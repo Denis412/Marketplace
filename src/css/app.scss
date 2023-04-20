@@ -1,1 +1,16 @@
 // app global css in SCSS form
+
+.club-input {
+  .q-field__control {
+    &::before {
+      border-color: #cacaca !important;
+    }
+
+    &:hover::before {
+      border-color: red !important;
+    }
+
+    border-radius: 8px !important;
+    padding: 0 24px;
+  }
+}
