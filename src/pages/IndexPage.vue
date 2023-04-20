@@ -8,31 +8,9 @@
       <directions />
       <statistics />
       <partitians />
+      <about/>
+      <items/>
 
-      <section class="section-margin">
-        <div class="q-mb-md font-size-32">О Клубе за 1 минуту</div>
-
-        <div class="flex justify-between">
-          <div class="font-size-24" style="max-width: 348px">
-            Мы проводим мероприятия и даём рекомендации участникам 1Т Клуба для
-            их профессионального развития в IT, бизнесе и инвестировании. У нас
-            можно найти специалистов и партнеров для совместной работы, а также
-            обмениваться знаниями и опытом.
-          </div>
-
-          <q-video style="width: 640px; height: 457px; border-radius: 10px"
-            src="https://www.youtube.com/watch?v=OJzN26zynP0" />
-        </div>
-      </section>
-
-      <section style="margin-top: 215px">
-        <div class="text-center header-text-32">
-          1Т Клуб - это масштабная экосистема для развития начинающих
-          специалистов в сфере IT.
-        </div>
-
-        <cards-group />
-      </section>
 
       <section class="section-margin">
         <graph-element />
@@ -99,7 +77,8 @@ import MainScreen from "src/components/ClubMainScreen.vue"
 import Directions from "src/components/ClubDirections.vue";
 import Statistics from "src/components/ClubStatistics.vue";
 import Partitians from "src/components/ClubParticipants.vue";
-import CardsGroup from "src/components/CardsGroup.vue";
+import Items from "src/components/ClubItems.vue";
+import About from "src/components/ClubAbout.vue";
 import BackgroundSpot from "src/components/BackgroundSpot.vue";
 import GraphElement from "src/components/GraphElement.vue";
 import CategoriesGroup from "src/components/CategoriesGroup.vue";

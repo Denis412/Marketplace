@@ -3,7 +3,7 @@
     <q-img class="card-image" :src="imageUrl" alt="image" />
 
     <q-card-section
-      style="font-size: 32px; font-weight: 600; line-height: 24px"
+    class="title"
       >{{ title }}</q-card-section
     >
   </q-card>
@@ -36,15 +36,19 @@ const { imageUrl, title, id } = defineProps({
   border: 1px solid white;
   border-radius: 10px;
 
-  background: linear-gradient(
-    101.5deg,
+  background: linear-gradient(101.5deg,
     rgba(16, 5, 34, 0.1) 37.03%,
     rgba(255, 255, 255, 0.08) 80.19%,
-    rgba(16, 5, 34, 0.1) 100%
-  );
+    rgba(16, 5, 34, 0.1) 100%);
 }
 
 .ml-16 {
   margin-left: 1rem;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 24px;
 }
 </style>
