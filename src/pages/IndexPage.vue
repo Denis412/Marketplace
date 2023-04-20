@@ -6,28 +6,8 @@
 
       <main-screen />
       <directions />
-      <section class="flex justify-between section-margin">
-        <div class="large-text">
-          <div class="large-text-g">200+</div>
-          <div>заказов</div>
-        </div>
-
-        <div class="large-text">
-          <div class="large-text-g">1500+</div>
-          <div>участников</div>
-        </div>
-
-        <div class="large-text">
-          <div class="large-text-g">50+</div>
-          <div>городов</div>
-        </div>
-      </section>
-
-      <section style="margin-top: 52px">
-        <div class="text-center font-size-32">Почетные участники 1Т Клуба</div>
-
-        <q-img style="margin-top: 56px" src="src/assets/images/Avatars.svg" />
-      </section>
+      <statistics />
+      <partitians />
 
       <section class="section-margin">
         <div class="q-mb-md font-size-32">О Клубе за 1 минуту</div>
@@ -78,11 +58,11 @@
       <section class="flex flex-center section-margin">
         <div class="section-container text-center flex items-between justify-center">
           <div style="
-                            font-size: 28px;
-                            line-height: 36px;
-                            font-weight: 400;
-                            margin-bottom: 32px;
-                          ">
+                                    font-size: 28px;
+                                    line-height: 36px;
+                                    font-weight: 400;
+                                    margin-bottom: 32px;
+                                  ">
             Сделате шаг навстречу будущему и будьте с нами!
           </div>
 
@@ -102,11 +82,11 @@
         <div class="header-text-32 text-center">Отзывы</div>
 
         <q-list class="flex flex-center no-wrap" style="
-                          margin-left: -30px;
-                          margin-top: 32px;
-                          overflow-x: auto;
-                          max-width: 1200px;
-                        ">
+                                  margin-left: -30px;
+                                  margin-top: 32px;
+                                  overflow-x: auto;
+                                  max-width: 1200px;
+                                ">
           <review-card style="margin-left: 30px" v-for="comment in comments" :key="comment.id" v-bind="comment" />
         </q-list>
       </section>
@@ -117,6 +97,8 @@
 <script setup>
 import MainScreen from "src/components/ClubMainScreen.vue"
 import Directions from "src/components/ClubDirections.vue";
+import Statistics from "src/components/ClubStatistics.vue";
+import Partitians from "src/components/ClubParticipants.vue";
 import CardsGroup from "src/components/CardsGroup.vue";
 import BackgroundSpot from "src/components/BackgroundSpot.vue";
 import GraphElement from "src/components/GraphElement.vue";
