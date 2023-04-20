@@ -10,11 +10,7 @@
       <partitians />
       <about/>
       <items/>
-
-
-      <section class="section-margin">
-        <graph-element />
-      </section>
+      <steps/>
 
       <section class="flex column flex-center" style="margin-top: 92px">
         <div class="header-text-32">Кому подходит 1Т Клуб</div>
@@ -77,6 +73,7 @@ import MainScreen from "src/components/ClubMainScreen.vue"
 import Directions from "src/components/ClubDirections.vue";
 import Statistics from "src/components/ClubStatistics.vue";
 import Partitians from "src/components/ClubParticipants.vue";
+import Steps from "src/components/ClubSteps.vue";
 import Items from "src/components/ClubItems.vue";
 import About from "src/components/ClubAbout.vue";
 import BackgroundSpot from "src/components/BackgroundSpot.vue";

@@ -154,6 +154,17 @@
       "
     />
 
+    <q-img
+    src="src\assets\images\vectors\Main\1440\desktop\Vector 44.svg"
+    style="
+    position: absolute;
+    width: 346px;
+    height: 233px;
+    left: 48.5px;
+    top: 4161px;
+    "
+    />
+
     <!-- <q-img
       src="src/assets/images/Cl.svg"
       style="
