@@ -1,1 +1,81 @@
 // app global css in SCSS form
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4c1d95;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: #260e4b;
+}
+
+.large-text {
+  font-size: 2rem;
+  line-height: 80px;
+  font-weight: 700;
+}
+
+.header-text-32 {
+  font-size: 2rem;
+  line-height: 36px;
+  font-weight: 800;
+}
+
+.font-size-32 {
+  font-size: 32px;
+}
+
+.section-margin {
+  margin-top: 124px;
+}
+
+.large-text-g {
+  font-size: 4rem;
+  line-height: 80px;
+  font-weight: 700;
+}
+
+.px-160 {
+  padding: 0 10rem;
+}
+
+.h-100p {
+  height: 100% !important;
+}
+
+.bg-gradient {
+  background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
+}
+
+.font-size-24 {
+  font-size: 24px;
+}
+
+.gradient-box {
+  border: 2px solid transparent;
+  background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
+  box-shadow: inset 0px 0px 0px 100vw $bg-dark-purple;
+  border-radius: 5px;
+}
+
+.bg-dark-purple {
+  background-color: $bg-dark-purple;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  min-height: 107px;
+}
+
+.logo-header {
+  height: 75px;
+  width: 90px;
+}
