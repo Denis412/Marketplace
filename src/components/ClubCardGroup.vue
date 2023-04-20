@@ -1,12 +1,12 @@
 <template>
-  <q-list class="flex flex-center q-mt-md">
+  <q-list class="row justify-between q-mt-md">
     <card v-for="card in cardsList" :key="card.id" v-bind="card" />
   </q-list>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import Card from "src/components/Card.vue";
+import Card from "src/components/ClubCard.vue";
 
 const cardsList = ref([
   {

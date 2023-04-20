@@ -1,41 +1,11 @@
 <template>
-  <q-page
-    class="flex flex-center column bg-dark-purple px-160 h-100p"
-    style="overflow: hidden"
-  >
+  <q-page class="flex flex-center column bg-dark-purple h-100p">
     <background-spot />
 
     <main class="text-white" style="z-index: 1">
-      <section class="flex no-wrap" style="margin-top: 71px">
-        <section style="max-width: 640px">
-          <h2 class="q-mb-md">1Т Клуб</h2>
 
-          <span class="font-size-24">
-            1Т Клуб - сообщество единомышленников, которых объединяет страсть к
-            работе и саморазвитию.
-          </span>
-
-          <q-btn
-            no-caps
-            class="bg-gradient font-size-24 q-px-xl q-mt-xl"
-            label="Вступить в клуб"
-          />
-        </section>
-
-        <q-img src="src/assets/images/amico.svg" />
-      </section>
-
-      <section class="flex flex-center text-center" style="margin-top: 179px">
-        <h2>Выберите направление</h2>
-
-        <div class="font-size-24 q-mt-md" style="max-width: 1122px">
-          Выберите интересующий вас профиль и мы поможем вам познакомиться с
-          платформой или сделать это самостоятельно.
-        </div>
-
-        <card-group />
-      </section>
-
+      <main-screen />
+      <directions />
       <section class="flex justify-between section-margin">
         <div class="large-text">
           <div class="large-text-g">200+</div>
@@ -70,10 +40,8 @@
             обмениваться знаниями и опытом.
           </div>
 
-          <q-video
-            style="width: 640px; height: 457px; border-radius: 10px"
-            src="https://www.youtube.com/watch?v=OJzN26zynP0"
-          />
+          <q-video style="width: 640px; height: 457px; border-radius: 10px"
+            src="https://www.youtube.com/watch?v=OJzN26zynP0" />
         </div>
       </section>
 
@@ -93,11 +61,7 @@
       <section class="flex column flex-center" style="margin-top: 92px">
         <div class="header-text-32">Кому подходит 1Т Клуб</div>
 
-        <q-img
-          class="q-mt-md"
-          style="max-width: 833px"
-          src="src/assets/images/Vector11.svg"
-        />
+        <q-img class="q-mt-md" style="max-width: 833px" src="src/assets/images/Vector11.svg" />
 
         <categories-group />
       </section>
@@ -105,40 +69,24 @@
       <section class="section-margin">
         <div class="text-center header-text-32">С нами сотрудничают</div>
 
-        <q-list
-          class="flex flex-center"
-          style="margin-left: -32px; margin-top: 41px"
-        >
-          <q-img
-            style="margin-left: 32px; max-width: 256px"
-            v-for="partner in partners"
-            :key="partner.id"
-            :src="partner.imageUrl"
-          />
+        <q-list class="flex flex-center" style="margin-left: -32px; margin-top: 41px">
+          <q-img style="margin-left: 32px; max-width: 256px" v-for="partner in partners" :key="partner.id"
+            :src="partner.imageUrl" />
         </q-list>
       </section>
 
       <section class="flex flex-center section-margin">
-        <div
-          class="section-container text-center flex items-between justify-center"
-        >
-          <div
-            style="
-              font-size: 28px;
-              line-height: 36px;
-              font-weight: 400;
-              margin-bottom: 32px;
-            "
-          >
+        <div class="section-container text-center flex items-between justify-center">
+          <div style="
+                            font-size: 28px;
+                            line-height: 36px;
+                            font-weight: 400;
+                            margin-bottom: 32px;
+                          ">
             Сделате шаг навстречу будущему и будьте с нами!
           </div>
 
-          <q-btn
-            no-caps
-            class="bg-gradient"
-            style="font-size: 18px"
-            label="Присоединиться к Клубу"
-          />
+          <q-btn no-caps class="bg-gradient" style="font-size: 18px" label="Присоединиться к Клубу" />
         </div>
       </section>
 
@@ -146,33 +94,20 @@
         <div class="text-center header-text-32">Наши продукты</div>
 
         <q-list class="flex flex-center" style="margin-left: -76px">
-          <product-item
-            style="margin-left: 76px"
-            v-for="product in products"
-            :key="product.id"
-            v-bind="product"
-          />
+          <product-item style="margin-left: 76px" v-for="product in products" :key="product.id" v-bind="product" />
         </q-list>
       </section>
 
       <section class="flex column flex-center section-margin">
         <div class="header-text-32 text-center">Отзывы</div>
 
-        <q-list
-          class="flex flex-center no-wrap"
-          style="
-            margin-left: -30px;
-            margin-top: 32px;
-            overflow-x: auto;
-            max-width: 1200px;
-          "
-        >
-          <review-card
-            style="margin-left: 30px"
-            v-for="comment in comments"
-            :key="comment.id"
-            v-bind="comment"
-          />
+        <q-list class="flex flex-center no-wrap" style="
+                          margin-left: -30px;
+                          margin-top: 32px;
+                          overflow-x: auto;
+                          max-width: 1200px;
+                        ">
+          <review-card style="margin-left: 30px" v-for="comment in comments" :key="comment.id" v-bind="comment" />
         </q-list>
       </section>
     </main>
@@ -180,7 +115,8 @@
 </template>
 
 <script setup>
-import CardGroup from "src/components/CardGroup.vue";
+import MainScreen from "src/components/ClubMainScreen.vue"
+import Directions from "src/components/ClubDirections.vue";
 import CardsGroup from "src/components/CardsGroup.vue";
 import BackgroundSpot from "src/components/BackgroundSpot.vue";
 import GraphElement from "src/components/GraphElement.vue";
@@ -264,6 +200,10 @@ const comments = ref([
 </script>
 
 <style scoped lang="scss">
+.q-page {
+  overflow: hidden;
+}
+
 .section-container {
   max-width: 772px;
   width: 772px;

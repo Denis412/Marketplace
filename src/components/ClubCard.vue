@@ -1,8 +1,5 @@
 <template>
-  <q-card
-    class="card flex column justify-between"
-    style="max-width: 300px; padding: 32px"
-  >
+  <q-card class="card column justify-between q-pa-lg">
     <header>
       <div class="card-cap" />
       <div class="q-my-md card-title">{{ title }}</div>
@@ -31,17 +28,13 @@ const { title, content } = defineProps({
 .card {
   position: relative;
   min-height: 316px;
-  max-width: 300px;
   width: 300px;
+  box-sizing: border-box;
 
   background: rgba(51, 19, 99, 0.5);
   backdrop-filter: blur(2px);
 
   border-radius: 12px;
-
-  &:not(&:first-child) {
-    margin-left: 110px;
-  }
 }
 
 .card-cap {
