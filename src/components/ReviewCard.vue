@@ -6,22 +6,22 @@
       <div style="margin-left: 50px">
         <div class="font-size-24">{{ fullname }}</div>
 
-        <div class="card-job-title" style="margin-top: 8px">
+        <div class="card-job-title q-mt-sm">
           {{ jobTitle }}
         </div>
       </div>
     </div>
 
-    <div style="margin-top: 32px; overflow-y: auto">
+    <div class="club-mt-32 overflow-auto">
       {{ content }}
     </div>
 
-    <div style="margin-top: 24px">
+    <div class="club-mt-24">
       <q-icon
         v-for="n in 5"
         name="star"
         :key="n"
-        style="font-size: 22px"
+        class="font-size-22"
         :style="{ color: n <= stars ? '#B936E7' : '#190A32' }"
       />
     </div>

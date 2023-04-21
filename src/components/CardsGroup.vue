@@ -1,5 +1,5 @@
 <template>
-  <q-list class="flex flex-center" style="margin-top: 44px; margin-left: -16px">
+  <q-list class="flex flex-center q-gutter-x-md q-mt-xl">
     <card-2 v-for="card in cards" :key="card.title" v-bind="card" />
   </q-list>
 </template>

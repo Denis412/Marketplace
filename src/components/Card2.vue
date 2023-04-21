@@ -1,11 +1,8 @@
 <template>
-  <q-card class="flex items-center text-white card q-ml-md">
+  <q-card class="flex items-center text-white card">
     <q-img class="card-image" :src="imageUrl" alt="image" />
 
-    <q-card-section
-      style="font-size: 32px; font-weight: 600; line-height: 24px"
-      >{{ title }}</q-card-section
-    >
+    <q-card-section class="header-text-32">{{ title }}</q-card-section>
   </q-card>
 </template>
 

@@ -8,16 +8,18 @@
         работе и саморазвитию.
       </p>
 
-      <q-btn no-caps class="bg-gradient font-size-24 q-px-xl q-mt-xl" label="Вступить в клуб" />
+      <q-btn
+        no-caps
+        class="bg-gradient font-size-24 q-px-xl q-mt-xl"
+        label="Вступить в клуб"
+      />
     </div>
 
     <q-img src="src/assets/images/amico.svg" />
   </section>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 section {

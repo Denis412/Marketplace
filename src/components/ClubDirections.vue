@@ -13,7 +13,6 @@
 
 <script setup>
 import CardGroup from "src/components/ClubCardGroup.vue";
-
 </script>
 
 <style lang="scss" scoped>

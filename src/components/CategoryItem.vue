@@ -1,8 +1,8 @@
 <template>
-  <section class="text-center" style="margin-left: 32px">
+  <section class="text-center">
     <q-img class="img" :src="imageUrl" />
 
-    <div class="font-size-24 q-mt-md" style="margin-bottom: 10px">
+    <div class="font-size-24 q-mt-md club-mb-10">
       {{ title }}
     </div>
 

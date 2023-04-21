@@ -1,9 +1,8 @@
 <template>
-  <q-page class="flex flex-center column bg-dark-purple h-100p">
+  <q-page class="flex flex-center column bg-dark-purple h-100p px-160">
     <background-spot />
 
     <main class="text-white" style="z-index: 1">
-
       <main-screen />
       <directions />
       <statistics />
@@ -20,8 +19,10 @@
             обмениваться знаниями и опытом.
           </div>
 
-          <q-video style="width: 640px; height: 457px; border-radius: 10px"
-            src="https://www.youtube.com/watch?v=OJzN26zynP0" />
+          <q-video
+            style="width: 640px; height: 457px; border-radius: 10px"
+            src="https://www.youtube.com/watch?v=OJzN26zynP0"
+          />
         </div>
       </section>
 
@@ -41,7 +42,11 @@
       <section class="flex column flex-center" style="margin-top: 92px">
         <div class="header-text-32">Кому подходит 1Т Клуб</div>
 
-        <q-img class="q-mt-md" style="max-width: 833px" src="src/assets/images/Vector11.svg" />
+        <q-img
+          class="q-mt-md"
+          style="max-width: 833px"
+          src="src/assets/images/Vector11.svg"
+        />
 
         <categories-group />
       </section>
@@ -49,24 +54,40 @@
       <section class="section-margin">
         <div class="text-center header-text-32">С нами сотрудничают</div>
 
-        <q-list class="flex flex-center" style="margin-left: -32px; margin-top: 41px">
-          <q-img style="margin-left: 32px; max-width: 256px" v-for="partner in partners" :key="partner.id"
-            :src="partner.imageUrl" />
+        <q-list
+          class="flex flex-center"
+          style="margin-left: -32px; margin-top: 41px"
+        >
+          <q-img
+            style="margin-left: 32px; max-width: 256px"
+            v-for="partner in partners"
+            :key="partner.id"
+            :src="partner.imageUrl"
+          />
         </q-list>
       </section>
 
       <section class="flex flex-center section-margin">
-        <div class="section-container text-center flex items-between justify-center">
-          <div style="
-                                    font-size: 28px;
-                                    line-height: 36px;
-                                    font-weight: 400;
-                                    margin-bottom: 32px;
-                                  ">
+        <div
+          class="section-container text-center flex items-between justify-center"
+        >
+          <div
+            style="
+              font-size: 28px;
+              line-height: 36px;
+              font-weight: 400;
+              margin-bottom: 32px;
+            "
+          >
             Сделате шаг навстречу будущему и будьте с нами!
           </div>
 
-          <q-btn no-caps class="bg-gradient" style="font-size: 18px" label="Присоединиться к Клубу" />
+          <q-btn
+            no-caps
+            class="bg-gradient"
+            style="font-size: 18px"
+            label="Присоединиться к Клубу"
+          />
         </div>
       </section>
 
@@ -74,28 +95,45 @@
         <div class="text-center header-text-32">Наши продукты</div>
 
         <q-list class="flex flex-center" style="margin-left: -76px">
-          <product-item style="margin-left: 76px" v-for="product in products" :key="product.id" v-bind="product" />
+          <product-item
+            style="margin-left: 76px"
+            v-for="product in products"
+            :key="product.id"
+            v-bind="product"
+          />
         </q-list>
       </section>
 
       <section class="flex column flex-center section-margin">
         <div class="header-text-32 text-center">Отзывы</div>
 
-        <q-list class="flex flex-center no-wrap" style="
-                                  margin-left: -30px;
-                                  margin-top: 32px;
-                                  overflow-x: auto;
-                                  max-width: 1200px;
-                                ">
-          <review-card style="margin-left: 30px" v-for="comment in comments" :key="comment.id" v-bind="comment" />
+        <q-list
+          class="flex flex-center no-wrap"
+          style="
+            margin-left: -30px;
+            margin-top: 32px;
+            overflow-x: auto;
+            max-width: 1200px;
+          "
+        >
+          <review-card
+            style="margin-left: 30px"
+            v-for="comment in comments"
+            :key="comment.id"
+            v-bind="comment"
+          />
         </q-list>
+      </section>
+
+      <section class="section-margin">
+        <club-contacts-form />
       </section>
     </main>
   </q-page>
 </template>
 
 <script setup>
-import MainScreen from "src/components/ClubMainScreen.vue"
+import MainScreen from "src/components/ClubMainScreen.vue";
 import Directions from "src/components/ClubDirections.vue";
 import Statistics from "src/components/ClubStatistics.vue";
 import Partitians from "src/components/ClubParticipants.vue";
@@ -105,6 +143,8 @@ import GraphElement from "src/components/GraphElement.vue";
 import CategoriesGroup from "src/components/CategoriesGroup.vue";
 import ProductItem from "src/components/ProductItem.vue";
 import ReviewCard from "src/components/ReviewCard.vue";
+import ClubContactsForm from "src/components/ClubContactsForm.vue";
+
 import { ref } from "vue";
 
 const partners = ref([

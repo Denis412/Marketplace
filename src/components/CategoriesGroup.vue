@@ -1,5 +1,5 @@
 <template>
-  <q-list class="flex justify-between" style="margin-left: -32px">
+  <q-list class="flex justify-between q-gutter-x-lg">
     <category-item
       v-for="category in categories"
       :key="category.id"

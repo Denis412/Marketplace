@@ -1,17 +1,26 @@
 <template>
-  <img :src="`src/assets/images/partitians/Vector-${index - 1}.png`" :class="`face${index} absolute`"
-    :alt="`face${index}`">
+  <img
+    :src="`src/assets/images/partitians/Vector-${index - 1}.png`"
+    :class="`face${index} absolute cursor-pointer avatar`"
+    :alt="`face${index}`"
+  />
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
-
 const { index } = defineProps({
-  index: Number
-})
+  index: Number,
+});
 </script>
 
 <style lang="scss" scoped>
+.avatar {
+  transition: 0.4s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
 .face1 {
   left: 0px;
   top: 2px;
@@ -175,4 +184,5 @@ const { index } = defineProps({
 .face33 {
   left: 550px;
   top: 109px;
-}</style>
+}
+</style>

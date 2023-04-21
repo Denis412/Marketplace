@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import Partitian from './ClubPartitian.vue';
+import Partitian from "./ClubPartitian.vue";
 </script>
 
 <style lang="scss" scoped>
