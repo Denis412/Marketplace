@@ -1,28 +1,31 @@
 <template>
-  <q-list class="row justify-between q-mt-md">
-    <card v-for="card in cardsList" :key="card.id" v-bind="card" />
+
+  <q-list v-if="items" class="flex justify-between card-items">
+    <items-card v-for="card in items" :key="card.title" v-bind="card" />
   </q-list>
+
+  <q-list v-else-if="directions" class="row justify-between q-mt-md">
+    <directions-card v-for="card in directions" :key="card.id" v-bind="card" />
+  </q-list>
+
 </template>
 
 <script setup>
-import { ref } from "vue";
-import Card from "src/components/ClubCard.vue";
+import { defineProps } from "vue";
+import ItemsCard from "src/components/ClubItemsCard.vue";
+import DirectionsCard from "src/components/ClubDirectionsCard.vue";
 
-const cardsList = ref([
-  {
-    id: 1,
-    title: "Для Бизнеса",
-    content: ["Новые партнеры", "Специалисты для развития бизнес-проектов"],
-  },
-  {
-    id: 2,
-    title: "Для Работы",
-    content: ["Новые заказы", "Стажировка в 1Т Клубе", "Участие в командах"],
-  },
-  {
-    id: 3,
-    title: "Для Развития",
-    content: ["Онлайн-курсы", "База знаний", "Консультации экспертов"],
-  },
-]);
+const { items, directions } = defineProps({
+  items: Object,
+  directions: Object
+});
+
+
 </script>
+
+<style scoped lang="scss">
+.card-items {
+  margin-top: 44px;
+  padding: 0 90px;
+}
+</style>

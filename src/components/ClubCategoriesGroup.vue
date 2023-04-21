@@ -45,3 +45,9 @@ const categories = ref([
   },
 ]);
 </script>
+
+<style scoped lang="scss">
+.groups {
+  padding: 0 12px;
+}
+</style>

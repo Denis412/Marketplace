@@ -1,12 +1,12 @@
 <template>
-  <section class="text-center">
+  <section class="text-center item">
     <q-img class="img" :src="imageUrl" />
 
-    <div class="font-size-24 q-mt-md club-mb-10">
+    <div class="font-size-24 q-mt-md text-center">
       {{ title }}
     </div>
 
-    <div class="text-center" style="max-width: 187px; line-height: 36px">
+    <div class="text-center content">
       {{ content }}
     </div>
   </section>
@@ -32,5 +32,14 @@ const { imageUrl, title, content } = defineProps({
   &:hover {
     transform: scale(1.05);
   }
+}
+
+.item {
+  width: 200px;
+}
+
+.content {
+  margin-top: 10px;
+  line-height: 36px;
 }
 </style>

@@ -2,7 +2,7 @@
   <q-card class="flex items-center text-white card">
     <q-img class="card-image" :src="imageUrl" alt="image" />
 
-    <q-card-section class="header-text-32">{{ title }}</q-card-section>
+    <q-card-section class="title">{{ title }}</q-card-section>
   </q-card>
 </template>
 
@@ -43,5 +43,11 @@ const { imageUrl, title, id } = defineProps({
 
 .ml-16 {
   margin-left: 1rem;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 24px;
 }
 </style>
