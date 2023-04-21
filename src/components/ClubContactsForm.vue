@@ -1,6 +1,6 @@
 <template>
   <q-card class="rounded-borders-12 card">
-    <q-card-section horizontal>
+    <q-card-section horizontal class="flex justify-between">
       <q-card-section>
         <div class="header-text-32 q-mb-xl">Контакты</div>
 
@@ -48,6 +48,7 @@ import ClubWriteToUsForm from "src/components/ClubWriteToUsForm.vue";
 
 <style scoped lang="scss">
 .card {
+  padding: 32px 95px;
   background-color: #260f4a;
 }
 </style>
