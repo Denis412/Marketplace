@@ -17,6 +17,7 @@
       <products/>
       <comments/>
       <community/>
+      <how-join/>
     </main>
   </q-page>
 </template>
@@ -36,6 +37,7 @@ import Products from "src/components/ClubProducts.vue";
 import Comments from "src/components/ClubComments.vue"
 import BackgroundSpot from "src/components/BackgroundSpot.vue";
 import Community from "src/components/ClubCommunity.vue";
+import HowJoin from "src/components/ClubHowJoin.vue";
 </script>
 
 <style scoped lang="scss">
