@@ -1,5 +1,5 @@
 <template>
-  <q-list class="flex justify-between" style="margin-left: -32px">
+  <q-list class="flex justify-between groups">
     <category-item
       v-for="category in categories"
       :key="category.id"
@@ -45,3 +45,9 @@ const categories = ref([
   },
 ]);
 </script>
+
+<style scoped lang="scss">
+.groups {
+  padding: 0 12px;
+}
+</style>

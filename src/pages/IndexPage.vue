@@ -11,14 +11,8 @@
       <about/>
       <items/>
       <steps/>
+      <clients/>
 
-      <section class="flex column flex-center" style="margin-top: 92px">
-        <div class="header-text-32">Кому подходит 1Т Клуб</div>
-
-        <q-img class="q-mt-md" style="max-width: 833px" src="src/assets/images/Vector11.svg" />
-
-        <categories-group />
-      </section>
 
       <section class="section-margin">
         <div class="text-center header-text-32">С нами сотрудничают</div>
@@ -76,9 +70,8 @@ import Partitians from "src/components/ClubParticipants.vue";
 import Steps from "src/components/ClubSteps.vue";
 import Items from "src/components/ClubItems.vue";
 import About from "src/components/ClubAbout.vue";
+import Clients from "src/components/ClubClients.vue";
 import BackgroundSpot from "src/components/BackgroundSpot.vue";
-import GraphElement from "src/components/GraphElement.vue";
-import CategoriesGroup from "src/components/CategoriesGroup.vue";
 import ProductItem from "src/components/ProductItem.vue";
 import ReviewCard from "src/components/ReviewCard.vue";
 import { ref } from "vue";
