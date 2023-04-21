@@ -5,7 +5,6 @@
     <div>
       <q-img
         class="item-image"
-        style="margin-left: 18px; width: 50px; min-height: 50px"
         :src="imageUrl"
       />
     </div>
@@ -38,5 +37,11 @@ const { title, imageUrl } = defineProps({
       transform: scale(1.05);
     }
   }
+}
+
+.item-image {
+  margin-left: 18px;
+  width: 50px;
+  min-height: 50px;
 }
 </style>
