@@ -12,16 +12,9 @@
       <items/>
       <steps/>
       <clients/>
+      <partners/>
 
 
-      <section class="section-margin">
-        <div class="text-center header-text-32">С нами сотрудничают</div>
-
-        <q-list class="flex flex-center" style="margin-left: -32px; margin-top: 41px">
-          <q-img style="margin-left: 32px; max-width: 256px" v-for="partner in partners" :key="partner.id"
-            :src="partner.imageUrl" />
-        </q-list>
-      </section>
 
       <section class="flex flex-center section-margin">
         <div class="section-container text-center flex items-between justify-center">
@@ -71,17 +64,13 @@ import Steps from "src/components/ClubSteps.vue";
 import Items from "src/components/ClubItems.vue";
 import About from "src/components/ClubAbout.vue";
 import Clients from "src/components/ClubClients.vue";
+import Partners from "src/components/ClubPartners.vue";
 import BackgroundSpot from "src/components/BackgroundSpot.vue";
 import ProductItem from "src/components/ProductItem.vue";
 import ReviewCard from "src/components/ReviewCard.vue";
 import { ref } from "vue";
 
-const partners = ref([
-  { id: 1, imageUrl: "src/assets/images/logoRSO.svg" },
-  { id: 2, imageUrl: "src/assets/images/logoRAO.svg" },
-  { id: 3, imageUrl: "src/assets/images/logoRosnou.svg" },
-  { id: 4, imageUrl: "src/assets/images/logoObrsoyuz.svg" },
-]);
+
 
 const products = ref([
   {
