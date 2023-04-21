@@ -3,7 +3,6 @@
     <background-spot />
 
     <main class="text-white" style="z-index: 1">
-
       <main-screen />
       <directions />
       <statistics />
@@ -18,6 +17,7 @@
       <comments/>
       <community/>
       <how-join/>
+      <questions/>
     </main>
   </q-page>
 </template>
@@ -38,6 +38,7 @@ import Comments from "src/components/ClubComments.vue"
 import BackgroundSpot from "src/components/BackgroundSpot.vue";
 import Community from "src/components/ClubCommunity.vue";
 import HowJoin from "src/components/ClubHowJoin.vue";
+import Questions from "src/components/ClubQuestions.vue";
 </script>
 
 <style scoped lang="scss">
