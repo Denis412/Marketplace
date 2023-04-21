@@ -1,5 +1,5 @@
 <template>
-  <div :class="`relative-position flex step-num step${num}`">
+  <div :class="`relative-position z-top flex step-num step${num}`">
         <div class="absolute-center num">
           {{ num }}
         </div>
@@ -40,8 +40,8 @@ const { num } = defineProps({
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(135deg, #950C95 0%, #9600FF 100%, #3C0A5F 100%);
   border-radius: 100px;
 
-  &:nth-child(odd) {
-    margin: 210px auto;
+  &:nth-child(even) {
+    margin: 210px 0 0 355px;
   }
 
   margin-top: 210px;

@@ -1,20 +1,24 @@
 <template>
-  <section class="container steps">
+  <section class="container steps relative-position">
       <h4 class="step-title">
         В 1T Клубе вас ждет:
       </h4>
-      <step
-      v-for="(step, index) in steps"
-      :num="index + 1"
-      :title="step.title"
-      :info="step.info"
-      />
+      <div class="steps-wrapper">
+        <step
+        v-for="(step, index) in steps"
+        :num="index + 1"
+        :title="step.title"
+        :info="step.info"
+        />
+      </div>
+      <steps-backgroung/>
 
   </section>
 </template>
 
 <script setup>
 import Step from './ClubStep.vue';
+import StepsBackgroung from './ClubStepsBackgroung.vue';
 import { ref } from "vue";
 const steps = ref([
   {
@@ -52,5 +56,9 @@ const steps = ref([
   font-size: 32px;
   line-height: 36px;
   margin-bottom: 113px;
+}
+
+.steps-wrapper {
+  padding: 0 100px;
 }
 </style>
