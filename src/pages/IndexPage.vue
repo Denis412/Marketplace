@@ -2,10 +2,10 @@
   <q-page class="flex flex-center column bg-dark-purple h-100p px-160">
     <background-spot />
 
-    <main class="text-white" style="z-index: 1">
+    <main class="text-white container" style="z-index: 1">
       <c-chapter-page
         title="1Т Клуб"
-        section-classes="flex container"
+        section-classes="flex"
         title-classes="text-h1"
         subtitle="1Т Клуб - сообщество единомышленников, которых объединяет страсть к работе и саморазвитию"
         subtitle-classes="text-subtitle2 q-my-md"
@@ -27,7 +27,7 @@
 
       <c-chapter-page
         title="Выберите направление"
-        section-classes="text-center container"
+        section-classes="text-center"
         title-classes="text-h1"
         subtitle="Выберите интересующий вас профиль и мы поможем вам познакомиться с платформой или сделать это самостоятельно."
         subtitle-classes="text-subtitle1 club-my-32"
@@ -38,7 +38,7 @@
       </c-chapter-page>
 
       <c-chapter-page
-        section-classes="text-center container"
+        section-classes="text-center"
         subtitle="Почетные участники 1Т Клуба"
         subtitle-classes="text-subtitle1 club-mt-80"
       >
@@ -66,7 +66,6 @@
         title="О Клубе за 1 минуту"
         title-classes="text-h3 q-mb-md"
         content-classes="flex justify-between"
-        section-classes="container"
       >
         <template #chapter-content>
           <p class="text-subtitle2" style="max-width: 348px">
@@ -87,7 +86,6 @@
         title="1Т Клуб - это масштабная экосистема для развития начинающих специалистов в сфере IT."
         title-classes="text-h3 text-center q-mb-md"
         content-classes="flex justify-between"
-        section-classes="container"
       >
         <template #chapter-content>
           <card-group :items="cards" />
@@ -97,29 +95,25 @@
       <c-chapter-page
         title="В 1T Клубе вас ждет:"
         title-classes="text-subtitle1 q-mb-xl"
-        section-classes="container relative-position"
-        class="steps-wrapper"
+        content-classes="relative-position"
       >
         <template #chapter-content>
-          <div class="steps-wrapper">
-            <step
+          <step
             v-for="(step, index) in steps"
             :key="step.title"
             :num="index + 1"
             :title="step.title"
             :info="step.info"
-            />
-          </div>
-            <steps-background />
+          />
 
-
+          <steps-background />
         </template>
       </c-chapter-page>
 
       <c-chapter-page
         title="Кому подходит 1Т Клуб"
         title-classes="text-h3"
-        section-classes="text-center container"
+        section-classes="text-center"
       >
         <template #subtitle>
           <img class="q-mt-md" src="src/assets/images/Vector11.svg" />
@@ -133,7 +127,7 @@
       <c-chapter-page
         title="С нами сотрудничают"
         title-classes="text-h3"
-        section-classes="text-center container"
+        section-classes="text-center"
         content-classes="row justify-between q-mt-xl"
       >
         <template #chapter-content>
@@ -164,7 +158,7 @@
       <c-chapter-page
         title="Наши продукты"
         title-classes="text-h3"
-        section-classes="text-center container"
+        section-classes="text-center"
         content-classes="row justify-between"
       >
         <template #chapter-content>
@@ -179,7 +173,7 @@
       <c-chapter-page
         title="Отзывы"
         title-classes="text-h3 text-center"
-        section-classes="container container"
+        section-classes="container"
       >
         <template #chapter-content>
           <q-list class="row no-wrap comments-list">
@@ -199,7 +193,8 @@
         достигнем больших результатов и сможем реализовать самые смелые идеи.
         Присоединяйтесь к нам и становитесь частью большой и дружной команды."
         title-classes="text-h3 text-center"
-        subtitle-classes="text-subtitle1 club-mt-32 container"
+        subtitle-classes="text-subtitle1 club-mt-32"
+        section-classes="container"
       >
         <template #chapter-content>
           <c-community />
@@ -209,7 +204,7 @@
       <c-chapter-page
         title="Как вступить в 1Т Клуб?"
         title-classes="text-h3"
-        section-classes="flex justify-between club-px-96 container"
+        section-classes="flex justify-between club-px-96"
       >
         <template #prepend-header>
           <div class="relative-position">
@@ -231,10 +226,7 @@
         </template>
       </c-chapter-page>
 
-      <c-chapter-page
-      title="Часто задаваемые вопросы"
-      title-classes="text-h3"
-      section-classes="container">
+      <c-chapter-page title="Часто задаваемые вопросы" title-classes="text-h3">
         <template #chapter-content>
           <dropdown
             v-for="item in dropdown"
@@ -478,10 +470,5 @@ const dropdown = ref([
 
 .club-px-96 {
   padding: 0 96px;
-}
-
-.steps-wrapper {
-  padding: 0 100px;
-  margin-top: 100px;
 }
 </style>

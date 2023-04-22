@@ -6,8 +6,8 @@
     max-width: 346px;
     width: 30.89%;
     height: 233px;
-    left: 249.5px;
-    top: 240px;
+    left: 148.5px;
+    top: 245px;
     "
     />
     <q-img
@@ -17,8 +17,8 @@
     max-width: 316.5px;
     width: 28.27%;
     height: 243.13px;
-    left: 272.5px;
-    top: 545px;
+    left: 173.5px;
+    top: 555px;
     "
     />
     <q-img
@@ -28,8 +28,8 @@
     max-width: 335px;
     width: 29.91%;
     height: 278px;
-    left: 261.5px;
-    top: 848px;
+    left: 164.5px;
+    top: 856px;
     "
     />
     <q-img
@@ -39,8 +39,8 @@
     max-width: 328px;
     width: 29.29%;
     height: 340px;
-    left: 260px;
-    top: 1132px;
+    left: 189px;
+    top: 1149px;
     "
     />
 </template>

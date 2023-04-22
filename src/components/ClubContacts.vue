@@ -1,5 +1,5 @@
 <template>
-  <q-card class="rounded-borders-12 card container">
+  <q-card class="rounded-borders-12 card">
     <q-card-section horizontal class="flex justify-between">
       <q-card-section>
         <div class="text-h4 q-mb-xl">Контакты</div>

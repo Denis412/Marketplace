@@ -1,6 +1,6 @@
 <template>
   <q-footer class="footer px-160">
-    <div class="flex q-pt-lg container" style="width: 100%">
+    <div class="flex q-pt-lg" style="width: 100%">
       <section class="col relative">
         <q-img src="src/assets/images/LogoWhite.svg" class="footer-logo" />
 
