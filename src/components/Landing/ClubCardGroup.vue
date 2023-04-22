@@ -10,8 +10,8 @@
 
 <script setup>
 import { defineProps } from "vue";
-import ItemsCard from "src/components/ClubItemsCard.vue";
-import DirectionsCard from "src/components/ClubDirectionsCard.vue";
+import ItemsCard from "components/Landing/ClubItemsCard.vue";
+import DirectionsCard from "components/Landing/ClubDirectionsCard.vue";
 
 const { items, directions } = defineProps({
   items: Object,

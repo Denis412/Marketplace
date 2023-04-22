@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import ProductItem from "src/components/ProductItem.vue";
+import ProductItem from "components/Landing/ProductItem.vue";
 import { ref } from "vue";
 
 const products = ref([

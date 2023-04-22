@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import CategoryItem from "src/components/CategoryItem.vue";
+import CategoryItem from "components/Landing/CategoryItem.vue";
 import { ref } from "vue";
 
 const categories = ref([

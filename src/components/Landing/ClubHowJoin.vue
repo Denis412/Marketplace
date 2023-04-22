@@ -4,7 +4,7 @@
       <img src="src/assets/images/cuate.svg" />
       <img
         class="absolute-center"
-        src="src/assets/images/Ellipse 70.svg"
+        src="src/assets/images/Ellipse%2070.svg"
         style="z-index: -1"
       />
     </div>

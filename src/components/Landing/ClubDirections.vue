@@ -1,9 +1,18 @@
 <template>
-  <card-group :directions="cardsList" />
+  <section class="text-center section-margin directions">
+    <h2 class="title">Выберите направление</h2>
+
+    <div class="font-size-24 text-weight-light subtitle">
+      Выберите интересующий вас профиль и мы поможем вам познакомиться с
+      платформой или сделать это самостоятельно.
+    </div>
+
+    <card-group :directions="cardsList" />
+  </section>
 </template>
 
 <script setup>
-import CardGroup from "src/components/ClubCardGroup.vue";
+import CardGroup from "components/Landing/ClubCardGroup.vue";
 import { ref } from "vue";
 
 const cardsList = ref([

@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import ReviewCard from "src/components/ClubReviewCard.vue";
+import ReviewCard from "components/Landing/ClubReviewCard.vue";
 import { ref } from "vue";
 
 const comments = ref([
