@@ -2,7 +2,11 @@
   <section class="section-margin how-join container row justify-between">
     <div class="image relative-position">
       <img src="src/assets/images/cuate.svg" />
-      <img class="absolute-center" src="src/assets/images/Ellipse 70.svg" />
+      <img
+        class="absolute-center"
+        src="src/assets/images/Ellipse 70.svg"
+        style="z-index: -1"
+      />
     </div>
     <div class="info">
       <h3 class="text-h3">Как вступить в 1Т Клуб?</h3>

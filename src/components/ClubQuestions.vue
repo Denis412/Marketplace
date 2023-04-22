@@ -1,13 +1,11 @@
 <template>
   <section class="questions container">
-    <div class="title">
-      Часто задаваемые вопросы
-    </div>
+    <div class="text-h3">Часто задаваемые вопросы</div>
     <dropdown
-    v-for="item in dropdown"
-    :key="item.title"
-    :title="item.title"
-    :content="item.content"
+      v-for="item in dropdown"
+      :key="item.title"
+      :title="item.title"
+      :content="item.content"
     />
   </section>
 </template>
@@ -19,21 +17,21 @@ import Dropdown from "./ClubDropdown.vue";
 const dropdown = ref([
   {
     title: "Какие требования к участникам Клуба?",
-    content: "placeholder"
+    content: "placeholder",
   },
   {
     title: "Что внутри 1Т Клуба? Какие задачи я смогу решать?",
-    content: "placeholder"
+    content: "placeholder",
   },
   {
     title: "Как вступить в команду команду?",
-    content: "placeholder"
+    content: "placeholder",
   },
   {
     title: "Как оформить заказ в 1Т Клубе?",
-    content: "placeholder"
+    content: "placeholder",
   },
-])
+]);
 </script>
 
 <style lang="scss" scoped>

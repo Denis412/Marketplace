@@ -41,10 +41,10 @@
         </div>
       </section>
 
-      <section>
+      <section class="flex column">
         <div class="text-16 q-md-sm">Приложения</div>
 
-        <q-btn color="white">
+        <q-btn color="white club-mt-32">
           <q-img style="width: 24px" src="src/assets/icons/GooglePlay.svg" />
 
           <div class="q-ml-sm text-left" style="color: #333333">
@@ -54,11 +54,12 @@
           </div>
         </q-btn>
 
-        <q-btn class="flex store-btn q-mt-md" color="white">
+        <q-btn class="q-mt-md" color="white">
           <q-img style="width: 24px" src="src/assets/icons/Apple.svg" />
 
           <div class="q-ml-sm text-left" style="color: #333333">
-            <span class="store-btn-text1">Загрузите в</span><br />
+            <span class="store-btn-text1">Загрузите в</span>
+            <br />
             <span class="store-btn-text2">App Store</span>
           </div>
         </q-btn>

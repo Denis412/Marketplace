@@ -8,8 +8,8 @@
         :title="step.title"
         :info="step.info"
       />
+      <steps-backgroung />
     </div>
-    <steps-backgroung />
   </section>
 </template>
 

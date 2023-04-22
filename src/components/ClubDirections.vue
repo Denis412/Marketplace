@@ -1,14 +1,5 @@
 <template>
-  <section class="text-center section-margin">
-    <h2 class="text-h1">Выберите направление</h2>
-
-    <div class="text-subtitle1 club-my-32">
-      Выберите интересующий вас профиль и мы поможем вам познакомиться с
-      платформой или сделать это самостоятельно.
-    </div>
-
-    <card-group :directions="cardsList" />
-  </section>
+  <card-group :directions="cardsList" />
 </template>
 
 <script setup>

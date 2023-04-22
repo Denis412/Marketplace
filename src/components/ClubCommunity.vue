@@ -1,36 +1,25 @@
 <template>
-  <section class="section-margin">
+  <div class="community-photos flex justify-center row justify-between">
     <div>
-      <h3 class="text-h3 text-center">Наши участники — главный актив клуба</h3>
-      <p class="text-subtitle1 club-mt-32">
-        Нас уже более 1500 человек!<br />
-        Наше сообщество основывается на взаимной поддержке. Мы верим, что вместе
-        достигнем больших результатов и сможем реализовать самые смелые идеи.
-        Присоединяйтесь к нам и становитесь частью большой и дружной команды.
-      </p>
+      <div></div>
+      <div></div>
     </div>
-    <div class="community-photos flex justify-center row justify-between">
-      <div>
-        <div></div>
-        <div></div>
-      </div>
-      <div>
-        <div></div>
-        <div></div>
-      </div>
-      <div>
-        <div></div>
-        <div></div>
-      </div>
-      <div>
-        <div></div>
-      </div>
-      <div>
-        <div></div>
-        <div></div>
-      </div>
+    <div>
+      <div></div>
+      <div></div>
     </div>
-  </section>
+    <div>
+      <div></div>
+      <div></div>
+    </div>
+    <div>
+      <div></div>
+    </div>
+    <div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </template>
 
 <script setup></script>

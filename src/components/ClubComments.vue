@@ -1,11 +1,15 @@
 <template>
   <section class="comments container">
-        <div class="header-text-32 text-center">Отзывы</div>
+    <div class="text-h3 text-center">Отзывы</div>
 
-        <q-list class="row no-wrap comments-list" >
-          <review-card v-for="comment in comments" :key="comment.id" v-bind="comment" />
-        </q-list>
-      </section>
+    <q-list class="row no-wrap comments-list">
+      <review-card
+        v-for="comment in comments"
+        :key="comment.id"
+        v-bind="comment"
+      />
+    </q-list>
+  </section>
 </template>
 
 <script setup>
