@@ -1,7 +1,7 @@
 <template>
   <q-card class="card">
     <div class="flex items-center">
-      <q-img style="width: 90px" :src="avatarUrl" alt="avatar" />
+      <q-img class="avatar" :src="avatarUrl" alt="avatar" />
 
       <div style="margin-left: 50px">
         <div class="text-subtitle1">{{ fullname }}</div>
@@ -19,6 +19,7 @@
     <div class="club-mt-24">
       <q-icon
         v-for="n in 5"
+        class="star"
         name="star"
         :key="n"
         class="font-size-22"
@@ -47,8 +48,12 @@ const { avatarUrl, fullname, jobTitle, content, stars } = defineProps({
   height: 350px;
   background: #260f4a;
   padding: 40px;
-
+  margin: 0 0 32px 30px;
   border-radius: 33px;
+
+  &:first-child {
+    margin: 0 0 30px 0;
+  }
 
   &-job-title {
     background: linear-gradient(101.75deg, #881d95 4.25%, #881d95 96.95%);
@@ -56,6 +61,28 @@ const { avatarUrl, fullname, jobTitle, content, stars } = defineProps({
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
+    margin-top: 8px;
   }
+}
+
+.avatar {
+  width: 90px;
+}
+
+.title-block {
+  margin-left: 50px;
+}
+
+.comment-content {
+  margin-top: 32px;
+  overflow-y: auto;
+}
+
+.star {
+  font-size: 22px;
+}
+
+.stars-area {
+  margin-top: 24px;
 }
 </style>
