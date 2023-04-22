@@ -1,6 +1,6 @@
 <template>
   <q-header class="header bg-dark-purple px-160" elevated>
-    <q-toolbar>
+    <q-toolbar class="container">
       <q-img
         class="logo-header"
         src="src/assets/images/LogologoSprint.svg"
