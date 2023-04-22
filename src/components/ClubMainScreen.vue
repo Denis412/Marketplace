@@ -1,5 +1,5 @@
 <template>
-  <section class="flex no-wrap container">
+  <section class="flex no-wrap">
     <div class="col">
       <h1 class="text-h1">1Т Клуб</h1>
 

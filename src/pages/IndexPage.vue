@@ -2,7 +2,7 @@
   <q-page class="flex flex-center column bg-dark-purple h-100p px-160">
     <background-spot />
 
-    <main class="text-white" style="z-index: 1">
+    <main class="text-white container" style="z-index: 1">
       <main-screen />
       <directions />
       <statistics />
@@ -18,6 +18,7 @@
       <community />
       <how-join />
       <questions />
+      <club-contacts />
     </main>
   </q-page>
 </template>
@@ -38,6 +39,7 @@ import BackgroundSpot from "src/components/BackgroundSpot.vue";
 import Community from "src/components/ClubCommunity.vue";
 import HowJoin from "src/components/ClubHowJoin.vue";
 import Questions from "src/components/ClubQuestions.vue";
+import ClubContacts from "src/components/ClubContacts.vue";
 </script>
 
 <style scoped lang="scss">

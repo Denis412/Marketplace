@@ -22,7 +22,6 @@
         class="star"
         name="star"
         :key="n"
-        class="font-size-22"
         :style="{ color: n <= stars ? '#B936E7' : '#190A32' }"
       />
     </div>
