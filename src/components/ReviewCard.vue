@@ -4,15 +4,15 @@
       <q-img style="width: 90px" :src="avatarUrl" alt="avatar" />
 
       <div style="margin-left: 50px">
-        <div class="font-size-24">{{ fullname }}</div>
+        <div class="text-subtitle1">{{ fullname }}</div>
 
-        <div class="card-job-title q-mt-sm">
+        <div class="card-job-title text-body2 q-mt-sm">
           {{ jobTitle }}
         </div>
       </div>
     </div>
 
-    <div class="club-mt-32 overflow-auto">
+    <div class="club-mt-32 overflow-auto text-body1">
       {{ content }}
     </div>
 

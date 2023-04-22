@@ -1,11 +1,15 @@
 <template>
-  <section class="products container">
-        <div class="text-center header-text-32">Наши продукты</div>
+  <section class="section-margin text-center">
+    <div class="text-subtitle1">Наши продукты</div>
 
-        <q-list class="row wrap justify-between justify-center">
-          <product-item v-for="product in products" :key="product.id" v-bind="product" />
-        </q-list>
-      </section>
+    <q-list class="row justify-between">
+      <product-item
+        v-for="product in products"
+        :key="product.id"
+        v-bind="product"
+      />
+    </q-list>
+  </section>
 </template>
 
 <script setup>
@@ -31,8 +35,4 @@ const products = ref([
 ]);
 </script>
 
-<style lang="scss" scoped>
-.products {
-  margin-top: 124px;
-}
-</style>
+<style lang="scss" scoped></style>

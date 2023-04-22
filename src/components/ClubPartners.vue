@@ -1,11 +1,15 @@
 <template>
-  <section class="partners">
-        <div class="text-center header-text-32">С нами сотрудничают</div>
+  <section class="section-margin text-center">
+    <div class="text-h3">С нами сотрудничают</div>
 
-        <q-list class="row justify-between partners-list">
-          <img class="partners-logo" v-for="partner in partners" :key="partner.id"
-            :src="partner.imageUrl" />
-        </q-list>
+    <q-list class="row justify-between q-mt-xl">
+      <img
+        class="partner-logo"
+        v-for="partner in partners"
+        :key="partner.id"
+        :src="partner.imageUrl"
+      />
+    </q-list>
   </section>
 </template>
 
@@ -20,15 +24,7 @@ const partners = ref([
 </script>
 
 <style lang="scss" scoped>
-.partners-list {
-  margin-top: 41px;
-}
-
-.partners-logo {
+.partner-logo {
   max-width: 256px;
-}
-
-.partners {
-  margin-top: 124px;
 }
 </style>

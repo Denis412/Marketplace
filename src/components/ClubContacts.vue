@@ -2,7 +2,7 @@
   <q-card class="rounded-borders-12 card">
     <q-card-section horizontal class="flex justify-between">
       <q-card-section>
-        <div class="header-text-32 q-mb-xl">Контакты</div>
+        <div class="text-h4 q-mb-xl">Контакты</div>
 
         <club-contacts-section
           title="Режим работы"
@@ -50,5 +50,7 @@ import ClubWriteToUsForm from "src/components/ClubWriteToUsForm.vue";
 .card {
   padding: 32px 95px;
   background-color: #260f4a;
+
+  margin-bottom: 66px;
 }
 </style>

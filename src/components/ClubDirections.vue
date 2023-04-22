@@ -1,8 +1,8 @@
 <template>
-  <section class="text-center container directions">
-    <h2 class="title">Выберите направление</h2>
+  <section class="text-center section-margin">
+    <h2 class="text-h1">Выберите направление</h2>
 
-    <div class="font-size-24 text-weight-light subtitle">
+    <div class="text-subtitle1 club-my-32">
       Выберите интересующий вас профиль и мы поможем вам познакомиться с
       платформой или сделать это самостоятельно.
     </div>
@@ -34,18 +34,4 @@ const cardsList = ref([
 ]);
 </script>
 
-<style lang="scss" scoped>
-.title {
-  font-weight: 800;
-  font-size: 60px;
-  line-height: 73px;
-}
-
-.subtitle {
-  margin-top: 33px;
-}
-
-.directions {
-  margin-top: 179px;
-}
-</style>
+<style lang="scss" scoped></style>

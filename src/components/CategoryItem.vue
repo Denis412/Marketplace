@@ -1,12 +1,12 @@
 <template>
-  <section class="text-center item">
+  <section class="item">
     <q-img class="img" :src="imageUrl" />
 
-    <div class="font-size-24 q-mt-md text-center">
+    <div class="q-mt-md text-subtitle2">
       {{ title }}
     </div>
 
-    <div class="text-center content">
+    <div class="q-mt-sm text-body2">
       {{ content }}
     </div>
   </section>
@@ -35,11 +35,6 @@ const { imageUrl, title, content } = defineProps({
 }
 
 .item {
-  width: 200px;
-}
-
-.content {
-  margin-top: 10px;
-  line-height: 36px;
+  max-width: 200px;
 }
 </style>

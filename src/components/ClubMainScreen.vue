@@ -1,9 +1,9 @@
 <template>
   <section class="flex no-wrap container">
-    <div style="max-width: 640px">
-      <h1 class="q-mb-md title">1Т Клуб</h1>
+    <div class="col">
+      <h1 class="text-h1">1Т Клуб</h1>
 
-      <p class="font-size-24">
+      <p class="text-subtitle2 q-mt-md">
         1Т Клуб - сообщество единомышленников, которых объединяет страсть к
         работе и саморазвитию.
       </p>
@@ -15,7 +15,11 @@
       />
     </div>
 
-    <q-img src="src/assets/images/amico.svg" />
+    <q-img
+      class="col"
+      style="max-width: 480px"
+      src="src/assets/images/amico.svg"
+    />
   </section>
 </template>
 

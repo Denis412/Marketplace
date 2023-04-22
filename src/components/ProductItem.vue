@@ -1,12 +1,9 @@
 <template>
-  <div class="flex text-white items-center item">
-    <div class="link font-size-24">{{ title }}</div>
+  <div class="flex items-center item">
+    <div class="link text-subtitle2">{{ title }}</div>
 
     <div>
-      <q-img
-        class="item-image"
-        :src="imageUrl"
-      />
+      <q-img class="item-image" :src="imageUrl" />
     </div>
   </div>
 </template>

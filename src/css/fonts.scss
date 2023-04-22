@@ -1,0 +1,112 @@
+@font-face {
+  font-family: "Furore";
+  src: local("Furore"), url("src/assets/fonts/Furore.otf");
+}
+
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: local("Montserrat-Regular"),
+    url("src/assets/fonts/Montserrat-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Montserrat-SemiBold";
+  src: local("Montserrat-SemiBold"),
+    url("src/assets/fonts/Montserrat-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Play-Bold";
+  src: local("Play-Bold"), url("src/assets/fonts/Play-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Play-Regular";
+  src: local("Play-Regular"), url("src/assets/fonts/Play-Regular.ttf");
+}
+
+.text-h1,
+.text-h2,
+.text-h3,
+.text-h4 {
+  font-family: "Furore" !important;
+}
+
+.text-h1 {
+  font-size: 60px !important;
+  font-weight: 400 !important;
+  line-height: 80px !important;
+}
+
+.text-h2 {
+  font-size: 48px !important;
+  font-weight: 400 !important;
+  line-height: 60px !important;
+}
+
+.text-h3 {
+  font-size: 30px !important;
+  font-weight: 400 !important;
+  line-height: 40px !important;
+}
+
+.text-h4 {
+  font-size: 24px !important;
+  font-weight: 400 !important;
+  line-height: 30px !important;
+}
+
+.text-subtitle1,
+.text-subtitle3 {
+  font-family: "Play-Regular" !important;
+}
+
+.text-subtitle1 {
+  font-size: 32px !important;
+  font-weight: 400 !important;
+  line-height: 40px !important;
+}
+
+.text-subtitle2 {
+  font-family: "Play-Bold" !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  line-height: 28px !important;
+}
+
+.text-subtitle3 {
+  font-size: 22px !important;
+  font-weight: 400 !important;
+  line-height: 28px !important;
+}
+
+.text-body1 {
+  font-family: "Montserrat-SemiBold" !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  line-height: 24px !important;
+}
+
+.text-body2 {
+  font-family: "Montserrat-Regular" !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  line-height: 24px !important;
+}
+
+.text-caption1,
+.text-caption2 {
+  font-family: "Montserrat-Regular" !important;
+}
+
+.text-caption1 {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+}
+
+.text-caption2 {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+}

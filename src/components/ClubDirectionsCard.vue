@@ -2,10 +2,10 @@
   <q-card class="card column justify-between q-pa-lg">
     <header>
       <div class="card-cap" />
-      <div class="q-my-md card-title">{{ title }}</div>
+      <div class="q-my-md text-h3">{{ title }}</div>
     </header>
 
-    <main class="card-content text-center">
+    <main class="text-body2">
       <div v-for="contentItem in content" :key="contentItem">
         {{ contentItem }}
       </div>
@@ -48,17 +48,6 @@ const { title, content } = defineProps({
   background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 12px 12px 0px 0px;
-}
-
-.card-title {
-  font-weight: 500;
-  font-size: 2rem;
-  line-height: 36px;
-}
-
-.card-content {
-  font-weight: 400;
-  line-height: 36px;
 }
 
 .card-button {

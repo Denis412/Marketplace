@@ -1,8 +1,8 @@
 <template>
-  <q-card class="flex items-center text-white card">
+  <q-card class="flex items-center card">
     <q-img class="card-image" :src="imageUrl" alt="image" />
 
-    <q-card-section class="title">{{ title }}</q-card-section>
+    <q-card-section class="text-subtitle1">{{ title }}</q-card-section>
   </q-card>
 </template>
 

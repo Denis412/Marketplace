@@ -1,6 +1,6 @@
 <template>
-  <section class="items container">
-    <div class="text-center header-text-32">
+  <section class="items">
+    <div class="text-center text-h3">
       1Т Клуб - это масштабная экосистема для развития начинающих специалистов в
       сфере IT.
     </div>

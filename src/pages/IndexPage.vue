@@ -2,11 +2,10 @@
   <q-page class="flex flex-center column bg-dark-purple h-100p px-160">
     <background-spot />
 
-    <main class="text-white" style="z-index: 1">
+    <main class="text-white container" style="z-index: 1">
       <main-screen />
       <directions />
       <statistics />
-      <partitians />
       <about />
       <items />
       <steps />
@@ -16,19 +15,12 @@
       <products />
 
       <section class="flex column flex-center section-margin">
-        <div class="header-text-32 text-center">Отзывы</div>
+        <div class="text-h3">Отзывы</div>
 
         <q-list
-          class="flex flex-center no-wrap"
-          style="
-            margin-left: -30px;
-            margin-top: 32px;
-            overflow-x: auto;
-            max-width: 1200px;
-          "
+          class="flex flex-center no-wrap club-mt-32 overflow-auto q-gutter-x-lg container"
         >
           <review-card
-            style="margin-left: 30px"
             v-for="comment in comments"
             :key="comment.id"
             v-bind="comment"
@@ -37,7 +29,7 @@
       </section>
 
       <section class="section-margin">
-        <club-contacts-form />
+        <club-contacts />
       </section>
     </main>
   </q-page>
@@ -47,7 +39,6 @@
 import MainScreen from "src/components/ClubMainScreen.vue";
 import Directions from "src/components/ClubDirections.vue";
 import Statistics from "src/components/ClubStatistics.vue";
-import Partitians from "src/components/ClubParticipants.vue";
 import Steps from "src/components/ClubSteps.vue";
 import Items from "src/components/ClubItems.vue";
 import About from "src/components/ClubAbout.vue";
@@ -57,7 +48,7 @@ import Join from "src/components/ClubJoin.vue";
 import Products from "src/components/ClubProducts.vue";
 import BackgroundSpot from "src/components/BackgroundSpot.vue";
 import ReviewCard from "src/components/ReviewCard.vue";
-import ClubContactsForm from "src/components/ClubContactsForm.vue";
+import ClubContacts from "src/components/ClubContacts.vue";
 
 import { ref } from "vue";
 

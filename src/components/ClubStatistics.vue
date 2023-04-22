@@ -1,26 +1,42 @@
 <template>
-  <section class="flex justify-between container statistics">
-    <div class="large-text">
-      <div class="large-text-g">200+</div>
-      <div>заказов</div>
+  <section class="text-center section-margin">
+    <div class="flex justify-between">
+      <div class="text-h1">
+        200+
+        <div class="text-h2">заказов</div>
+      </div>
+
+      <div class="text-h1">
+        1500+
+        <div class="text-h2">участников</div>
+      </div>
+
+      <div class="text-h1">
+        50+
+        <div class="text-h2">Городов</div>
+      </div>
     </div>
 
-    <div class="large-text">
-      <div class="large-text-g">1500+</div>
-      <div>участников</div>
-    </div>
-
-    <div class="large-text">
-      <div class="large-text-g">50+</div>
-      <div>городов</div>
+    <div class="partitians">
+      <h3 class="text-subtitle1">Почетные участники 1Т Клуба</h3>
+      <div class="partitians-faces relative-position">
+        <partitian :index="index" v-for="index in 33" :key="index" />
+      </div>
     </div>
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import Partitian from "./ClubPartitian.vue";
+</script>
 
 <style lang="scss" scoped>
-.statistics {
-  margin-top: 124px;
+.partitians {
+  margin-top: 80px;
+
+  &-faces {
+    margin-top: 58px;
+    height: 338px;
+  }
 }
 </style>

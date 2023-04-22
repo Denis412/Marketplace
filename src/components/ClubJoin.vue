@@ -1,22 +1,24 @@
 <template>
-  <section class="flex flex-center ">
-        <div class="join text-center flex items-between justify-center">
-          <div class="join-text">
-            Сделате шаг навстречу будущему и будьте с нами!
-          </div>
+  <section class="flex flex-center">
+    <div class="join text-center flex items-between justify-center">
+      <div class="text-subtitle1">
+        Сделате шаг навстречу будущему и будьте с нами!
+      </div>
 
-          <q-btn no-caps class="bg-gradient join-btn" label="Присоединиться к Клубу" />
-        </div>
-      </section>
+      <q-btn
+        no-caps
+        class="bg-gradient club-mt-32 text-body2"
+        label="Присоединиться к Клубу"
+      />
+    </div>
+  </section>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 .join {
-  width: 772px;
+  width: 816px;
   min-height: 192px;
 
   padding: 32px;
