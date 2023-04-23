@@ -11,7 +11,7 @@
     <template v-slot:append v-if="visibility">
       <q-img
         class="cursor-pointer club-input-append-icon"
-        src="src/assets/icons/Eye.svg"
+        src="src/assets/icons/Eye/Eye.svg"
         @click="toggleShowText"
       />
     </template>
