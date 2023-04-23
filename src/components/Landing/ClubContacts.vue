@@ -1,5 +1,5 @@
 <template>
-  <section class="section-margin">
+  <section class="section-margin container">
     <q-card class="rounded-borders-12 card">
       <q-card-section horizontal class="flex justify-between">
         <q-card-section>

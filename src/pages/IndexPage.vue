@@ -2,7 +2,7 @@
   <q-page class="bg-dark-purple h-100p">
     <background-spot />
 
-    <main class="text-white" style="z-index: 1">
+    <main class="text-white relative-position" style="z-index: 1">
       <main-screen />
       <directions />
       <statistics />

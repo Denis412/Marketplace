@@ -27,6 +27,6 @@
 
 <style lang="scss" scoped>
 section {
-  margin-top: 71px;
+  margin-top: 85px;
 }
 </style>

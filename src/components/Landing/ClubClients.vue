@@ -1,8 +1,13 @@
 <template>
   <section class="flex column section-margin text-center container">
     <div class="text-h3">Кому подходит 1Т Клуб</div>
-    <img class="q-mt-md" src="../../assets/images/Vector11.svg" />
-
+    <div class="relative-position">
+      <img class="q-mt-md" src="../../assets/images/Vector11.svg" />
+      <img
+        src="src/assets/images/Ellipse69.svg"
+        class="absolute-center"
+      />
+    </div>
     <categories-group />
   </section>
 </template>
