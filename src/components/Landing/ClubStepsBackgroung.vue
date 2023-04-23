@@ -7,7 +7,7 @@
     width: 30.89%;
     height: 233px;
     left: 148.5px;
-    top: 245px;
+    top: 240px;
     "
     />
     <q-img
@@ -18,7 +18,7 @@
     width: 28.27%;
     height: 243.13px;
     left: 173.5px;
-    top: 555px;
+    top: 544px;
     "
     />
     <q-img
@@ -29,7 +29,7 @@
     width: 29.91%;
     height: 278px;
     left: 164.5px;
-    top: 856px;
+    top: 847px;
     "
     />
     <q-img

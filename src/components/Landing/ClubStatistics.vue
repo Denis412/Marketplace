@@ -1,5 +1,5 @@
 <template>
-  <section class="text-center section-margin">
+  <section class="text-center section-margin container">
     <div class="flex justify-between">
       <div class="text-h1">
         200+

@@ -1,5 +1,5 @@
 <template>
-  <section class="section-margin relative-position">
+  <section class="section-margin relative-position container">
     <h4 class="text-subtitle1 q-mb-xl">В 1T Клубе вас ждет:</h4>
     <div class="steps-wrapper">
       <step
@@ -44,5 +44,6 @@ const steps = ref([
 <style lang="scss" scoped>
 .steps-wrapper {
   padding: 0 100px;
+  margin-top: 100px;
 }
 </style>

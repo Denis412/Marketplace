@@ -1,5 +1,5 @@
 <template>
-  <q-header class="header bg-dark-purple px-160" elevated>
+  <q-header class="header bg-dark-purple px-160 z-max" elevated>
     <q-toolbar>
       <q-img
         class="logo-header"

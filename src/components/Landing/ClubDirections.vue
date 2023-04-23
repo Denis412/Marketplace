@@ -1,5 +1,5 @@
 <template>
-  <section class="text-center section-margin directions">
+  <section class="text-center section-margin directions container">
     <h2 class="title">Выберите направление</h2>
 
     <div class="font-size-24 text-weight-light subtitle">

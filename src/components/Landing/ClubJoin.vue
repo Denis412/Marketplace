@@ -1,5 +1,5 @@
 <template>
-  <section class="flex flex-center">
+  <section class="flex flex-center container">
     <div class="join text-center flex items-between justify-center">
       <div class="text-subtitle1">
         Сделате шаг навстречу будущему и будьте с нами!
