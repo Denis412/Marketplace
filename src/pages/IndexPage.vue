@@ -1,23 +1,28 @@
 <template>
   <q-page class="flex flex-center column">
-    <!-- <t-club-input type="password" placeholder="Введите пароль" /> -->
-    <q-form @submit="sub">
-      <club-input
+    <q-form @submit="sub" class="flex column items-center">
+      <c-input
         type="password"
         visibility
         placeholder="Введите пароль"
         :rules="[required, minLength(8), passwordValid]"
-        v-model="v"
+        v-model.capitalize="v"
       />
 
-      <q-btn label="Submit" type="submit" />
+      <c-button
+        background
+        type="submit"
+        label="Смотреть резюме"
+        icon-right="img:src/assets/icons/Plus/plus.svg"
+      />
     </q-form>
   </q-page>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import ClubInput from "src/components/ClubInput.vue";
+import CInput from "src/components/ClubInput.vue";
+import CButton from "src/components/ClubButton.vue";
 import { useValidators } from "src/use/validators";
 
 const { passwordValid, minLength, required } = useValidators();
@@ -28,3 +33,5 @@ const sub = () => {
 
 const v = ref("f");
 </script>
+
+<style lang="scss" scoped></style>
