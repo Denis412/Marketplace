@@ -3,7 +3,7 @@
     <div class="text-subtitle1">Наши продукты</div>
 
     <q-list class="row justify-between">
-      <product-item
+      <c-product-item
         v-for="product in products"
         :key="product.id"
         v-bind="product"
@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import ProductItem from "components/Landing/ProductItem.vue";
+import CProductItem from "components/Landing/ClubProductItem.vue";
 import { ref } from "vue";
 
 const products = ref([

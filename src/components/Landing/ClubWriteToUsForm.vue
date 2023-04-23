@@ -6,7 +6,7 @@
       <div class="form-control">
         <label for="firstName" class="text-body2">Имя</label>
 
-        <club-input
+        <c-input
           id="firstName"
           class="text-caption1"
           type="text"
@@ -18,7 +18,7 @@
       <div class="form-control">
         <label for="phoneNumber" class="text-body2">Номер телефона</label>
 
-        <club-input
+        <c-input
           id="phoneNumber"
           class="text-caption1"
           type="text"
@@ -30,7 +30,7 @@
       <div class="form-control">
         <label for="email" class="text-body2">Почта</label>
 
-        <club-input
+        <c-input
           id="email"
           class="text-caption1"
           type="text"
@@ -40,7 +40,7 @@
       </div>
 
       <div class="form-control">
-        <club-input
+        <c-input
           type="textarea"
           class="text-caption1"
           placeholder="Сообщение"
@@ -66,7 +66,7 @@
 
 <script setup>
 import { ref } from "vue";
-import ClubInput from "components/ClubInput.vue";
+import CInput from "components/ClubInput.vue";
 
 const form = ref({
   first_name: "",

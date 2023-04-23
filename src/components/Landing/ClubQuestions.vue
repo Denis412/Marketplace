@@ -1,7 +1,7 @@
 <template>
   <section class="questions container">
     <div class="text-h3">Часто задаваемые вопросы</div>
-    <dropdown
+    <c-dropdown
       v-for="item in dropdown"
       :key="item.title"
       :title="item.title"
@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref } from "vue";
-import Dropdown from "./ClubDropdown.vue";
+import CDropdown from "./ClubDropdown.vue";
 
 const dropdown = ref([
   {

@@ -20,14 +20,14 @@
     <div class="partitians">
       <h3 class="text-subtitle1">Почетные участники 1Т Клуба</h3>
       <div class="partitians-faces relative-position">
-        <partitian :index="index" v-for="index in 33" :key="index" />
+        <c-partitian :index="index" v-for="index in 33" :key="index" />
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import Partitian from "./ClubPartitian.vue";
+import CPartitian from "./ClubPartitian.vue";
 </script>
 
 <style lang="scss" scoped>

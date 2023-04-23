@@ -15,6 +15,7 @@
 
 <script setup>
 import { ref } from "vue";
+
 const partners = ref([
   { id: 1, imageUrl: "src/assets/images/logoRSO.svg" },
   { id: 2, imageUrl: "src/assets/images/logoRAO.svg" },

@@ -5,12 +5,12 @@
       сфере IT.
     </div>
 
-    <card-group :items="cards" />
+    <c-card-group :items="cards" />
   </section>
 </template>
 
 <script setup>
-import CardGroup from "./ClubCardGroup.vue";
+import CCardGroup from "./ClubCardGroup.vue";
 import { ref } from "vue";
 
 const cards = ref([
