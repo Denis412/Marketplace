@@ -1,6 +1,6 @@
 <template>
   <div class="fullscreen text-center flex row">
-    <div class="col">
+    <div class="col relative-position">
       <div class="flex column items-center club-mt-65">
         <h4 class="text-bold club-mb-25">Войти в личный кабинет</h4>
         <p class="club-mb-65">Рады видеть вас снова</p>
@@ -18,6 +18,10 @@
         <a href="" class="club-mb-50">Забыли пароль?</a>
         <q-btn>Войти</q-btn>
       </div>
+      <q-img
+        class="absolute club-img-270 club-absolute-bottom-0 club-absolute-right--145 z-top"
+        src="../assets/images/authentication/gears.svg"
+      ></q-img>
     </div>
     <div class="col-5 bg-auth relative-position">
       <q-img
@@ -70,11 +74,20 @@ const { passwordValid, minLength, required } = useValidators();
 .club-img-120 {
   max-width: 120px;
 }
+.club-img-270 {
+  max-width: 270px;
+}
 .club-absolute-right-20 {
   right: 20px;
 }
+.club-absolute-right--145 {
+  right: -145px;
+}
 .club-absolute-top-70 {
   top: 70px;
+}
+.club-absolute-bottom-0 {
+  bottom: 0px;
 }
 .c-input-400 {
   width: 100%;
