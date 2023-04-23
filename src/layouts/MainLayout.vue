@@ -1,34 +1,22 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered> </q-drawer>
+  <q-layout view="hHh LpR lff">
+    <main-header />
 
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </q-page-container>
+
+    <club-main-footer />
   </q-layout>
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-const leftDrawerOpen = ref(false);
-
-const toggleeftDrawer = () => {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-};
+import MainHeader from "components/Landing/MainHeader.vue";
+import ClubMainFooter from "components/Landing/ClubMainFooter.vue";
 </script>
+
+<style lang="scss"></style>
