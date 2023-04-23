@@ -67,6 +67,7 @@
 <script setup>
 import { ref } from "vue";
 import CInput from "components/ClubInput.vue";
+import CButton from "../ClubButton.vue";
 
 const form = ref({
   first_name: "",

@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+.w-100p {
+  width: 100%;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #4c1d95;
   border-radius: 100px;
@@ -16,6 +20,12 @@
   background: #260e4b;
 }
 
+.text-primary-gradient {
+  background: $primary-gradient;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .bg-gradient {
   background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
 }
@@ -24,21 +34,19 @@
   font-size: 24px;
 }
 
-.gradient-box {
-  border: 2px solid transparent;
-  background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
-  box-shadow: inset 0px 0px 0px 100vw $bg-dark-purple;
-  border-radius: 5px;
-}
-
 .bg-dark-purple {
-  background-color: $bg-dark-purple;
+  background: $bg-dark-purple !important;
+  background-clip: padding-box !important;
 }
 
 .header {
   display: flex;
   align-items: center;
   min-height: 107px;
+
+  &-main {
+    min-height: 84px;
+  }
 }
 
 .logo-header {
@@ -55,6 +63,10 @@
   border-radius: 12px;
 }
 
+.rounded-borders-15 {
+  border-radius: 15px;
+}
+
 // Отступы
 
 .club-mt-32 {
@@ -67,6 +79,10 @@
 
 .club-my-32 {
   margin: 32px 0;
+}
+
+.club-ml-32 {
+  margin-left: 2rem;
 }
 
 .club-mt-24 {
@@ -89,12 +105,27 @@
   margin-bottom: 10px;
 }
 
+.c-pa-32 {
+  padding: 2rem;
+}
+
 .px-160 {
   padding: 0 10rem;
 }
 
 .section-margin {
   margin-top: 124px;
+}
+
+.page-background {
+  background: $light-page !important;
+}
+
+.club-textarea-mh-150 {
+  & div div {
+    max-height: 125px;
+    overflow-y: auto;
+  }
 }
 
 .q-field {

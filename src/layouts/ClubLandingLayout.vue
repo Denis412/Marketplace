@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh LpR lff">
-    <c-main-header />
+    <c-landing-main-header />
 
     <q-page-container>
       <router-view v-slot="{ Component }">
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import CMainHeader from "components/Landing/ClubMainHeader.vue";
+import CLandingMainHeader from "components/Landing/ClubLandingMainHeader.vue";
 import CMainFooter from "components/Landing/ClubMainFooter.vue";
 </script>
 

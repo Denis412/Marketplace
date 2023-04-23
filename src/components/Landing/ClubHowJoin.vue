@@ -19,12 +19,14 @@
         семьи!
       </p>
 
-      <q-btn class="info-btn block" label="Присоединиться" />
+      <c-button background label="Присоединиться" class="info-btn block" />
     </div>
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import CButton from "../ClubButton.vue";
+</script>
 
 <style lang="scss" scoped>
 .how-join {

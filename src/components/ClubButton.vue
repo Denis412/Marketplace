@@ -7,6 +7,7 @@
           :name="iconLeft"
           style="margin-right: 12px"
         />
+
         <q-icon
           v-else-if="iconLeft && disable"
           :name="iconLeftDisableName"
@@ -20,6 +21,7 @@
           :name="iconRight"
           style="margin-left: 12px"
         />
+
         <q-icon
           v-else-if="iconRight && disable"
           :name="iconRightDisableName"
@@ -33,17 +35,29 @@
 <script setup>
 import { computed } from "vue";
 
-const { disable, label, type, iconLeft, iconRight, flat, background, outline } =
-  defineProps({
-    disable: Boolean,
-    label: String,
-    type: String,
-    iconLeft: String,
-    iconRight: String,
-    flat: Boolean,
-    background: Boolean,
-    outline: Boolean,
-  });
+const {
+  disable,
+  label,
+  type,
+  textColor,
+  iconLeft,
+  iconRight,
+  flat,
+  background,
+  outline,
+  outlineNoText,
+} = defineProps({
+  disable: Boolean,
+  label: String,
+  type: String,
+  textColor: String,
+  iconLeft: String,
+  iconRight: String,
+  flat: Boolean,
+  background: Boolean,
+  outline: Boolean,
+  outlineNoText: Boolean,
+});
 
 const iconRightDisableName = computed(
   () => iconRight.slice(0, iconRight.indexOf(".")) + "Disable.svg"
@@ -56,6 +70,7 @@ const iconLeftDisableName = computed(
 const typeClass = {
   "club-button-flat": flat,
   "club-button-outline": outline,
+  "club-button-outline-text-colored": outlineNoText,
   "club-button-background": background,
 };
 </script>
@@ -96,7 +111,7 @@ const typeClass = {
   border: $border solid transparent !important;
   border-radius: 8px !important;
 
-  background: white !important;
+  background: white;
   background-clip: padding-box !important;
 
   & .q-focus-helper {
@@ -108,6 +123,33 @@ const typeClass = {
     background-image: $primary-gradient !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
+  }
+
+  &:before {
+    margin: -$border !important;
+    z-index: -1 !important;
+
+    border: none !important;
+    border-radius: inherit !important;
+    background: $primary-gradient !important;
+  }
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.3) !important;
+  }
+}
+
+.club-button-outline-text-colored {
+  $border: 3px;
+
+  border: $border solid transparent !important;
+  border-radius: 8px !important;
+
+  background: white;
+  background-clip: padding-box !important;
+
+  & .q-focus-helper {
+    border-radius: 0 !important;
   }
 
   &:before {

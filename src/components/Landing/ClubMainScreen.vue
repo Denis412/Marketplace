@@ -8,11 +8,7 @@
         работе и саморазвитию.
       </p>
 
-      <q-btn
-        no-caps
-        class="bg-gradient font-size-24 q-px-xl q-mt-xl"
-        label="Вступить в клуб"
-      />
+      <c-button background size="xl" class="q-mt-xl" label="Вступить в клуб" />
     </div>
 
     <q-img
@@ -23,7 +19,9 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import CButton from "../ClubButton.vue";
+</script>
 
 <style lang="scss" scoped>
 section {

@@ -5,16 +5,18 @@
         Сделате шаг навстречу будущему и будьте с нами!
       </div>
 
-      <q-btn
-        no-caps
-        class="bg-gradient club-mt-32 text-body2"
+      <c-button
+        background
         label="Присоединиться к Клубу"
+        class="club-mt-32 text-body2"
       />
     </div>
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import CButton from "../ClubButton.vue";
+</script>
 
 <style lang="scss" scoped>
 .join {

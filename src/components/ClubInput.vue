@@ -5,6 +5,7 @@
     v-model="value"
     @update:modelValue="emitChange"
     :type="calcType"
+    :autogrow="autogrow"
     :placeholder="placeholder"
     :rules="rules"
   >
@@ -22,17 +23,25 @@
 import { ref } from "vue";
 import capitalizeWord from "src/utils/capitalizeWord";
 
-const { type, placeholder, visibility, rules, modelValue, modelModifiers } =
-  defineProps({
-    type: String,
-    placeholder: String,
-    visibility: Boolean,
-    rules: Array,
-    modelValue: String,
-    modelModifiers: {
-      default: () => ({}),
-    },
-  });
+const {
+  type,
+  placeholder,
+  visibility,
+  autogrow,
+  rules,
+  modelValue,
+  modelModifiers,
+} = defineProps({
+  type: String,
+  placeholder: String,
+  visibility: Boolean,
+  autogrow: Boolean,
+  rules: Array,
+  modelValue: String,
+  modelModifiers: {
+    default: () => ({}),
+  },
+});
 const emit = defineEmits(["update:modelValue"]);
 
 const showText = ref(visibility);
