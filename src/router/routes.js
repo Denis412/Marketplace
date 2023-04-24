@@ -24,6 +24,11 @@ const routes = [
         name: "teams",
         component: () => import("pages/ClubTeamsPage.vue"),
       },
+      {
+        path: "my-teams",
+        name: "my-teams",
+        component: () => import("pages/ClubMyTeams.vue"),
+      },
     ],
   },
 

@@ -1,5 +1,12 @@
 <template>
-  <q-btn flat no-caps :disable="disable" :type="type" :class="typeClass">
+  <q-btn
+  flat
+  v-ripple="{ color: rippleColor ?? '' }"
+  no-caps
+  :disable="disable"
+  :type="type"
+  :class="typeClass"
+  >
     <template #default>
       <span>
         <q-icon
@@ -42,6 +49,7 @@ const {
   textColor,
   iconLeft,
   iconRight,
+  rippleColor,
   flat,
   background,
   outline,
@@ -50,6 +58,7 @@ const {
   disable: Boolean,
   label: String,
   type: String,
+  rippleColor: String,
   textColor: String,
   iconLeft: String,
   iconRight: String,

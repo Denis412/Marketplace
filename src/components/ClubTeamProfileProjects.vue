@@ -1,5 +1,5 @@
 <template>
-  <section class="club-mt-32">
+  <section class="c-mt-32">
     <q-toolbar class="flex items-center">
       <q-toolbar-title style="max-width: min-content">
         <h4 class="text-h4">Проекты</h4>
