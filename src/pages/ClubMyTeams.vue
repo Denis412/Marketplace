@@ -12,6 +12,7 @@
             :label="btn"
             :flat="true"
             :rippleColor="'violet-6'"
+            @click="screenChoose(index + 1)"
             />
           </q-item-section>
         </q-item>
@@ -25,12 +26,26 @@
         </q-item>
       </q-list>
     </nav>
-    <section class="row">
+
+    <section v-show="screen == 1" class="row">
       <c-my-team
       :team="team"
       v-for="team in teams"
       :key="team.id"/>
     </section>
+
+    <section v-show="screen == 2">
+      Входящие заявки
+    </section>
+
+    <section v-show="screen == 3">
+      Исходящие заявки
+    </section>
+
+    <section v-show="screen == 4">
+      Архив
+    </section>
+
   </q-page>
 </template>
 
@@ -54,6 +69,12 @@ const teams = ref([
     content: "Наша команда делает сервис, где человек смог бы следить за своим развитием в каждой из сфер жизни. Мы ждем иммено тебя!"
   }
 ])
+
+const screen = ref(1);
+
+const screenChoose = (screenIndex) => {
+  screen.value = screenIndex;
+}
 </script>
 
 <style lang="scss" scoped>
