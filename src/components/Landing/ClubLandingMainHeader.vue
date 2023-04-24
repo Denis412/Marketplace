@@ -1,5 +1,5 @@
 <template>
-  <q-header class="header bg-dark-purple px-160" elevated>
+  <q-header class="header bg-dark-purple px-160 z-max" elevated>
     <q-toolbar>
       <q-img
         class="logo-header"
@@ -28,14 +28,20 @@
       <q-space />
 
       <div>
-        <q-btn no-caps class="bg-gradient" label="Вступить в клуб" />
-        <q-btn no-caps class="gradient-box q-ml-md" label="Войти" />
+        <c-button background label="Вступить в клуб" />
+        <c-button
+          outline-no-text
+          label="Войти"
+          class="bg-dark-purple q-ml-md"
+        />
       </div>
     </q-toolbar>
   </q-header>
 </template>
 
-<script setup></script>
+<script setup>
+import CButton from "src/components/ClubButton.vue";
+</script>
 
 <style scoped>
 .main-tabs {

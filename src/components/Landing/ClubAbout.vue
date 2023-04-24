@@ -1,5 +1,5 @@
 <template>
-  <section class="section-margin">
+  <section class="section-margin container">
     <div class="q-mb-md text-h3">О Клубе за 1 минуту</div>
 
     <div class="flex justify-between">

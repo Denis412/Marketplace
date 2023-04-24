@@ -1,21 +1,22 @@
 <template>
-  <section class="section-margin relative-position">
+  <section class="section-margin relative-position container">
     <h4 class="text-subtitle1 q-mb-xl">В 1T Клубе вас ждет:</h4>
     <div class="steps-wrapper">
-      <step
+      <c-step
         v-for="(step, index) in steps"
         :num="index + 1"
+        :key="step.title"
         :title="step.title"
         :info="step.info"
       />
-      <steps-backgroung />
+      <c-steps-backgroung />
     </div>
   </section>
 </template>
 
 <script setup>
-import Step from "./ClubStep.vue";
-import StepsBackgroung from "./ClubStepsBackgroung.vue";
+import CStep from "./ClubStep.vue";
+import CStepsBackgroung from "./ClubStepsBackgroung.vue";
 import { ref } from "vue";
 const steps = ref([
   {
@@ -44,5 +45,6 @@ const steps = ref([
 <style lang="scss" scoped>
 .steps-wrapper {
   padding: 0 100px;
+  margin-top: 100px;
 }
 </style>

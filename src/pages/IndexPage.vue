@@ -1,96 +1,43 @@
 <template>
-  <q-page class="flex flex-center column bg-dark-purple h-100p px-160">
-    <background-spot />
+  <q-page class="bg-dark-purple h-100p" style="overflow-x: hidden">
+    <c-background-spot />
 
-    <main class="text-white container" style="z-index: 1">
-      <main-screen />
-      <directions />
-      <statistics />
-      <partitians />
-      <about />
-      <items />
-      <steps />
-      <clients />
-      <partners />
-      <join />
-      <products />
-      <comments />
-      <community />
-      <how-join />
-      <questions />
-      <club-contacts />
+    <main class="text-white" style="z-index: 1">
+      <c-main-screen />
+      <c-directions />
+      <c-statistics />
+      <c-partitians />
+      <c-about />
+      <c-items />
+      <c-steps />
+      <c-clients />
+      <c-partners />
+      <c-join />
+      <c-products />
+      <c-comments />
+      <c-community />
+      <c-how-join />
+      <c-questions />
+      <c-contacts />
     </main>
   </q-page>
 </template>
 
 <script setup>
-import MainScreen from "components/Landing/ClubMainScreen.vue";
-import Directions from "components/Landing/ClubDirections.vue";
-import Statistics from "components/Landing/ClubStatistics.vue";
-import Steps from "components/Landing/ClubSteps.vue";
-import Items from "components/Landing/ClubItems.vue";
-import About from "components/Landing/ClubAbout.vue";
-import Clients from "components/Landing/ClubClients.vue";
-import Partners from "components/Landing/ClubPartners.vue";
-import Join from "components/Landing/ClubJoin.vue";
-import Products from "components/Landing/ClubProducts.vue";
-import Comments from "components/Landing/ClubComments.vue";
-import BackgroundSpot from "components/Landing/BackgroundSpot.vue";
-import Community from "components/Landing/ClubCommunity.vue";
-import HowJoin from "components/Landing/ClubHowJoin.vue";
-import Questions from "components/Landing/ClubQuestions.vue";
-import ClubContacts from "components/Landing/ClubContacts.vue";
+import CMainScreen from "components/Landing/ClubMainScreen.vue";
+import CDirections from "components/Landing/ClubDirections.vue";
+import CStatistics from "components/Landing/ClubStatistics.vue";
+import CSteps from "components/Landing/ClubSteps.vue";
+import CItems from "components/Landing/ClubItems.vue";
+import CAbout from "components/Landing/ClubAbout.vue";
+import CClients from "components/Landing/ClubClients.vue";
+import CPartners from "components/Landing/ClubPartners.vue";
+import CJoin from "components/Landing/ClubJoin.vue";
+import CProducts from "components/Landing/ClubProducts.vue";
+import CComments from "components/Landing/ClubComments.vue";
+import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
+import CCommunity from "components/Landing/ClubCommunity.vue";
+import CHowJoin from "components/Landing/ClubHowJoin.vue";
+import CQuestions from "components/Landing/ClubQuestions.vue";
+import CContacts from "components/Landing/ClubContacts.vue";
 </script>
-
-<style scoped lang="scss">
-.q-page {
-  overflow: hidden;
-}
-
-.partitians {
-  &-faces {
-    margin-top: 58px;
-    height: 338px;
-  }
-}
-
-.video {
-  width: 640px;
-  height: 457px;
-  border-radius: 10px;
-}
-
-.join {
-  max-width: 816px;
-  min-height: 192px;
-
-  padding: 32px;
-
-  background: rgba(135, 32, 148, 0.197);
-  box-shadow: inset 8px -8px 32px rgba(103, 24, 112, 0.2),
-    inset -12px 12px 32px rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(53.01px);
-
-  border-radius: 12px;
-  margin-top: 124px;
-}
-
-.comments-list {
-  margin-top: 50px;
-  overflow-x: auto;
-  width: 100%;
-}
-
-.comments-list,
-.comments-list .card {
-  transform: rotateX(180deg);
-}
-
-.club-mw-474 {
-  max-width: 474px;
-}
-
-.club-px-96 {
-  padding: 0 96px;
-}
-</style>

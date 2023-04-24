@@ -1,16 +1,16 @@
 <template>
-  <section class="items">
+  <section class="items container">
     <div class="text-center text-h3">
       1Т Клуб - это масштабная экосистема для развития начинающих специалистов в
       сфере IT.
     </div>
 
-    <card-group :items="cards" />
+    <c-card-group :items="cards" />
   </section>
 </template>
 
 <script setup>
-import CardGroup from "./ClubCardGroup.vue";
+import CCardGroup from "./ClubCardGroup.vue";
 import { ref } from "vue";
 
 const cards = ref([

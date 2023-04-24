@@ -3,7 +3,7 @@
     <div class="text-h3 text-center">Отзывы</div>
 
     <q-list class="row no-wrap comments-list">
-      <review-card
+      <c-review-card
         v-for="comment in comments"
         :key="comment.id"
         v-bind="comment"
@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import ReviewCard from "components/Landing/ClubReviewCard.vue";
+import CReviewCard from "components/Landing/ClubReviewCard.vue";
 import { ref } from "vue";
 
 const comments = ref([

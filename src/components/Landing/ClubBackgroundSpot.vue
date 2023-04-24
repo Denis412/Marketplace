@@ -1,9 +1,10 @@
 <template>
-  <div style="z-index: 0">
+  <div style="z-index: -1">
     <q-img
       src="src/assets/images/Vector.svg"
       style="
         width: 433px;
+        z-index: 0;
         height: 509px;
         position: absolute;
         background: #881d95;

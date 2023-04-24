@@ -2,25 +2,31 @@
   <section class="section-margin how-join container row justify-between">
     <div class="image relative-position">
       <img src="src/assets/images/cuate.svg" />
+
       <img
         class="absolute-center"
         src="src/assets/images/Ellipse%2070.svg"
         style="z-index: -1"
       />
     </div>
+
     <div class="info">
       <h3 class="text-h3">Как вступить в 1Т Клуб?</h3>
+
       <p class="text-body2 club-mt-72">
         Присоединяйтесь к нашему сообществу, пройдя простую регистрацию на
         сайте. Вступайте в 1Т Клуб и станьте частью нашей большой и дружной
         семьи!
       </p>
-      <q-btn class="info-btn block" label="Присоединиться" />
+
+      <c-button background label="Присоединиться" class="info-btn block" />
     </div>
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import CButton from "../ClubButton.vue";
+</script>
 
 <style lang="scss" scoped>
 .how-join {

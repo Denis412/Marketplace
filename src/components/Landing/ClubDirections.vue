@@ -1,5 +1,5 @@
 <template>
-  <section class="text-center section-margin directions">
+  <section class="text-center section-margin directions container">
     <h2 class="title">Выберите направление</h2>
 
     <div class="font-size-24 text-weight-light subtitle">
@@ -7,12 +7,12 @@
       платформой или сделать это самостоятельно.
     </div>
 
-    <card-group :directions="cardsList" />
+    <c-card-group :directions="cardsList" />
   </section>
 </template>
 
 <script setup>
-import CardGroup from "components/Landing/ClubCardGroup.vue";
+import CCardGroup from "components/Landing/ClubCardGroup.vue";
 import { ref } from "vue";
 
 const cardsList = ref([

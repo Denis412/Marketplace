@@ -2,7 +2,7 @@
   <q-footer class="footer px-160">
     <div class="flex q-pt-lg" style="width: 100%">
       <section class="col relative">
-        <q-img src="src/assets/images/LogoWhite.svg" class="footer-logo" />
+        <q-img src="/src/assets/images/LogoWhite.svg" class="footer-logo" />
 
         <div class="flex q-gutter-x-md q-mt-lg">
           <div
@@ -45,7 +45,7 @@
         <div class="text-16 q-md-sm">Приложения</div>
 
         <q-btn color="white club-mt-32">
-          <q-img style="width: 24px" src="src/assets/icons/GooglePlay.svg" />
+          <q-img style="width: 24px" src="/src/assets/icons/GooglePlay.svg" />
 
           <div class="q-ml-sm text-left" style="color: #333333">
             <span class="store-btn-text1"> Загрузите в </span>
@@ -55,7 +55,7 @@
         </q-btn>
 
         <q-btn class="q-mt-md" color="white">
-          <q-img style="width: 24px" src="src/assets/icons/Apple.svg" />
+          <q-img style="width: 24px" src="/src/assets/icons/Apple.svg" />
 
           <div class="q-ml-sm text-left" style="color: #333333">
             <span class="store-btn-text1">Загрузите в</span>
@@ -78,9 +78,9 @@ const contacts = ref([
 ]);
 
 const socials = ref([
-  { id: 1, imageUrl: "src/assets/images/VK.svg" },
-  { id: 2, imageUrl: "src/assets/images/Youtube.svg" },
-  { id: 3, imageUrl: "src/assets/images/Telegram.svg" },
+  { id: 1, imageUrl: "/src/assets/images/VK.svg" },
+  { id: 2, imageUrl: "/src/assets/images/Youtube.svg" },
+  { id: 3, imageUrl: "/src/assets/images/Telegram.svg" },
 ]);
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="section-margin text-center">
+  <section class="section-margin text-center container">
     <div class="text-h3">С нами сотрудничают</div>
 
     <q-list class="row justify-between q-mt-xl">
@@ -15,6 +15,7 @@
 
 <script setup>
 import { ref } from "vue";
+
 const partners = ref([
   { id: 1, imageUrl: "src/assets/images/logoRSO.svg" },
   { id: 2, imageUrl: "src/assets/images/logoRAO.svg" },

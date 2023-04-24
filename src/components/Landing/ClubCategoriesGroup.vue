@@ -1,6 +1,6 @@
 <template>
   <q-list class="flex justify-between">
-    <category-item
+    <c-category-item
       v-for="category in categories"
       :key="category.id"
       v-bind="category"
@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import CategoryItem from "components/Landing/CategoryItem.vue";
+import CCategoryItem from "components/Landing/ClubCategoryItem.vue";
 import { ref } from "vue";
 
 const categories = ref([
