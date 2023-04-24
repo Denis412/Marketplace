@@ -1,5 +1,5 @@
 <template>
-  <section class="flex items-center">
+  <q-item class="flex items-center">
     <q-avatar class="medium-avatar">
       <q-img src="/src/assets/images/Ellipse55.svg" />
     </q-avatar>
@@ -13,7 +13,7 @@
         {{ specialist.speciality }}
       </div>
     </div>
-  </section>
+  </q-item>
 </template>
 
 <script setup>
