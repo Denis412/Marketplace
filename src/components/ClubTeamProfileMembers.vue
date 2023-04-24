@@ -70,6 +70,7 @@ const selectSpecialistsList = ref("");
 const inviteUser = () => {
   router.push({
     name: "teamInvite",
+    params: { id: team.id || 1 },
   });
 };
 </script>

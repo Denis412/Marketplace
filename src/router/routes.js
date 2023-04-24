@@ -6,6 +6,7 @@ const routes = [
   },
   {
     path: "/club",
+    name: "club",
     component: () => import("layouts/ClubMainLayout.vue"),
     children: [
       {

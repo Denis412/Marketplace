@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="c-pa-32 page-background">
     <c-team-profile :team="team" />
   </q-page>
 </template>
