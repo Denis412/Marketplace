@@ -1,9 +1,8 @@
 <template>
   <div class="fullscreen text-center flex row">
-    <div class="col relative-position flex flex-center">
+    <section class="col relative-position flex flex-center">
       <div class="flex column items-center">
-        <p class="text-bold c-mb-25 text-h3">Войти в личный кабинет</p>
-
+        <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
         <c-input
@@ -20,35 +19,30 @@
         />
 
         <a href="" class="c-mb-50 link-grey">Забыли пароль?</a>
-
-        <c-button
-          background
-          label="Войти"
-          class="text-body1 q-py-sm q-px-xl"
-        ></c-button>
+        <c-button background label="Войти" class="text-body1 q-py-sm q-px-xl" />
       </div>
 
       <q-img
         class="absolute c-img-270 c-ab-0 c-ar--13 c-z--1"
         src="../assets/images/authentication/gears.svg"
-      ></q-img>
-    </div>
+      />
+    </section>
 
-    <div class="col-5 bg-auth relative-position flex flex-center">
+    <section class="col-5 bg-auth relative-position flex flex-center">
       <div class="absolute c-width c-at-0 c-ar-20 c-z--1">
         <q-img
           class="c-img-120"
           src="../assets/images/authentication/envelope.svg"
-        ></q-img>
+        />
 
         <q-img
           class="c-img-120 c-at--3"
           src="../assets/images/authentication/speech-bubble.svg"
-        ></q-img>
+        />
       </div>
 
       <div class="flex column flex-center">
-        <p class="text-bold c-mb-15 text-h3">Впервые здесь?</p>
+        <h3 class="text-bold c-mb-15 text-h3">Впервые здесь?</h3>
 
         <p class="c-mb-115 fs-16 text-body2 c-maxw-300">
           Зарегистрируйтесь в нашем клубе прямо сейчас
@@ -59,15 +53,17 @@
           outline
           label="Регистрация"
           class="text-body1 q-py-sm q-px-xl"
-        ></c-button>
+        />
       </div>
-    </div>
+    </section>
   </div>
 </template>
+
 <script setup>
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
 </script>
+
 <style lang="scss" scoped>
 .c {
   &-ab {

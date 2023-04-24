@@ -1,20 +1,20 @@
 <template>
   <div class="fullscreen text-center flex row">
-    <div class="col-5 bg-auth relative-position flex flex-center">
+    <section class="col-5 bg-auth relative-position flex flex-center">
       <div class="absolute c-width c-at-0 c-ar-20 c-z--1">
         <q-img
           class="c-img-120"
           src="../assets/images/authentication/envelope.svg"
-        ></q-img>
+        />
 
         <q-img
           class="c-img-120 c-at--3"
           src="../assets/images/authentication/speech-bubble.svg"
-        ></q-img>
+        />
       </div>
 
       <div class="flex column flex-center">
-        <p class="text-bold c-mb-15 text-h3">Уже заходили?</p>
+        <h3 class="text-bold c-mb-15 text-h3">Уже заходили?</h3>
 
         <p class="c-mb-115 fs-16 text-body2 c-maxw-250">
           Будем рады видеть вас снова
@@ -25,30 +25,40 @@
           outline
           label="Войти"
           class="text-body1 q-py-sm q-px-xl"
-        ></c-button>
+        />
       </div>
-    </div>
+    </section>
 
-    <div class="col relative-position flex flex-center">
+    <section class="col relative-position flex flex-center">
       <div class="flex column items-center c-maxw-400">
-        <p class="text-bold c-mb-25 text-h3">Регистрация</p>
+        <h3 class="text-bold c-mb-25 text-h3">Регистрация</h3>
 
         <p class="c-mb-30 fs-16 text-body2">Зарегистрируйтесь в нашем клубе</p>
 
         <c-input
           class="c-mb-10 c-input-400"
+          v-model="form.name"
           type="text"
-          placeholder="Введите вашу фамилию и имя"
+          placeholder="Введите ваше имя"
         />
 
         <c-input
           class="c-mb-10 c-input-400"
+          v-model="form.surname"
+          type="text"
+          placeholder="Введите вашу фамилию"
+        />
+
+        <c-input
+          class="c-mb-10 c-input-400"
+          v-model="form.email"
           type="email"
           placeholder="Введите ваш e-mail"
         />
 
         <c-input
           class="c-mb-10 c-input-400"
+          v-model="form.password"
           type="password"
           placeholder="Введите пароль"
           visibility
@@ -56,6 +66,7 @@
 
         <c-input
           class="c-mb-15 c-input-400"
+          v-model="form.confirmPassword"
           type="password"
           placeholder="Повторите пароль"
           visibility
@@ -63,7 +74,7 @@
 
         <q-checkbox
           dense
-          v-model="val"
+          v-model="agreement"
           color="purple"
           class="c-mb-30 c-maxw-350"
         >
@@ -74,31 +85,71 @@
         </q-checkbox>
 
         <c-button
-          :disable="val === false"
+          :disable="!agreement"
           background
           label="Зарегистрироваться"
+          @click="registration"
           class="text-body1 q-py-sm q-px-xl"
-        ></c-button>
+        />
       </div>
 
       <q-img
         class="absolute c-img-270 c-ab-0 c-al--11 c-z--1"
         src="../assets/images/authentication/gears.svg"
-      ></q-img>
-    </div>
+      />
+    </section>
+
+    <c-confirmation-code-dialog v-model="showConfirmCode" :timer="timer" />
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
+import CConfirmationCodeDialog from "src/components/ClubConfirmationCodeDialog.vue";
+import userApi from "src/sdk/user";
 
-const val = ref(false);
+const agreement = ref(false);
+const showConfirmCode = ref(false);
+const timer = ref(0);
+
+const form = ref({
+  name: "",
+  surname: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
+
+const registration = async () => {
+  try {
+    // const userInfo = await userApi.registration(form);
+
+    if (!timer.value) startTimer();
+    showConfirmCode.value = true;
+
+    // await userApi.setPassword(form);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const startTimer = () => {
+  timer.value = 90;
+
+  const timerId = setInterval(() => {
+    timer.value -= 1;
+
+    if (!timer.value) clearInterval(timerId);
+  }, 1000);
+};
 </script>
+
 <style lang="scss" scoped>
 * {
   box-sizing: border-box;
 }
+
 .c {
   &-ab {
     &-0 {
