@@ -9,7 +9,18 @@ const routes = [
     component: () => import("layouts/ClubMainLayout.vue"),
     children: [
       {
-        path: "/club/teams",
+        path: "team/:id",
+        name: "team",
+        component: () => import("pages/ClubTeamPage.vue"),
+      },
+      {
+        path: "team/:id/invite",
+        name: "teamInvite",
+        component: () => import("pages/ClubTeamInvitePage.vue"),
+      },
+      {
+        path: "teams",
+        name: "teams",
         component: () => import("pages/ClubTeamsPage.vue"),
       },
     ],

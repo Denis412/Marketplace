@@ -1,6 +1,6 @@
 <template>
   <section class="club-mt-32">
-    <div class="text-h4">Участники</div>
+    <h4 class="text-h4">Участники</h4>
 
     <div class="q-mt-md rounded-borders-10 bg-white c-pa-32">
       <q-toolbar class="toolbar-bottom-border q-pb-md">
@@ -13,7 +13,12 @@
           :options="membersTeamList"
         />
 
-        <c-button background label="Пригласить" class="text-body2" />
+        <c-button
+          background
+          label="Пригласить"
+          class="text-body2"
+          @click="inviteUser"
+        />
       </q-toolbar>
 
       <q-toolbar class="overflow-auto">
@@ -39,6 +44,9 @@
 import { ref } from "vue";
 import CSpecialistsList from "./ClubSpecialistsList.vue";
 import CButton from "./ClubButton.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const { team } = defineProps({
   team: Object,
@@ -48,7 +56,6 @@ const membersTeamList = ref([
   { label: "Команда", value: "team" },
   { label: "Отправленные заявки", value: "sended" },
 ]);
-
 const specialtiesList = ref([
   { label: "Разработчики", value: "developers" },
   { label: "Менеджеры", value: "managers" },
@@ -59,6 +66,12 @@ const specialtiesList = ref([
 
 const selectMembersList = ref("");
 const selectSpecialistsList = ref("");
+
+const inviteUser = () => {
+  router.push({
+    name: "teamInvite",
+  });
+};
 </script>
 
 <style scoped lang="scss">
