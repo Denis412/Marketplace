@@ -6,7 +6,7 @@
 
     <main class="flex column flex-center club-mt-32">
       <section class="relative-position">
-        <q-avatar class="create-form-avatar">
+        <q-avatar class="large-avatar">
           <q-img src="/src/assets/previews/preview-create-team.png" />
         </q-avatar>
 
@@ -47,9 +47,6 @@ import CButton from "./ClubButton.vue";
   min-height: 544px;
 
   &-avatar {
-    width: 140px;
-    height: 140px;
-
     &-create {
       bottom: 15px;
       right: -13px;
