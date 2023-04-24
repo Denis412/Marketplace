@@ -18,8 +18,12 @@ const routes = [
   // Always leave this as last one,
   // but you can also remove it
   {
-    path: "/auth",
+    path: "/authentication",
     component: () => import("pages/ClubAuthenticationPage.vue"),
+  },
+  {
+    path: "/registration",
+    component: () => import("pages/ClubRegistrationPage.vue"),
   },
   {
     path: "/:catchAll(.*)*",
