@@ -25,18 +25,34 @@
         </q-item>
       </q-list>
     </nav>
+    <section class="row">
+      <c-my-team
+      :team="team"
+      v-for="team in teams"
+      :key="team.id"/>
+    </section>
   </q-page>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import CButton from "src/components/ClubButton.vue";
+import CMyTeam from "src/components/ClubMyTeam.vue";
 
 const options = ref([
   "Активные",
   "Входящие заявки",
   "Исходящие заявки",
   "Архив"
+])
+
+const teams = ref([
+  {
+    id: 1,
+    img: "",
+    title: "Dream Team",
+    content: "Наша команда делает сервис, где человек смог бы следить за своим развитием в каждой из сфер жизни. Мы ждем иммено тебя!"
+  }
 ])
 </script>
 
