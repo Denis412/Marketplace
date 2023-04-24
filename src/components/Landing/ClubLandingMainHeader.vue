@@ -28,8 +28,9 @@
       <q-space />
 
       <div>
-        <c-button background label="Вступить в клуб" />
+        <c-button to="/registration" background label="Вступить в клуб" />
         <c-button
+          to="/authentication"
           outline-no-text
           label="Войти"
           class="bg-dark-purple q-ml-md"

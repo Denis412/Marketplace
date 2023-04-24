@@ -8,7 +8,13 @@
         работе и саморазвитию.
       </p>
 
-      <c-button background size="xl" class="q-mt-xl" label="Вступить в клуб" />
+      <c-button
+        to="/registration"
+        background
+        size="xl"
+        class="q-mt-xl"
+        label="Вступить в клуб"
+      />
     </div>
 
     <q-img

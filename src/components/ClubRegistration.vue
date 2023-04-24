@@ -21,6 +21,7 @@
         </p>
 
         <c-button
+          to="/authentication"
           outline
           label="Войти"
           class="text-body1 q-py-sm q-px-xl"

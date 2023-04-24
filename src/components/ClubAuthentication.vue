@@ -55,6 +55,7 @@
         </p>
 
         <c-button
+          to="/registration"
           outline
           label="Регистрация"
           class="text-body1 q-py-sm q-px-xl"
