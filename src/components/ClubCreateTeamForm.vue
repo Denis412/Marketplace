@@ -18,6 +18,7 @@
 
       <section class="w-100p q-mt-md q-gutter-y-md">
         <c-input placeholder="Название" class="text-body2" />
+
         <c-input
           placeholder="Описание"
           class="club-textarea-mh-150 text-body2"
