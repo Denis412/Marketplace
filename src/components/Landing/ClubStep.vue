@@ -29,11 +29,9 @@ const { num } = defineProps({
 .step-shadow {
   width: 320px;
   height: 320px;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    rgba(136, 29, 149, 0.3) 0%,
-    rgba(136, 29, 149, 0) 100%
-  );
+  background: radial-gradient(50% 50% at 50% 50%,
+      rgba(136, 29, 149, 0.3) 0%,
+      rgba(136, 29, 149, 0) 100%);
   filter: blur(2px);
 }
 
@@ -65,7 +63,7 @@ const { num } = defineProps({
 
 .step-text {
   width: 544px;
-  bottom: -72px;
+  top: 46px;
   left: 74px;
 }
 </style>

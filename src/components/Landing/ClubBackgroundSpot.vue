@@ -29,27 +29,13 @@
     />
 
     <q-img
-      src="src/assets/images/Vector3.svg"
-      style="
-        position: absolute;
-        width: 958px;
-        height: 61px;
-        left: 217px;
-        top: 817px;
-
-        background: #881d95;
-        filter: blur(85px);
-      "
-    />
-
-    <q-img
       src="src/assets/images/Vector4.svg"
       style="
         position: absolute;
         width: 362px;
         height: 426px;
         left: 1139px;
-        top: 1387px;
+        top: 1280px;
 
         background: #881d95;
         filter: blur(313.5px);
@@ -63,8 +49,7 @@
         width: 362px;
         height: 426px;
         left: -84px;
-        top: 2626px;
-
+        top: 2318px;
         background: #881d95;
         filter: blur(260.5px);
       "
@@ -78,77 +63,6 @@
         height: 495px;
         left: 718px;
         top: 2322px;
-
-        background: #881d95;
-        filter: blur(250px);
-      "
-    />
-
-    <q-img
-      src="src/assets/images/Vector7.svg"
-      style="
-        position: absolute;
-        width: 362px;
-        height: 426px;
-        left: 1259px;
-        top: 2829px;
-
-        background: #881d95;
-        filter: blur(260.5px);
-      "
-    />
-
-    <q-img
-      src="src/assets/images/Vector8.svg"
-      style="
-        position: absolute;
-        width: 362px;
-        height: 426px;
-        left: -229px;
-        top: 3590px;
-
-        background: #881d95;
-        filter: blur(260.5px);
-      "
-    />
-
-    <q-img
-      src="src/assets/images/Vector9.svg"
-      style="
-        position: absolute;
-        width: 433px;
-        height: 913px;
-        left: 1237px;
-        top: 4400px;
-
-        background: #881d95;
-        filter: blur(313.5px);
-      "
-    />
-
-    <q-img
-      src="src/assets/images/Vector10.svg"
-      style="
-        position: absolute;
-        width: 374px;
-        height: 440px;
-        left: -326px;
-        top: 5221.91px;
-
-        background: #881d95;
-        filter: blur(260.5px);
-        transform: rotate(-67.25deg);
-      "
-    />
-
-    <q-img
-      src="src/assets/images/Ellipse69.svg"
-      style="
-        position: absolute;
-        width: 828px;
-        height: 195px;
-        left: 310px;
-        top: 5742px;
 
         background: #881d95;
         filter: blur(250px);
@@ -174,5 +88,63 @@
         transform: rotate(-126.39deg);
       "
     /> -->
+    <img
+      src="src/assets/images/Vectorbg.svg"
+      style="
+        position: absolute;
+        left: -41.67vw;
+        top: 1823.31px;
+      "
+    />
+    <img
+      src="src/assets/images/Vector-1bg.svg"
+      style="
+        position: absolute;
+        left: 51.46vw;
+        top: 2326px;
+      "
+    />
+    <img
+      src="src/assets/images/Vector-2bg.svg"
+      style="
+        position: absolute;
+        left: -53.26vw;
+        top: 3091px;
+      "
+    />
+    <img
+      src="src/assets/images/Vector-3bg.svg"
+      style="
+      position: absolute;
+      left: 43.4vw;
+      top: 3489px;
+      "
+    />
+    <img
+      src="src/assets/images/Vector-4bg.svg"
+      style="
+      position: absolute;
+      left: -52.64vw;
+      top: 4302.91px;
+      "
+    />
+    <img
+      src="src/assets/images/Vector-5bg.svg"
+      style="
+      position: absolute;
+      left: 45.76vw;
+      top: 5738px;
+      "
+    />
+    <img
+      src="src/assets/images/Vector-6bg.svg"
+      style="
+      position: absolute;
+      left: 42.08vw;
+      top: 7877px;
+      "
+    />
   </div>
 </template>
+
+<style scoped lang="scss"></style>
