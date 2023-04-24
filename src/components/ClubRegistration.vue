@@ -73,6 +73,7 @@
         </q-checkbox>
 
         <c-button
+          :disable="val === false"
           background
           label="Зарегистрироваться"
           class="text-body1 q-py-sm q-px-xl"
