@@ -93,7 +93,7 @@ import { ref } from "vue";
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
 
-const val = ref(true);
+const val = ref(false);
 </script>
 <style lang="scss" scoped>
 * {
