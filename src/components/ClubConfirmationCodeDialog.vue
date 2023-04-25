@@ -20,7 +20,6 @@
 
         <section class="flex no-wrap q-gutter-x-sm club-mt-32">
           <c-input
-            id="codeNumber1"
             type="text"
             countInput="1"
             v-model.numberCode="codeNumber"
@@ -30,7 +29,6 @@
           />
 
           <c-input
-            id="codeNumber2"
             type="text"
             countInput="2"
             v-model.numberCode="codeNumber"
@@ -40,7 +38,6 @@
           />
 
           <c-input
-            id="codeNumber3"
             type="text"
             countInput="3"
             v-model.numberCode="codeNumber"
@@ -50,7 +47,6 @@
           />
 
           <c-input
-            id="codeNumber4"
             type="text"
             countInput="4"
             v-model.numberCode="codeNumber"
@@ -60,7 +56,6 @@
           />
 
           <c-input
-            id="codeNumber5"
             type="text"
             countInput="5"
             v-model.numberCode="codeNumber"
@@ -70,7 +65,6 @@
           />
 
           <c-input
-            id="codeNumber6"
             type="text"
             countInput="6"
             v-model.numberCode="codeNumber"
@@ -85,7 +79,11 @@
         Отправить код повторно ({{ timer }} секунд)
       </q-card-section>
 
-      <q-card-section v-else class="text-violet-6 text-caption1 cursor-pointer">
+      <q-card-section
+        v-else
+        class="text-violet-6 text-caption1 cursor-pointer"
+        @clik="sendCode"
+      >
         Отправить код повторно
       </q-card-section>
     </q-card>
@@ -99,29 +97,47 @@ import { useQuasar } from "quasar";
 import CInput from "./ClubInput.vue";
 import userApi from "src/sdk/user";
 import replaceAt from "src/utils/replaceAt";
+import { useRouter } from "vue-router";
 
 const $q = useQuasar();
+const router = useRouter();
 
 const { timer, authInfo } = defineProps({
-  timer: Number,
+  timer: Object,
   authInfo: Object,
 });
 
 const codeNumber = ref("");
-const fullCode = ref("");
+const fullCode = ref(" ".repeat(6));
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
 
-  if (fullCode.value.length === 6) {
+  if (fullCode.value.indexOf(" ") === -1) {
     try {
       await userApi.setPassword({ ...authInfo, code: fullCode.value });
+
+      $q.notify({
+        type: "positive",
+        message: "Регистрация прошла успешно!",
+      });
+
+      router.push({
+        name: "auth",
+      });
     } catch (error) {
       $q.notify({
         type: "negative",
         message: "Неверный код!",
       });
     }
+  }
+};
+
+const sendCode = () => {
+  try {
+  } catch (error) {
+    console.log(error);
   }
 };
 </script>

@@ -31,10 +31,12 @@ const routes = [
   // but you can also remove it
   {
     path: "/authentication",
+    name: "auth",
     component: () => import("pages/ClubAuthenticationPage.vue"),
   },
   {
     path: "/registration",
+    name: "reg",
     component: () => import("pages/ClubRegistrationPage.vue"),
   },
   {

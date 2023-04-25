@@ -101,7 +101,7 @@
 
     <c-confirmation-code-dialog
       v-model="showConfirmCode"
-      :timer="timer"
+      :timer="timer.timer"
       :authInfo="authUserInfo"
     />
   </div>
@@ -109,6 +109,7 @@
 <script setup>
 import { ref } from "vue";
 import { useQuasar } from "quasar";
+import { useTimer } from "src/use/timer";
 
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
@@ -118,7 +119,7 @@ import userApi from "src/sdk/user";
 const authUserInfo = ref({});
 const agreement = ref(false);
 const showConfirmCode = ref(false);
-const timer = ref(0);
+const timer = useTimer(90);
 
 const form = ref({
   name: "",
@@ -135,13 +136,12 @@ const registration = async () => {
     let userInfo;
 
     if (registration.count === 1)
-      if (!timer.value)
-        // userInfo = await userApi.registration(form.value);
+      if (!timer.timer.value) userInfo = await userApi.registration(form.value);
 
-        startTimer();
+    timer.start();
     showConfirmCode.value = true;
 
-    // authUserInfo.value.user_id = userInfo.recordId;
+    authUserInfo.value.user_id = userInfo.recordId;
     authUserInfo.value.password = form.value.password;
   } catch (error) {
     console.log(error);
@@ -149,16 +149,6 @@ const registration = async () => {
 };
 
 registration.count = 0;
-
-const startTimer = () => {
-  timer.value = 90;
-
-  const timerId = setInterval(() => {
-    timer.value -= 1;
-
-    if (!timer.value) clearInterval(timerId);
-  }, 1000);
-};
 </script>
 
 <style lang="scss" scoped>
