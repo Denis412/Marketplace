@@ -1,4 +1,8 @@
-import { provideApolloClient, useMutation } from "@vue/apollo-composable";
+import {
+  provideApolloClient,
+  useMutation,
+  useQuery,
+} from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 
 import {
@@ -8,8 +12,11 @@ import {
   userResetPasswordSendCode,
   userResetPasswordConfirmCodeSetPassword,
 } from "src/graphql/user/mutations";
+import { getUser } from "src/graphql/user/queries";
 
 provideApolloClient(apolloClient);
+
+const { refetch: refetchUser } = useQuery(getUser);
 
 const { mutate: signUp } = useMutation(userSignUp);
 const { mutate: signIn } = useMutation(userSignIn);
@@ -47,28 +54,45 @@ const setPassword = async ({ user_id, password, code }) => {
 };
 
 const userPasswordSendCode = async ({ email }) => {
-  await resetPasswordSendCode({
-    email,
+  const { data: resetSendCode } = await resetPasswordSendCode({
+    input: {
+      email,
+    },
   });
+
+  return resetSendCode.userResetPasswordSendCode;
 };
 
 const userPasswordConfirmCode = async ({ user_id, code, password }) => {
   await resetPasswordConfirmCode({
-    user_id,
-    code,
-    password,
+    input: {
+      user_id,
+      code,
+      password,
+    },
   });
 };
 
 const login = async ({ login, password }) => {
   const { data: userInfo } = await signIn({
-    login,
-    password,
+    input: {
+      login,
+      password,
+    },
   });
 
   localStorage.setItem("token", userInfo.userSignIn.record.access_token);
 
-  return userInfo.userSignIn;
+  const { data: userData } = await refetchUser({
+    id: userInfo.userSignIn.recordId,
+  });
+
+  localStorage.setItem("user-avatar", userData.user.avatar);
+  localStorage.setItem("user-name", userData.user.name);
+  localStorage.setItem("user-surname", userData.user.surname);
+  localStorage.setItem("user-telegram", userData.user.telegram_chat_id);
+
+  return userData.user;
 };
 
 const userApi = {

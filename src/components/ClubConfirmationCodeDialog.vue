@@ -74,15 +74,19 @@
           />
         </section>
       </q-card-section>
+      <!--
+      <pre>y {{ userIdRefetch }}</pre>
+      <pre>{{ authInfo }}</pre>
+      <pre>{{ fullCode }}</pre> -->
 
-      <q-card-section class="text-caption1" v-if="timer">
+      <q-card-section class="text-caption1" v-if="timer.timer.value">
         Отправить код повторно ({{ timer.timer }} секунд)
       </q-card-section>
 
       <q-card-section
         v-else
         class="text-violet-6 text-caption1 cursor-pointer"
-        @clik="sendCode"
+        @click="sendCode"
       >
         Отправить код повторно
       </q-card-section>
@@ -91,31 +95,44 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { isRef, ref } from "vue";
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 import CInput from "./ClubInput.vue";
 import userApi from "src/sdk/user";
 import replaceAt from "src/utils/replaceAt";
-import { useRouter } from "vue-router";
 
 const $q = useQuasar();
 const router = useRouter();
 
-const { timer, authInfo } = defineProps({
+const { timer, authInfo, password } = defineProps({
   timer: Object,
   authInfo: Object,
+  password: String,
 });
 
 const codeNumber = ref("");
 const fullCode = ref(" ".repeat(6));
+const userIdRefetch = ref("");
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
 
   if (fullCode.value.indexOf(" ") === -1) {
     try {
-      await userApi.setPassword({ ...authInfo, code: fullCode.value });
+      if (!userIdRefetch.value)
+        await userApi.setPassword({
+          user_id: authInfo.user_id,
+          password: authInfo.password,
+          code: fullCode.value,
+        });
+      else
+        await userApi.userPasswordConfirmCode({
+          user_id: userIdRefetch.value,
+          password: authInfo.password,
+          code: parseInt(fullCode.value),
+        });
 
       router.push({
         name: "auth",
@@ -130,7 +147,22 @@ const inputCode = async (value, inputNumber) => {
 };
 
 const sendCode = async () => {
+  console.log("info", authInfo);
+
   try {
+    const userId = await userApi.userPasswordSendCode({
+      email: authInfo.email,
+    });
+
+    userIdRefetch.value = userId.record.user_id;
+
+    timer.clear();
+    timer.start();
+
+    $q.notify({
+      type: "positive",
+      message: "Код выслан повторно!",
+    });
   } catch (error) {
     console.log(error);
   }

@@ -30,7 +30,10 @@
     </section>
 
     <section class="col relative-position flex flex-center">
-      <q-form class="flex column items-center c-maxw-400">
+      <q-form
+        class="flex column items-center c-maxw-400"
+        @submit="registration"
+      >
         <h3 class="text-bold c-mb-25 text-h3">Регистрация</h3>
 
         <p class="c-mb-30 fs-16 text-body2">Зарегистрируйтесь в нашем клубе</p>
@@ -91,9 +94,9 @@
 
         <c-button
           :disable="!agreement"
+          type="submit"
           background
           label="Зарегистрироваться"
-          @click="registration"
           class="text-body1 q-py-sm q-px-xl"
         />
       </q-form>
@@ -104,10 +107,14 @@
       />
     </section>
 
+    <!-- <pre>{{ authUserInfo }}</pre> -->
+
     <c-confirmation-code-dialog
       v-model="showConfirmCode"
       :timer="timer"
       :authInfo="authUserInfo"
+      :email="form.email"
+      :password="form.password"
     />
   </div>
 </template>
@@ -145,8 +152,13 @@ const registration = async () => {
   try {
     let userInfo;
 
+    console.log(timer.timer.value);
+
     if (registration.count === 1) {
-      if (!timer.timer.value) userInfo = await userApi.registration(form.value);
+      if (timer.timer.value === 90)
+        userInfo = await userApi.registration(form.value);
+
+      console.log(userInfo);
 
       $q.notify({
         type: "positive",
@@ -157,8 +169,11 @@ const registration = async () => {
     timer.start();
     showConfirmCode.value = true;
 
-    authUserInfo.value.user_id = userInfo.recordId;
-    authUserInfo.value.password = form.value.password;
+    if (userInfo) {
+      authUserInfo.value.user_id = userInfo.recordId;
+      authUserInfo.value.email = userInfo.record.email;
+      authUserInfo.value.password = form.value.password;
+    }
   } catch (error) {
     console.log(error);
   }

@@ -1,25 +1,32 @@
 <template>
   <div class="fullscreen text-center flex row">
     <section class="col relative-position flex flex-center">
-      <q-form class="flex column items-center">
+      <q-form class="flex column items-center" @submit="authorization">
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
         <c-input
           class="c-mb-10 c-input-400"
+          v-model="form.login"
           type="email"
           placeholder="Введите ваш e-mail"
         />
 
         <c-input
           class="c-mb-15 c-input-400"
+          v-model="form.password"
           type="password"
           placeholder="Введите пароль"
           visibility
         />
 
         <a href="" class="c-mb-50 link-grey">Забыли пароль?</a>
-        <c-button background label="Войти" class="text-body1 q-py-sm q-px-xl" />
+        <c-button
+          background
+          label="Войти"
+          type="submit"
+          class="text-body1 q-py-sm q-px-xl"
+        />
       </q-form>
 
       <q-img
@@ -60,8 +67,30 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
+import userApi from "src/sdk/user";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const form = ref({
+  login: "",
+  password: "",
+});
+
+const authorization = async () => {
+  try {
+    await userApi.login(form.value);
+
+    router.push({
+      name: "club",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <style lang="scss" scoped>

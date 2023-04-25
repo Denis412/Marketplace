@@ -6,15 +6,21 @@ export const useTimer = (seconds) => {
 
   return {
     timer,
+    stop: () => clearInterval(timerId),
+
     start: () => {
+      clearInterval(timerId);
+
       timerId = setInterval(() => {
         timer.value -= 1;
+
+        if (!timer.value) clearInterval(timerId);
       }, 1000);
     },
-    stop: () => clearInterval(timerId),
+
     clear: () => {
       clearInterval(timerId);
-      timer.value = 0;
+      timer.value = seconds;
     },
   };
 };
