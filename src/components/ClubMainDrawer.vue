@@ -3,13 +3,17 @@
   show-if-above
   bordered
   :side="side"
+  :mini="miniState"
   v-model="drawer"
   :width="256"
   >
-    <q-list> </q-list>
+    <q-list>
+      Contetn
+    </q-list>
     <button
+    ref="btn"
     class="bg-violet-6 drawer-btn absolute"
-    @click="drawer = !drawer"
+    @click="toggleDrawer()"
     >
       <img
       src="/src/assets/icons/DrawerArrow.svg"
@@ -25,7 +29,14 @@ const { side } = defineProps({
   side: String,
 });
 
-const drawer = ref(true);
+const drawer = ref(false);
+const miniState = ref(false);
+const btn = ref();
+
+const toggleDrawer = () => {
+  miniState.value = !miniState.value;
+  btn.value.classList.toggle("rotate")
+}
 </script>
 
 <style scoped lang="scss">
@@ -37,6 +48,11 @@ const drawer = ref(true);
   border: none;
   top: 8px;
   right: -12px;
+  transition: ease .6s all;
+}
+
+.rotate {
+  transform: rotate(-180deg);
 }
 
 .overflow-initial {
