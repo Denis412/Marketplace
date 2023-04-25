@@ -5,6 +5,8 @@ import {
   userSignUp,
   userSignIn,
   userSignUpSetPassword,
+  userResetPasswordSendCode,
+  userResetPasswordConfirmCodeSetPassword,
 } from "src/graphql/user/mutations";
 
 provideApolloClient(apolloClient);
@@ -12,6 +14,12 @@ provideApolloClient(apolloClient);
 const { mutate: signUp } = useMutation(userSignUp);
 const { mutate: signIn } = useMutation(userSignIn);
 const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
+const { mutate: resetPasswordSendCode } = useMutation(
+  userResetPasswordSendCode
+);
+const { mutate: resetPasswordConfirmCode } = useMutation(
+  userResetPasswordConfirmCodeSetPassword
+);
 
 const registration = async ({ name, surname, email }) => {
   const { data: userInfo } = await signUp({
@@ -35,8 +43,22 @@ const setPassword = async ({ user_id, password, code }) => {
   });
 };
 
+const userPasswordSendCode = async ({ email }) => {
+  await resetPasswordSendCode({
+    email,
+  });
+};
+
+const userPasswordConfirmCode = async ({ user_id, code, password }) => {
+  await resetPasswordConfirmCode({
+    user_id,
+    code,
+    password,
+  });
+};
+
 const login = async ({ login, password }) => {
-  const { data: userInfo } = await userSignIn({
+  const { data: userInfo } = await signIn({
     login,
     password,
   });
@@ -46,6 +68,12 @@ const login = async ({ login, password }) => {
   return userInfo.userSignIn;
 };
 
-const userApi = { registration, setPassword, login };
+const userApi = {
+  registration,
+  setPassword,
+  userPasswordSendCode,
+  userPasswordConfirmCode,
+  login,
+};
 
 export default userApi;

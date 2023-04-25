@@ -24,6 +24,30 @@ export const userSignUpSetPassword = gql`
   }
 `;
 
+export const userResetPasswordSendCode = gql`
+  mutation UserResetPasswordSendCode($input: UserResetPasswordSendCodeInput!) {
+    userResetPasswordSendCode(input: $input) {
+      record {
+        user_id
+      }
+      status
+    }
+  }
+`;
+
+export const userResetPasswordConfirmCodeSetPassword = gql`
+  mutation UserResetPasswordConfirmCodeSetPassword(
+    $input: UserResetPasswordConfirmCodeSetPasswordInput!
+  ) {
+    userResetPasswordConfirmCodeSetPassword(input: $input) {
+      record {
+        email
+      }
+      status
+    }
+  }
+`;
+
 export const userSignIn = gql`
   mutation UserSignIn($input: UserSignInInput!) {
     userSignIn(input: $input) {

@@ -68,6 +68,8 @@ const emitChange = (targetValue) => {
         : capitalizeWord(words[0]);
   }
 
+  if (modelModifiers.numberCode) text = text.replace(/[^0-9]/g, "");
+
   value.value = text;
   emit("update:modelValue", text);
 };

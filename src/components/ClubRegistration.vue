@@ -30,7 +30,7 @@
     </section>
 
     <section class="col relative-position flex flex-center">
-      <div class="flex column items-center c-maxw-400">
+      <q-form class="flex column items-center c-maxw-400">
         <h3 class="text-bold c-mb-25 text-h3">Регистрация</h3>
 
         <p class="c-mb-30 fs-16 text-body2">Зарегистрируйтесь в нашем клубе</p>
@@ -91,7 +91,7 @@
           @click="registration"
           class="text-body1 q-py-sm q-px-xl"
         />
-      </div>
+      </q-form>
 
       <q-img
         class="absolute c-img-270 c-ab-0 c-al--11 c-z--1"
@@ -99,7 +99,11 @@
       />
     </section>
 
-    <c-confirmation-code-dialog v-model="showConfirmCode" :timer="timer" />
+    <c-confirmation-code-dialog
+      v-model="showConfirmCode"
+      :timer="timer"
+      :authInfo="authUserInfo"
+    />
   </div>
 </template>
 <script setup>
@@ -109,6 +113,7 @@ import CButton from "src/components/ClubButton.vue";
 import CConfirmationCodeDialog from "src/components/ClubConfirmationCodeDialog.vue";
 import userApi from "src/sdk/user";
 
+const authUserInfo = ref({});
 const agreement = ref(false);
 const showConfirmCode = ref(false);
 const timer = ref(0);
@@ -123,12 +128,13 @@ const form = ref({
 
 const registration = async () => {
   try {
-    // const userInfo = await userApi.registration(form);
+    const userInfo = await userApi.registration(form.value);
 
     if (!timer.value) startTimer();
     showConfirmCode.value = true;
 
-    // await userApi.setPassword(form);
+    authUserInfo.value.user_id = userInfo.recordId;
+    authUserInfo.value.password = form.value.password;
   } catch (error) {
     console.log(error);
   }

@@ -19,32 +19,92 @@
         </section>
 
         <section class="flex no-wrap q-gutter-x-sm club-mt-32">
-          <c-input type="text" class="dialog-size-input q-pa-none" />
-          <c-input type="text" class="dialog-size-input q-pa-none" />
-          <c-input type="text" class="dialog-size-input q-pa-none" />
-          <c-input type="text" class="dialog-size-input q-pa-none" />
-          <c-input type="text" class="dialog-size-input q-pa-none" />
-          <c-input type="text" class="dialog-size-input q-pa-none" />
+          <c-input
+            id="codeNumber1"
+            type="text"
+            v-model.numberCode="codeNumber"
+            class="dialog-size-input q-pa-none"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
+
+          <c-input
+            id="codeNumber2"
+            type="text"
+            v-model.numberCode="codeNumber"
+            class="dialog-size-input q-pa-none"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
+
+          <c-input
+            id="codeNumber3"
+            type="text"
+            v-model.numberCode="codeNumber"
+            class="dialog-size-input q-pa-none"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
+
+          <c-input
+            id="codeNumber4"
+            type="text"
+            v-model.numberCode="codeNumber"
+            class="dialog-size-input q-pa-none"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
+
+          <c-input
+            id="codeNumber5"
+            type="text"
+            v-model.numberCode="codeNumber"
+            class="dialog-size-input q-pa-none"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
+
+          <c-input
+            id="codeNumber6"
+            type="text"
+            v-model.numberCode="codeNumber"
+            class="dialog-size-input q-pa-none"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
         </section>
       </q-card-section>
 
-      <div class="text-caption1 q-mt-md" v-if="timer">
+      <q-card-section class="text-caption1" v-if="timer">
         Отправить код повторно ({{ timer }} секунд)
-      </div>
+      </q-card-section>
 
-      <div v-else class="text-violet-6 text-caption1 cursor-pointer">
+      <q-card-section v-else class="text-violet-6 text-caption1 cursor-pointer">
         Отправить код повторно
-      </div>
+      </q-card-section>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import CInput from "./ClubInput.vue";
+import userApi from "src/sdk/user";
 
-const { timer } = defineProps({
+const { timer, authInfo } = defineProps({
   timer: Number,
+  authInfo: Object,
 });
+
+const codeNumber = ref("");
+const fullCode = ref("");
+
+const inputCode = async (value) => {
+  fullCode.value += value;
+
+  if (fullCode.value.length === 6)
+    await userApi.setPassword({ ...authInfo, code: fullCode.value });
+};
 </script>
 
 <style scoped lang="scss">

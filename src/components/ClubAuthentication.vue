@@ -1,7 +1,7 @@
 <template>
   <div class="fullscreen text-center flex row">
     <section class="col relative-position flex flex-center">
-      <div class="flex column items-center">
+      <q-form class="flex column items-center">
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
@@ -20,7 +20,7 @@
 
         <a href="" class="c-mb-50 link-grey">Забыли пароль?</a>
         <c-button background label="Войти" class="text-body1 q-py-sm q-px-xl" />
-      </div>
+      </q-form>
 
       <q-img
         class="absolute c-img-270 c-ab-0 c-ar--13 c-z--1"
