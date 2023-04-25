@@ -30,6 +30,7 @@ const routes = [
         name: "my-teams",
         component: () => import("pages/ClubMyTeams.vue"),
       },
+      //тестовые роуты
       {
         path: "market",
         name: "market",
@@ -45,6 +46,7 @@ const routes = [
         name: "space",
         component: () => import("pages/ErrorNotFound.vue"),
       },
+      //
     ],
   },
 
