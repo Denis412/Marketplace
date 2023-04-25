@@ -12,7 +12,7 @@
           placeholder="Поиск участника"
         />
 
-        <q-btn-dropdown label="Выбрать специальность" class="club-ml-32">
+        <q-btn-dropdown label="Выбрать специальность" class="c-ml-32">
           <q-list>
             <q-item clickable v-close-popup @click="onItemClick">
               <q-item-section>
@@ -35,7 +35,7 @@
         </q-btn-dropdown>
       </section>
 
-      <section class="subjects-wrapper club-mt-24 q-gutter-y-md">
+      <section class="subjects-wrapper c-mt-24 q-gutter-y-md">
         <q-item
           clickable
           class="rounded-borders-10 flex justify-between"

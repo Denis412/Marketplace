@@ -6,7 +6,6 @@
       <c-main-screen />
       <c-directions />
       <c-statistics />
-      <c-partitians />
       <c-about />
       <c-items />
       <c-steps />

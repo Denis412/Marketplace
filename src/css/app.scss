@@ -73,23 +73,79 @@
 
 // Отступы
 
-.club-mt-32 {
+.c-ma-16 {
+  margin: 16px;
+}
+
+.c-mt-16 {
+  margin-top: 16px;
+}
+
+.c-mb-16 {
+  margin-bottom: 16px;
+}
+
+.c-ml-16 {
+  margin-left: 16px;
+}
+
+.c-mr-16 {
+  margin-right: 16px;
+}
+
+.c-ma-12 {
+  margin: 12px;
+}
+
+.c-mt-12 {
+  margin-top: 12px;
+}
+
+.c-mb-12 {
+  margin-bottom: 12px;
+}
+
+.c-ml-12 {
+  margin-left: 12px;
+}
+
+.c-mr-12 {
+  margin-right: 12px;
+}
+
+.c-mt-20 {
+  margin-top: 20px;
+}
+
+.c-mb-20 {
+  margin-bottom: 20px;
+}
+
+.c-ml-20 {
+  margin-left: 20px;
+}
+
+.c-mr-20 {
+  margin-right: 20px;
+}
+
+.c-mt-32 {
   margin-top: 32px;
 }
 
-.club-mb-32 {
+.c-mb-32 {
   margin-bottom: 32px;
 }
 
-.club-my-32 {
+.c-my-32 {
   margin: 32px 0;
 }
 
-.club-ml-32 {
+.c-ml-32 {
   margin-left: 2rem;
 }
 
-.club-mt-24 {
+.c-mt-24 {
   margin-top: 24px;
 }
 
@@ -97,20 +153,80 @@
   margin-left: 24px;
 }
 
-.club-mt-72 {
+.c-mt-72 {
   margin-top: 72px;
 }
 
-.club-mt-80 {
+.c-mt-80 {
   margin-top: 80px;
 }
 
-.club-mt-215 {
+.c-mt-215 {
   margin-top: 215px;
 }
 
-.club-mb-10 {
+.c-mb-10 {
   margin-bottom: 10px;
+}
+
+.c-pa-8 {
+  padding: 8px;
+}
+
+.c-pt-8 {
+  padding-top: 8px !important;
+}
+
+.c-pb-8 {
+  padding-bottom: 8px !important;
+}
+
+.c-pl-8 {
+  padding-left: 8px !important;
+}
+
+.c-pr-8 {
+  padding-right: 8px !important;
+}
+
+.c-pa-12 {
+  padding: 12px;
+}
+
+.c-pt-12 {
+  padding-top: 12px !important;
+}
+
+.c-pb-12 {
+  padding-bottom: 12px !important;
+}
+
+.c-pl-12 {
+  padding-left: 12px !important;
+}
+
+.c-pr-12 {
+  padding-right: 12px !important;
+}
+
+.c-pa-16 {
+  padding: 16px;
+}
+
+.c-pt-16 {
+  padding-top: 16px !important;
+}
+
+.c-pb-16 {
+  padding-bottom: 16px !important;
+}
+
+.c-pl-16 {
+  padding-left: 16px !important;
+}
+
+.c-pr-16 {
+  padding-right: 16px !important;
 }
 
 .c-pa-24 {
@@ -195,6 +311,10 @@
 
 .text-violet-6 {
   color: #581c87;
+}
+
+.bg-violet-6 {
+  background-color: #581c87;
 }
 
 .violet-active {
