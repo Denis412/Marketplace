@@ -23,7 +23,30 @@ const routes = [
         path: "teams",
         name: "teams",
         component: () => import("pages/ClubTeamsPage.vue"),
+        children: [],
       },
+      {
+        path: "teams/my-teams",
+        name: "my-teams",
+        component: () => import("pages/ClubMyTeams.vue"),
+      },
+      //тестовые роуты
+      {
+        path: "market",
+        name: "market",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
+        path: "projects",
+        name: "projects",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
+        path: "space",
+        name: "space",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      //
     ],
   },
 

@@ -4,7 +4,7 @@
       <h3 class="text-h3 text-center">Создание команды</h3>
     </header>
 
-    <main class="flex column flex-center club-mt-32">
+    <main class="flex column flex-center c-mt-32">
       <section class="relative-position">
         <q-avatar class="large-avatar">
           <q-img src="/src/assets/previews/preview-create-team.png" />
@@ -30,7 +30,7 @@
 
     <footer class="flex justify-center q-mt-xl">
       <c-button background size="lg" label="Создать" />
-      <c-button outline class="club-ml-32" size="lg" label="Отмена" />
+      <c-button outline class="c-ml-32" size="lg" label="Отмена" />
     </footer>
   </q-form>
 </template>

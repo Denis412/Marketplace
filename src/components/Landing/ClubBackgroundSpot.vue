@@ -92,8 +92,8 @@
       src="src/assets/images/Vectorbg.svg"
       style="
         position: absolute;
-        left: -41.67vw;
-        top: 1823.31px;
+        left: -37.67vw;
+        top: 2008.31px;
       "
     />
     <img
@@ -101,7 +101,7 @@
       style="
         position: absolute;
         left: 51.46vw;
-        top: 2326px;
+        top: 2206px;
       "
     />
     <img
@@ -109,7 +109,7 @@
       style="
         position: absolute;
         left: -53.26vw;
-        top: 3091px;
+        top: 3017px;
       "
     />
     <img
@@ -117,7 +117,7 @@
       style="
       position: absolute;
       left: 43.4vw;
-      top: 3489px;
+      top: 3664px;
       "
     />
     <img
@@ -133,7 +133,7 @@
       style="
       position: absolute;
       left: 45.76vw;
-      top: 5738px;
+      top: 6054px;
       "
     />
     <img
@@ -141,7 +141,7 @@
       style="
       position: absolute;
       left: 42.08vw;
-      top: 7877px;
+      top: 8160px;
       "
     />
   </div>

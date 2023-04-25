@@ -1,7 +1,6 @@
 <template>
   <q-layout view="hHh LpR lff">
     <c-main-header />
-
     <c-main-drawer side="left" />
 
     <q-page-container>

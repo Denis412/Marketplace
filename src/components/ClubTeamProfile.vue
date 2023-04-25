@@ -4,7 +4,7 @@
       <h3 class="text-h3">Профиль команды</h3>
     </header>
 
-    <main class="club-mt-24">
+    <main class="c-mt-24">
       <c-team-profile-header
         :title="team.title"
         :description="team.description"

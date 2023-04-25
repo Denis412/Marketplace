@@ -9,11 +9,11 @@
         <q-img src="/src/assets/images/Ellipse55.svg" />
       </q-avatar>
 
-      <div class="club-ml-32">
+      <div class="c-ml-32">
         <h4 class="text-h4">{{ title }}</h4>
         <div class="text-body2 q-mt-sm">{{ description }}</div>
 
-        <q-list class="club-mt-32 q-gutter-sm">
+        <q-list class="c-mt-32 q-gutter-sm">
           <c-button
             background
             v-for="direction in directions"
