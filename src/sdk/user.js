@@ -22,6 +22,8 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
 );
 
 const registration = async ({ name, surname, email }) => {
+  console.log("reg", { name, surname, email });
+
   const { data: userInfo } = await signUp({
     input: {
       name,
@@ -34,6 +36,7 @@ const registration = async ({ name, surname, email }) => {
 };
 
 const setPassword = async ({ user_id, password, code }) => {
+  console.log("code", { user_id, password, code });
   await userSetPassword({
     input: {
       user_id,

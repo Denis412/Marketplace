@@ -22,6 +22,7 @@
           <c-input
             id="codeNumber1"
             type="text"
+            countInput="1"
             v-model.numberCode="codeNumber"
             class="dialog-size-input q-pa-none"
             maxlength="1"
@@ -31,6 +32,7 @@
           <c-input
             id="codeNumber2"
             type="text"
+            countInput="2"
             v-model.numberCode="codeNumber"
             class="dialog-size-input q-pa-none"
             maxlength="1"
@@ -40,6 +42,7 @@
           <c-input
             id="codeNumber3"
             type="text"
+            countInput="3"
             v-model.numberCode="codeNumber"
             class="dialog-size-input q-pa-none"
             maxlength="1"
@@ -49,6 +52,7 @@
           <c-input
             id="codeNumber4"
             type="text"
+            countInput="4"
             v-model.numberCode="codeNumber"
             class="dialog-size-input q-pa-none"
             maxlength="1"
@@ -58,6 +62,7 @@
           <c-input
             id="codeNumber5"
             type="text"
+            countInput="5"
             v-model.numberCode="codeNumber"
             class="dialog-size-input q-pa-none"
             maxlength="1"
@@ -67,6 +72,7 @@
           <c-input
             id="codeNumber6"
             type="text"
+            countInput="6"
             v-model.numberCode="codeNumber"
             class="dialog-size-input q-pa-none"
             maxlength="1"
@@ -88,8 +94,13 @@
 
 <script setup>
 import { ref } from "vue";
+import { useQuasar } from "quasar";
+
 import CInput from "./ClubInput.vue";
 import userApi from "src/sdk/user";
+import replaceAt from "src/utils/replaceAt";
+
+const $q = useQuasar();
 
 const { timer, authInfo } = defineProps({
   timer: Number,
@@ -99,11 +110,19 @@ const { timer, authInfo } = defineProps({
 const codeNumber = ref("");
 const fullCode = ref("");
 
-const inputCode = async (value) => {
-  fullCode.value += value;
+const inputCode = async (value, inputNumber) => {
+  fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
 
-  if (fullCode.value.length === 6)
-    await userApi.setPassword({ ...authInfo, code: fullCode.value });
+  if (fullCode.value.length === 6) {
+    try {
+      await userApi.setPassword({ ...authInfo, code: fullCode.value });
+    } catch (error) {
+      $q.notify({
+        type: "negative",
+        message: "Неверный код!",
+      });
+    }
+  }
 };
 </script>
 

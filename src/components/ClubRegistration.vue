@@ -108,6 +108,8 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { useQuasar } from "quasar";
+
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
 import CConfirmationCodeDialog from "src/components/ClubConfirmationCodeDialog.vue";
@@ -127,18 +129,26 @@ const form = ref({
 });
 
 const registration = async () => {
-  try {
-    const userInfo = await userApi.registration(form.value);
+  registration.count++;
 
-    if (!timer.value) startTimer();
+  try {
+    let userInfo;
+
+    if (registration.count === 1)
+      if (!timer.value)
+        // userInfo = await userApi.registration(form.value);
+
+        startTimer();
     showConfirmCode.value = true;
 
-    authUserInfo.value.user_id = userInfo.recordId;
+    // authUserInfo.value.user_id = userInfo.recordId;
     authUserInfo.value.password = form.value.password;
   } catch (error) {
     console.log(error);
   }
 };
+
+registration.count = 0;
 
 const startTimer = () => {
   timer.value = 90;

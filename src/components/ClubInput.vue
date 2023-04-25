@@ -31,11 +31,13 @@ const {
   rules,
   modelValue,
   modelModifiers,
+  countInput,
 } = defineProps({
   type: String,
   placeholder: String,
   visibility: Boolean,
   autogrow: Boolean,
+  countInput: String,
   rules: Array,
   modelValue: String,
   modelModifiers: {
@@ -68,7 +70,14 @@ const emitChange = (targetValue) => {
         : capitalizeWord(words[0]);
   }
 
-  if (modelModifiers.numberCode) text = text.replace(/[^0-9]/g, "");
+  if (modelModifiers.numberCode) {
+    text = text.replace(/[^0-9]/g, "");
+
+    value.value = text;
+    emit("update:modelValue", text, countInput);
+
+    return;
+  }
 
   value.value = text;
   emit("update:modelValue", text);
