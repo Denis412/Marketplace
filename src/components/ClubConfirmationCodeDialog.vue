@@ -76,7 +76,7 @@
       </q-card-section>
 
       <q-card-section class="text-caption1" v-if="timer">
-        Отправить код повторно ({{ timer }} секунд)
+        Отправить код повторно ({{ timer.timer }} секунд)
       </q-card-section>
 
       <q-card-section
@@ -117,24 +117,19 @@ const inputCode = async (value, inputNumber) => {
     try {
       await userApi.setPassword({ ...authInfo, code: fullCode.value });
 
-      $q.notify({
-        type: "positive",
-        message: "Регистрация прошла успешно!",
-      });
-
       router.push({
         name: "auth",
       });
     } catch (error) {
       $q.notify({
         type: "negative",
-        message: "Неверный код!",
+        message: "Вы неверно ввели код!",
       });
     }
   }
 };
 
-const sendCode = () => {
+const sendCode = async () => {
   try {
   } catch (error) {
     console.log(error);

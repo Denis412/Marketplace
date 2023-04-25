@@ -40,6 +40,7 @@
           v-model="form.name"
           type="text"
           placeholder="Введите ваше имя"
+          :rules="[required, maxLength(50)]"
         />
 
         <c-input
@@ -47,6 +48,7 @@
           v-model="form.surname"
           type="text"
           placeholder="Введите вашу фамилию"
+          :rules="[required, maxLength(50)]"
         />
 
         <c-input
@@ -54,6 +56,7 @@
           v-model="form.email"
           type="email"
           placeholder="Введите ваш e-mail"
+          :rules="[required, maxLength(150)]"
         />
 
         <c-input
@@ -62,6 +65,7 @@
           type="password"
           placeholder="Введите пароль"
           visibility
+          :rules="[required, minLength(8), maxLength(30), passwordValid]"
         />
 
         <c-input
@@ -70,6 +74,7 @@
           type="password"
           placeholder="Повторите пароль"
           visibility
+          :rules="[required, equal(form.password)]"
         />
 
         <q-checkbox
@@ -101,25 +106,30 @@
 
     <c-confirmation-code-dialog
       v-model="showConfirmCode"
-      :timer="timer.timer"
+      :timer="timer"
       :authInfo="authUserInfo"
     />
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
-import { useQuasar } from "quasar";
 import { useTimer } from "src/use/timer";
+import { useValidators } from "src/use/validators";
+import { useQuasar } from "quasar";
 
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
 import CConfirmationCodeDialog from "src/components/ClubConfirmationCodeDialog.vue";
 import userApi from "src/sdk/user";
 
+const $q = useQuasar();
+const timer = useTimer(90);
+const { required, minLength, maxLength, passwordValid, equal } =
+  useValidators();
+
 const authUserInfo = ref({});
 const agreement = ref(false);
 const showConfirmCode = ref(false);
-const timer = useTimer(90);
 
 const form = ref({
   name: "",
@@ -135,8 +145,14 @@ const registration = async () => {
   try {
     let userInfo;
 
-    if (registration.count === 1)
+    if (registration.count === 1) {
       if (!timer.timer.value) userInfo = await userApi.registration(form.value);
+
+      $q.notify({
+        type: "positive",
+        message: "Вам на почту отправлено письмо с кодом подтверждения!",
+      });
+    }
 
     timer.start();
     showConfirmCode.value = true;
