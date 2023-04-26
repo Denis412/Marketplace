@@ -85,9 +85,9 @@ const form = ref({
 
 const authorization = async () => {
   try {
-    const userData = await userApi.login(form.value);
+    await userApi.login(form.value);
 
-    store.SET_CURRENT_USER(userData);
+    store.SET_CURRENT_USER();
 
     router.push({
       name: "club",

@@ -10,12 +10,11 @@
 import { onMounted } from "vue";
 import { useUserStore } from "./stores/user";
 
+import userApi from "src/sdk/user";
+
 const store = useUserStore();
 
 onMounted(() => {
-  const userData = localStorage.getItem("user-data");
-
-  if (!store.GET_CURRENT_USER && userData)
-    store.SET_CURRENT_USER(JSON.parse(userData));
+  userApi.isAuth() ? store.SET_CURRENT_USER() : null;
 });
 </script>

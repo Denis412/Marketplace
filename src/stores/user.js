@@ -12,8 +12,8 @@ export const useUserStore = defineStore("user", {
   },
 
   actions: {
-    SET_CURRENT_USER(currentUser) {
-      this.currentUser = currentUser;
+    SET_CURRENT_USER() {
+      this.currentUser = JSON.parse(localStorage.getItem("user-data"));
     },
 
     LOGOUT_CURRENT_USER() {

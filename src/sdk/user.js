@@ -31,7 +31,6 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
 
 const registration = async ({ name, surname, email }) => {
   console.log("reg", { name, surname, email });
-
   const { data: userInfo } = await signUp({
     input: {
       name,
@@ -99,6 +98,9 @@ const logout = () => {
   localStorage.removeItem("user-data");
 };
 
+const isAuth = () =>
+  localStorage.getItem("user-data") && localStorage.getItem("refreshToken");
+
 const userApi = {
   registration,
   setPassword,
@@ -106,6 +108,7 @@ const userApi = {
   userPasswordConfirmCode,
   login,
   logout,
+  isAuth,
 };
 
 export default userApi;

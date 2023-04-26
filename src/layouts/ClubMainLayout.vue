@@ -16,12 +16,15 @@
 </template>
 
 <script setup>
-import CMainHeader from "src/components/ClubMainHeader.vue";
-import CMainDrawer from "src/components/ClubMainDrawer.vue";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "src/stores/user";
 import { useQuasar } from "quasar";
+
+import CMainHeader from "src/components/ClubMainHeader.vue";
+import CMainDrawer from "src/components/ClubMainDrawer.vue";
+
+import userApi from "src/sdk/user";
 
 const router = useRouter();
 const store = useUserStore();
@@ -29,7 +32,7 @@ const $q = useQuasar();
 
 const currentUser = computed(() => store.GET_CURRENT_USER);
 
-if (!localStorage.getItem("refreshToken") || !currentUser.value) {
+if (!userApi.isAuth() && !currentUser.value) {
   router.push({
     name: "auth",
   });
