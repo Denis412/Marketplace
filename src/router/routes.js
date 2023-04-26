@@ -46,6 +46,11 @@ const routes = [
         name: "space",
         component: () => import("pages/ErrorNotFound.vue"),
       },
+      {
+        path: "addDocument",
+        name: "addDocument",
+        component: () => import("pages/ClubAddNewDocument.vue"),
+      },
       //
     ],
   },
