@@ -13,12 +13,17 @@
         <q-img
           src="/src/assets/previews/craete-photo.png"
           class="absolute create-form-avatar-create cursor-pointer"
-          @click="testClick"
+          @click="triggerInput"
         />       
       </section>
       
       <section>
-          <q-file outlined v-model="team_img"
+          <q-file 
+          class="q-file"
+          outlined 
+          v-model="team_img"
+          accept=".png,.jpg"
+          ref="uploadFile"
           @update:model-value="updateFile()"/>
       </section>
 
@@ -64,6 +69,7 @@ const form = ref({
 
 const team_img = ref(null)
 const team_img_URL = ref("/src/assets/previews/preview-create-team.png");
+const uploadFile = ref(null)
 
 const createSpace = async () => {
   try {
@@ -78,9 +84,9 @@ const updateFile = () => {
         team_img_URL.value = URL.createObjectURL(team_img.value);
       }
 
-// const testClick = () =>{
-     
-//     }
+const triggerInput = () => {
+      uploadFile.value.pickFiles();
+    };
 
 </script>
 
@@ -99,4 +105,9 @@ const updateFile = () => {
     }
   }
 }
+
+.q-file {
+  display: none;
+}
+
 </style>
