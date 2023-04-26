@@ -11,12 +11,13 @@
         </div>
 
         <div class="flex buttons-wrapper q-mt-xl">
-          <c-button background size="lg" label="Создать команду" />
+          <c-button background size="lg" label="Найти команду" />
           <c-button
             outline
             size="lg"
-            label="Найти команду"
+            label="Создать команду"
             class="page-background"
+            to="/club/team-create"
           />
         </div>
       </div>
