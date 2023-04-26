@@ -4,6 +4,7 @@
         v-model="editor"
         ref="edit"
         square
+        flat
         :toolbar="[
           ['undo','redo'],
             [
@@ -22,7 +23,6 @@
           ['underline','strike','bold', 'italic'],
           [
             {
-              label: $q.lang.editor.align,
               icon: $q.iconSet.editor.align,
               fixedLabel: true,
               list: 'only-icons',
@@ -67,7 +67,8 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
-      </template>
+        </template>
+
       </q-editor>
     </div>
   </template>
@@ -94,9 +95,9 @@ const foreColor = ref('#000000')
 const highlight = ref('#ffff00aa')
 
 const color = (cmd, name) => {
-  this.token.hide()
-  this.edit.caret.restore()
-  this.edit.runCmd(cmd, name)
-  this.edit.focus()
+  token._value.hide()
+  edit._value.caret.restore()
+  edit._value.runCmd(cmd, name)
+  edit._value.focus()
 }
 </script>
