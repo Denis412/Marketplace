@@ -13,6 +13,7 @@ import {
   userResetPasswordConfirmCodeSetPassword,
 } from "src/graphql/user/mutations";
 import { getUser } from "src/graphql/user/queries";
+import tokenApi from "./token";
 
 provideApolloClient(apolloClient);
 
@@ -81,18 +82,21 @@ const login = async ({ login, password }) => {
     },
   });
 
-  localStorage.setItem("token", userInfo.userSignIn.record.access_token);
+  tokenApi.save(userInfo.userSignIn.record);
 
   const { data: userData } = await refetchUser({
     id: userInfo.userSignIn.recordId,
   });
 
-  localStorage.setItem("user-avatar", userData.user.avatar);
-  localStorage.setItem("user-name", userData.user.name);
-  localStorage.setItem("user-surname", userData.user.surname);
-  localStorage.setItem("user-telegram", userData.user.telegram_chat_id);
+  localStorage.setItem("user-data", JSON.stringify(userData.user));
 
   return userData.user;
+};
+
+const logout = () => {
+  tokenApi.remove();
+
+  localStorage.removeItem("user-data");
 };
 
 const userApi = {
@@ -101,6 +105,7 @@ const userApi = {
   userPasswordSendCode,
   userPasswordConfirmCode,
   login,
+  logout,
 };
 
 export default userApi;

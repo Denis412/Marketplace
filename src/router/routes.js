@@ -23,7 +23,6 @@ const routes = [
         path: "teams",
         name: "teams",
         component: () => import("pages/ClubTeamsPage.vue"),
-        children: [],
       },
       {
         path: "teams/my-teams",
