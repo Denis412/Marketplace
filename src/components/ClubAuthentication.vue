@@ -68,12 +68,15 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "stores/user";
+
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
 import userApi from "src/sdk/user";
-import { useRouter } from "vue-router";
 
 const router = useRouter();
+const store = useUserStore();
 
 const form = ref({
   login: "",
@@ -83,6 +86,8 @@ const form = ref({
 const authorization = async () => {
   try {
     await userApi.login(form.value);
+
+    store.SET_CURRENT_USER();
 
     router.push({
       name: "club",

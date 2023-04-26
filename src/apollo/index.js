@@ -1,5 +1,6 @@
 import { createHttpLink, InMemoryCache } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
+import tokenApi from "src/sdk/token";
 
 export /* async */ function getClientOptions(/* {app, router, ...} */) {
   const httpLink = createHttpLink({
@@ -7,7 +8,7 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem("token");
+    const token = tokenApi.getTokenData()?.access_token;
 
     return !token
       ? { headers: { ...headers } }
