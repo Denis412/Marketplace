@@ -24,7 +24,7 @@
           to="/authentication"
           outline
           label="Войти"
-          class="text-body1 q-py-sm q-px-xl"
+          class="text-body1"
         />
       </div>
     </section>
@@ -39,7 +39,7 @@
         <p class="c-mb-30 fs-16 text-body2">Зарегистрируйтесь в нашем клубе</p>
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.name"
           type="text"
           placeholder="Введите ваше имя"
@@ -47,7 +47,7 @@
         />
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.surname"
           type="text"
           placeholder="Введите вашу фамилию"
@@ -55,7 +55,7 @@
         />
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.email"
           type="email"
           placeholder="Введите ваш e-mail"
@@ -63,7 +63,7 @@
         />
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.password"
           type="password"
           placeholder="Введите пароль"
@@ -72,7 +72,7 @@
         />
 
         <c-input
-          class="c-mb-15 c-input-400"
+          class="c-input-400"
           v-model="form.confirmPassword"
           type="password"
           placeholder="Повторите пароль"
@@ -84,7 +84,7 @@
           dense
           v-model="agreement"
           color="purple"
-          class="c-mb-30 c-maxw-350"
+          class="c-mb-30 c-maxw-350 c-checkbox-rounded"
         >
           <template v-slot:default>
             Я принимаю <a href="">Условия использования</a> и соглашаюсь с
@@ -97,7 +97,7 @@
           type="submit"
           background
           label="Зарегистрироваться"
-          class="text-body1 q-py-sm q-px-xl"
+          class="text-body1"
         />
       </q-form>
 

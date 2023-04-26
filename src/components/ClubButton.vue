@@ -1,11 +1,11 @@
 <template>
   <q-btn
-  flat
-  v-ripple="{ color: rippleColor ?? '' }"
-  no-caps
-  :disable="disable"
-  :type="type"
-  :class="typeClass"
+    flat
+    v-ripple="{ color: rippleColor ?? '' }"
+    no-caps
+    :disable="disable"
+    :type="type"
+    :class="typeClass"
   >
     <template #default>
       <span>
@@ -84,94 +84,4 @@ const typeClass = {
 };
 </script>
 
-<style lang="scss" scoped>
-.club-button-background {
-  color: white;
-  background: $primary-gradient;
-
-  border-radius: 8px !important;
-
-  &:disabled {
-    color: rgba(255, 255, 255, 0.5);
-    background: $primary-gradient-disaled;
-  }
-}
-
-.club-button-flat {
-  background: inherit;
-
-  border-radius: 8px !important;
-
-  & span span,
-  i {
-    background-image: $primary-gradient !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-  }
-
-  &:disabled {
-    color: rgba(255, 255, 255, 0.3);
-  }
-}
-
-.club-button-outline {
-  $border: 3px;
-
-  border: $border solid transparent !important;
-  border-radius: 8px !important;
-
-  background: white;
-  background-clip: padding-box !important;
-
-  & .q-focus-helper {
-    border-radius: 0 !important;
-  }
-
-  & span span,
-  i {
-    background-image: $primary-gradient !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-  }
-
-  &:before {
-    margin: -$border !important;
-    z-index: -1 !important;
-
-    border: none !important;
-    border-radius: inherit !important;
-    background: $primary-gradient !important;
-  }
-
-  &:disabled {
-    color: rgba(255, 255, 255, 0.3) !important;
-  }
-}
-
-.club-button-outline-text-colored {
-  $border: 3px;
-
-  border: $border solid transparent !important;
-  border-radius: 8px !important;
-
-  background: white;
-  background-clip: padding-box !important;
-
-  & .q-focus-helper {
-    border-radius: 0 !important;
-  }
-
-  &:before {
-    margin: -$border !important;
-    z-index: -1 !important;
-
-    border: none !important;
-    border-radius: inherit !important;
-    background: $primary-gradient !important;
-  }
-
-  &:disabled {
-    color: rgba(255, 255, 255, 0.3) !important;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -21,12 +21,7 @@
         />
 
         <a href="" class="c-mb-50 link-grey">Забыли пароль?</a>
-        <c-button
-          background
-          label="Войти"
-          type="submit"
-          class="text-body1 q-py-sm q-px-xl"
-        />
+        <c-button background label="Войти" type="submit" class="text-body1" />
       </q-form>
 
       <q-img
@@ -59,7 +54,7 @@
           to="/registration"
           outline
           label="Регистрация"
-          class="text-body1 q-py-sm q-px-xl"
+          class="text-body1"
         />
       </div>
     </section>
