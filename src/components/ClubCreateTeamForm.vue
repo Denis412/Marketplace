@@ -1,5 +1,5 @@
 <template>
-  <q-form class="create-form c-pa-32 bg-white rounded-borders-15" @submit.prevent="createSpace">
+  <q-form class="create-form c-pa-32 bg-white rounded-borders-15" @submit.prevent="createTeam">
     <header>
       <h3 class="text-h3 text-center">Создание команды</h3>
     </header>
@@ -73,7 +73,13 @@ const team_img = ref(null)
 const team_img_URL = ref("/src/assets/previews/preview-create-team.png");
 const uploadFile = ref(null)
 
-const createSpace = async () => {
+const createTeam = async () => {
+  try {
+    await  userSpace.userTeamCreate(form.value);
+  } 
+  catch (error) {
+    console.log(error);
+  }
   try {
     await  userSpace.userSpaceCreate(form.value);
   } 
@@ -89,7 +95,7 @@ const updateFile = () => {
   else{
     $q.notify('Максимальный вес картинки 10Mb!')
   }
-  }
+}
 
 const triggerInput = () => {
       uploadFile.value.pickFiles();
