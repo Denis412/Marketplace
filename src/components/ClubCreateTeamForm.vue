@@ -58,6 +58,7 @@ import { ref } from "vue";
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
 import userTeams from "src/sdk/team";
+import filesApi from "src/sdk/file";
 import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
 
@@ -77,6 +78,12 @@ const createTeam = async () => {
   try {
     await  userTeams.userTeamCreate(form.value);
   } 
+  catch (error) {
+    console.log(error);
+  }
+   try {
+    await filesApi.uploadFiles(team_img.value);
+  }
   catch (error) {
     console.log(error);
   }
