@@ -112,9 +112,7 @@
     <c-confirmation-code-dialog
       v-model="showConfirmCode"
       :timer="timer"
-      :authInfo="authUserInfo"
-      :email="form.email"
-      :password="form.password"
+      :auth-info="authUserInfo"
     />
   </div>
 </template>

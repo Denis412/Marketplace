@@ -1,21 +1,45 @@
 @import "fonts.scss";
 
 .c-input-outline {
-  $min-height: 60px;
-
   div {
     border-radius: 8px !important;
 
     & .q-field__control {
       outline: 1px solid #cacaca !important;
       padding: 0 24px !important;
-      height: $min-height;
+      height: $input-height-md;
 
       div {
-        height: $min-height;
+        height: $input-height-md;
 
         input {
           @extend .text-body2;
+
+          &::placeholder {
+            color: #6d6d6d;
+          }
+        }
+      }
+    }
+  }
+}
+
+.c-input-number {
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__control {
+      outline: 1px solid #cacaca !important;
+      padding: 0 12px !important;
+      height: $input-height-md;
+
+      div {
+        height: $input-height-md;
+
+        input {
+          @extend .text-body2;
+
+          text-align: center;
 
           &::placeholder {
             color: #6d6d6d;

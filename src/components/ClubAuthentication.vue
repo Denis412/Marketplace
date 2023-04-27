@@ -20,7 +20,10 @@
           visibility
         />
 
-        <a href="" class="c-mb-50 link-grey">Забыли пароль?</a>
+        <p href="" class="c-mb-50 link-grey" @click="resetPassword">
+          Забыли пароль?
+        </p>
+
         <c-button background label="Войти" type="submit" class="text-body1" />
       </q-form>
 
@@ -58,6 +61,16 @@
         />
       </div>
     </section>
+
+    <!-- <c-confirmation-code-dialog
+      v-if="reset"
+      v-model="reset"
+      :timer="timer"
+      edit-password
+      :auth-info="authInfo"
+    /> -->
+
+    <!-- <c-edit-password-dialog v-model="reset" /> -->
   </div>
 </template>
 
@@ -68,10 +81,17 @@ import { useUserStore } from "stores/user";
 
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
+import CConfirmationCodeDialog from "./ClubConfirmationCodeDialog.vue";
+import CEditPasswordDialog from "src/components/ClubEditPasswordDialog.vue";
 import userApi from "src/sdk/user";
+import { useTimer } from "src/use/timer";
 
 const router = useRouter();
 const store = useUserStore();
+const timer = useTimer(90);
+
+const reset = ref(false);
+const authInfo = ref({});
 
 const form = ref({
   login: "",
@@ -90,6 +110,18 @@ const authorization = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const resetPassword = async () => {
+  if (timer.timer.value === 90) {
+    authInfo.value.email = form.value.login;
+    authInfo.value.password = form.value.password;
+
+    timer.clear();
+    timer.start();
+  }
+
+  reset.value = true;
 };
 </script>
 

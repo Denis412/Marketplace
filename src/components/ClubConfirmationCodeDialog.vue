@@ -18,12 +18,12 @@
           </div>
         </section>
 
-        <section class="flex no-wrap q-gutter-x-sm club-mt-32">
+        <section class="flex no-wrap q-gutter-x-sm c-mt-32">
           <c-input
             type="text"
             countInput="1"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -32,7 +32,7 @@
             type="text"
             countInput="2"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -41,7 +41,7 @@
             type="text"
             countInput="3"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -50,7 +50,7 @@
             type="text"
             countInput="4"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -59,7 +59,7 @@
             type="text"
             countInput="5"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -68,14 +68,14 @@
             type="text"
             countInput="6"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
         </section>
       </q-card-section>
-      <!--
-      <pre>y {{ userIdRefetch }}</pre>
+
+      <!-- <pre>y {{ userIdRefetch }}</pre>
       <pre>{{ authInfo }}</pre>
       <pre>{{ fullCode }}</pre> -->
 
@@ -91,59 +91,72 @@
         Отправить код повторно
       </q-card-section>
     </q-card>
+
+    <c-edit-password-dialog @resetPassword="fetchCode" />
   </q-dialog>
 </template>
 
 <script setup>
-import { isRef, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 import CInput from "./ClubInput.vue";
+import CEditPasswordDialog from "./ClubEditPasswordDialog.vue";
 import userApi from "src/sdk/user";
 import replaceAt from "src/utils/replaceAt";
 
 const $q = useQuasar();
 const router = useRouter();
 
-const { timer, authInfo, password } = defineProps({
+const { timer, authInfo, editPassword } = defineProps({
   timer: Object,
   authInfo: Object,
-  password: String,
+  editPassword: Boolean,
 });
 
 const codeNumber = ref("");
 const fullCode = ref(" ".repeat(6));
 const userIdRefetch = ref("");
+const showEditPassword = ref(false);
+
+const fetchCode = async (editedPassword = "") => {
+  if (editPassword && !editedPassword) {
+    showEditPassword.value = true;
+    return;
+  }
+
+  const currentPassword = editedPassword || authInfo.password;
+
+  try {
+    if (!userIdRefetch.value)
+      await userApi.setPassword({
+        user_id: authInfo.user_id,
+        password: currentPassword,
+        code: fullCode.value,
+      });
+    else
+      await userApi.userPasswordConfirmCode({
+        user_id: userIdRefetch.value,
+        password: currentPassword,
+        code: parseInt(fullCode.value),
+      });
+
+    router.push({
+      name: "auth",
+    });
+  } catch (error) {
+    $q.notify({
+      type: "negative",
+      message: "Вы неверно ввели код!",
+    });
+  }
+};
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
 
-  if (fullCode.value.indexOf(" ") === -1) {
-    try {
-      if (!userIdRefetch.value)
-        await userApi.setPassword({
-          user_id: authInfo.user_id,
-          password: authInfo.password,
-          code: fullCode.value,
-        });
-      else
-        await userApi.userPasswordConfirmCode({
-          user_id: userIdRefetch.value,
-          password: authInfo.password,
-          code: parseInt(fullCode.value),
-        });
-
-      router.push({
-        name: "auth",
-      });
-    } catch (error) {
-      $q.notify({
-        type: "negative",
-        message: "Вы неверно ввели код!",
-      });
-    }
-  }
+  if (fullCode.value.indexOf(" ") === -1) fetchCode();
 };
 
 const sendCode = async () => {
@@ -167,6 +180,10 @@ const sendCode = async () => {
     console.log(error);
   }
 };
+
+onMounted(() => {
+  if (editPassword && authInfo.email) sendCode();
+});
 </script>
 
 <style scoped lang="scss">
