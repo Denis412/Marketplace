@@ -5,34 +5,7 @@
         ref="edit"
         square
         flat
-        :toolbar="[
-          ['undo','redo'],
-            [
-              {
-                label:$q.lang.editor.fontSize,
-                fixedIcon: true,
-                list: 'no-icons',
-                options: [
-                  'size-6',
-                  'size-5',
-                  'size-4'
-                ]
-              },
-            ],
-          ['token'],
-          ['underline','strike','bold', 'italic'],
-          [
-            {
-              icon: $q.iconSet.editor.align,
-              fixedLabel: true,
-              list: 'only-icons',
-              options: ['left', 'center', 'right', 'justify']
-            },
-            'outdent', 'indent', 'ordered', 'unordered'
-          ],
-          ['removeFormat','link','hr'],
-          ['print']
-        ]" >
+        :toolbar="toolbar" >
         <template v-slot:token>
         <q-btn-dropdown dense no-caps ref="token" no-wrap unelevated   label="Цвет текста" size="sm">
           <q-list dense>
@@ -75,6 +48,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
   
 const lightPalette = [
   '#ffccccaa', '#ffe6ccaa', '#ffffccaa', '#ccffccaa',
@@ -86,6 +62,34 @@ const lightPalette = [
   const textPalette = [
   '#ff0000', '#ff8000', '#ffff00', '#000000', '#00ff80',
   '#00ffff', '#0080ff', '#0000ff', '#8000ff', '#ff00ff'
+]
+const toolbar = [
+  ['undo','redo'],
+    [
+      {
+        label:$q.lang.editor.fontSize,
+        fixedIcon: true,
+        list: 'no-icons',
+        options: [
+          'size-6',
+          'size-5',
+          'size-4'
+        ]
+      },
+    ],
+    ['token'],
+    ['underline','strike','bold', 'italic'],
+    [
+      {
+        icon: $q.iconSet.editor.align,
+        fixedLabel: true,
+        list: 'only-icons',
+        options: ['left', 'center', 'right', 'justify']
+      },
+      'outdent', 'indent', 'ordered', 'unordered'
+    ],
+    ['removeFormat','link','hr'],
+    ['print']
 ]
 const edit = ref(null)
 const editor = ref("")

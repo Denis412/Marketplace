@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-import CEditor from "src/components/Documents/ClubEditor.vue"
+import CEditor from "src/components/ClubEditor.vue"
 </script>
