@@ -1,23 +1,10 @@
 import { provideApolloClient, useMutation } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
-
-import { spaceCreate, teamCreate } from "src/graphql/team/mutations";
+import { teamCreate } from "src/graphql/team/mutations";
 
 provideApolloClient(apolloClient);
 
-const { mutate: createSpace } = useMutation(spaceCreate);
 const { mutate: createTeam } = useMutation(teamCreate);
-
-const userSpaceCreate = async ({ name, description }) => {
-    const {data: userSpaceInfo } = await createSpace({
-        input: {
-            name,
-            description,
-          },
-    });
-
-    return userSpaceInfo.spaceCreate
-  };
 
 const userTeamCreate = async ({ name, description }) => {
     const {data: userTeamInfo } = await createTeam({
@@ -30,9 +17,8 @@ const userTeamCreate = async ({ name, description }) => {
     return userTeamInfo.create_Teams.record
   };
 
-  const userSpace = {
-    userSpaceCreate,
+  const userTeams = {
     userTeamCreate,
   };
   
-  export default userSpace;
+  export default userTeams;

@@ -57,7 +57,7 @@ import { ref } from "vue";
 
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
-import userSpace from "src/sdk/team";
+import userTeams from "src/sdk/team";
 import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
 
@@ -75,13 +75,7 @@ const uploadFile = ref(null)
 
 const createTeam = async () => {
   try {
-    await  userSpace.userTeamCreate(form.value);
-  } 
-  catch (error) {
-    console.log(error);
-  }
-  try {
-    await  userSpace.userSpaceCreate(form.value);
+    await  userTeams.userTeamCreate(form.value);
   } 
   catch (error) {
     console.log(error);
