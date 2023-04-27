@@ -21,7 +21,7 @@
           <q-file 
           class="q-file"
           outlined 
-          v-model="team_img"
+          v-model="upload_img"
           accept=".png,.jpg"
           ref="uploadFile"
           @update:model-value="updateFile()"/>
@@ -70,19 +70,31 @@ const form = ref({
   description:""
 })
 
-const team_img = ref(null)
+const upload_img = ref(null)
 const team_img_URL = ref("/src/assets/previews/preview-create-team.png");
 const uploadFile = ref(null)
+// const obj=ref({
+//   id:"",
+//   team_img:""
+// })
+const id = ref("")
+const team_img = ref("")
 
 const createTeam = async () => {
   try {
-    await  userTeams.userTeamCreate(form.value);
+    id.value = await userTeams.userTeamCreate(form.value);
   } 
   catch (error) {
     console.log(error);
   }
    try {
-    await filesApi.uploadFiles(team_img.value);
+    team_img.value = await filesApi.uploadFiles(upload_img.value);
+  }
+  catch (error) {
+    console.log(error);
+  }
+  try {
+    await userTeams.userTeamUpdate(id.value, team_img.value, form.value.name);
   }
   catch (error) {
     console.log(error);
@@ -90,8 +102,8 @@ const createTeam = async () => {
 };
 
 const updateFile = () => {
-  if (Math.round(team_img.value.size / Math.pow(1024,2)) <= 10){
-        team_img_URL.value = URL.createObjectURL(team_img.value);
+  if (Math.round(upload_img.value.size / Math.pow(1024,2)) <= 10){
+        team_img_URL.value = URL.createObjectURL(upload_img.value);
         }
   else{
     $q.notify('Максимальный вес картинки 10Mb!')
