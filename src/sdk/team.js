@@ -27,7 +27,7 @@ const userTeamCreate = async ({ name, description }) => {
           },
     });
 
-    return userTeamInfo.create_type3.record
+    return userTeamInfo.create_Teams.record
   };
 
   const userSpace = {
