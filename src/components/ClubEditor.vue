@@ -1,10 +1,11 @@
 <template>
-    <div class="q-pa-md q-gutter-sm">
+    <div class="q-pa-md q-gutter-sm ">
       <q-editor
         v-model="editor"
         ref="edit"
-        square
         flat
+        :content-style="{borderTop: '1px solid grey'}"
+        :content-class="'q-px-xl'"
         :toolbar="toolbar" >
         <template v-slot:token>
         <q-btn-dropdown dense no-caps ref="token" no-wrap unelevated   label="Цвет текста" size="sm">
@@ -41,7 +42,6 @@
           </q-list>
         </q-btn-dropdown>
         </template>
-
       </q-editor>
     </div>
   </template>
@@ -71,9 +71,9 @@ const toolbar = [
         fixedIcon: true,
         list: 'no-icons',
         options: [
-          'size-6',
           'size-5',
-          'size-4'
+          'size-4',
+          'size-3'
         ]
       },
     ],
@@ -91,8 +91,21 @@ const toolbar = [
     ['removeFormat','link','hr'],
     ['print']
 ]
+const monthNames = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
+  "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"
+];
+
+const date = new Date()
+const day = date.getDate()
+const month = monthNames[date.getMonth()]
+const year = date.getFullYear()
 const edit = ref(null)
-const editor = ref("")
+const path = "Главная/Сайт с каталогом/Без названия" //Placeholder
+const editor = ref("<input readonly class='q-my-sm q-mt-xl' style='color:grey; outline:none; width:50%; border: none' placeholder='"+path+"'></input>" +
+                   "<input readonly class='q-my-sm' style='align:right; direction: rtl; color:grey; outline:none; width:50%; border: none' placeholder='Дата создания: "+ day+ " " + month + " " + year +"'></input>" +
+                   "<input autocomplete='off'; v-bind:name style='color:grey; width:100%; border: none; outline:none' class='text-h3 q-mb-sm' id='id' placeholder='Придумайте название файла'></input>" +
+                   "<div style='font-size:16px'></div>"
+                  )
 const token = ref(null)
 
 const foreColor = ref('#000000')
@@ -105,3 +118,10 @@ const color = (cmd, name) => {
   edit._value.focus()
 }
 </script>
+
+<style lang="scss" scoped>
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+</style>
