@@ -6,7 +6,7 @@
 
     <div class="c-ml-24">
       <h4 class="text-h4 club-mb-16">{{ team.name }}</h4>
-      <p class="text-body2">{{ team.description }}</p>
+      <h6 class="text-body2">{{ team.description }}</h6>
     </div>
   </div>
 </template>

@@ -1,13 +1,22 @@
 <template>
-  <q-page class="c-pa-32 page-background flex flex-center" style="z-index: 0">
-    <!-- <c-not-found-teams /> -->
+  <q-page class="c-pa-32 page-background" style="z-index: 0">
+    <div>
+      <div v-if="teams.length" class="flex club-mb-32">
+        <c-team-card v-for="team in teams" :key="team.id" :team="team" />
+      </div>
+
+      <div v-else>
+        <c-not-found-teams />
+      </div>
+    </div>
+
+    <c-team-request />
+    <c-team-request />
 
     <!-- <section class="flex flex-center"> -->
     <!-- <c-create-team-form /> -->
     <!-- </section> -->
     <!-- <c-team-profile :team="team" /> -->
-
-    <c-team-card v-for="team in teams" :key="team.id" :team="team" />
   </q-page>
 </template>
 
@@ -25,6 +34,7 @@ import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
 import CCreateTeamForm from "src/components/ClubCreateTeamForm.vue";
 import CTeamProfile from "src/components/ClubTeamProfile.vue";
 import CTeamCard from "src/components/ClubTeamCard.vue";
+import CTeamRequest from "src/components/ClubTeamRequest.vue";
 
 provideApolloClient(apolloClient);
 
@@ -41,6 +51,7 @@ provideApolloClient(apolloClient);
 //   console.log(teams.value);
 // });
 
+//тестовый массив
 const teams = ref([
   {
     id: 1,
