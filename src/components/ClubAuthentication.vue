@@ -1,5 +1,20 @@
 <template>
   <div class="fullscreen text-center flex row">
+    <q-file
+      v-model="files"
+      label="Pick files"
+      filled
+      multiple
+      append
+      style="max-width: 300px"
+    />
+    <c-button
+      background
+      label="Загрузить"
+      @click="upload"
+      style="height: 50px"
+    />
+
     <section class="col relative-position flex flex-center">
       <q-form class="flex column items-center" @submit="authorization">
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
@@ -89,6 +104,17 @@ import CConfirmationCodeDialog from "./ClubConfirmationCodeDialog.vue";
 import CEditPasswordDialog from "src/components/ClubEditPasswordDialog.vue";
 import userApi from "src/sdk/user";
 import { useTimer } from "src/use/timer";
+import filesApi from "src/sdk/file";
+
+const files = ref(null);
+
+const upload = async () => {
+  try {
+    await filesApi.uploadFiles(files.value);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const router = useRouter();
 const store = useUserStore();

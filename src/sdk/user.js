@@ -3,8 +3,6 @@ import {
   useMutation,
   useQuery,
 } from "@vue/apollo-composable";
-import apolloClient from "src/apollo/apollo-client";
-
 import {
   userSignUp,
   userSignIn,
@@ -14,6 +12,8 @@ import {
   userGroupInviteUser,
 } from "src/graphql/user/mutations";
 import { getUser, getSubject } from "src/graphql/user/queries";
+
+import apolloClient from "src/apollo/apollo-client";
 import tokenApi from "./token";
 
 provideApolloClient(apolloClient);
@@ -130,10 +130,13 @@ const login = async ({ login, password }) => {
     first_name: subjectData.paginate_subject.data[0].fullname.first_name,
     middle_name: subjectData.paginate_subject.data[0].fullname.middle_name,
     last_name: subjectData.paginate_subject.data[0].fullname.last_name,
+    user_id: userInfo.userSignIn.recordId,
     email: userData.user.email,
     avatar: userData.user.avatar,
     telegram_chat_id: userData.user.telegram_chat_id,
   };
+
+  console.log(userStore);
 
   localStorage.setItem("user-data", JSON.stringify(saveUserData));
 

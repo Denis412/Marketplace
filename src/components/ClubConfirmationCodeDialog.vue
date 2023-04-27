@@ -75,10 +75,6 @@
         </section>
       </q-card-section>
 
-      <!-- <pre>y {{ userIdRefetch }}</pre>
-      <pre>{{ authInfo }}</pre>
-      <pre>{{ fullCode }}</pre> -->
-
       <q-card-section class="text-caption1" v-if="timer.timer.value">
         Отправить код повторно ({{ timer.timer }} секунд)
       </q-card-section>
@@ -92,18 +88,15 @@
         Отправить код повторно
       </q-card-section>
     </q-card>
-
-    <c-edit-password-dialog @resetPassword="fetchCode" />
   </q-dialog>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 import CInput from "./ClubInput.vue";
-import CEditPasswordDialog from "./ClubEditPasswordDialog.vue";
 import userApi from "src/sdk/user";
 import replaceAt from "src/utils/replaceAt";
 
@@ -119,45 +112,35 @@ const { timer, authInfo, editPassword } = defineProps({
 const codeNumber = ref("");
 const fullCode = ref(" ".repeat(6));
 const userIdRefetch = ref("");
-const showEditPassword = ref(false);
-
-const fetchCode = async (editedPassword = "") => {
-  if (editPassword && !editedPassword) {
-    showEditPassword.value = true;
-    return;
-  }
-
-  const currentPassword = editedPassword || authInfo.password;
-
-  try {
-    if (!userIdRefetch.value)
-      await userApi.setPassword({
-        user_id: authInfo.user_id,
-        password: currentPassword,
-        code: fullCode.value,
-      });
-    else
-      await userApi.userPasswordConfirmCode({
-        user_id: userIdRefetch.value,
-        password: currentPassword,
-        code: parseInt(fullCode.value),
-      });
-
-    router.push({
-      name: "auth",
-    });
-  } catch (error) {
-    $q.notify({
-      type: "negative",
-      message: "Вы неверно ввели код!",
-    });
-  }
-};
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
 
-  if (fullCode.value.indexOf(" ") === -1) fetchCode();
+  if (fullCode.value.indexOf(" ") === -1) {
+    try {
+      if (!userIdRefetch.value)
+        await userApi.setPassword({
+          user_id: authInfo.user_id,
+          password: currentPassword,
+          code: fullCode.value,
+        });
+      else
+        await userApi.userPasswordConfirmCode({
+          user_id: userIdRefetch.value,
+          password: currentPassword,
+          code: parseInt(fullCode.value),
+        });
+
+      router.push({
+        name: "auth",
+      });
+    } catch (error) {
+      $q.notify({
+        type: "negative",
+        message: "Вы неверно ввели код!",
+      });
+    }
+  }
 };
 
 const sendCode = async () => {
@@ -181,10 +164,6 @@ const sendCode = async () => {
     console.log(error);
   }
 };
-
-onMounted(() => {
-  if (editPassword && authInfo.email) sendCode();
-});
 </script>
 
 <style scoped lang="scss">
