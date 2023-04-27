@@ -5,10 +5,11 @@
         ref="edit"
         flat
         :content-style="{borderTop: '1px solid grey'}"
+        min-height="15rem"
         :content-class="'q-px-xl'"
         :toolbar="toolbar" >
         <template v-slot:token>
-        <q-btn-dropdown dense no-caps ref="token" no-wrap unelevated   label="Цвет текста" size="sm">
+        <q-btn-dropdown dense no-caps ref="token" no-wrap unelevated label="" size="sm" dropdown-icon="palette">
           <q-list dense>
             <q-item tag="label" clickable @click="color('backColor', highlight)">
               <q-item-section side>
@@ -101,8 +102,8 @@ const month = monthNames[date.getMonth()]
 const year = date.getFullYear()
 const edit = ref(null)
 const path = "Главная/Сайт с каталогом/Без названия" //Placeholder
-const editor = ref("<input readonly class='q-my-sm q-mt-xl' style='color:grey; outline:none; width:50%; border: none' placeholder='"+path+"'></input>" +
-                   "<input readonly class='q-my-sm' style='align:right; direction: rtl; color:grey; outline:none; width:50%; border: none' placeholder='Дата создания: "+ day+ " " + month + " " + year +"'></input>" +
+const editor = ref("<input readonly class='q-py-sm q-pt-xl' style='color:grey; outline:none; width:50%; border: none' placeholder='"+path+"'></input>" +
+                   "<input readonly class='q-py-sm' style='align:right; direction: rtl; color:grey; outline:none; width:50%; border: none' placeholder='Дата создания: "+ day+ " " + month + " " + year +"'></input>" +
                    "<input autocomplete='off'; v-bind:name style='color:grey; width:100%; border: none; outline:none' class='text-h3 q-mb-sm' id='id' placeholder='Придумайте название файла'></input>" +
                    "<div style='font-size:16px'></div>"
                   )
