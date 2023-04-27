@@ -1,14 +1,18 @@
 import { createHttpLink, InMemoryCache } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
+import { Cookies } from "quasar";
 import tokenApi from "src/sdk/token";
 
 export /* async */ function getClientOptions(/* {app, router, ...} */) {
   const httpLink = createHttpLink({
     uri: process.env.GRAPHQL_URI || "https://app.stud.druid.1t.ru/graphql",
+    // credentials: "include",
   });
 
   const authLink = setContext((_, { headers }) => {
     const token = tokenApi.getTokenData()?.access_token;
+
+    // console.log("cook", Cookies.get("access_token"));
 
     return !token
       ? { headers: { ...headers } }

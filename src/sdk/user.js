@@ -19,7 +19,13 @@ import tokenApi from "./token";
 provideApolloClient(apolloClient);
 
 const { refetch: refetchUser } = useQuery(getUser);
-// const { refetch: refetchSubject } = useQuery(getSubject("1"));
+const { refetch: refetchSubject } = useQuery(getSubject, {
+  where: {
+    column: "user_id",
+    operator: "EQ",
+    value: "5571026735801383150",
+  },
+});
 
 const { mutate: signUp } = useMutation(userSignUp);
 const { mutate: signIn } = useMutation(userSignIn);
@@ -59,7 +65,7 @@ const registration = async ({ name, surname, email }) => {
     name,
     surname,
     email,
-    group_id: process.env.BASE_GROUP_ID,
+    group_id: process.env.USERS_GROUP_ID,
   });
 
   return userInfo.userSignUp;
@@ -110,11 +116,15 @@ const login = async ({ login, password }) => {
     id: userInfo.userSignIn.recordId,
   });
 
-  const { refetch } = useQuery(getSubject(userInfo.userSignIn.recordId)); //Временное решение, пока не рабоатет where на сервере
-
-  const { data: subjectData } = await refetch(
-    getSubject(userInfo.userSignIn.recordId)
-  );
+  const { data: subjectData } = await refetchSubject({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "user_id",
+      operator: "EQ",
+      value: `${userInfo.userSignIn.recordId}`,
+    },
+  });
 
   const saveUserData = {
     first_name: subjectData.paginate_subject.data[0].fullname.first_name,

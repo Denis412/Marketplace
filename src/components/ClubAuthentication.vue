@@ -20,7 +20,11 @@
           visibility
         />
 
-        <p href="" class="c-mb-50 link-grey" @click="resetPassword">
+        <p
+          href=""
+          class="c-mb-50 link-grey cursor-pointer"
+          @click="resetPassword"
+        >
           Забыли пароль?
         </p>
 
@@ -62,13 +66,13 @@
       </div>
     </section>
 
-    <!-- <c-confirmation-code-dialog
+    <c-confirmation-code-dialog
       v-if="reset"
       v-model="reset"
       :timer="timer"
       edit-password
       :auth-info="authInfo"
-    /> -->
+    />
 
     <!-- <c-edit-password-dialog v-model="reset" /> -->
   </div>

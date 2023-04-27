@@ -29,7 +29,7 @@
     border-radius: 8px !important;
 
     & .q-field__control {
-      outline: 1px solid #cacaca !important;
+      outline: 1px solid #581c87 !important;
       padding: 0 12px !important;
       height: $input-height-md;
 
@@ -45,6 +45,10 @@
             color: #6d6d6d;
           }
         }
+      }
+
+      &:before {
+        border: none !important;
       }
     }
   }

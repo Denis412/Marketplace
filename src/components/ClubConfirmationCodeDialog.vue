@@ -86,6 +86,7 @@
       <q-card-section
         v-else
         class="text-violet-6 text-caption1 cursor-pointer"
+        style="text-decoration: underline"
         @click="sendCode"
       >
         Отправить код повторно
