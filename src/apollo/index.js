@@ -1,13 +1,25 @@
 import { createHttpLink, InMemoryCache } from "@apollo/client/core";
+import { createUploadLink } from "apollo-upload-client";
 import { setContext } from "@apollo/client/link/context";
+import { Cookies } from "quasar";
+import tokenApi from "src/sdk/token";
+import { ApolloLink, concat } from "@apollo/client/core";
 
 export /* async */ function getClientOptions(/* {app, router, ...} */) {
   const httpLink = createHttpLink({
     uri: process.env.GRAPHQL_URI || "https://app.stud.druid.1t.ru/graphql",
+    // credentials: "include",
+  });
+
+  const uploadLink = createUploadLink({
+    uri: process.env.GRAPHQL_URI || "https://app.stud.druid.1t.ru/graphql",
+    // credentials: "include",
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem("token");
+    const token = tokenApi.getTokenData()?.access_token;
+
+    // console.log("cook", Cookies.get("access_token"));
 
     return !token
       ? { headers: { ...headers } }
@@ -19,10 +31,19 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
         };
   });
 
+  const link = concat(
+    authLink,
+    ApolloLink.split(
+      (operation) => operation.getContext().hasUpload,
+      uploadLink,
+      httpLink
+    )
+  );
+
   return Object.assign(
     // General options.
     {
-      link: authLink.concat(httpLink),
+      link: link,
       cache: new InMemoryCache(),
     },
     // Specific Quasar mode options.
