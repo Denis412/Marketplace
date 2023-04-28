@@ -1,6 +1,6 @@
 <template>
   <div class="club-mb-32">
-    <h4 class="text-h4 club-mb-16">Заявки</h4>
+    <h4 class="text-h4 club-mb-16">{{ title }}</h4>
 
     <div class="c-team-requests flex justify-center">
       <!-- пусто, будет v-if -->
@@ -19,6 +19,9 @@
 </template>
 
 <script setup>
+const { title } = defineProps({
+  title: String,
+});
 </script>
 
 <style lang='scss' scoped>

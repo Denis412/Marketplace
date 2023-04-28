@@ -1,5 +1,5 @@
 <template>
-  <div class="team c-pa-32 c-mt-20">
+  <div class="team c-pa-32 c-mt-20 ">
     <div class="content relative-position row justify-between">
       <q-img
       class="image c-mt-16"
