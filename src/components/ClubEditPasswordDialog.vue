@@ -13,9 +13,7 @@
 
           <main class="c-mt-32 dialog-size-input">
             <label for="password">
-              <div class="text-left text-body2 q-mb-sm">
-                Введите новый пароль
-              </div>
+              <p class="text-left text-body2 q-mb-sm">Введите новый пароль</p>
 
               <c-input
                 id="password"
@@ -27,9 +25,9 @@
             </label>
 
             <label for="confirm">
-              <div class="text-left text-body2 q-mt-lg q-mb-sm">
+              <p class="text-left text-body2 q-mt-lg q-mb-sm">
                 Подтвердите новый пароль
-              </div>
+              </p>
 
               <c-input
                 id="confirm"

@@ -19,8 +19,6 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
   const authLink = setContext((_, { headers }) => {
     const token = tokenApi.getTokenData()?.access_token;
 
-    // console.log("cook", Cookies.get("access_token"));
-
     return !token
       ? { headers: { ...headers } }
       : {

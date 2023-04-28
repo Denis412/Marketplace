@@ -75,6 +75,10 @@
         </section>
       </q-card-section>
 
+      <!-- <pre>{{ fullCode }}</pre>
+      <pre>ref {{ userIdRefetch }}</pre>
+      <pre>{{ authInfo }}</pre> -->
+
       <q-card-section class="text-caption1" v-if="timer.timer.value">
         Отправить код повторно ({{ timer.timer }} секунд)
       </q-card-section>
@@ -103,10 +107,9 @@ import replaceAt from "src/utils/replaceAt";
 const $q = useQuasar();
 const router = useRouter();
 
-const { timer, authInfo, editPassword } = defineProps({
+const { timer, authInfo } = defineProps({
   timer: Object,
   authInfo: Object,
-  editPassword: Boolean,
 });
 
 const codeNumber = ref("");
@@ -121,13 +124,13 @@ const inputCode = async (value, inputNumber) => {
       if (!userIdRefetch.value)
         await userApi.setPassword({
           user_id: authInfo.user_id,
-          password: currentPassword,
+          password: authInfo.password,
           code: fullCode.value,
         });
       else
         await userApi.userPasswordConfirmCode({
           user_id: userIdRefetch.value,
-          password: currentPassword,
+          password: authInfo.password,
           code: parseInt(fullCode.value),
         });
 

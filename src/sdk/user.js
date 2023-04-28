@@ -39,6 +39,8 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
 );
 
 const inviteGroup = async ({ name, surname, email, group_id }) => {
+  console.log(name, surname, email, group_id);
+
   const { data: userData } = await invitingUser({
     input: {
       name,
@@ -48,7 +50,7 @@ const inviteGroup = async ({ name, surname, email, group_id }) => {
     },
   });
 
-  console.log("data", data);
+  console.log("data", userData);
 };
 
 const registration = async ({ name, surname, email }) => {
@@ -61,12 +63,16 @@ const registration = async ({ name, surname, email }) => {
     },
   });
 
-  await inviteGroup({
-    name,
-    surname,
-    email,
-    group_id: process.env.USERS_GROUP_ID,
-  });
+  // console.log(userInfo, process.env.USERS_GROUP_ID);
+
+  // const data = await inviteGroup({
+  //   name,
+  //   surname,
+  //   email,
+  //   group_id: process.env.USERS_GROUP_ID,
+  // });
+
+  // console.log(data, process.env.USERS_GROUP_ID);
 
   return userInfo.userSignUp;
 };
