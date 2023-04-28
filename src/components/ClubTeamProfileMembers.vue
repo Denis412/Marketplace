@@ -1,5 +1,5 @@
 <template>
-  <section class="club-mt-32">
+  <section class="c-mt-32">
     <h4 class="text-h4">Участники</h4>
 
     <div class="q-mt-md rounded-borders-10 bg-white c-pa-32">

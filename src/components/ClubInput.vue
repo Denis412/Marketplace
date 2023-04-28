@@ -1,6 +1,6 @@
 <template>
   <q-input
-    class="club-input"
+    class="c-input-outline"
     outlined
     v-model="value"
     @update:modelValue="emitChange"
@@ -10,17 +10,13 @@
     :rules="rules"
   >
     <template v-slot:append v-if="visibility">
-      <q-img
-        class="cursor-pointer club-input-append-icon"
-        src="src/assets/icons/Eye/Eye.svg"
-        @click="toggleShowText"
-      />
+      <q-icon class="cursor-pointer" :name="iconName" @click="toggleShowText" />
     </template>
   </q-input>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import capitalizeWord from "src/utils/capitalizeWord";
 
 const {
@@ -49,6 +45,18 @@ const emit = defineEmits(["update:modelValue"]);
 const showText = ref(visibility);
 const value = ref("");
 const calcType = ref(type);
+
+const iconName = computed(() => {
+  let name = "";
+
+  if (visibility) {
+    name = showText.value
+      ? "img:/src/assets/icons/eye/eye-grey.svg"
+      : "img:/src/assets/icons/eye/eye-hidden-grey.svg";
+  }
+
+  return name;
+});
 
 const toggleShowText = () => {
   showText.value = !showText.value;
@@ -84,9 +92,4 @@ const emitChange = (targetValue) => {
 };
 </script>
 
-<style scoped lang="scss">
-.club-input-append-icon {
-  width: 22px;
-  height: 15px;
-}
-</style>
+<style scoped lang="scss"></style>

@@ -1,3 +1,5 @@
+import userApi from "src/sdk/user";
+
 const routes = [
   {
     path: "/",
@@ -9,6 +11,11 @@ const routes = [
     name: "club",
     component: () => import("layouts/ClubMainLayout.vue"),
     children: [
+      {
+        path: "account",
+        name: "account",
+        component: () => import("pages/ClubAccountSettingsPage.vue"),
+      },
       {
         path: "team/:id",
         name: "team",
@@ -24,6 +31,29 @@ const routes = [
         name: "teams",
         component: () => import("pages/ClubTeamsPage.vue"),
       },
+      {
+        path: "teams/my-teams",
+        name: "my-teams",
+        component: () => import("pages/ClubMyTeams.vue"),
+      },
+
+      //тестовые роуты
+      {
+        path: "market",
+        name: "market",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
+        path: "projects",
+        name: "projects",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
+        path: "space",
+        name: "space",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      //
     ],
   },
 
@@ -31,10 +61,12 @@ const routes = [
   // but you can also remove it
   {
     path: "/authentication",
+    name: "auth",
     component: () => import("pages/ClubAuthenticationPage.vue"),
   },
   {
     path: "/registration",
+    name: "reg",
     component: () => import("pages/ClubRegistrationPage.vue"),
   },
   {
