@@ -10,15 +10,19 @@
     </section>
     <section>
       <form action="">
-        <label for="name-order" class="text-subtitle3 input-title input-mt">
-            Название заказа
-        </label>
-        <q-input class="input c-mt-24" name="name-order" placeholder="Кратко в одном предложении опишите идею вашего проекта или заказа..." outlined/>
+        <c-input
+        :title="'Название заказа'"
+        :name="'name-order'"
+        :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
+        :type="'text'"
+        />
 
-        <label for="name-customer" class="text-subtitle3 input-title input-mt">
-            Наименование заказчика
-        </label>
-        <q-input class="input c-mt-24" name="name-customer" placeholder="Укажите названия компании или ИП..." outlined/>
+        <c-input
+        :title="'Наименование заказчика'"
+        :name="'name-customer'"
+        :placeholder="'Укажите названия компании или ИП...'"
+        :type="'text'"
+        />
 
         <div class="text-subtitle3 input-title input-mt">
             Что требуется сделать
@@ -49,11 +53,13 @@
             />
         </div>
 
+        <c-input
+        :title="'Описание заказчика'"
+        :name="'order-description'"
+        :placeholder="'Опишите, что требуется сделать по вашей задаче...'"
+        :type="'textarea'"
+        />
 
-        <label for="order-description" class="text-subtitle3 input-title input-mt">
-            Описание заказчика
-        </label>
-        <q-input type="textarea" class="input c-mt-24" name="order-description" placeholder="Опишите, что требуется сделать по вашей задаче..." outlined/>
 
         <q-checkbox
         v-model="consult"
@@ -85,19 +91,21 @@
         <label for="date" class="text-subtitle3 input-title input-mt">
             Желаемый срок готовности
         </label>
+
         <q-input style="width: 300px;" name="date" filled v-model="date" mask="date" :rules="['date']">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="date">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="date">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+
       </form>
     </section>
   </q-page>
@@ -105,7 +113,8 @@
 
 <script setup>
 import CButton from "src/components/ClubButton.vue";
-import { ref, watch } from "vue";
+import CInput from "src/components/ClubOrderCreateInput.vue";
+import { ref } from "vue";
 
 const buttons = ref([
   {
