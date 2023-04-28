@@ -136,8 +136,6 @@ const login = async ({ login, password }) => {
     telegram_chat_id: userData.user.telegram_chat_id,
   };
 
-  console.log(userStore);
-
   localStorage.setItem("user-data", JSON.stringify(saveUserData));
 
   return userData.user;

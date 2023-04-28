@@ -51,6 +51,11 @@ const routes = [
         component: () => import("pages/ErrorNotFound.vue"),
       },
       //
+      {
+        path: "order-create",
+        name: "order-create",
+        component: () => import("pages/ClubOrderCreate.vue"),
+      },
     ],
   },
 
