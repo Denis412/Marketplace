@@ -153,3 +153,19 @@
     color: rgba(255, 255, 255, 0.3) !important;
   }
 }
+
+.q-editor__toolbar{
+  & .q-icon{
+    font-size: 20px;
+  }
+  & .q-editor__toolbar-group{
+    padding-top: 20px;
+  }
+  & .q-editor__toolbar-group::before{
+    margin-bottom: 22px;
+    margin-top: 22px;
+  }
+  border-top: 1px solid black !important;
+  border-radius: 0px;
+  height: 80px;
+}

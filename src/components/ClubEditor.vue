@@ -1,12 +1,13 @@
 <template>
     <div class="q-pa-md q-gutter-sm ">
-      <div class="row">
+      <div class="row q-my-lg">
         <input readonly class='q-py-sm q-pt-sm col-6' :placeholder=" path "/> 
         <input readonly class='q-py-sm col-6' 
           style='direction: rtl' 
           :placeholder='"Дата создания: " +  day + " " + month+ " " + year '/>
+        <input autocomplete='off'  class='text-h3 q-mb-sm col-12' id='id' placeholder='Придумайте название файла'/>
       </div>
-      <input autocomplete='off' style='color:grey; width:100%; border: none; outline:none' class='text-h3 q-mb-sm' id='id' placeholder='Придумайте название файла'/>
+      
       <q-editor
         v-model="editor"
         ref="edit"
@@ -79,9 +80,10 @@ const toolbar = [
         fixedIcon: true,
         list: 'no-icons',
         options: [
-          'size-5',
-          'size-4',
-          'size-3'
+          'p',
+          'h4',
+          'h5',
+          'h6',
         ]
       },
     ],
