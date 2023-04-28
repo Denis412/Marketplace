@@ -1,5 +1,12 @@
 <template>
     <div class="q-pa-md q-gutter-sm ">
+      <div class="row">
+        <input readonly class='q-py-sm q-pt-sm col-6' :placeholder=" path "/> 
+        <input readonly class='q-py-sm col-6' 
+          style='direction: rtl' 
+          :placeholder='"Дата создания: " +  day + " " + month+ " " + year '/>
+      </div>
+      <input autocomplete='off' style='color:grey; width:100%; border: none; outline:none' class='text-h3 q-mb-sm' id='id' placeholder='Придумайте название файла'/>
       <q-editor
         v-model="editor"
         ref="edit"
@@ -7,7 +14,7 @@
         :content-style="{borderTop: '1px solid grey'}"
         min-height="15rem"
         :content-class="'q-px-xl'"
-        :toolbar="toolbar" >
+        :toolbar="toolbar">
         <template v-slot:token>
         <q-btn-dropdown dense no-caps ref="token" no-wrap unelevated label="" size="sm" dropdown-icon="palette">
           <q-list dense>
@@ -102,10 +109,7 @@ const month = monthNames[date.getMonth()]
 const year = date.getFullYear()
 const edit = ref(null)
 const path = "Главная/Сайт с каталогом/Без названия" //Placeholder
-const editor = ref("<input readonly class='q-py-sm q-pt-xl' style='color:grey; outline:none; width:50%; border: none' placeholder='"+path+"'></input>" +
-                   "<input readonly class='q-py-sm' style='align:right; direction: rtl; color:grey; outline:none; width:50%; border: none' placeholder='Дата создания: "+ day+ " " + month + " " + year +"'></input>" +
-                   "<input autocomplete='off'; v-bind:name style='color:grey; width:100%; border: none; outline:none' class='text-h3 q-mb-sm' id='id' placeholder='Придумайте название файла'></input>" +
-                   "<div style='font-size:16px'></div>"
+const editor = ref(""
                   )
 const token = ref(null)
 
@@ -121,8 +125,7 @@ const color = (cmd, name) => {
 </script>
 
 <style lang="scss" scoped>
-:active, :hover, :focus {
-    outline: 0;
-    outline-offset: 0;
+input{
+  color:grey; outline:none; border: none
 }
 </style>
