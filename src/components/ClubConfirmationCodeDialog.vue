@@ -75,10 +75,6 @@
         </section>
       </q-card-section>
 
-      <!-- <pre>{{ fullCode }}</pre>
-      <pre>ref {{ userIdRefetch }}</pre>
-      <pre>{{ authInfo }}</pre> -->
-
       <q-card-section class="text-caption1" v-if="timer.timer.value">
         Отправить код повторно ({{ timer.timer }} секунд)
       </q-card-section>
@@ -96,7 +92,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -107,14 +103,14 @@ import replaceAt from "src/utils/replaceAt";
 const $q = useQuasar();
 const router = useRouter();
 
-const { timer, authInfo } = defineProps({
+const { timer, authInfo, reset } = defineProps({
   timer: Object,
   authInfo: Object,
+  reset: Boolean,
 });
 
 const codeNumber = ref("");
 const fullCode = ref(" ".repeat(6));
-const userIdRefetch = computed(() => authInfo.user_id);
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
@@ -124,7 +120,7 @@ const inputCode = async (value, inputNumber) => {
     console.log(authInfo);
 
     try {
-      if (!userIdRefetch.value)
+      if (!reset)
         await userApi.setPassword({
           user_id: authInfo.user_id,
           password: authInfo.password,
@@ -132,7 +128,7 @@ const inputCode = async (value, inputNumber) => {
         });
       else
         await userApi.userPasswordConfirmCode({
-          user_id: userIdRefetch.value,
+          user_id: authInfo.user_id,
           password: authInfo.password,
           code: parseInt(fullCode.value),
         });
@@ -154,20 +150,17 @@ const inputCode = async (value, inputNumber) => {
 };
 
 const sendCode = async () => {
-  console.log("info", authInfo);
-
   try {
-    const userId = await userApi.userPasswordSendCode({
+    await userApi.userPasswordSendCode({
       email: authInfo.email,
     });
-
-    userIdRefetch.value = userId.record.user_id;
 
     timer.clear();
     timer.start();
 
     $q.notify({
       type: "positive",
+      position: "top",
       message: "Код выслан повторно!",
     });
   } catch (error) {

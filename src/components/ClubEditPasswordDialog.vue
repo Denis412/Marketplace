@@ -39,8 +39,6 @@
             </label>
           </main>
 
-          <!-- <pre>{{ isReactive(authInfo) }}</pre> -->
-
           <footer class="flex flex-center c-mt-32">
             <c-button
               background
@@ -56,6 +54,7 @@
         v-model="sendCode"
         :timer="timer"
         :auth-info="newAuthInfo"
+        reset
       />
     </q-card>
   </q-dialog>
@@ -104,13 +103,12 @@ const changePassword = async () => {
     newAuthInfo.value.user_id = userId?.record.user_id;
     newAuthInfo.value.password = form.value.password;
 
-    timer.clear();
     timer.start();
 
     sendCode.value = true;
 
     $q.notify({
-      type: "positiove",
+      type: "positive",
       position: "top",
       message: "Код подтверждения отрпавлен на почту!",
     });

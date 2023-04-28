@@ -83,20 +83,10 @@ import userApi from "src/sdk/user";
 import { useTimer } from "src/use/timer";
 import filesApi from "src/sdk/file";
 
-const files = ref(null);
-const forgotPassword = ref(false);
-
-const upload = async () => {
-  try {
-    await filesApi.uploadFiles(files.value);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const router = useRouter();
 const store = useUserStore();
 
+const forgotPassword = ref(false);
 const authInfo = ref({});
 
 const form = ref({
