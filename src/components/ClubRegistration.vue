@@ -24,59 +24,67 @@
           to="/authentication"
           outline
           label="Войти"
-          class="text-body1 q-py-sm q-px-xl"
+          class="text-body1"
         />
       </div>
     </section>
 
     <section class="col relative-position flex flex-center">
-      <q-form class="flex column items-center c-maxw-400">
+      <q-form
+        class="flex column items-center c-maxw-400"
+        @submit="registration"
+      >
         <h3 class="text-bold c-mb-25 text-h3">Регистрация</h3>
 
         <p class="c-mb-30 fs-16 text-body2">Зарегистрируйтесь в нашем клубе</p>
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.name"
           type="text"
           placeholder="Введите ваше имя"
+          :rules="[required, maxLength(50)]"
         />
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.surname"
           type="text"
           placeholder="Введите вашу фамилию"
+          :rules="[required, maxLength(50)]"
         />
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.email"
           type="email"
           placeholder="Введите ваш e-mail"
+          :rules="[required, maxLength(150)]"
         />
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.password"
           type="password"
           placeholder="Введите пароль"
           visibility
+          :rules="[required, minLength(8), maxLength(30), passwordValid]"
         />
 
         <c-input
-          class="c-mb-15 c-input-400"
+          class="c-input-400"
           v-model="form.confirmPassword"
           type="password"
           placeholder="Повторите пароль"
           visibility
+          :rules="[required, equal(form.password)]"
         />
 
         <q-checkbox
           dense
           v-model="agreement"
           color="purple"
-          class="c-mb-30 c-maxw-350"
+          class="c-mb-30 c-maxw-350 c-checkbox-rounded"
         >
           <template v-slot:default>
             Я принимаю <a href="">Условия использования</a> и соглашаюсь с
@@ -86,10 +94,10 @@
 
         <c-button
           :disable="!agreement"
+          type="submit"
           background
           label="Зарегистрироваться"
-          @click="registration"
-          class="text-body1 q-py-sm q-px-xl"
+          class="text-body1"
         />
       </q-form>
 
@@ -99,15 +107,19 @@
       />
     </section>
 
+    <!-- <pre>{{ authUserInfo }}</pre> -->
+
     <c-confirmation-code-dialog
       v-model="showConfirmCode"
       :timer="timer"
-      :authInfo="authUserInfo"
+      :auth-info="authUserInfo"
     />
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
+import { useTimer } from "src/use/timer";
+import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
 
 import CInput from "src/components/ClubInput.vue";
@@ -115,10 +127,14 @@ import CButton from "src/components/ClubButton.vue";
 import CConfirmationCodeDialog from "src/components/ClubConfirmationCodeDialog.vue";
 import userApi from "src/sdk/user";
 
+const $q = useQuasar();
+const timer = useTimer(90);
+const { required, minLength, maxLength, passwordValid, equal } =
+  useValidators();
+
 const authUserInfo = ref({});
 const agreement = ref(false);
 const showConfirmCode = ref(false);
-const timer = ref(0);
 
 const form = ref({
   name: "",
@@ -134,31 +150,34 @@ const registration = async () => {
   try {
     let userInfo;
 
-    if (registration.count === 1)
-      if (!timer.value)
-        // userInfo = await userApi.registration(form.value);
+    console.log(timer.timer.value);
 
-        startTimer();
+    if (registration.count === 1) {
+      if (timer.timer.value === 90)
+        userInfo = await userApi.registration(form.value);
+
+      console.log(userInfo);
+
+      $q.notify({
+        type: "positive",
+        message: "Вам на почту отправлено письмо с кодом подтверждения!",
+      });
+    }
+
+    timer.start();
     showConfirmCode.value = true;
 
-    // authUserInfo.value.user_id = userInfo.recordId;
-    authUserInfo.value.password = form.value.password;
+    if (userInfo) {
+      authUserInfo.value.user_id = userInfo.recordId;
+      authUserInfo.value.email = userInfo.record.email;
+      authUserInfo.value.password = form.value.password;
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
 registration.count = 0;
-
-const startTimer = () => {
-  timer.value = 90;
-
-  const timerId = setInterval(() => {
-    timer.value -= 1;
-
-    if (!timer.value) clearInterval(timerId);
-  }, 1000);
-};
 </script>
 
 <style lang="scss" scoped>

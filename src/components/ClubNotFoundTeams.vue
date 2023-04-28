@@ -2,7 +2,7 @@
   <section class="section-wrapper">
     <q-img src="/src/assets/images/support-service.png" style="width: 352px" />
 
-    <div class="flex items-center club-ml-32">
+    <div class="flex items-center c-ml-32">
       <div>
         <div class="text-h3 text-primary-gradient">У вас нет команды?</div>
 

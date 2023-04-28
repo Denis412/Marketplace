@@ -17,7 +17,7 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiZWQyNjg3ODBmODNlMzk4MTMzNTA2ZTJhNDllNTM1YjYwZjNhMTBiYWUzZDJjYjRkZTFkZjc1YmEzMDQ5NmJmNjBkMDc5NzJmNmNkOTIwZmQiLCJpYXQiOjE2ODAxOTQ5MTYuNzExNzU1LCJuYmYiOjE2ODAxOTQ5MTYuNzExNzU4LCJleHAiOjE3MTE4MTczMTYuNzAzMTY4LCJzdWIiOiI1MTIwMzYyMjI3MjE5NzUwODIwIiwic2NvcGVzIjpbXX0.s9UWCea3QbhY__q8-xWDAjekVSIjyRy-ePoYWimUH6SXbTj9Hnfythz6Rh8cx4EOu3NRzqmsSKe3qxHB5qcYN1CGoZMGUNaNhZ0mP2700NfCt42WzSEufzpVVyugs8KVMUH0pa3nIg2-jmHDbg3YVSnzP9TnoHLZimA3EmR4-3MX7oeW1aUv7xLFL3EHxPUY_vsWyF0k7pR3Wa97YHbOO9UkRFSYoIKHBEt1p5qyLX8-m4Gs4qkLVjUBS8a-riqfRd5NH2OeXAjDJiXU140AOoOnApIxdOvqMmPJp7ZLq6sXfsH-bXf7K04ExkJjavRWzAQ424vcPWaiTof76Mcla0q6uH9j8wSh_90E3aFQ8NIBcVwlNEXvu3n3mz2wTO9Nbvm8IHGo-oBG58aEdEOQU7TfGG4WkuDwlszAto-qILhZv4jVeKUtJ-MTeOKOZvelv-yF9v7Xqq6lx7-Eg1i8hCqUumQ1RSAV3zgbcnfh3lvyutDQBhrO9glLCuoN1lAPAPJH0kTeMnbfQAxC4iFx_0OGn0dDCdNXTvXr6FRTeCzNoUiMgyXIP4BY7Bt5lQsGWVt0xNmCZ3MpgaFHBBPlGbkscc53OKYsnCKMUQIVlS_BOAR-47SkcamyIQnq2boQtvXDpgdd_EbD-DaeGW1WkCsd5Ryu7GYAhZRUEgYoCh0";
+    const token = tokenApi.getTokenData()?.access_token;
 
     // console.log("cook", Cookies.get("access_token"));
 

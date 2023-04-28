@@ -10,6 +10,11 @@ const routes = [
     component: () => import("layouts/ClubMainLayout.vue"),
     children: [
       {
+        path: "account",
+        name: "account",
+        component: () => import("pages/ClubAccountSettingsPage.vue"),
+      },
+      {
         path: "team/:id",
         name: "team",
         component: () => import("pages/ClubTeamPage.vue"),
@@ -29,6 +34,28 @@ const routes = [
         name: "team-create",
         component: () => import("pages/ClubCreateTeamPage.vue"),
       },
+      {
+        path: "teams/my-teams",
+        name: "my-teams",
+        component: () => import("pages/ClubMyTeams.vue"),
+      },
+      //тестовые роуты
+      {
+        path: "market",
+        name: "market",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
+        path: "projects",
+        name: "projects",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
+        path: "space",
+        name: "space",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      //
     ],
   },
 
@@ -36,10 +63,12 @@ const routes = [
   // but you can also remove it
   {
     path: "/authentication",
+    name: "auth",
     component: () => import("pages/ClubAuthenticationPage.vue"),
   },
   {
     path: "/registration",
+    name: "reg",
     component: () => import("pages/ClubRegistrationPage.vue"),
   },
   {

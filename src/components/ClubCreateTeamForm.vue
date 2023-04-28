@@ -4,7 +4,7 @@
       <h3 class="text-h3 text-center">Создание команды</h3>
     </header>
 
-    <main class="flex column flex-center club-mt-32">
+    <main class="flex column flex-center c-mt-32">
       <section class="relative-position">
         <q-avatar class="large-avatar">
           <q-img :src="team_img_URL" />

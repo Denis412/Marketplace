@@ -73,74 +73,6 @@
 
 // Отступы
 
-.club-mt-32 {
-  margin-top: 32px;
-}
-
-.club-mb-32 {
-  margin-bottom: 32px;
-}
-
-.club-my-32 {
-  margin: 32px 0;
-}
-
-.club-ml-32 {
-  margin-left: 2rem;
-}
-
-.club-mt-24 {
-  margin-top: 24px;
-}
-
-.c-ml-24 {
-  margin-left: 24px;
-}
-
-.club-mt-72 {
-  margin-top: 72px;
-}
-
-.club-mt-80 {
-  margin-top: 80px;
-}
-
-.club-mt-215 {
-  margin-top: 215px;
-}
-
-.club-mb-10 {
-  margin-bottom: 10px;
-}
-
-.c-pa-24 {
-  padding: 24px;
-}
-
-.c-pt-24 {
-  padding-top: 24px !important;
-}
-
-.c-pb-24 {
-  padding-bottom: 24px !important;
-}
-
-.c-pa-32 {
-  padding: 2rem;
-}
-
-.c-py-24 {
-  padding: 24px 0 !important;
-}
-
-.c-px-64 {
-  padding: 0 4rem;
-}
-
-.px-160 {
-  padding: 0 10rem;
-}
-
 .section-margin {
   margin-top: 124px;
 }
@@ -166,25 +98,6 @@
   height: 140px;
 }
 
-.q-field {
-  &__control {
-    border-radius: 8px !important;
-    // padding: 0 24px !important;
-
-    &::before {
-      border-color: #cacaca !important;
-    }
-
-    &:hover::before {
-      border-color: gray !important;
-    }
-  }
-
-  &__native {
-    color: #6d6d6d !important;
-  }
-}
-
 .primary-gradient {
   background: $primary-gradient;
 }
@@ -197,6 +110,14 @@
   color: #581c87;
 }
 
+.bg-violet-6 {
+  background-color: #581c87;
+}
+
 .violet-active {
   color: $violet-active;
+}
+
+.border-section-bottom {
+  border-bottom: 1px solid #dcdcdc;
 }

@@ -1,25 +1,49 @@
 <template>
   <div class="fullscreen text-center flex row">
+    <q-file
+      v-model="files"
+      label="Pick files"
+      filled
+      multiple
+      append
+      style="max-width: 300px"
+    />
+    <c-button
+      background
+      label="Загрузить"
+      @click="upload"
+      style="height: 50px"
+    />
+
     <section class="col relative-position flex flex-center">
-      <q-form class="flex column items-center">
+      <q-form class="flex column items-center" @submit="authorization">
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
         <c-input
           class="c-mb-10 c-input-400"
+          v-model="form.login"
           type="email"
           placeholder="Введите ваш e-mail"
         />
 
         <c-input
           class="c-mb-15 c-input-400"
+          v-model="form.password"
           type="password"
           placeholder="Введите пароль"
           visibility
         />
 
-        <a href="" class="c-mb-50 link-grey">Забыли пароль?</a>
-        <c-button background label="Войти" class="text-body1 q-py-sm q-px-xl" />
+        <p
+          href=""
+          class="c-mb-50 link-grey cursor-pointer"
+          @click="resetPassword"
+        >
+          Забыли пароль?
+        </p>
+
+        <c-button background label="Войти" type="submit" class="text-body1" />
       </q-form>
 
       <q-img
@@ -52,16 +76,83 @@
           to="/registration"
           outline
           label="Регистрация"
-          class="text-body1 q-py-sm q-px-xl"
+          class="text-body1"
         />
       </div>
     </section>
+
+    <c-confirmation-code-dialog
+      v-if="reset"
+      v-model="reset"
+      :timer="timer"
+      edit-password
+      :auth-info="authInfo"
+    />
+
+    <!-- <c-edit-password-dialog v-model="reset" /> -->
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "stores/user";
+
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
+import CConfirmationCodeDialog from "./ClubConfirmationCodeDialog.vue";
+import CEditPasswordDialog from "src/components/ClubEditPasswordDialog.vue";
+import userApi from "src/sdk/user";
+import { useTimer } from "src/use/timer";
+import filesApi from "src/sdk/file";
+
+const files = ref(null);
+
+const upload = async () => {
+  try {
+    await filesApi.uploadFiles(files.value);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const router = useRouter();
+const store = useUserStore();
+const timer = useTimer(90);
+
+const reset = ref(false);
+const authInfo = ref({});
+
+const form = ref({
+  login: "",
+  password: "",
+});
+
+const authorization = async () => {
+  try {
+    await userApi.login(form.value);
+
+    store.SET_CURRENT_USER();
+
+    router.push({
+      name: "club",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const resetPassword = async () => {
+  if (timer.timer.value === 90) {
+    authInfo.value.email = form.value.login;
+    authInfo.value.password = form.value.password;
+
+    timer.clear();
+    timer.start();
+  }
+
+  reset.value = true;
+};
 </script>
 
 <style lang="scss" scoped>
