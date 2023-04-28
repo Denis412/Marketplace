@@ -1,20 +1,5 @@
 <template>
   <div class="fullscreen text-center flex row">
-    <q-file
-      v-model="files"
-      label="Pick files"
-      filled
-      multiple
-      append
-      style="max-width: 300px"
-    />
-    <c-button
-      background
-      label="Загрузить"
-      @click="upload"
-      style="height: 50px"
-    />
-
     <section class="col relative-position flex flex-center">
       <q-form class="flex column items-center" @submit="authorization">
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>

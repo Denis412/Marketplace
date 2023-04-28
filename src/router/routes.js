@@ -1,3 +1,5 @@
+import userApi from "src/sdk/user";
+
 const routes = [
   {
     path: "/",
@@ -34,6 +36,7 @@ const routes = [
         name: "my-teams",
         component: () => import("pages/ClubMyTeams.vue"),
       },
+
       //тестовые роуты
       {
         path: "market",
