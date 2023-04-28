@@ -96,7 +96,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -114,12 +114,15 @@ const { timer, authInfo } = defineProps({
 
 const codeNumber = ref("");
 const fullCode = ref(" ".repeat(6));
-const userIdRefetch = ref("");
+const userIdRefetch = computed(() => authInfo.user_id);
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
+  console.log(authInfo);
 
   if (fullCode.value.indexOf(" ") === -1) {
+    console.log(authInfo);
+
     try {
       if (!userIdRefetch.value)
         await userApi.setPassword({
@@ -134,10 +137,14 @@ const inputCode = async (value, inputNumber) => {
           code: parseInt(fullCode.value),
         });
 
+      console.log("hello");
+
       router.push({
         name: "auth",
       });
     } catch (error) {
+      console.log(error);
+
       $q.notify({
         type: "negative",
         message: "Вы неверно ввели код!",

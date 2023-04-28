@@ -66,15 +66,7 @@
       </div>
     </section>
 
-    <c-confirmation-code-dialog
-      v-if="reset"
-      v-model="reset"
-      :timer="timer"
-      edit-password
-      :auth-info="authInfo"
-    />
-
-    <!-- <c-edit-password-dialog v-model="reset" /> -->
+    <c-edit-password-dialog v-model="forgotPassword" :auth-info="authInfo" />
   </div>
 </template>
 
@@ -92,6 +84,7 @@ import { useTimer } from "src/use/timer";
 import filesApi from "src/sdk/file";
 
 const files = ref(null);
+const forgotPassword = ref(false);
 
 const upload = async () => {
   try {
@@ -103,9 +96,7 @@ const upload = async () => {
 
 const router = useRouter();
 const store = useUserStore();
-const timer = useTimer(90);
 
-const reset = ref(false);
 const authInfo = ref({});
 
 const form = ref({
@@ -128,15 +119,10 @@ const authorization = async () => {
 };
 
 const resetPassword = async () => {
-  if (timer.timer.value === 90) {
-    authInfo.value.email = form.value.login;
-    authInfo.value.password = form.value.password;
+  authInfo.value.email = form.value.login;
+  authInfo.value.password = form.value.password;
 
-    timer.clear();
-    timer.start();
-  }
-
-  reset.value = true;
+  forgotPassword.value = true;
 };
 </script>
 

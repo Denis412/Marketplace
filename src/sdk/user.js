@@ -122,20 +122,24 @@ const login = async ({ login, password }) => {
     id: userInfo.userSignIn.recordId,
   });
 
-  const { data: subjectData } = await refetchSubject({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "user_id",
-      operator: "EQ",
-      value: `${userInfo.userSignIn.recordId}`,
-    },
-  });
+  console.log("userData", userData, userInfo);
+
+  // const { data: subjectData } = await refetchSubject({
+  //   page: 1,
+  //   perPage: 1,
+  //   where: {
+  //     column: "user_id",
+  //     operator: "EQ",
+  //     value: `${userInfo.userSignIn.recordId}`,
+  //   },
+  // });
+
+  // console.log("subjectData", subjectData);
 
   const saveUserData = {
-    first_name: subjectData.paginate_subject.data[0].fullname.first_name,
-    middle_name: subjectData.paginate_subject.data[0].fullname.middle_name,
-    last_name: subjectData.paginate_subject.data[0].fullname.last_name,
+    first_name: userData.user.name,
+    middle_name: userData.user.surname,
+    last_name: userData.user.surname,
     user_id: userInfo.userSignIn.recordId,
     email: userData.user.email,
     avatar: userData.user.avatar,
