@@ -10,6 +10,11 @@ const routes = [
     component: () => import("layouts/ClubMainLayout.vue"),
     children: [
       {
+        path: "account",
+        name: "account",
+        component: () => import("pages/ClubAccountSettingsPage.vue"),
+      },
+      {
         path: "team/:id",
         name: "team",
         component: () => import("pages/ClubTeamPage.vue"),

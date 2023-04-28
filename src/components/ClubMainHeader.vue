@@ -37,19 +37,19 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "src/stores/user";
 
 const router = useRouter();
-const store = useUserStore();
+const userStore = useUserStore();
 
 const showIconMenu = ref(false);
 
 const menuIcon = ref([
-  { title: "Учетная запись" },
-  { title: "Профиль" },
+  { title: "Учетная запись", textColor: "text-black" },
+  { title: "Профиль", textColor: "text-black" },
   {
     title: "Выход",
     textColor: "text-negative",
     callback: () => {
       userApi.logout();
-      store.LOGOUT_CURRENT_USER();
+      userStore.LOGOUT_CURRENT_USER();
 
       router.push({
         name: "auth",

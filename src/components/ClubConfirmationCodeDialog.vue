@@ -18,12 +18,12 @@
           </div>
         </section>
 
-        <section class="flex no-wrap q-gutter-x-sm club-mt-32">
+        <section class="flex no-wrap q-gutter-x-sm c-mt-32">
           <c-input
             type="text"
             countInput="1"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -32,7 +32,7 @@
             type="text"
             countInput="2"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -41,7 +41,7 @@
             type="text"
             countInput="3"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -50,7 +50,7 @@
             type="text"
             countInput="4"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -59,7 +59,7 @@
             type="text"
             countInput="5"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
@@ -68,16 +68,12 @@
             type="text"
             countInput="6"
             v-model.numberCode="codeNumber"
-            class="dialog-size-input q-pa-none"
+            class="dialog-size-input c-input-number"
             maxlength="1"
             @update:modelValue="inputCode"
           />
         </section>
       </q-card-section>
-      <!--
-      <pre>y {{ userIdRefetch }}</pre>
-      <pre>{{ authInfo }}</pre>
-      <pre>{{ fullCode }}</pre> -->
 
       <q-card-section class="text-caption1" v-if="timer.timer.value">
         Отправить код повторно ({{ timer.timer }} секунд)
@@ -86,6 +82,7 @@
       <q-card-section
         v-else
         class="text-violet-6 text-caption1 cursor-pointer"
+        style="text-decoration: underline"
         @click="sendCode"
       >
         Отправить код повторно
@@ -95,7 +92,7 @@
 </template>
 
 <script setup>
-import { isRef, ref } from "vue";
+import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -106,10 +103,10 @@ import replaceAt from "src/utils/replaceAt";
 const $q = useQuasar();
 const router = useRouter();
 
-const { timer, authInfo, password } = defineProps({
+const { timer, authInfo, editPassword } = defineProps({
   timer: Object,
   authInfo: Object,
-  password: String,
+  editPassword: Boolean,
 });
 
 const codeNumber = ref("");
@@ -124,13 +121,13 @@ const inputCode = async (value, inputNumber) => {
       if (!userIdRefetch.value)
         await userApi.setPassword({
           user_id: authInfo.user_id,
-          password: authInfo.password,
+          password: currentPassword,
           code: fullCode.value,
         });
       else
         await userApi.userPasswordConfirmCode({
           user_id: userIdRefetch.value,
-          password: authInfo.password,
+          password: currentPassword,
           code: parseInt(fullCode.value),
         });
 

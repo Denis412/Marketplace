@@ -3,31 +3,53 @@ import {
   useMutation,
   useQuery,
 } from "@vue/apollo-composable";
-import apolloClient from "src/apollo/apollo-client";
-
 import {
   userSignUp,
   userSignIn,
   userSignUpSetPassword,
   userResetPasswordSendCode,
   userResetPasswordConfirmCodeSetPassword,
+  userGroupInviteUser,
 } from "src/graphql/user/mutations";
-import { getUser } from "src/graphql/user/queries";
+import { getUser, getSubject } from "src/graphql/user/queries";
+
+import apolloClient from "src/apollo/apollo-client";
 import tokenApi from "./token";
 
 provideApolloClient(apolloClient);
 
 const { refetch: refetchUser } = useQuery(getUser);
+const { refetch: refetchSubject } = useQuery(getSubject, {
+  where: {
+    column: "user_id",
+    operator: "EQ",
+    value: "5571026735801383150",
+  },
+});
 
 const { mutate: signUp } = useMutation(userSignUp);
 const { mutate: signIn } = useMutation(userSignIn);
 const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
+const { mutate: invitingUser } = useMutation(userGroupInviteUser);
 const { mutate: resetPasswordSendCode } = useMutation(
   userResetPasswordSendCode
 );
 const { mutate: resetPasswordConfirmCode } = useMutation(
   userResetPasswordConfirmCodeSetPassword
 );
+
+const inviteGroup = async ({ name, surname, email, group_id }) => {
+  const { data: userData } = await invitingUser({
+    input: {
+      name,
+      surname,
+      email,
+      group_id,
+    },
+  });
+
+  console.log("data", data);
+};
 
 const registration = async ({ name, surname, email }) => {
   console.log("reg", { name, surname, email });
@@ -37,6 +59,13 @@ const registration = async ({ name, surname, email }) => {
       surname,
       email,
     },
+  });
+
+  await inviteGroup({
+    name,
+    surname,
+    email,
+    group_id: process.env.USERS_GROUP_ID,
   });
 
   return userInfo.userSignUp;
@@ -87,7 +116,29 @@ const login = async ({ login, password }) => {
     id: userInfo.userSignIn.recordId,
   });
 
-  localStorage.setItem("user-data", JSON.stringify(userData.user));
+  const { data: subjectData } = await refetchSubject({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "user_id",
+      operator: "EQ",
+      value: `${userInfo.userSignIn.recordId}`,
+    },
+  });
+
+  const saveUserData = {
+    first_name: subjectData.paginate_subject.data[0].fullname.first_name,
+    middle_name: subjectData.paginate_subject.data[0].fullname.middle_name,
+    last_name: subjectData.paginate_subject.data[0].fullname.last_name,
+    user_id: userInfo.userSignIn.recordId,
+    email: userData.user.email,
+    avatar: userData.user.avatar,
+    telegram_chat_id: userData.user.telegram_chat_id,
+  };
+
+  console.log(userStore);
+
+  localStorage.setItem("user-data", JSON.stringify(saveUserData));
 
   return userData.user;
 };
@@ -107,6 +158,7 @@ const userApi = {
   userPasswordSendCode,
   userPasswordConfirmCode,
   login,
+  inviteGroup,
   logout,
   isAuth,
 };

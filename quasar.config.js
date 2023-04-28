@@ -21,7 +21,7 @@ module.exports = configure(function (/* ctx */) {
     boot: [],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
-    css: ["app.scss", "fonts.scss"],
+    css: ["app.scss", "fonts.scss", "controls.scss", "spaces.scss"],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -55,6 +55,7 @@ module.exports = configure(function (/* ctx */) {
       // analyze: true,
       env: {
         GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphql",
+        USERS_GROUP_ID: "1319554634306561363",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
@@ -72,7 +73,7 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
-      // https: true
+      // https: true,
       open: true, // opens browser window automatically
     },
 
