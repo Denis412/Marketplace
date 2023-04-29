@@ -6,48 +6,49 @@
       }">
 
       <div class="item_doc">
-        <span>{{ doc.name.slice(0, -5) }}</span>
-        <span clickable>⋮</span>
-        <q-menu class="popup" anchor="bottom right" self="top left">
+        <div class="item_doc">{{ doc.name.slice(0, -5) }}</div>
+        <div>⋮
+          <q-menu class="popup" anchor="bottom right" self="top left">
 
-          <q-item class="popup-component" clickable>
-            <q-img class="popup-png" src="/src/assets/icons/doc_popup/link.png" />
-            <q-item-section>Открыть</q-item-section>
-          </q-item>
+            <q-item class="popup-component" clickable>
+              <q-img class="popup-png" src="/src/assets/icons/doc_popup/link.png" />
+              <q-item-section>Открыть</q-item-section>
+            </q-item>
 
-          <q-item class="popup-component" clickable>
-            <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
-            <q-item-section>Дублировать</q-item-section>
-          </q-item>
+            <q-item class="popup-component" clickable>
+              <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
+              <q-item-section>Дублировать</q-item-section>
+            </q-item>
 
-          <q-item class="popup-component" clickable>
-            <q-img class="popup-png2" src="/src/assets/icons/doc_popup/trash.png" />
-            <q-item-section @click="filesApi.deleteDoc(doc.id)">Удалить</q-item-section>
-          </q-item>
+            <q-item class="popup-component" clickable>
+              <q-img class="popup-png2" src="/src/assets/icons/doc_popup/trash.png" />
+              <q-item-section @click="filesApi.deleteDoc(doc.id)">Удалить</q-item-section>
+            </q-item>
 
-          <q-item class="popup-component" clickable>
-            <q-img class="popup-png" src="/src/assets/icons/doc_popup/lock.png" />
-            <q-item-section>Права доступа</q-item-section>
-          </q-item>
+            <q-item class="popup-component" clickable>
+              <q-img class="popup-png" src="/src/assets/icons/doc_popup/lock.png" />
+              <q-item-section>Права доступа</q-item-section>
+            </q-item>
 
-          <q-item class="popup-component" clickable>
-            <q-img class="popup-png" src="/src/assets/icons/doc_popup/pen.png" />
-            <q-item-section>Переименовать</q-item-section>
-            <q-popup-edit v-model="doc.name" :validate="(val) => val.length < 150" v-slot="scope">
-              <q-input v-model="scope.value" :model-value="scope.value" hint="Введите имя документа" :rules="[
-                  (val) => scope.validate(val) || 'Слишком длинное название',
-                ]">
-                <template v-slot:after>
-                  <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
-                  <q-btn flat dense color="positive" icon="check_circle"
-                    @click.stop.prevent="filesApi.updateFile(scope.value, doc)" :disable="scope.validate(scope.value) === false ||
-                      scope.initialValue === scope.value
-                      " />
-                </template>
-              </q-input>
-            </q-popup-edit>
-          </q-item>
-        </q-menu>
+            <q-item class="popup-component" clickable>
+              <q-img class="popup-png" src="/src/assets/icons/doc_popup/pen.png" />
+              <q-item-section>Переименовать</q-item-section>
+              <q-popup-edit v-model="doc.name" :validate="(val) => val.length < 150" v-slot="scope">
+                <q-input v-model="scope.value" :model-value="scope.value" hint="Введите имя документа" :rules="[
+                    (val) => scope.validate(val) || 'Слишком длинное название',
+                  ]">
+                  <template v-slot:after>
+                    <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
+                    <q-btn flat dense color="positive" icon="check_circle"
+                      @click.stop.prevent="filesApi.updateFile(scope.value, doc)" :disable="scope.validate(scope.value) === false ||
+                        scope.initialValue === scope.value
+                        " />
+                  </template>
+                </q-input>
+              </q-popup-edit>
+            </q-item>
+          </q-menu>
+        </div>
       </div>
     </q-route-tab>
   </q-tabs>
@@ -76,7 +77,7 @@ watch(FILES, () => {
 }
 
 .item_doc {
-  width: 100%;
+  min-width: 205px;
   display: flex;
   justify-content: space-between;
 }
@@ -132,5 +133,10 @@ watch(FILES, () => {
 .popup-png2 {
   width: 14px;
   height: 16px;
+}
+
+.doc_wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
