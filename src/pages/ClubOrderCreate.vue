@@ -9,13 +9,14 @@
       </p>
     </section>
     <section>
-      <form action="">
+      <q-form @submit="onSubmit">
         <c-input
         :title="'Название заказа'"
         :name="'name-order'"
         :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
         :type="'text'"
         @change="(value) => form.order = value"
+        :length="500"
         />
 
         <c-input
@@ -24,6 +25,7 @@
         :placeholder="'Укажите названия компании или ИП...'"
         :type="'text'"
         @change="(value) => form.customer = value"
+        :length="500"
         />
 
         <div class="text-subtitle3 input-title input-mt">
@@ -62,6 +64,7 @@
         :placeholder="'Опишите, что требуется сделать по вашей задаче...'"
         :type="'textarea'"
         @change="(value) => form.description = value"
+        :length="5000"
         />
 
 
@@ -78,7 +81,15 @@
         <label for="file" class="text-subtitle3 input-mt">
             Файлы и документы
         </label>
-        <q-file outlined multiple append v-model="form.files">
+        <q-file
+        outlined
+        multiple
+        use-chips
+        append
+        v-model="form.files"
+        max-files="10"
+        max-file-size="51200"
+        >
           <template v-slot:prepend>
             <q-icon name="attach_file" />
           </template>
@@ -88,19 +99,40 @@
             Желаемая стоимость
         </label>
         <div class="row">
-          <q-input v-model="form.priceFrom" type="number" class="input c-mt-24 col-3" name="from-to" placeholder="Опишите, что требуется сделать по вашей задаче..." outlined/>
-          <q-input v-model="form.priceTo" type="number" class="input c-mt-24 col-3 offset-1" name="from-to" placeholder="Опишите, что требуется сделать по вашей задаче..." outlined/>
+          <q-input
+          v-model="form.priceFrom"
+          type="number"
+          class="input c-mt-24 col-3"
+          name="from-to"
+          placeholder="Опишите, что требуется сделать по вашей задаче..."
+          outlined
+          :rules="[requiredOneOf(form.priceTo), positive, lowerThan(form.priceTo)]"
+          />
+
+          <q-input
+          v-model="form.priceTo"
+          type="number"
+          class="input c-mt-24 col-3 offset-1"
+          name="from-to"
+          placeholder="Опишите, что требуется сделать по вашей задаче..."
+          outlined
+          :rules="[requiredOneOf(form.priceFrom), positive, biggerThan(form.priceFrom)]"
+          />
         </div>
 
         <label for="date" class="text-subtitle3 input-title input-mt">
             Желаемый срок готовности
         </label>
-
-        <q-input style="width: 300px;" name="date" filled v-model="form.date" mask="date" :rules="['date']">
+        <q-input style="width: 300px;" name="date" filled v-model="form.date" :rules="[required]">
           <template v-slot:append>
             <q-icon name="event" class="cursor-pointer">
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date v-model="form.date">
+                <q-date
+                :rules="[required]"
+                v-model="form.date"
+                mask="DD.MM.YYYY"
+                :options="optionsFn"
+                >
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
@@ -110,7 +142,24 @@
           </template>
         </q-input>
 
-      </form>
+        <div class="row">
+          <c-button
+            class="text-body1 btn col-2"
+            :label="'Разместить заказ'"
+            :background="true"
+            :type="'submit'"
+          />
+
+          <c-button
+            class="text-body1 btn col-3 offset-1"
+            :label="'Сохранить как черновик'"
+            :outline="true"
+            :type="'submit'"
+          />
+        </div>
+
+
+      </q-form>
     </section>
   </q-page>
 </template>
@@ -119,6 +168,7 @@
 import CButton from "src/components/ClubButton.vue";
 import CInput from "src/components/ClubOrderCreateInput.vue";
 import { ref, watch } from "vue";
+import { useValidators } from "src/use/validators";
 
 const buttons = ref([
   {
@@ -158,7 +208,7 @@ const checkboxes = ref([
 const form = ref({
   order: "",
   customer: "",
-  type: "",
+  type: "Нетиповой заказ",
   websiteFuncs: [],
   description: "",
   consult: false,
@@ -168,7 +218,15 @@ const form = ref({
   date: ""
 })
 
+const { required, positive, requiredOneOf, lowerThan, biggerThan } = useValidators();
 
+const optionsFn = (date) => {
+  return new Date(date).getTime() > Date.now() - 86_400_000;
+}
+
+const onSubmit = () => {
+  console.log(form.value)
+}
 </script>
 
 <style lang="scss" scoped>

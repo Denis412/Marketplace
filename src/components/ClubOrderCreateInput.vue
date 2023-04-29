@@ -1,27 +1,30 @@
 <template>
-<label :for="name" class="text-subtitle3 input-title input-mt">
-  {{ title }}
-</label>
-<q-input
-v-model="value"
-@update:model-value="change"
-:type="type"
-class="input c-mt-24"
-:name="name"
-:placeholder="placeholder"
-outlined
-/>
+  <label :for="name" class="text-subtitle3 input-title input-mt">
+    {{ title }}
+  </label>
 
+  <q-input
+  v-model="value"
+  @update:model-value="change"
+  :type="type"
+  class="input c-mt-24"
+  :name="name"
+  :placeholder="placeholder"
+  outlined
+  :rules="[required, maxLength(length)]"
+  />
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useValidators } from "src/use/validators";
 
-const { title, name, placeholder, type } = defineProps({
+const { title, name, placeholder, type, length } = defineProps({
   title: String,
   name: String,
   placeholder: String,
   type: String,
+  length: Number,
 })
 
 const emit = defineEmits(["change"])
@@ -29,10 +32,10 @@ const emit = defineEmits(["change"])
 const value = ref();
 
 const change = () => {
-  console.log(value.value)
   emit("change", value.value);
 }
 
+const { required, maxLength } = useValidators();
 </script>
 
 <style lang="scss" scoped>
