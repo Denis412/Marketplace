@@ -34,9 +34,6 @@ const getFileHtmlByUrl = async (path, id, name) => {
   console.log(path, id, name)
   const response = await fetch(
     `https://cdn.stud.druid.1t.ru/${path}/${id}.html?n=${name}`,
-    {
-      method: 'post',
-    },
   )
   const html = await response.text()
 

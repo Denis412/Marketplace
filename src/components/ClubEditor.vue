@@ -12,7 +12,7 @@
         autocomplete="off"
         class="text-h3 q-mb-sm col-12"
         id="id"
-        placeholder="Придумайте название файла"
+        :placeholder="titleDocument"
       />
     </div>
 
@@ -91,6 +91,8 @@ import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import filesApi from "src/sdk/file";
+
+const titleDocument = ref("Придумайте название файла");
 
 const $q = useQuasar();
 
@@ -191,12 +193,11 @@ storeFile.SET_FILES();
 const FILES = computed(() => storeFile.GET_FILES);
 
 watch(route, async () => {
-  filesApi.updateRouteId(id_route.value, route.params.id);
-  console.log(editor.value);
+  titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
   editor.value = await filesApi.getFileHtmlByUrl(
-    FILES.value[id_route.value].path,
-    FILES.value[id_route.value].id,
-    FILES.value[id_route.value].name
+    FILES.value[route.params.id].path,
+    FILES.value[route.params.id].id,
+    FILES.value[route.params.id].name
   );
   console.log(editor.value);
 });
