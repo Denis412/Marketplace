@@ -4,26 +4,32 @@
         name: 'Document',
         params: { id: `${index}` },
       }">
+
       <div class="item_doc">
         <span>{{ doc.name.slice(0, -5) }}</span>
         <span clickable>⋮</span>
         <q-menu class="popup" anchor="bottom right" self="top left">
+
           <q-item class="popup-component" clickable>
             <q-img class="popup-png" src="/src/assets/icons/doc_popup/link.png" />
             <q-item-section>Открыть</q-item-section>
           </q-item>
+
           <q-item class="popup-component" clickable>
             <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
             <q-item-section>Дублировать</q-item-section>
           </q-item>
+
           <q-item class="popup-component" clickable>
             <q-img class="popup-png2" src="/src/assets/icons/doc_popup/trash.png" />
             <q-item-section @click="filesApi.deleteDoc(doc.id)">Удалить</q-item-section>
           </q-item>
+
           <q-item class="popup-component" clickable>
             <q-img class="popup-png" src="/src/assets/icons/doc_popup/lock.png" />
             <q-item-section>Права доступа</q-item-section>
           </q-item>
+
           <q-item class="popup-component" clickable>
             <q-img class="popup-png" src="/src/assets/icons/doc_popup/pen.png" />
             <q-item-section>Переименовать</q-item-section>
@@ -33,7 +39,6 @@
                 ]">
                 <template v-slot:after>
                   <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
-
                   <q-btn flat dense color="positive" icon="check_circle"
                     @click.stop.prevent="filesApi.updateFile(scope.value, doc)" :disable="scope.validate(scope.value) === false ||
                       scope.initialValue === scope.value
