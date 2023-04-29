@@ -130,8 +130,6 @@ watch(FILES, () => {
   width: 290px;
   height: 291px;
 
-  background: #FFFFFF;
-
   border: 1px solid #BBBBBB;
   box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
