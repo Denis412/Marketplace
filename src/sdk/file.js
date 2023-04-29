@@ -38,7 +38,6 @@ const getFileHtmlByUrl = async (path, id, name) => {
   const html = await response.text()
 
   let res = await Promise.resolve(html)
-  console.log(1111111111111, res)
 
   return res
 }
@@ -52,7 +51,9 @@ const upload = async (files) => {
   }
 }
 
-const createHtmlFile = async function ({ editorValue, fileName }) {
+const createHtmlFile = async function (editorValue, fileName) {
+  console.log(2)
+
   const blob = new Blob([editorValue], { type: 'text/html' })
 
   const formData = new FormData()
@@ -66,16 +67,16 @@ const setTimeoutFunc = ({ minutes, func }) => {
   setTimeout(func, minutes * 60)
 }
 
-const renameDocument = (scope, doc) => {
-  console.log(scope)
+const updateFile = (name, doc) => {
+  console.log(name)
   console.log(doc)
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {
-        title: scope,
+        title: name,
         path: doc.path,
         size: doc.size,
-        name: scope,
+        name: name,
         short_link: doc.short_link,
         extension: doc.extension,
         disk: doc.disk,
@@ -88,7 +89,7 @@ const renameDocument = (scope, doc) => {
 }
 
 const deleteDoc = function (id) {
-  console.log(id)
+  console.log(1)
   const apolloClient = new ApolloClient(getClientOptions())
   provideApolloClient(apolloClient)
   const { mutate } = useMutation(fileDelete, () => ({
@@ -110,7 +111,7 @@ const filesApi = {
   createHtmlFile,
   upload,
   setTimeoutFunc,
-  renameDocument,
+  updateFile,
   deleteDoc,
   updateRouteId,
 }

@@ -58,9 +58,7 @@
                     dense
                     color="positive"
                     icon="check_circle"
-                    @click.stop.prevent="
-                      filesApi.renameDocument(scope.value, doc)
-                    "
+                    @click.stop.prevent="filesApi.updateFile(scope.value, doc)"
                     :disable="
                       scope.validate(scope.value) === false ||
                       scope.initialValue === scope.value
