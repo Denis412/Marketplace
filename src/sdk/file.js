@@ -60,6 +60,12 @@ const setTimeoutFunc = ({ minutes, func }) => {
   setTimeout(func, minutes * 60)
 }
 
-const filesApi = { uploadFiles, getFileFetch, upload, setTimeoutFunc }
+const filesApi = {
+  uploadFiles,
+  getFileFetch,
+  createHtmlFile,
+  upload,
+  setTimeoutFunc,
+}
 
 export default filesApi
