@@ -1,24 +1,23 @@
 <template>
-  <q-btn-dropdown
-    v-model="menu"
-    flat
+  <q-select
     no-caps
-    class="q-ml-lg club-dropdown text-body2"
+    v-model="t"
+    borderless
+    class="club-dropdown"
     label="Dropdown"
+    :options="list"
     dropdown-icon="img:/src/assets/icons/arrow/arrow-down-grey.svg"
-  >
-    <slot name="list"></slot>
-  </q-btn-dropdown>
+  />
 </template>
 
 <script setup>
 import { ref } from "vue";
 
+const t = ref("");
+
 const { list } = defineProps({
   list: Array,
 });
-
-const menu = ref(false);
 
 const onItemClick = () => {};
 </script>

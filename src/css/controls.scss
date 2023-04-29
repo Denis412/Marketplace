@@ -155,12 +155,21 @@
 }
 
 .club-dropdown {
-  min-height: 60px;
-  border: 1px solid lightgrey;
+  min-height: $input-height-md;
+  border: 1px solid #cacaca;
   border-radius: 8px;
 
-  span {
-    color: #6d6d6d;
-    justify-content: space-between;
+  div {
+    min-height: $input-height-md !important;
+
+    .q-field__control {
+      @extend .text-body2;
+
+      padding: 0 24px;
+
+      &:before {
+        border-bottom: none !important;
+      }
+    }
   }
 }

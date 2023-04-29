@@ -43,13 +43,14 @@
     <section class="flex">
       <c-label-control label="Город">
         <template #control>
-          <c-input v-model="form.city" :placeholder="currentUser.city" />
+          <c-dropdown :label="currentUser.city"> </c-dropdown>
         </template>
       </c-label-control>
 
       <c-label-control label="Пол" class="c-ml-32">
         <template #control>
-          <c-input v-model="form.sex" :placeholder="currentUser.sex" />
+          <c-dropdown :label="currentUser.sex" :list="['item1', 'item2']">
+          </c-dropdown>
         </template>
       </c-label-control>
     </section>
@@ -67,6 +68,7 @@ import { ref, computed } from "vue";
 import { useUserStore } from "src/stores/user";
 
 import CInput from "./ClubInput.vue";
+import CDropdown from "./ClubDropdown.vue";
 import CLabelControl from "./ClubLabelControl.vue";
 
 const emit = defineEmits(["form-submit"]);
@@ -84,7 +86,13 @@ const currentUser = computed(() => userStore.GET_CURRENT_USER);
 
 <style scoped lang="scss">
 label {
-  width: 352px;
-  max-width: 352px;
+  $control-width: 352px;
+
+  width: $control-width;
+  max-width: $control-width;
+
+  button {
+    width: $control-width;
+  }
 }
 </style>
