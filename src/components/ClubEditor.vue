@@ -88,15 +88,6 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useQuasar } from "quasar";
-//=======================
-import { useFileStore } from "src/stores/file";
-const storeFile = useFileStore();
-storeFile.SET_FILES();
-const files = computed(() => storeFile.GET_FILES);
-watch(storeFile, () => {
-  console.log(files.value);
-});
-//=======================
 
 const $q = useQuasar();
 

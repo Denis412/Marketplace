@@ -54,16 +54,12 @@ const routes = [
         path: 'addDocument',
         name: 'addDocument',
         component: () => import('pages/ClubAddNewDocument.vue'),
-        children: [
-          {
-            path: 'Document/:id',
-            name: 'Document',
-            component: () => import('pages/Document.vue'),
-          },
-        ],
       },
-
-      //
+      {
+        path: 'addDocument/:id',
+        name: 'Document',
+        component: () => import('pages/ClubAddNewDocument.vue'),
+      },
     ],
   },
 

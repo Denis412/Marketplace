@@ -1,6 +1,12 @@
 import { provideApolloClient, useMutation } from '@vue/apollo-composable'
 import apolloClient from 'src/apollo/apollo-client'
-import { filesUpload } from 'src/graphql/files/mutations'
+import {
+  filesUpload,
+  fileUpdate,
+  fileDelete,
+} from 'src/graphql/files/mutations'
+import { ApolloClient } from '@apollo/client/core'
+import { getClientOptions } from 'src/apollo/index'
 
 provideApolloClient(apolloClient)
 
@@ -60,12 +66,47 @@ const setTimeoutFunc = ({ minutes, func }) => {
   setTimeout(func, minutes * 60)
 }
 
+const renameDocument = (scope, doc) => {
+  console.log(scope)
+  console.log(doc)
+  const { mutate } = useMutation(fileUpdate, () => ({
+    variables: {
+      input: {
+        title: scope,
+        path: doc.path,
+        size: doc.size,
+        name: scope,
+        short_link: doc.short_link,
+        extension: doc.extension,
+        disk: doc.disk,
+        hash: doc.hash,
+      },
+      id: doc.id,
+    },
+  }))
+  mutate()
+}
+
+const deleteDoc = function (id) {
+  console.log(id)
+  const apolloClient = new ApolloClient(getClientOptions())
+  provideApolloClient(apolloClient)
+  const { mutate } = useMutation(fileDelete, () => ({
+    variables: {
+      id: id,
+    },
+  }))
+  mutate()
+}
+
 const filesApi = {
   uploadFiles,
   getFileFetch,
   createHtmlFile,
   upload,
   setTimeoutFunc,
+  renameDocument,
+  deleteDoc,
 }
 
 export default filesApi

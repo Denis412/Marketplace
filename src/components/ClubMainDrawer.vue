@@ -25,6 +25,7 @@
             {{ item.title }}
           </div>
         </router-link>
+        <c-qtabs-document v-if="item.title == 'Лендинг'" />
       </q-item>
     </q-list>
 
@@ -41,6 +42,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+
+import CQtabsDocument from "src/components/q-tabs/ClubQtabsDocument.vue";
 
 const { side } = defineProps({
   side: String,
