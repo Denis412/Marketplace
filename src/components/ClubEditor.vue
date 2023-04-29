@@ -86,11 +86,10 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
-import filesApi from "src/sdk/file";
 
 const titleDocument = ref("");
 
@@ -173,9 +172,6 @@ const monthNames = [
 ];
 
 const route = useRoute();
-const storeFile = useFileStore();
-
-const id_route = ref(route.params.id);
 
 const date = new Date();
 const day = date.getDate();
@@ -185,37 +181,9 @@ const edit = ref(null);
 const path = "Главная/Сайт с каталогом/Без названия"; //Placeholder
 const editor = ref("");
 const token = ref(null);
-
+const previousRoutParam = ref(null);
 const foreColor = ref("#000000");
 const highlight = ref("#ffff00aa");
-
-const FILES = computed(() => storeFile.GET_FILES);
-watch(FILES, () => {
-  editor.value = filesApi.getFileHtmlByUrl(
-    FILES.value[route.params.id].path,
-    FILES.value[route.params.id].id,
-    FILES.value[route.params.id].name
-  );
-  titleDocument.value = FILES.value[route.params.id].name;
-});
-
-watch(route, async () => {
-  // filesApi.deleteDoc(FILES.value[route.params.id].id);
-  // filesApi.createHtmlFile(editor.value, titleDocument.value + ".html");
-
-  if (route.params.id) {
-    console.log(11111, FILES.value[route.params.id].id);
-    console.log(22222, titleDocument.value + ".html");
-    console.log(33333, editor.value);
-
-    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
-    editor.value = await filesApi.getFileHtmlByUrl(
-      FILES.value[route.params.id].path,
-      FILES.value[route.params.id].id,
-      FILES.value[route.params.id].name
-    );
-  }
-});
 
 const color = (cmd, name) => {
   token._value.hide();

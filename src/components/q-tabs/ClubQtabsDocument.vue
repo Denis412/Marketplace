@@ -22,7 +22,7 @@
             <q-item-section>Дублировать</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
-            <q-item-section @click="filesApi.deleteDoc(doc.id)"
+            <q-item-section @click="deleteDocument(doc.id)"
               >Удалить</q-item-section
             >
           </q-item>
@@ -58,7 +58,7 @@
                     dense
                     color="positive"
                     icon="check_circle"
-                    @click.stop.prevent="filesApi.updateFile(scope.value, doc)"
+                    @click.stop.prevent="updateDocument(scope.value)"
                     :disable="
                       scope.validate(scope.value) === false ||
                       scope.initialValue === scope.value
@@ -81,10 +81,17 @@ import { provideApolloClient } from "@vue/apollo-composable";
 import { useMutation } from "@vue/apollo-composable";
 import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
-import filesApi from "src/sdk/file";
 
-const storeFile = useFileStore();
-const FILES = computed(() => storeFile.GET_FILES);
+// const storeFile = useFileStore();
+// const FILES = computed(() => storeFile.GET_FILES);
+
+const deleteDocument = () => {
+  console.log("deleteDocument");
+};
+
+const updateDocument = () => {
+  console.log("updateDocument");
+};
 
 watch(FILES, () => {
   console.log(FILES.value);
