@@ -29,18 +29,21 @@ const uploadFiles = async (files) => {
   console.log(BigInt(data.data.filesUpload.ids[0]).toString())
 }
 
-const getFileFetch = (path, id, name) => {
-  fetch(`https://cdn.stud.druid.1t.ru/${path}/${id}.html?n=${name}`).then(
-    (response) => {
-      response
-        .text()
-        .then((html) => {
-          console.log(html)
-          return html
-        })
-        .catch((err) => console.log(err))
+const getFileHtmlByUrl = async (path, id, name) => {
+  //mode: no-cores
+  console.log(path, id, name)
+  const response = await fetch(
+    `https://cdn.stud.druid.1t.ru/${path}/${id}.html?n=${name}`,
+    {
+      method: 'post',
     },
   )
+  const html = await response.text()
+
+  let res = await Promise.resolve(html)
+  console.log(1111111111111, res)
+
+  return res
 }
 
 const upload = async (files) => {
@@ -99,14 +102,20 @@ const deleteDoc = function (id) {
   mutate()
 }
 
+const updateRouteId = (id_route, routeParamsId) => {
+  id_route = routeParamsId
+  console.log(id_route)
+}
+
 const filesApi = {
   uploadFiles,
-  getFileFetch,
+  getFileHtmlByUrl,
   createHtmlFile,
   upload,
   setTimeoutFunc,
   renameDocument,
   deleteDoc,
+  updateRouteId,
 }
 
 export default filesApi

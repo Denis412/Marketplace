@@ -88,6 +88,9 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useQuasar } from "quasar";
+import { useFileStore } from "src/stores/file";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import filesApi from "src/sdk/file";
 
 const $q = useQuasar();
 
@@ -167,6 +170,11 @@ const monthNames = [
   "Декабря",
 ];
 
+const route = useRoute();
+const storeFile = useFileStore();
+
+const id_route = ref(route.params.id);
+
 const date = new Date();
 const day = date.getDate();
 const month = monthNames[date.getMonth()];
@@ -178,6 +186,20 @@ const token = ref(null);
 
 const foreColor = ref("#000000");
 const highlight = ref("#ffff00aa");
+
+storeFile.SET_FILES();
+const FILES = computed(() => storeFile.GET_FILES);
+
+watch(route, async () => {
+  filesApi.updateRouteId(id_route.value, route.params.id);
+  console.log(editor.value);
+  editor.value = await filesApi.getFileHtmlByUrl(
+    FILES.value[id_route.value].path,
+    FILES.value[id_route.value].id,
+    FILES.value[id_route.value].name
+  );
+  console.log(editor.value);
+});
 
 const color = (cmd, name) => {
   token._value.hide();

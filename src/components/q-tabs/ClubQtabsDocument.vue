@@ -88,9 +88,6 @@ import { useFileStore } from "src/stores/file";
 import filesApi from "src/sdk/file";
 
 const storeFile = useFileStore();
-
-storeFile.SET_FILES();
-
 const FILES = computed(() => storeFile.GET_FILES);
 
 watch(FILES, () => {
