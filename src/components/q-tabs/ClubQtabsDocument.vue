@@ -13,12 +13,20 @@
     >
       <div class="item_doc">
         <span>{{ doc.name.slice(0, -5) }}</span>
-        <span clickable @click="menuDoc">⋮</span>
+        <span clickable>⋮</span>
         <q-menu class="popup" anchor="bottom right" self="top left">
           <q-item class="popup-component" clickable>
+            <q-img
+              class="popup-png"
+              src="/src/assets/icons/doc_popup/link.png"
+            />
             <q-item-section>Открыть</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
+            <q-img
+              class="popup-png"
+              src="/src/assets/icons/doc_popup/file.png"
+            />
             <q-item-section>Дублировать</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
@@ -27,21 +35,29 @@
             >
           </q-item>
           <q-item class="popup-component" clickable>
+            <q-img
+              class="popup-png"
+              src="/src/assets/icons/doc_popup/lock.png"
+            />
             <q-item-section>Права доступа</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
+            <q-img
+              class="popup-png"
+              src="/src/assets/icons/doc_popup/pen.png"
+            />
             <q-item-section>Переименовать</q-item-section>
             <q-popup-edit
               v-model="doc.name"
-              :validate="(val) => val.length > 5"
+              :validate="(val) => val.length < 150"
               v-slot="scope"
             >
               <q-input
                 v-model="scope.value"
                 :model-value="scope.value"
-                hint="Set document name"
+                hint="Введите имя документа"
                 :rules="[
-                  (val) => scope.validate(val) || 'More than 5 chars required',
+                  (val) => scope.validate(val) || 'Слишком длинное название',
                 ]"
               >
                 <template v-slot:after>
@@ -58,7 +74,9 @@
                     dense
                     color="positive"
                     icon="check_circle"
-                    @click.stop.prevent="updateDocument(scope.value)"
+                    @click.stop.prevent="
+                      filesApi.renameDocument(scope.value, doc)
+                    "
                     :disable="
                       scope.validate(scope.value) === false ||
                       scope.initialValue === scope.value
@@ -120,20 +138,47 @@ watch(FILES, () => {
 }
 
 .popup {
-  width: 290px;
-  height: 291px;
+  align-items: center;
   padding: 8px 0px 20px;
   gap: 16px;
+
+  position: relative;
+  width: 290px;
+  height: 291px;
+
+  background: #ffffff;
+
   border: 1px solid #bbbbbb;
   box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
 }
 
 .popup-component {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   padding: 10px 29px 10px 20px;
   gap: 18px;
 
+  width: 290px;
   height: 40px;
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+
+  color: #666666;
+}
+
+.popup-png {
+  width: 16px;
+  height: 14px;
+}
+
+.popup-png2 {
+  width: 14px;
+  height: 16px;
 }
 </style>
