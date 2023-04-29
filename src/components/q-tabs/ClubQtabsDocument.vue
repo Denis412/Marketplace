@@ -9,18 +9,23 @@
         <span clickable>⋮</span>
         <q-menu class="popup" anchor="bottom right" self="top left">
           <q-item class="popup-component" clickable>
+            <q-img class="popup-png" src="/src/assets/icons/doc_popup/link.png" />
             <q-item-section>Открыть</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
+            <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
             <q-item-section>Дублировать</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
+            <q-img class="popup-png2" src="/src/assets/icons/doc_popup/trash.png" />
             <q-item-section @click="filesApi.deleteDoc(doc.id)">Удалить</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
+            <q-img class="popup-png" src="/src/assets/icons/doc_popup/lock.png" />
             <q-item-section>Права доступа</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
+            <q-img class="popup-png" src="/src/assets/icons/doc_popup/pen.png" />
             <q-item-section>Переименовать</q-item-section>
             <q-popup-edit v-model="doc.name" :validate="(val) => val.length < 150" v-slot="scope">
               <q-input v-model="scope.value" :model-value="scope.value" hint="Введите имя документа" :rules="[
@@ -117,20 +122,47 @@ watch(FILES, () => {
 }
 
 .popup {
-  width: 290px;
-  height: 291px;
+  align-items: center;
   padding: 8px 0px 20px;
   gap: 16px;
-  border: 1px solid #bbbbbb;
+
+  position: relative;
+  width: 290px;
+  height: 291px;
+
+  background: #FFFFFF;
+
+  border: 1px solid #BBBBBB;
   box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
 }
 
 .popup-component {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   padding: 10px 29px 10px 20px;
   gap: 18px;
 
+  width: 290px;
   height: 40px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+
+  color: #666666;
+}
+
+.popup-png {
+  width: 16px;
+  height: 14px;
+}
+
+.popup-png2 {
+  width: 14px;
+  height: 16px;
 }
 </style>
