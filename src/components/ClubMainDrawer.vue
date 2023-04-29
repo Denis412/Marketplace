@@ -79,6 +79,11 @@ const mainTreeItems = ref([
     img: "HomeIconDemo.svg",
     path: "space",
   },
+  {
+    title: "Лендинг",
+    img: "HomeIconDemo.svg",
+    path: "addDocument",
+  },
 ]);
 
 const toggleDrawer = () => {

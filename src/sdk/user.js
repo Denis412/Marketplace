@@ -2,7 +2,7 @@ import {
   provideApolloClient,
   useMutation,
   useQuery,
-} from "@vue/apollo-composable";
+} from '@vue/apollo-composable'
 import {
   userSignUp,
   userSignIn,
@@ -10,33 +10,31 @@ import {
   userResetPasswordSendCode,
   userResetPasswordConfirmCodeSetPassword,
   userGroupInviteUser,
-} from "src/graphql/user/mutations";
-import { getUser, getSubject } from "src/graphql/user/queries";
+} from 'src/graphql/user/mutations'
+import { getUser, getSubject } from 'src/graphql/user/queries'
 
-import apolloClient from "src/apollo/apollo-client";
-import tokenApi from "./token";
+import apolloClient from 'src/apollo/apollo-client'
+import tokenApi from './token'
 
-provideApolloClient(apolloClient);
+provideApolloClient(apolloClient)
 
-const { refetch: refetchUser } = useQuery(getUser);
+const { refetch: refetchUser } = useQuery(getUser)
 const { refetch: refetchSubject } = useQuery(getSubject, {
   where: {
-    column: "user_id",
-    operator: "EQ",
-    value: "5571026735801383150",
+    column: 'user_id',
+    operator: 'EQ',
+    value: '5571026735801383150',
   },
-});
+})
 
-const { mutate: signUp } = useMutation(userSignUp);
-const { mutate: signIn } = useMutation(userSignIn);
-const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
-const { mutate: invitingUser } = useMutation(userGroupInviteUser);
-const { mutate: resetPasswordSendCode } = useMutation(
-  userResetPasswordSendCode
-);
+const { mutate: signUp } = useMutation(userSignUp)
+const { mutate: signIn } = useMutation(userSignIn)
+const { mutate: userSetPassword } = useMutation(userSignUpSetPassword)
+const { mutate: invitingUser } = useMutation(userGroupInviteUser)
+const { mutate: resetPasswordSendCode } = useMutation(userResetPasswordSendCode)
 const { mutate: resetPasswordConfirmCode } = useMutation(
-  userResetPasswordConfirmCodeSetPassword
-);
+  userResetPasswordConfirmCodeSetPassword,
+)
 
 const inviteGroup = async ({ name, surname, email, group_id }) => {
   const { data: userData } = await invitingUser({
@@ -46,51 +44,51 @@ const inviteGroup = async ({ name, surname, email, group_id }) => {
       email,
       group_id,
     },
-  });
+  })
 
-  console.log("data", data);
-};
+  console.log('data', data)
+}
 
 const registration = async ({ name, surname, email }) => {
-  console.log("reg", { name, surname, email });
+  console.log('reg', { name, surname, email })
   const { data: userInfo } = await signUp({
     input: {
       name,
       surname,
       email,
     },
-  });
+  })
 
   await inviteGroup({
     name,
     surname,
     email,
     group_id: process.env.USERS_GROUP_ID,
-  });
+  })
 
-  return userInfo.userSignUp;
-};
+  return userInfo.userSignUp
+}
 
 const setPassword = async ({ user_id, password, code }) => {
-  console.log("code", { user_id, password, code });
+  console.log('code', { user_id, password, code })
   await userSetPassword({
     input: {
       user_id,
       password,
       code,
     },
-  });
-};
+  })
+}
 
 const userPasswordSendCode = async ({ email }) => {
   const { data: resetSendCode } = await resetPasswordSendCode({
     input: {
       email,
     },
-  });
+  })
 
-  return resetSendCode.userResetPasswordSendCode;
-};
+  return resetSendCode.userResetPasswordSendCode
+}
 
 const userPasswordConfirmCode = async ({ user_id, code, password }) => {
   await resetPasswordConfirmCode({
@@ -99,8 +97,8 @@ const userPasswordConfirmCode = async ({ user_id, code, password }) => {
       code,
       password,
     },
-  });
-};
+  })
+}
 
 const login = async ({ login, password }) => {
   const { data: userInfo } = await signIn({
@@ -108,23 +106,23 @@ const login = async ({ login, password }) => {
       login,
       password,
     },
-  });
+  })
 
-  tokenApi.save(userInfo.userSignIn.record);
+  tokenApi.save(userInfo.userSignIn.record)
 
   const { data: userData } = await refetchUser({
     id: userInfo.userSignIn.recordId,
-  });
+  })
 
   const { data: subjectData } = await refetchSubject({
     page: 1,
     perPage: 1,
     where: {
-      column: "user_id",
-      operator: "EQ",
+      column: 'user_id',
+      operator: 'EQ',
       value: `${userInfo.userSignIn.recordId}`,
     },
-  });
+  })
 
   const saveUserData = {
     first_name: subjectData.paginate_subject.data[0].fullname.first_name,
@@ -134,23 +132,21 @@ const login = async ({ login, password }) => {
     email: userData.user.email,
     avatar: userData.user.avatar,
     telegram_chat_id: userData.user.telegram_chat_id,
-  };
+  }
 
-  console.log(userStore);
+  localStorage.setItem('user-data', JSON.stringify(saveUserData))
 
-  localStorage.setItem("user-data", JSON.stringify(saveUserData));
-
-  return userData.user;
-};
+  return userData.user
+}
 
 const logout = () => {
-  tokenApi.remove();
+  tokenApi.remove()
 
-  localStorage.removeItem("user-data");
-};
+  localStorage.removeItem('user-data')
+}
 
 const isAuth = () =>
-  localStorage.getItem("user-data") && localStorage.getItem("refreshToken");
+  localStorage.getItem('user-data') && localStorage.getItem('refreshToken')
 
 const userApi = {
   registration,
@@ -161,6 +157,6 @@ const userApi = {
   inviteGroup,
   logout,
   isAuth,
-};
+}
 
-export default userApi;
+export default userApi
