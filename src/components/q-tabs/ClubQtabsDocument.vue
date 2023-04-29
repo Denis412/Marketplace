@@ -34,10 +34,10 @@
                 <template v-slot:after>
                   <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
 
-                  <q-btn flat dense color="positive" icon="check_circle" @click.stop.prevent="filesApi.renameDocument(scope.value, doc)
-                    " :disable="scope.validate(scope.value) === false ||
-    scope.initialValue === scope.value
-    " />
+                  <q-btn flat dense color="positive" icon="check_circle"
+                    @click.stop.prevent="filesApi.updateFile(scope.value, doc)" :disable="scope.validate(scope.value) === false ||
+                      scope.initialValue === scope.value
+                      " />
                 </template>
               </q-input>
             </q-popup-edit>
@@ -51,8 +51,6 @@
 <script setup>
 import { defineComponent, ref, computed, onMounted, watch } from "vue";
 import { useQuery } from "@vue/apollo-composable";
-import { fileUpdate, fileDelete } from "src/graphql/files/mutations";
-import { ApolloClient } from "@apollo/client/core";
 import { provideApolloClient } from "@vue/apollo-composable";
 import { useMutation } from "@vue/apollo-composable";
 import { useQuasar } from "quasar";
@@ -65,39 +63,6 @@ const FILES = computed(() => storeFile.GET_FILES);
 watch(FILES, () => {
   console.log(FILES.value);
 });
-
-// const renameDocument = (scope, doc) => {
-//   console.log(scope);
-//   console.log(doc);
-//   console.log();
-//   const { mutate } = useMutation(fileUpdate, () => ({
-//     variables: {
-//       input: {
-//         title: scope,
-//         path: doc.path,
-//         size: doc.size,
-//         name: scope,
-//         short_link: doc.short_link,
-//         extension: doc.extension,
-//         disk: doc.disk,
-//         hash: doc.hash,
-//       },
-//       id: doc.id,
-//     },
-//   }));
-//   mutate();
-// };
-
-// const deleteDoc = function (id) {
-//   const apolloClient = new ApolloClient(getClientOptions());
-//   provideApolloClient(apolloClient);
-//   const { mutate } = useMutation(fileDelete, () => ({
-//     variables: {
-//       id: id,
-//     },
-//   }));
-//   mutate();
-// };
 </script>
 
 <style scoped lang="scss">
