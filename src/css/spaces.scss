@@ -270,6 +270,50 @@
   }
 }
 
+.c-m {
+  &t- {
+    &64 {
+      margin-top: 64px;
+    }
+  }
+
+  &b- {
+    &64 {
+      margin-bottom: 64px;
+    }
+  }
+
+  &l- {
+    &64 {
+      margin-left: 64px;
+    }
+  }
+
+  &r- {
+    &64 {
+      margin-right: 64px;
+    }
+  }
+
+  &x- {
+    &64 {
+      margin: 0 64px;
+    }
+  }
+
+  &y- {
+    &64 {
+      margin-top: 64px 0;
+    }
+  }
+
+  &a- {
+    &64 {
+      margin: 64px;
+    }
+  }
+}
+
 .c-p {
   &t- {
     &32 {

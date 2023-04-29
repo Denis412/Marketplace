@@ -50,6 +50,8 @@
         </q-form>
       </q-card-section>
 
+      <!-- <pre>{{ authInfo }}</pre> -->
+
       <c-confirmation-code-dialog
         v-model="sendCode"
         :timer="timer"
@@ -98,6 +100,17 @@ const changePassword = async () => {
       userId = await userApi.userPasswordSendCode({
         email: authInfo.email,
       });
+    else {
+      $q.notify({
+        type: "warning",
+        position: "top",
+        message: "Код подтверждения уже был отправлен на почту!",
+      });
+
+      sendCode.value = true;
+
+      return;
+    }
 
     newAuthInfo.value.email = authInfo.email;
     newAuthInfo.value.user_id = userId?.record.user_id;

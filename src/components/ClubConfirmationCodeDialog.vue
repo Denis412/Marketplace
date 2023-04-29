@@ -138,6 +138,12 @@ const inputCode = async (value, inputNumber) => {
       router.push({
         name: "auth",
       });
+
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: "Все отлично! Осталось войти в аккаунт!",
+      });
     } catch (error) {
       console.log(error);
 

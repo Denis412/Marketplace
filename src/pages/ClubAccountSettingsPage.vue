@@ -1,5 +1,5 @@
 <template>
-  <q-page class="c-pt-40 c-pl-96 c-pr-32">
+  <q-page class="c-pt-40 c-pl-96 c-pr-32 c-pb-64">
     <c-account-settings />
   </q-page>
 </template>

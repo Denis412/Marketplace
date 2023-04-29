@@ -1,55 +1,73 @@
 <template>
   <q-form @submit="$emit('submit-form', form)">
-    <label for="last_name">
-      <p class="text-body2 c-mt-32 q-mb-sm">Фамилия</p>
+    <section class="flex">
+      <c-label-control label="Фамилия">
+        <template #control>
+          <c-input
+            v-model="form.last_name"
+            :placeholder="currentUser.last_name"
+          />
+        </template>
+      </c-label-control>
 
-      <c-input
-        id="last_name"
-        class="w-100p"
-        v-model="form.last_name"
-        :placeholder="currentUser.last_name"
-      />
-    </label>
+      <c-label-control label="Имя" class="c-ml-32">
+        <template #control>
+          <c-input
+            v-model="form.first_name"
+            :placeholder="currentUser.first_name"
+          />
+        </template>
+      </c-label-control>
+    </section>
 
-    <label for="first_name">
-      <p class="text-body2 c-mt-32 q-mb-sm">Имя</p>
+    <section class="flex">
+      <c-label-control label="Отчество">
+        <template #control>
+          <c-input
+            v-model="form.middle_name"
+            :placeholder="currentUser.middle_name"
+          />
+        </template>
+      </c-label-control>
 
-      <c-input
-        id="first_name"
-        class="w-100p"
-        v-model="form.first_name"
-        :placeholder="currentUser.first_name"
-      />
-    </label>
+      <c-label-control label="Дата рождения" class="c-ml-32">
+        <template #control>
+          <c-input
+            v-model="form.birthday"
+            :placeholder="currentUser.birthday"
+          />
+        </template>
+      </c-label-control>
+    </section>
 
-    <label for="middle_name">
-      <p class="text-body2 c-mt-32 q-mb-sm">Отчество</p>
+    <section class="flex">
+      <c-label-control label="Город">
+        <template #control>
+          <c-input v-model="form.city" :placeholder="currentUser.city" />
+        </template>
+      </c-label-control>
 
-      <c-input
-        id="middle_name"
-        class="w-100p"
-        v-model="form.middle_name"
-        :placeholder="currentUser.middle_name"
-      />
-    </label>
+      <c-label-control label="Пол" class="c-ml-32">
+        <template #control>
+          <c-input v-model="form.sex" :placeholder="currentUser.sex" />
+        </template>
+      </c-label-control>
+    </section>
 
-    <label for="email">
-      <p class="text-body2 c-mt-32 q-mb-sm">Адрес электронной почты</p>
-
-      <c-input
-        id="email"
-        class="w-100p"
-        :placeholder="currentUser.email"
-        disable
-      />
-    </label>
+    <c-label-control label="Адрес электронной почты">
+      <template #control>
+        <c-input :placeholder="currentUser.email" disable />
+      </template>
+    </c-label-control>
   </q-form>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
 import { useUserStore } from "src/stores/user";
+
 import CInput from "./ClubInput.vue";
+import CLabelControl from "./ClubLabelControl.vue";
 
 const emit = defineEmits(["form-submit"]);
 
@@ -64,4 +82,9 @@ const form = ref({
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+label {
+  width: 352px;
+  max-width: 352px;
+}
+</style>

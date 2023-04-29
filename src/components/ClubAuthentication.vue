@@ -108,7 +108,7 @@ const authorization = async () => {
   }
 };
 
-const resetPassword = async () => {
+const resetPassword = () => {
   authInfo.value.email = form.value.login;
   authInfo.value.password = form.value.password;
 
