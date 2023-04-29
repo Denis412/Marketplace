@@ -1,19 +1,12 @@
 <template>
-  <q-tabs
-    indicator-color="transparent"
-    v-for="(doc, index) in FILES"
-    :key="doc.id"
-    align="left"
-  >
-    <q-route-tab
-      :to="{
+  <q-tabs indicator-color="transparent" v-for="(doc, index) in FILES" :key="doc.id" align="left">
+    <q-route-tab :to="{
         name: 'Document',
         params: { id: `${index}` },
-      }"
-    >
+      }">
       <div class="item_doc">
         <span>{{ doc.name.slice(0, -5) }}</span>
-        <span clickable @click="menuDoc">⋮</span>
+        <span clickable>⋮</span>
         <q-menu class="popup" anchor="bottom right" self="top left">
           <q-item class="popup-component" clickable>
             <q-item-section>Открыть</q-item-section>
@@ -22,50 +15,24 @@
             <q-item-section>Дублировать</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
-            <q-item-section @click="filesApi.deleteDoc(doc.id)"
-              >Удалить</q-item-section
-            >
+            <q-item-section @click="filesApi.deleteDoc(doc.id)">Удалить</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
             <q-item-section>Права доступа</q-item-section>
           </q-item>
           <q-item class="popup-component" clickable>
             <q-item-section>Переименовать</q-item-section>
-            <q-popup-edit
-              v-model="doc.name"
-              :validate="(val) => val.length > 5"
-              v-slot="scope"
-            >
-              <q-input
-                v-model="scope.value"
-                :model-value="scope.value"
-                hint="Set document name"
-                :rules="[
-                  (val) => scope.validate(val) || 'More than 5 chars required',
-                ]"
-              >
+            <q-popup-edit v-model="doc.name" :validate="(val) => val.length < 150" v-slot="scope">
+              <q-input v-model="scope.value" :model-value="scope.value" hint="Введите имя документа" :rules="[
+                  (val) => scope.validate(val) || 'Слишком длинное название',
+                ]">
                 <template v-slot:after>
-                  <q-btn
-                    flat
-                    dense
-                    color="negative"
-                    icon="cancel"
-                    @click.stop.prevent="scope.cancel"
-                  />
+                  <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
 
-                  <q-btn
-                    flat
-                    dense
-                    color="positive"
-                    icon="check_circle"
-                    @click.stop.prevent="
-                      filesApi.renameDocument(scope.value, doc)
-                    "
-                    :disable="
-                      scope.validate(scope.value) === false ||
-                      scope.initialValue === scope.value
-                    "
-                  />
+                  <q-btn flat dense color="positive" icon="check_circle" @click.stop.prevent="filesApi.renameDocument(scope.value, doc)
+                    " :disable="scope.validate(scope.value) === false ||
+    scope.initialValue === scope.value
+    " />
                 </template>
               </q-input>
             </q-popup-edit>
