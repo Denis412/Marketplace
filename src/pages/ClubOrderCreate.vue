@@ -15,6 +15,7 @@
         :name="'name-order'"
         :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
         :type="'text'"
+        @change="(value) => form.order = value"
         />
 
         <c-input
@@ -22,6 +23,7 @@
         :name="'name-customer'"
         :placeholder="'Укажите названия компании или ИП...'"
         :type="'text'"
+        @change="(value) => form.customer = value"
         />
 
         <div class="text-subtitle3 input-title input-mt">
@@ -29,13 +31,14 @@
         </div>
         <div class="row justify-between wrap c-mt-24">
           <c-button
-          v-for="button in buttons"
-          :key="button.name"
+          v-for="(button, index) in buttons"
+          :key="form.type + index"
           class="text-body1 btn"
-          :label="'Создать команду'"
-          :outline="true"
-          :background="false"
+          :label="button.name"
+          :outline="button.name != form.type"
+          :background="button.name == form.type"
           :iconLeft="`img:/src/assets/icons/${button.icon}`"
+          @click="form.type = button.name"
           />
         </div>
 
@@ -46,7 +49,7 @@
             <q-checkbox
             v-for="(checkbox, index) in checkboxes"
             :key="index"
-            v-model="selection"
+            v-model="form.websiteFuncs"
             :val="checkbox"
             :label="checkbox"
             color="violet-6"
@@ -58,11 +61,12 @@
         :name="'order-description'"
         :placeholder="'Опишите, что требуется сделать по вашей задаче...'"
         :type="'textarea'"
+        @change="(value) => form.description = value"
         />
 
 
         <q-checkbox
-        v-model="consult"
+        v-model="form.consult"
         :val="true"
         label="Мне нужна консультация"
         color="violet-6"
@@ -74,7 +78,7 @@
         <label for="file" class="text-subtitle3 input-mt">
             Файлы и документы
         </label>
-        <q-file outlined v-model="model">
+        <q-file outlined multiple append v-model="form.files">
           <template v-slot:prepend>
             <q-icon name="attach_file" />
           </template>
@@ -84,19 +88,19 @@
             Желаемая стоимость
         </label>
         <div class="row">
-          <q-input type="number" class="input c-mt-24 col-3" name="from-to" placeholder="Опишите, что требуется сделать по вашей задаче..." outlined/>
-          <q-input type="number" class="input c-mt-24 col-3 offset-1" name="from-to" placeholder="Опишите, что требуется сделать по вашей задаче..." outlined/>
+          <q-input v-model="form.priceFrom" type="number" class="input c-mt-24 col-3" name="from-to" placeholder="Опишите, что требуется сделать по вашей задаче..." outlined/>
+          <q-input v-model="form.priceTo" type="number" class="input c-mt-24 col-3 offset-1" name="from-to" placeholder="Опишите, что требуется сделать по вашей задаче..." outlined/>
         </div>
 
         <label for="date" class="text-subtitle3 input-title input-mt">
             Желаемый срок готовности
         </label>
 
-        <q-input style="width: 300px;" name="date" filled v-model="date" mask="date" :rules="['date']">
+        <q-input style="width: 300px;" name="date" filled v-model="form.date" mask="date" :rules="['date']">
           <template v-slot:append>
             <q-icon name="event" class="cursor-pointer">
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date v-model="date">
+                <q-date v-model="form.date">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
@@ -114,7 +118,7 @@
 <script setup>
 import CButton from "src/components/ClubButton.vue";
 import CInput from "src/components/ClubOrderCreateInput.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const buttons = ref([
   {
@@ -137,7 +141,7 @@ const buttons = ref([
     name: "Блог или новостной сайт",
     icon: "Apple.svg"
   },
-])
+]);
 
 const checkboxes = ref([
   "Отзывы",
@@ -149,11 +153,22 @@ const checkboxes = ref([
   "Сотрудники, команда",
   "Карточки товаров/услуг",
   "Слайдер с акциями"
-])
+]);
 
-const selection = ref([]);
+const form = ref({
+  order: "",
+  customer: "",
+  type: "",
+  websiteFuncs: [],
+  description: "",
+  consult: false,
+  files: null,
+  priceFrom: "",
+  priceTo: "",
+  date: ""
+})
 
-const consult = ref(false);
+
 </script>
 
 <style lang="scss" scoped>
