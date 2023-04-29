@@ -125,3 +125,14 @@
     color: rgba(255, 255, 255, 0.3) !important;
   }
 }
+
+.club-dropdown {
+  min-height: 60px;
+  border: 1px solid lightgrey;
+  border-radius: 8px;
+
+  span {
+    color: #6d6d6d;
+    justify-content: space-between;
+  }
+}
