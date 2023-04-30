@@ -12,7 +12,7 @@
           <div class="row">
             <div class="flex items-center col">
               <q-avatar class="avatar">
-                <q-img src="/src/assets/images/Ellipse55.svg" />
+                <q-img src="/src/assets/images/default-avatar.svg" />
               </q-avatar>
 
               <div class="flex column flex-center c-ml-32">
@@ -45,7 +45,7 @@
       </section>
 
       <section class="row c-mt-72">
-        <div class="col">
+        <div class="col-6">
           <h3 class="text-h3">Изменение пароля</h3>
 
           <p class="text-body2 password-subtitle c-mt-32">
@@ -70,7 +70,11 @@
 
     <footer></footer>
 
-    <c-edit-password-dialog v-model="isChanging" :auth-info="authInfo" />
+    <c-edit-password-dialog
+      v-model="isChanging"
+      :auth-info="authInfo"
+      recovery
+    />
   </section>
 </template>
 

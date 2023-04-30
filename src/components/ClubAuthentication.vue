@@ -66,7 +66,10 @@
       </div>
     </section>
 
-    <c-edit-password-dialog v-model="forgotPassword" :auth-info="authInfo" />
+    <c-password-recovery-dialog
+      v-model="forgotPassword"
+      :auth-info="authInfo"
+    />
   </div>
 </template>
 
@@ -77,11 +80,8 @@ import { useUserStore } from "stores/user";
 
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
-import CConfirmationCodeDialog from "./ClubConfirmationCodeDialog.vue";
-import CEditPasswordDialog from "src/components/ClubEditPasswordDialog.vue";
+import CPasswordRecoveryDialog from "./ClubPasswordRecoveryDialog.vue";
 import userApi from "src/sdk/user";
-import { useTimer } from "src/use/timer";
-import filesApi from "src/sdk/file";
 
 const router = useRouter();
 const store = useUserStore();

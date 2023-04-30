@@ -4,7 +4,6 @@
     v-model="t"
     borderless
     class="club-dropdown"
-    label="Dropdown"
     :options="list"
     dropdown-icon="img:/src/assets/icons/arrow/arrow-down-grey.svg"
   />

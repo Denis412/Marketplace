@@ -5,7 +5,7 @@
     border-radius: 8px !important;
 
     & .q-field__control {
-      outline: 1px solid #cacaca !important;
+      // outline: 1px solid #cacaca !important;
       padding: 0 24px !important;
       height: $input-height-md;
 
@@ -15,8 +15,10 @@
         input {
           @extend .text-body2;
 
+          color: #6d6d6d;
+
           &::placeholder {
-            color: #6d6d6d;
+            color: #6d6d6d4d;
           }
         }
       }
@@ -39,10 +41,11 @@
         input {
           @extend .text-body2;
 
+          color: #6d6d6d;
           text-align: center;
 
           &::placeholder {
-            color: #6d6d6d;
+            color: #6d6d6d4d;
           }
         }
       }
@@ -161,6 +164,7 @@
 
   div {
     min-height: $input-height-md !important;
+    color: #6d6d6d;
 
     .q-field__control {
       @extend .text-body2;

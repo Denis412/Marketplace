@@ -1,6 +1,6 @@
 <template>
-  <q-form @submit="$emit('submit-form', form)">
-    <section class="flex">
+  <q-form @submit="$emit('submit-form', form)" style="width: min-content">
+    <section class="flex no-wrap">
       <c-label-control label="Фамилия">
         <template #control>
           <c-input
@@ -20,7 +20,7 @@
       </c-label-control>
     </section>
 
-    <section class="flex">
+    <section class="flex no-wrap">
       <c-label-control label="Отчество">
         <template #control>
           <c-input
@@ -40,24 +40,26 @@
       </c-label-control>
     </section>
 
-    <section class="flex">
+    <section class="flex no-wrap">
       <c-label-control label="Город">
         <template #control>
-          <c-dropdown :label="currentUser.city"> </c-dropdown>
+          <c-dropdown
+            v-model="form.city"
+            :list="['Москва', 'Санкт-Петербург']"
+          />
         </template>
       </c-label-control>
 
       <c-label-control label="Пол" class="c-ml-32">
         <template #control>
-          <c-dropdown :label="currentUser.sex" :list="['item1', 'item2']">
-          </c-dropdown>
+          <c-dropdown v-model="form.sex" :list="['Мужской', 'Женский']" />
         </template>
       </c-label-control>
     </section>
 
     <c-label-control label="Адрес электронной почты">
       <template #control>
-        <c-input :placeholder="currentUser.email" disable />
+        <c-input :label="form.email" disable />
       </template>
     </c-label-control>
   </q-form>
@@ -75,13 +77,17 @@ const emit = defineEmits(["form-submit"]);
 
 const userStore = useUserStore();
 
+const currentUser = computed(() => userStore.GET_CURRENT_USER);
+
 const form = ref({
   last_name: "",
   first_name: "",
   middle_name: "",
+  birthday: "",
+  sex: "",
+  city: "",
+  email: currentUser.value.email,
 });
-
-const currentUser = computed(() => userStore.GET_CURRENT_USER);
 </script>
 
 <style scoped lang="scss">

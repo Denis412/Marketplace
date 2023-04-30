@@ -108,14 +108,8 @@ const userPasswordConfirmCode = async ({ user_id, code, password }) => {
   });
 };
 
-const login = async ({ login, password }) => {
-  const { data: userInfo } = await signIn({
-    input: {
-      login,
-      password,
-    },
-  });
-
+const saveUserData = async (userInfo) => {
+  console.log("hehehehehehe");
   tokenApi.save(userInfo.userSignIn.record);
 
   const { data: userData } = await refetchUser({
@@ -148,7 +142,20 @@ const login = async ({ login, password }) => {
 
   localStorage.setItem("user-data", JSON.stringify(saveUserData));
 
-  return userData.user;
+  return userData;
+};
+
+const login = async ({ login, password }, recovery = false) => {
+  const { data: userInfo } = await signIn({
+    input: {
+      login,
+      password,
+    },
+  });
+
+  const userData = recovery ? null : saveUserData(userInfo);
+
+  return userData?.user;
 };
 
 const logout = () => {

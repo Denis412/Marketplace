@@ -1,56 +1,46 @@
 <template>
-  <q-dialog>
-    <q-card class="dialog-size">
-      <q-card-section>
-        <section class="flex justify-end">
-          <q-btn icon="close" flat round dense v-close-popup />
-        </section>
-      </q-card-section>
+  <c-closing-dialog title="Изменение пароля" title-position="left">
+    <template #main-content>
+      <q-form @submit="changePassword">
+        <main class="c-mt-32 dialog-input">
+          <c-input
+            v-if="recovery"
+            id="old-password"
+            v-model="form.oldPassword"
+            type="password"
+            placeholder="Ваш старый пароль"
+            visibility
+            :rules="[required, minLength(8), passwordValid]"
+          />
 
-      <q-card-section class="flex justify-center">
-        <q-form @submit="changePassword">
-          <h3 class="text-h3">Изменение пароля</h3>
+          <c-input
+            id="password"
+            v-model="form.password"
+            type="password"
+            placeholder="Введите новый пароль"
+            visibility
+            :rules="[
+              required,
+              minLength(8),
+              passwordValid,
+              notEqual(form.oldPassword),
+            ]"
+          />
 
-          <main class="c-mt-32 dialog-size-input">
-            <label for="password">
-              <p class="text-left text-body2 q-mb-sm">Введите новый пароль</p>
+          <c-input
+            id="confirm"
+            v-model="form.confirmPassword"
+            type="password"
+            placeholder="Подтвердите новый пароль"
+            visibility
+            :rules="[required, minLength(8), equal(form.password)]"
+          />
+        </main>
 
-              <c-input
-                id="password"
-                v-model="form.password"
-                type="password"
-                visibility
-                :rules="[required, passwordValid]"
-              />
-            </label>
-
-            <label for="confirm">
-              <p class="text-left text-body2 q-mt-lg q-mb-sm">
-                Подтвердите новый пароль
-              </p>
-
-              <c-input
-                id="confirm"
-                v-model="form.confirmPassword"
-                type="password"
-                visibility
-                :rules="[required, equal(form.password)]"
-              />
-            </label>
-          </main>
-
-          <footer class="flex flex-center c-mt-32">
-            <c-button
-              background
-              label="Изменить пароль"
-              type="submit"
-              class="text-body2"
-            />
-          </footer>
-        </q-form>
-      </q-card-section>
-
-      <!-- <pre>{{ authInfo }}</pre> -->
+        <footer class="flex flex-center c-mt-32">
+          <c-button background label="Далее" type="submit" class="text-body2" />
+        </footer>
+      </q-form>
 
       <c-confirmation-code-dialog
         v-model="sendCode"
@@ -58,8 +48,8 @@
         :auth-info="newAuthInfo"
         reset
       />
-    </q-card>
-  </q-dialog>
+    </template>
+  </c-closing-dialog>
 </template>
 
 <script setup>
@@ -70,20 +60,23 @@ import { useTimer } from "src/use/timer";
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
 import CConfirmationCodeDialog from "./ClubConfirmationCodeDialog.vue";
+import CClosingDialog from "./ClubClosingDialog.vue";
 
 import userApi from "src/sdk/user";
 import { useQuasar } from "quasar";
 
 const $q = useQuasar();
-const { required, passwordValid, equal } = useValidators();
+const { required, minLength, passwordValid, equal, notEqual } = useValidators();
 const timer = useTimer(90);
 
 const emit = defineEmits(["resetPassword"]);
-const { authInfo } = defineProps({
+const { authInfo, recovery } = defineProps({
   authInfo: Object,
+  recovery: Boolean,
 });
 
 const form = ref({
+  oldPassword: "",
   password: "",
   confirmPassword: "",
 });
@@ -95,6 +88,16 @@ const changePassword = async () => {
 
   try {
     let userId;
+
+    if (recovery) {
+      await userApi.login(
+        {
+          login: authInfo.email,
+          password: form.value.oldPassword,
+        },
+        true
+      );
+    }
 
     if (timer.timer.value === 90)
       userId = await userApi.userPasswordSendCode({
@@ -127,17 +130,24 @@ const changePassword = async () => {
     });
   } catch (error) {
     console.log(error);
+
+    if (recovery) {
+      $q.notify({
+        type: "negative",
+        position: "top",
+        message: "Указан неверный старый пароль!",
+      });
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
-.dialog-size {
-  width: 500px;
-  height: 540px;
+.dialog {
+  padding: 64px 50px;
 
   &-input {
-    width: 340px;
+    width: 400px;
   }
 }
 </style>
