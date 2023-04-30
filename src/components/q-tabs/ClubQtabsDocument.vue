@@ -12,11 +12,13 @@
         name: 'Document',
         params: { id: `${index}` },
       }"
+      
     >
       <div class="item_doc">
+        <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" class="q-pr-md"/>
+        <div class="item_doc">{{ (doc.name.replace('.html', '').length > 10) ? doc.name.replace('.html', '').slice(0, 10) + '...' : doc.name.replace('.html', '') }} </div>
         
-        <div class="item_doc">{{ doc.name.slice(0, -5) }}</div>
-        <div>
+        <div class="menu-wrapper" clickable>
           ⋮
           <q-menu class="popup" anchor="bottom right" self="top left">
             <q-item class="popup-component" clickable>
@@ -141,10 +143,14 @@ watch(FILES, () => {
 .q-tab__content {
   width: 100%;
 }
+.menu-wrapper {
+  width: 40px;
+}
 .item_doc {
-  width: 150%;
+  width: 190px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .q-tabs__content {
   width: 100% !important;
