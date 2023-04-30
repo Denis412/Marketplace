@@ -1,12 +1,11 @@
 <template>
   <q-tabs
-    class="row no-wrap c-pl-16 drawer-item"
+    class="row no-wrap q-pl-lg drawer-item"
     indicator-color="transparent"
     v-for="(doc, index) in FILES"
     :key="doc.id"
     align="left"
   >
-    <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" />
     <q-route-tab
       :to="{
         name: 'Document',
@@ -123,10 +122,14 @@ watch(FILES, () => {
   width: 100%;
 }
 .item_doc {
-  min-width: 205px;
   display: flex;
   justify-content: space-between;
 }
+
+.relative-position {
+  width: 100%;
+}
+
 .q-tabs__content {
   width: 100% !important;
   text-align: left !important;
