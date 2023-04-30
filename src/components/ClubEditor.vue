@@ -86,10 +86,10 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, ref, watch, onMounted, onBeforeMount } from "vue";
 import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import filesApi from "src/sdk/file";
 
 const titleDocument = ref("");
@@ -176,6 +176,7 @@ const monthNames = [
 ];
 
 const route = useRoute();
+const router = useRouter();
 const storeFile = useFileStore();
 const id_route = ref(route.params.id);
 const date = new Date();
@@ -225,6 +226,10 @@ onMounted(async () => {
       FILES.value[route.params.id].name
     );
   }
+});
+
+onBeforeMount(() => {
+  router.push("/club/addDocument");
 });
 </script>
 
