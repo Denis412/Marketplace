@@ -201,7 +201,7 @@ const color = (cmd, name) => {
 watch(route, async () => {
   // filesApi.deleteDoc(FILES.value[route.params.id].id);
   // filesApi.createHtmlFile(editor.value, titleDocument.value + ".html");
-  if (route.params.id) {
+  if (route.params.id && FILES.value) {
     console.log(11111, FILES.value[route.params.id].id);
     console.log(22222, titleDocument.value + ".html");
     console.log(33333, editor.value);
@@ -215,7 +215,7 @@ watch(route, async () => {
 });
 
 onMounted(async () => {
-  if (route.params.id) {
+  if (route.params.id && FILES.value) {
     console.log(11111, FILES.value[route.params.id].id);
     console.log(22222, titleDocument.value + ".html");
     console.log(33333, editor.value);
