@@ -12,7 +12,8 @@
         autocomplete="off"
         class="text-h3 q-mb-sm col-12"
         id="id"
-        :placeholder="titleDocument"
+        placeholder="Придумайте название документа"
+        v-model="titleDocument"
       />
     </div>
 
@@ -86,10 +87,10 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, ref, watch, onMounted, onBeforeMount } from "vue";
 import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import filesApi from "src/sdk/file";
 
 const titleDocument = ref("");
@@ -176,6 +177,7 @@ const monthNames = [
 ];
 
 const route = useRoute();
+const router = useRouter();
 const storeFile = useFileStore();
 const id_route = ref(route.params.id);
 const date = new Date();
@@ -189,6 +191,7 @@ const token = ref(null);
 const foreColor = ref("#000000");
 const highlight = ref("#ffff00aa");
 const FILES = computed(() => storeFile.GET_FILES);
+const previousRout = ref("d");
 
 const color = (cmd, name) => {
   token._value.hide();
@@ -198,12 +201,33 @@ const color = (cmd, name) => {
 };
 
 watch(route, async () => {
-  // filesApi.deleteDoc(FILES.value[route.params.id].id);
-  // filesApi.createHtmlFile(editor.value, titleDocument.value + ".html");
-  if (route.params.id) {
-    console.log(11111, FILES.value[route.params.id].id);
-    console.log(22222, titleDocument.value + ".html");
-    console.log(33333, editor.value);
+  console.log(route.params.id);
+  if (!previousRout.value && editor.value && titleDocument.value) {
+    filesApi.createHtmlFile(editor.value, titleDocument.value);
+  }
+
+  if (route.params.id && FILES.value) {
+    // console.log(11111, FILES.value[route.params.id].id);
+    // console.log(22222, titleDocument.value + ".html");
+    // console.log(33333, editor.value);
+    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
+    editor.value = await filesApi.getFileHtmlByUrl(
+      FILES.value[route.params.id].path,
+      FILES.value[route.params.id].id,
+      FILES.value[route.params.id].name
+    );
+  } else {
+    editor.value = "";
+    titleDocument.value = "";
+  }
+  previousRout.value = route.params.id;
+});
+
+onMounted(async () => {
+  if (route.params.id && FILES.value) {
+    // console.log(11111, FILES.value[route.params.id].id);
+    // console.log(22222, titleDocument.value + ".html");
+    // console.log(33333, editor.value);
     titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
@@ -213,18 +237,11 @@ watch(route, async () => {
   }
 });
 
-onMounted(async () => {
-  if (route.params.id) {
-    console.log(11111, FILES.value[route.params.id].id);
-    console.log(22222, titleDocument.value + ".html");
-    console.log(33333, editor.value);
-    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
-    editor.value = await filesApi.getFileHtmlByUrl(
-      FILES.value[route.params.id].path,
-      FILES.value[route.params.id].id,
-      FILES.value[route.params.id].name
-    );
-  }
+onBeforeMount(() => {
+  // console.log("before", titleDocument.value);
+  editor.value = "";
+  titleDocument.value = "";
+  router.push("/club/addDocument");
 });
 </script>
 

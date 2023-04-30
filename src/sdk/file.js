@@ -55,8 +55,13 @@ const upload = async (files) => {
   }
 }
 
-const createHtmlFile = async function (editorValue, fileName) {
+const createHtmlFile = async function (
+  editorValue = '',
+  fileName = 'Придумайте название документа',
+) {
   console.log(2)
+  console.log(editorValue)
+  console.log(fileName)
 
   const blob = new Blob([editorValue], { type: 'text/html' })
 

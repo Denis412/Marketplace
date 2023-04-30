@@ -1,12 +1,11 @@
 <template>
   <q-tabs
-    class="row no-wrap c-pl-16 drawer-item"
+    class="row no-wrap q-pl-lg drawer-item"
     indicator-color="transparent"
     v-for="(doc, index) in FILES"
     :key="doc.id"
     align="left"
   >
-    <!-- <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" /> -->
     <q-route-tab
       :to="{
         name: 'Document',
@@ -131,9 +130,11 @@ import { useMutation } from "@vue/apollo-composable";
 import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
 import filesApi from "src/sdk/file";
+
 const storeFile = useFileStore();
 let showDialog = ref(false);
 const FILES = computed(() => storeFile.GET_FILES);
+
 watch(FILES, () => {
   console.log(FILES.value);
 });
@@ -152,6 +153,7 @@ watch(FILES, () => {
   justify-content: space-between;
   align-items: center;
 }
+
 .q-tabs__content {
   width: 100% !important;
   text-align: left !important;
