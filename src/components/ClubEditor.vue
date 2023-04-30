@@ -88,8 +88,9 @@
 <script setup>
 import { computed, ref, watch, onMounted } from "vue";
 import { useQuasar } from "quasar";
-import { useDocumentStore } from "src/stores/document";
+import { useFileStore } from "src/stores/file";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import filesApi from "src/sdk/file";
 
 const titleDocument = ref("");
 
@@ -117,6 +118,7 @@ const lightPalette = [
   "#8000ffaa",
   "#ff00ffaa",
 ];
+
 const textPalette = [
   "#ff0000",
   "#ff8000",
@@ -129,6 +131,7 @@ const textPalette = [
   "#8000ff",
   "#ff00ff",
 ];
+
 const toolbar = [
   ["undo", "redo"],
   [
@@ -156,6 +159,7 @@ const toolbar = [
   ["removeFormat", "link", "hr"],
   ["print"],
 ];
+
 const monthNames = [
   "Января",
   "Февраля",
@@ -172,7 +176,8 @@ const monthNames = [
 ];
 
 const route = useRoute();
-
+const storeFile = useFileStore();
+const id_route = ref(route.params.id);
 const date = new Date();
 const day = date.getDate();
 const month = monthNames[date.getMonth()];
@@ -181,9 +186,9 @@ const edit = ref(null);
 const path = "Главная/Сайт с каталогом/Без названия"; //Placeholder
 const editor = ref("");
 const token = ref(null);
-const previousRoutParam = ref(null);
 const foreColor = ref("#000000");
 const highlight = ref("#ffff00aa");
+const FILES = computed(() => storeFile.GET_FILES);
 
 const color = (cmd, name) => {
   token._value.hide();
@@ -191,6 +196,45 @@ const color = (cmd, name) => {
   edit._value.runCmd(cmd, name);
   edit._value.focus();
 };
+
+watch(FILES, () => {
+  editor.value = filesApi.getFileHtmlByUrl(
+    FILES.value[route.params.id].path,
+    FILES.value[route.params.id].id,
+    FILES.value[route.params.id].name
+  );
+  titleDocument.value = FILES.value[route.params.id].name;
+});
+
+watch(route, async () => {
+  // filesApi.deleteDoc(FILES.value[route.params.id].id);
+  // filesApi.createHtmlFile(editor.value, titleDocument.value + ".html");
+  if (route.params.id) {
+    console.log(11111, FILES.value[route.params.id].id);
+    console.log(22222, titleDocument.value + ".html");
+    console.log(33333, editor.value);
+    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
+    editor.value = await filesApi.getFileHtmlByUrl(
+      FILES.value[route.params.id].path,
+      FILES.value[route.params.id].id,
+      FILES.value[route.params.id].name
+    );
+  }
+});
+
+onMounted(async () => {
+  if (route.params.id) {
+    console.log(11111, FILES.value[route.params.id].id);
+    console.log(22222, titleDocument.value + ".html");
+    console.log(33333, editor.value);
+    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
+    editor.value = await filesApi.getFileHtmlByUrl(
+      FILES.value[route.params.id].path,
+      FILES.value[route.params.id].id,
+      FILES.value[route.params.id].name
+    );
+  }
+});
 </script>
 
 <style lang="scss" scoped>

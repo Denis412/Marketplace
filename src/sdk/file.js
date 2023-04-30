@@ -52,6 +52,8 @@ const upload = async (files) => {
 }
 
 const createHtmlFile = async function (editorValue, fileName) {
+  console.log(2)
+
   const blob = new Blob([editorValue], { type: 'text/html' })
 
   const formData = new FormData()
@@ -87,6 +89,7 @@ const updateFile = (name, doc) => {
 }
 
 const deleteDoc = function (id) {
+  console.log(1)
   const apolloClient = new ApolloClient(getClientOptions())
   provideApolloClient(apolloClient)
   const { mutate } = useMutation(fileDelete, () => ({
@@ -102,25 +105,6 @@ const updateRouteId = (id_route, routeParamsId) => {
   console.log(id_route)
 }
 
-const updateFileFull = async (id, editorValue, fileName) => {
-  const apolloClient = new ApolloClient(getClientOptions())
-  provideApolloClient(apolloClient)
-  const { mutate } = useMutation(fileDelete, () => ({
-    variables: {
-      id: id,
-    },
-  }))
-  await mutate()
-
-  const blob = new Blob([editorValue], { type: 'text/html' })
-
-  const formData = new FormData()
-  formData.append('files', blob, `${fileName}.html`)
-  const file = formData.getAll('files')
-
-  upload(file)
-}
-
 const filesApi = {
   uploadFiles,
   getFileHtmlByUrl,
@@ -130,7 +114,6 @@ const filesApi = {
   updateFile,
   deleteDoc,
   updateRouteId,
-  updateFileFull,
 }
 
 export default filesApi

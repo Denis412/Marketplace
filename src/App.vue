@@ -9,14 +9,13 @@
 <script setup>
 import { onMounted } from "vue";
 import { useUserStore } from "./stores/user";
-import { useDocumentStore } from "./stores/document";
-
+import { useFileStore } from "src/stores/file";
 import userApi from "src/sdk/user";
 
 const store = useUserStore();
-const storeDocument = useDocumentStore();
+const storeFile = useFileStore();
 
-storeDocument.SET_DOCUMENTS();
+storeFile.SET_FILES();
 
 onMounted(() => {
   userApi.isAuth() ? store.SET_CURRENT_USER() : null;
