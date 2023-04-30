@@ -11,10 +11,13 @@
         name: 'Document',
         params: { id: `${index}` },
       }"
+      
     >
       <div class="item_doc">
-        <div class="item_doc">{{ doc.name.slice(0, -5) }}</div>
-        <div>
+        <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" class="q-pr-md"/>
+        <div class="item_doc">{{ (doc.name.replace('.html', '').length > 10) ? doc.name.replace('.html', '').slice(0, 10) + '...' : doc.name.replace('.html', '') }} </div>
+        
+        <div class="menu-wrapper" clickable>
           ⋮
           <q-menu class="popup" anchor="bottom right" self="top left">
             <q-item class="popup-component" clickable>
@@ -38,10 +41,27 @@
                 class="popup-png2"
                 src="/src/assets/icons/doc_popup/trash.png"
               />
-              <q-item-section @click="filesApi.deleteDoc(doc.id)"
+              <q-item-section @click="showDialog = true"
                 >Удалить</q-item-section
               >
             </q-item>
+
+            <q-dialog v-model="showDialog">
+                <q-card>
+                  <q-card-section>
+                    <div class="text-h6">Удаление файла</div>
+                  </q-card-section>
+
+                  <q-card-section class="q-pt-none">
+                    Вы уверены, что хотите удалить этот файл? Отменить это действие будет невозможно
+                  </q-card-section>
+
+                  <q-card-actions align="right">
+                    <q-btn label="Да" @click="filesApi.deleteDoc(doc.id), showDialog = false" />
+                    <q-btn label="Нет" @click="showDialog = false" />
+                  </q-card-actions>
+                  </q-card>
+              </q-dialog>
 
             <q-item class="popup-component" clickable>
               <q-img
@@ -112,6 +132,7 @@ import { useFileStore } from "src/stores/file";
 import filesApi from "src/sdk/file";
 
 const storeFile = useFileStore();
+let showDialog = ref(false);
 const FILES = computed(() => storeFile.GET_FILES);
 
 watch(FILES, () => {
@@ -123,11 +144,14 @@ watch(FILES, () => {
 .q-tab__content {
   width: 100%;
 }
-
+.menu-wrapper {
+  width: 40px;
+}
 .item_doc {
   width: 190px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .q-tabs__content {
