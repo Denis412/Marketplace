@@ -7,8 +7,12 @@ import {
 } from 'src/graphql/files/mutations'
 import { ApolloClient } from '@apollo/client/core'
 import { getClientOptions } from 'src/apollo/index'
+import { useQuasar } from "quasar";
+import { Notify } from 'quasar'
 
 provideApolloClient(apolloClient)
+
+
 
 const { mutate } = useMutation(filesUpload)
 
@@ -96,8 +100,11 @@ const deleteDoc = function (id) {
     variables: {
       id: id,
     },
+    
   }))
-  mutate()
+
+  const $q = useQuasar();
+  response("Документ удален", "Ошибка", mutate);
 }
 
 const updateRouteId = (id_route, routeParamsId) => {
@@ -114,6 +121,32 @@ const filesApi = {
   updateFile,
   deleteDoc,
   updateRouteId,
+}
+
+const response = async function (
+  ms1,
+  ms2,
+  mutation = () => {
+    console.log('empty refetch')
+  },
+  refetch = () => {
+    console.log('empty refetch')
+  },
+) {
+  try {
+    await mutation()
+    Notify.create({
+      type: 'positive',
+      message: ms1,
+    })
+    refetch()
+  } catch (err) {
+    console.log(err)
+    Notify.create({
+      type: 'negative',
+      message: ms2,
+    })
+  }
 }
 
 export default filesApi

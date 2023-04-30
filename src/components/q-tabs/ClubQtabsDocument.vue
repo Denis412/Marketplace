@@ -6,7 +6,7 @@
     :key="doc.id"
     align="left"
   >
-    <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" />
+    <!-- <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" /> -->
     <q-route-tab
       :to="{
         name: 'Document',
@@ -14,6 +14,7 @@
       }"
     >
       <div class="item_doc">
+        
         <div class="item_doc">{{ doc.name.slice(0, -5) }}</div>
         <div>
           ⋮
@@ -39,10 +40,27 @@
                 class="popup-png2"
                 src="/src/assets/icons/doc_popup/trash.png"
               />
-              <q-item-section @click="filesApi.deleteDoc(doc.id)"
+              <q-item-section @click="showDialog = true"
                 >Удалить</q-item-section
               >
             </q-item>
+
+            <q-dialog v-model="showDialog">
+                <q-card>
+                  <q-card-section>
+                    <div class="text-h6">Удаление файла</div>
+                  </q-card-section>
+
+                  <q-card-section class="q-pt-none">
+                    Вы уверены, что хотите удалить этот файл? Отменить это действие будет невозможно
+                  </q-card-section>
+
+                  <q-card-actions align="right">
+                    <q-btn label="Да" @click="filesApi.deleteDoc(doc.id), showDialog = false" />
+                    <q-btn label="Нет" @click="showDialog = false" />
+                  </q-card-actions>
+                  </q-card>
+              </q-dialog>
 
             <q-item class="popup-component" clickable>
               <q-img
@@ -112,6 +130,7 @@ import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
 import filesApi from "src/sdk/file";
 const storeFile = useFileStore();
+let showDialog = ref(false);
 const FILES = computed(() => storeFile.GET_FILES);
 watch(FILES, () => {
   console.log(FILES.value);
@@ -123,7 +142,7 @@ watch(FILES, () => {
   width: 100%;
 }
 .item_doc {
-  min-width: 205px;
+  width: 150%;
   display: flex;
   justify-content: space-between;
 }
