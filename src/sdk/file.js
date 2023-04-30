@@ -7,7 +7,6 @@ import {
 } from 'src/graphql/files/mutations'
 import { ApolloClient } from '@apollo/client/core'
 import { getClientOptions } from 'src/apollo/index'
-import { useFileStore } from 'src/stores/document'
 
 provideApolloClient(apolloClient)
 
