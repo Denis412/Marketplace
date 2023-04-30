@@ -88,7 +88,7 @@
 <script setup>
 import { computed, ref, watch, onMounted } from "vue";
 import { useQuasar } from "quasar";
-import { useFileStore } from "src/stores/file";
+import { useDocumentStore } from "src/stores/document";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 
 const titleDocument = ref("");

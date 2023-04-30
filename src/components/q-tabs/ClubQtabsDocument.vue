@@ -1,7 +1,7 @@
 <template>
   <q-tabs
     indicator-color="transparent"
-    v-for="(doc, index) in FILES"
+    v-for="(doc, index) in DOCUMENT"
     :key="doc.id"
     align="left"
   >
@@ -22,6 +22,7 @@
             />
             <q-item-section>Открыть</q-item-section>
           </q-item>
+
           <q-item class="popup-component" clickable>
             <q-img
               class="popup-png"
@@ -29,11 +30,17 @@
             />
             <q-item-section>Дублировать</q-item-section>
           </q-item>
+
           <q-item class="popup-component" clickable>
-            <q-item-section @click="deleteDocument(doc.id)"
+            <q-img
+              class="popup-png2"
+              src="/src/assets/icons/doc_popup/trash.png"
+            />
+            <q-item-section @click="filesApi.deleteDocument(doc.id)"
               >Удалить</q-item-section
             >
           </q-item>
+
           <q-item class="popup-component" clickable>
             <q-img
               class="popup-png"
@@ -41,6 +48,7 @@
             />
             <q-item-section>Права доступа</q-item-section>
           </q-item>
+
           <q-item class="popup-component" clickable>
             <q-img
               class="popup-png"
@@ -74,6 +82,18 @@
                     dense
                     color="positive"
                     icon="check_circle"
+                    @click.stop.prevent="filesApi.updateFile(scope.value, doc)"
+                    :disable="
+                      scope.validate(scope.value) === false ||
+                      scope.initialValue === scope.value
+                    "
+                  />
+                  =========
+                  <q-btn
+                    flat
+                    dense
+                    color="positive"
+                    icon="check_circle"
                     @click.stop.prevent="
                       filesApi.renameDocument(scope.value, doc)
                     "
@@ -98,10 +118,10 @@ import { useQuery } from "@vue/apollo-composable";
 import { provideApolloClient } from "@vue/apollo-composable";
 import { useMutation } from "@vue/apollo-composable";
 import { useQuasar } from "quasar";
-import { useFileStore } from "src/stores/file";
+import { useDocumentStore } from "src/stores/document";
 
-// const storeFile = useFileStore();
-// const FILES = computed(() => storeFile.GET_FILES);
+const storeDocument = useDocumentStore();
+const DOCUMENT = computed(() => storeDocument.GET_DOCUMENTS);
 
 const deleteDocument = () => {
   console.log("deleteDocument");
@@ -111,8 +131,8 @@ const updateDocument = () => {
   console.log("updateDocument");
 };
 
-watch(FILES, () => {
-  console.log(FILES.value);
+watch(DOCUMENT, () => {
+  console.log(DOCUMENT.value);
 });
 </script>
 
