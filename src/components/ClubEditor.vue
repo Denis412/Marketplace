@@ -202,8 +202,11 @@ const color = (cmd, name) => {
 
 watch(route, async () => {
   console.log(route.params.id);
-  if (!previousRout.value && editor.value && titleDocument.value) {
-    filesApi.createHtmlFile(editor.value, titleDocument.value);
+  if (!previousRout.value && editor.value) {
+    filesApi.createHtmlFile(
+      editor.value,
+      titleDocument.value ? titleDocument.value : "Unknown"
+    );
   }
 
   if (route.params.id && FILES.value) {
