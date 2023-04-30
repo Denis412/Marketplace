@@ -86,6 +86,7 @@ const mainTreeItems = ref([
     title: "Лендинг",
     img: "HomeIconDemo.svg",
     path: "addDocument",
+    content: "+",
   },
 ]);
 

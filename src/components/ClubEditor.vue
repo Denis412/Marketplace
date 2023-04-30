@@ -197,15 +197,6 @@ const color = (cmd, name) => {
   edit._value.focus();
 };
 
-watch(FILES, () => {
-  editor.value = filesApi.getFileHtmlByUrl(
-    FILES.value[route.params.id].path,
-    FILES.value[route.params.id].id,
-    FILES.value[route.params.id].name
-  );
-  titleDocument.value = FILES.value[route.params.id].name;
-});
-
 watch(route, async () => {
   // filesApi.deleteDoc(FILES.value[route.params.id].id);
   // filesApi.createHtmlFile(editor.value, titleDocument.value + ".html");

@@ -1,10 +1,12 @@
 <template>
   <q-tabs
+    class="row no-wrap c-pl-16 drawer-item"
     indicator-color="transparent"
     v-for="(doc, index) in FILES"
     :key="doc.id"
     align="left"
   >
+    <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" />
     <q-route-tab
       :to="{
         name: 'Document',
