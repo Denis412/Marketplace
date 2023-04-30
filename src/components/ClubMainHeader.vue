@@ -35,6 +35,7 @@ import { ref } from "vue";
 import userApi from "src/sdk/user";
 import { useRouter } from "vue-router";
 import { useUserStore } from "src/stores/user";
+import stompApi from "src/sdk/stomp";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -49,6 +50,7 @@ const menuIcon = ref([
     textColor: "text-negative",
     callback: () => {
       userApi.logout();
+      stompApi.disconnect();
       userStore.LOGOUT_CURRENT_USER();
 
       router.push({

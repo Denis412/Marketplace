@@ -9,7 +9,9 @@
 
       <slot name="main">
         <q-card-section class="flex column">
-          <h4 class="text-h4" :class="titlePositionClass">{{ title }}</h4>
+          <slot name="main-title">
+            <h3 class="text-h3" :class="titlePositionClass">{{ title }}</h3>
+          </slot>
 
           <slot name="main-content"></slot>
         </q-card-section>
@@ -27,7 +29,7 @@ const { title, titlePosition } = defineProps({
 });
 
 const titlePositionClass = computed(() => ({
-  ["text-" + titlePosition]: true,
+  ["text-" + titlePosition]: titlePosition,
 }));
 </script>
 

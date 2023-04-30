@@ -4,9 +4,9 @@
       <h3 class="text-h3">Моя учетная запись</h3>
     </header>
 
-    <main>
+    <main class="c-mt-64">
       <section
-        class="flex justify-between no-wrap c-mt-64 c-pb-64 border-section-bottom"
+        class="flex justify-between no-wrap c-pb-64 border-section-bottom"
       >
         <div class="w-100p">
           <div class="row">

@@ -1,5 +1,5 @@
 <template>
-  <c-closing-dialog title="Код подтверждения">
+  <c-closing-dialog title="Код подтверждения" title-position="center">
     <template #main-content>
       <section class="dialog-content">
         <q-img src="/src/assets/images/mails.svg" class="q-mt-lg" />
@@ -66,8 +66,8 @@
       </section>
 
       <section
-        class="text-caption1 q-mt-md text-center"
         v-if="timer.timer.value"
+        class="text-caption1 q-mt-md text-center"
       >
         Отправить код повторно ({{ timer.timer }} секунд)
       </section>
@@ -126,8 +126,6 @@ const inputCode = async (value, inputNumber) => {
           password: authInfo.password,
           code: parseInt(fullCode.value),
         });
-
-      console.log("hello");
 
       router.push({
         name: "auth",

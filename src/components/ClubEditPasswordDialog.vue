@@ -1,5 +1,5 @@
 <template>
-  <c-closing-dialog title="Изменение пароля" title-position="left">
+  <c-closing-dialog title="Изменение пароля" title-position="center">
     <template #main-content>
       <q-form @submit="changePassword">
         <main class="c-mt-32 dialog-input">

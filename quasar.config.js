@@ -55,6 +55,8 @@ module.exports = configure(function (/* ctx */) {
       // analyze: true,
       env: {
         GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphql",
+        FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru/",
+        RABBIT_URI: "wss://stud.druid.1t.ru/ws",
         USERS_GROUP_ID: "1319554634306561363",
       },
       // rawDefine: {}

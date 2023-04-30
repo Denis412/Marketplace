@@ -82,7 +82,9 @@ import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
 import CPasswordRecoveryDialog from "./ClubPasswordRecoveryDialog.vue";
 import userApi from "src/sdk/user";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const router = useRouter();
 const store = useUserStore();
 
@@ -105,6 +107,12 @@ const authorization = async () => {
     });
   } catch (error) {
     console.log(error);
+
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: "Введен неверный логин или пароль!",
+    });
   }
 };
 
