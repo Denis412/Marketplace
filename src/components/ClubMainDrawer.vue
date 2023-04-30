@@ -24,7 +24,10 @@
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
           </div>
+
+          <span @click="addDocument" v-if="item.title == 'Лендинг'">+</span>
         </router-link>
+
         <c-qtabs-document v-if="item.title == 'Лендинг'" />
       </q-item>
     </q-list>
@@ -42,8 +45,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-
 import CQtabsDocument from "src/components/q-tabs/ClubQtabsDocument.vue";
+import filesApi from "src/sdk/file";
 
 const { side } = defineProps({
   side: String,
@@ -93,6 +96,10 @@ const mainTreeItems = ref([
 const toggleDrawer = () => {
   miniState.value = !miniState.value;
   btn.value.classList.toggle("rotate");
+};
+
+const addDocument = () => {
+  filesApi.createHtmlFile();
 };
 
 const isActive = (path) => {

@@ -110,8 +110,10 @@ import { useMutation } from "@vue/apollo-composable";
 import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
 import filesApi from "src/sdk/file";
+
 const storeFile = useFileStore();
 const FILES = computed(() => storeFile.GET_FILES);
+
 watch(FILES, () => {
   console.log(FILES.value);
 });
@@ -121,13 +123,11 @@ watch(FILES, () => {
 .q-tab__content {
   width: 100%;
 }
+
 .item_doc {
+  width: 190px;
   display: flex;
   justify-content: space-between;
-}
-
-.relative-position {
-  width: 100%;
 }
 
 .q-tabs__content {
