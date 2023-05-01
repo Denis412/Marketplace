@@ -34,11 +34,6 @@ const routes = [
         name: "my-teams",
         component: () => import("pages/ClubMyTeams.vue"),
       },
-      {
-        path: "teams/all-teams",
-        name: "all-teams",
-        component: () => import("pages/ClubAllTeams.vue"),
-      },
       //тестовые роуты
       {
         path: "market",
