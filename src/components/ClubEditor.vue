@@ -201,8 +201,7 @@ const color = (cmd, name) => {
 };
 
 watch(route, async () => {
-  console.log(route.params.id);
-
+  console.log(FILES.value[route.params.id]);
   // console.log(route.params.id);
   if (!previousRout.value && editor.value) {
     console.log(1);
@@ -217,7 +216,7 @@ watch(route, async () => {
     // console.log(22222, titleDocument.value + ".html");
     // console.log(33333, editor.value);
 
-    titleDocument.value = FILES.value[route.params.id].title;
+    titleDocument.value = FILES.value[route.params.id].name;
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
