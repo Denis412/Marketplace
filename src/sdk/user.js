@@ -15,6 +15,7 @@ import { getUser, getSubject } from "src/graphql/user/queries";
 
 import apolloClient from "src/apollo/apollo-client";
 import tokenApi from "./token";
+import filesApi from "./file";
 
 provideApolloClient(apolloClient);
 
@@ -167,6 +168,12 @@ const logout = () => {
 const isAuth = () =>
   localStorage.getItem("user-data") && localStorage.getItem("refreshToken");
 
+const uploadAvatar = async (file) => {
+  const filesIds = await filesApi.uploadFiles(file);
+
+  return filesIds[0];
+};
+
 const userApi = {
   registration,
   setPassword,
@@ -176,6 +183,7 @@ const userApi = {
   inviteGroup,
   logout,
   isAuth,
+  uploadAvatar,
 };
 
 export default userApi;

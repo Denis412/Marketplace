@@ -12,14 +12,22 @@
           <div class="row">
             <div class="flex items-center col">
               <q-avatar class="avatar">
-                <q-img src="/src/assets/images/default-avatar.svg" />
+                <q-img :src="avatarUrl" />
               </q-avatar>
 
               <div class="flex column flex-center c-ml-32">
                 <c-button
                   background
                   label="Загрузить фото"
-                  @click="uploadPhoto"
+                  @click="uploadAvatar"
+                />
+
+                <q-file
+                  v-show="false"
+                  id="filePick"
+                  standout="bg-teal text-white"
+                  v-model="selectAvatar"
+                  label="Custom standout"
                 />
 
                 <c-button
@@ -79,21 +87,52 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useUserStore } from "src/stores/user";
 
 import CButton from "src/components/ClubButton.vue";
 import CAccountSettingsForm from "./ClubAccountSettingsForm.vue";
 import CEditPasswordDialog from "./ClubEditPasswordDialog.vue";
+import userApi from "src/sdk/user";
+import filesApi from "src/sdk/file";
 
 const userStore = useUserStore();
 
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
 
+const avatarUrl = computed(
+  () => currentUser.value.avatar || "/src/assets/images/default-avatar.svg"
+);
 const isChanging = ref(false);
 const authInfo = ref({});
+const selectAvatar = ref(null);
 
-const uploadPhoto = () => {};
+watch(selectAvatar, async (value) => {
+  if (!value) return;
+
+  const avatarId = await userApi.uploadAvatar(value);
+
+  const files = await filesApi.get(
+    avatarId
+      .toString()
+      .slice(0, avatarId.toString().length - 3)
+      .toString()
+  );
+
+  console.log(
+    avatarId,
+    files,
+    `${process.env.FILE_STORAGE_URI}/${files[0].path}/${avatarId}/${files[0].extension}?n=${files[0].name}`
+  );
+
+  userStore.SET_AVATAR(
+    `${process.env.FILE_STORAGE_URI}/${files[0].path}/${avatarId}/${files[0].extension}?n=${files[0].name}`
+  );
+});
+
+const uploadAvatar = async () => {
+  document.querySelector("input[type='file']").click();
+};
 const deletePhoto = () => {};
 
 const changePassword = () => {

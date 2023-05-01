@@ -6,14 +6,14 @@
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.login"
           type="email"
           placeholder="Введите ваш e-mail"
         />
 
         <c-input
-          class="c-mb-15 c-input-400"
+          class="q-mt-md c-input-400"
           v-model="form.password"
           type="password"
           placeholder="Введите пароль"
@@ -22,7 +22,7 @@
 
         <p
           href=""
-          class="c-mb-50 link-grey cursor-pointer"
+          class="c-mb-50 q-mt-md link-grey cursor-pointer"
           @click="resetPassword"
         >
           Забыли пароль?

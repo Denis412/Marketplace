@@ -15,7 +15,7 @@
       <q-form class="flex no-wrap items-center c-mt-32">
         <c-input
           v-model="authInfo.email"
-          :placeholder="authInfo.email"
+          placeholder="mail@example.ru"
           class="dialog-input"
         />
 
@@ -39,7 +39,7 @@ import CClosingDialog from "./ClubClosingDialog.vue";
 import CEditPasswordDialog from "./ClubEditPasswordDialog.vue";
 
 const authInfo = ref({
-  email: "mail@example.ru",
+  email: "",
 });
 const sended = ref(false);
 

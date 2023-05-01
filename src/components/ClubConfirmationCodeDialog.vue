@@ -1,85 +1,87 @@
 <template>
   <c-closing-dialog title="Код подтверждения" title-position="center">
     <template #main-content>
-      <section class="dialog-content">
-        <q-img src="/src/assets/images/mails.svg" class="q-mt-lg" />
+      <main class="flex column items-center">
+        <section class="dialog-content">
+          <q-img src="/src/assets/images/mails.svg" class="q-mt-lg" />
 
-        <p class="text-body2 c-mt-32 text-center">
-          Введите код подтверждения, отправленный на ваш email.
-        </p>
-      </section>
+          <p class="text-body2 c-mt-32 text-center">
+            Введите код подтверждения, отправленный на ваш email.
+          </p>
+        </section>
 
-      <section class="flex flex-center no-wrap q-gutter-x-sm c-mt-32">
-        <c-input
-          type="text"
-          countInput="1"
-          v-model.numberCode="codeNumber"
-          class="dialog-input c-input-number"
-          maxlength="1"
-          @update:modelValue="inputCode"
-        />
+        <section class="flex flex-center no-wrap q-gutter-x-sm c-mt-32">
+          <c-input
+            type="text"
+            countInput="1"
+            v-model.numberCode="codeNumber"
+            class="dialog-input c-input-number"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
 
-        <c-input
-          type="text"
-          countInput="2"
-          v-model.numberCode="codeNumber"
-          class="dialog-input c-input-number"
-          maxlength="1"
-          @update:modelValue="inputCode"
-        />
+          <c-input
+            type="text"
+            countInput="2"
+            v-model.numberCode="codeNumber"
+            class="dialog-input c-input-number"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
 
-        <c-input
-          type="text"
-          countInput="3"
-          v-model.numberCode="codeNumber"
-          class="dialog-input c-input-number"
-          maxlength="1"
-          @update:modelValue="inputCode"
-        />
+          <c-input
+            type="text"
+            countInput="3"
+            v-model.numberCode="codeNumber"
+            class="dialog-input c-input-number"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
 
-        <c-input
-          type="text"
-          countInput="4"
-          v-model.numberCode="codeNumber"
-          class="dialog-input c-input-number"
-          maxlength="1"
-          @update:modelValue="inputCode"
-        />
+          <c-input
+            type="text"
+            countInput="4"
+            v-model.numberCode="codeNumber"
+            class="dialog-input c-input-number"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
 
-        <c-input
-          type="text"
-          countInput="5"
-          v-model.numberCode="codeNumber"
-          class="dialog-input c-input-number"
-          maxlength="1"
-          @update:modelValue="inputCode"
-        />
+          <c-input
+            type="text"
+            countInput="5"
+            v-model.numberCode="codeNumber"
+            class="dialog-input c-input-number"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
 
-        <c-input
-          type="text"
-          countInput="6"
-          v-model.numberCode="codeNumber"
-          class="dialog-input c-input-number"
-          maxlength="1"
-          @update:modelValue="inputCode"
-        />
-      </section>
+          <c-input
+            type="text"
+            countInput="6"
+            v-model.numberCode="codeNumber"
+            class="dialog-input c-input-number"
+            maxlength="1"
+            @update:modelValue="inputCode"
+          />
+        </section>
 
-      <section
-        v-if="timer.timer.value"
-        class="text-caption1 q-mt-md text-center"
-      >
-        Отправить код повторно ({{ timer.timer }} секунд)
-      </section>
+        <section
+          v-if="timer.timer.value"
+          class="text-caption1 q-mt-md text-center"
+        >
+          Отправить код повторно ({{ timer.timer }} секунд)
+        </section>
 
-      <section
-        v-else
-        class="text-violet-6 text-caption1 cursor-pointer q-mt-md text-center"
-        style="text-decoration: underline"
-        @click="sendCode"
-      >
-        Отправить код повторно
-      </section>
+        <section
+          v-else
+          class="text-violet-6 text-caption1 cursor-pointer q-mt-md text-center"
+          style="text-decoration: underline"
+          @click="sendCode"
+        >
+          Отправить код повторно
+        </section>
+      </main>
     </template>
   </c-closing-dialog>
 </template>

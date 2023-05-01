@@ -16,6 +16,10 @@ export const useUserStore = defineStore("user", {
       this.currentUser = JSON.parse(localStorage.getItem("user-data"));
     },
 
+    SET_AVATAR(avatar_url) {
+      this.currentUser.avatar = avatar_url;
+    },
+
     LOGOUT_CURRENT_USER() {
       this.currentUser = null;
     },

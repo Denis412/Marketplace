@@ -57,7 +57,15 @@ module.exports = configure(function (/* ctx */) {
         GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphql",
         FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru/",
         RABBIT_URI: "wss://stud.druid.1t.ru/ws",
+
         USERS_GROUP_ID: "1319554634306561363",
+
+        SUBJECT_TYPE_ID: "1",
+        TEAM_TYPE_ID: "2",
+        TASK_TYPE_ID: "3",
+        PROJECT_TYPE_ID: "4",
+        FILE_TYPE_ID: "5",
+        COMMENT_TYPE_ID: "6",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

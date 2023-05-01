@@ -47,7 +47,7 @@
         />
 
         <c-input
-          class="c-input-400"
+          class="c-input-400 q-mt-md"
           v-model="form.surname"
           type="text"
           placeholder="Введите вашу фамилию"
@@ -55,7 +55,7 @@
         />
 
         <c-input
-          class="c-input-400"
+          class="c-input-400 q-mt-md"
           v-model="form.email"
           type="email"
           placeholder="Введите ваш e-mail"
@@ -63,7 +63,7 @@
         />
 
         <c-input
-          class="c-input-400"
+          class="c-input-400 q-mt-md"
           v-model="form.password"
           type="password"
           placeholder="Введите пароль"
@@ -72,7 +72,7 @@
         />
 
         <c-input
-          class="c-input-400"
+          class="c-input-400 q-mt-md"
           v-model="form.confirmPassword"
           type="password"
           placeholder="Повторите пароль"
@@ -84,7 +84,7 @@
           dense
           v-model="agreement"
           color="purple"
-          class="c-mb-30 c-maxw-350 c-checkbox-rounded"
+          class="c-mb-30 q-mt-md c-maxw-350 c-checkbox-rounded"
         >
           <template v-slot:default>
             Я принимаю <a href="">Условия использования</a> и соглашаюсь с
