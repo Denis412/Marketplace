@@ -18,7 +18,6 @@ import { ref } from "vue";
 import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
 // import CCreateTeamForm from "src/components/ClubCreateTeamForm.vue";
 import CTeamProfile from "src/components/ClubTeamProfile.vue";
-import CTeamCard from "src/components/ClubTeamCard.vue";
 import CTeamRequest from "src/components/ClubTeamRequest.vue";
 </script>
 

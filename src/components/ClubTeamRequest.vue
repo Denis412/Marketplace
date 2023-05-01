@@ -2,8 +2,15 @@
   <div class="club-mb-32">
     <h4 class="text-h4 club-mb-16">{{ title }}</h4>
 
-    <div class="c-team-requests flex justify-center">
-      <!-- пусто, будет v-if -->
+    <div v-if="requests.length">
+      <c-my-team
+        v-for="request in requests"
+        :key="request.id"
+        :team="request"
+      />
+    </div>
+
+    <div class="c-team-requests flex justify-center" v-else>
       <div class="flex flex-center club-my-64">
         <q-img
           class="c-team-emptyImg"
@@ -19,8 +26,11 @@
 </template>
 
 <script setup>
-const { title } = defineProps({
+import CMyTeam from "src/components/ClubMyTeam.vue";
+
+const { title, requests } = defineProps({
   title: String,
+  requests: Object,
 });
 </script>
 

@@ -1,34 +1,23 @@
 <template>
   <q-page class="c-pa-32">
-    <div class="flex justify-between">
+    <div class="flex justify-between c-mb-32">
       <h3 class="text-h3">Мои команды</h3>
 
-      <div class="flex flex-start">
-        <!-- доработать верстку кнопок -->
-        <c-button
-          class="text-body1"
-          :label="'Создать команду'"
-          :outline="true"
-        />
-
-        <c-button class="text-body1" :label="'Найти команду'" :outline="true" />
-      </div>
+      <c-add-buttons v-if="teams.length" />
     </div>
 
     <div>
-      <div v-if="teams.length" class="flex club-mb-32">
+      <div v-if="teams.length" class="flex club-mb-32 q-gutter-lg">
         <c-my-team v-for="team in teams" :key="team.id" :team="team" />
       </div>
 
       <div v-else>
         <c-not-found-teams />
-        <!-- изменить верстку -->
       </div>
     </div>
 
-    <c-team-request :title="'Входящие заявки'" />
-    <!-- доработать верстку внутри компонента - если есть заявки -->
-    <c-team-request :title="'Исходящие заявки'" />
+    <c-team-request :title="'Входящие заявки'" :requests="requestsIn" />
+    <c-team-request :title="'Исходящие заявки'" :requests="requestsOut" />
   </q-page>
 </template>
 
@@ -39,6 +28,7 @@ import CMyTeam from "src/components/ClubMyTeam.vue";
 import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
 import CCreateTeamForm from "src/components/ClubCreateTeamForm.vue";
 import CTeamRequest from "src/components/ClubTeamRequest.vue";
+import CAddButtons from "src/components/ClubTeamAddButtons.vue";
 
 const teams = ref([
   {
@@ -48,7 +38,11 @@ const teams = ref([
     content:
       "Наша команда делает сервис, где человек смог бы следить за своим развитием в каждой из сфер жизни. Мы ждем иммено тебя!",
   },
-]); // доработать верстку для 2 карточек
+]);
+
+//массивы заявок
+const requestsIn = ref([]);
+const requestsOut = ref([]);
 </script>
 
 <style lang="scss" scoped>
