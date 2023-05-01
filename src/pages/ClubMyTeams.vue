@@ -27,8 +27,8 @@
       </q-list>
     </nav>
 
-    <section v-show="screen == 1" class="row">
-      <c-my-team
+    <section v-show="screen == 1" class="row justify-between">
+      <c-team
       :team="team"
       v-for="team in teams"
       :key="team.id"/>
@@ -52,7 +52,7 @@
 <script setup>
 import { ref } from "vue";
 import CButton from "src/components/ClubButton.vue";
-import CMyTeam from "src/components/ClubMyTeam.vue";
+import CTeam from "src/components/ClubTeamCard.vue";
 
 const options = ref([
   "Активные",
