@@ -65,6 +65,13 @@ watch(FILES, () => {
 }
 
 .item_doc:hover .btn-dropdown-doc {
+  opacity: 0;
+  animation: ani 0.3s forwards;
   display: flex;
+}
+
+@keyframes ani {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 </style>
