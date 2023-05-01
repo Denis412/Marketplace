@@ -202,12 +202,13 @@ const color = (cmd, name) => {
 
 watch(route, async () => {
   // console.log(route.params.id);
-  // if (!previousRout.value && editor.value) {
-  //   filesApi.createHtmlFile(
-  //     editor.value,
-  //     titleDocument.value ? titleDocument.value : "Unknown"
-  //   );
-  // }
+  if (!previousRout.value && editor.value) {
+    console.log(1);
+    filesApi.createHtmlFile(
+      editor.value,
+      titleDocument.value ? titleDocument.value : "Unknown"
+    );
+  }
 
   if (route.params.id && FILES.value) {
     // console.log(11111, FILES.value[route.params.id].id);

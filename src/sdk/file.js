@@ -14,12 +14,10 @@ const fileStore = useFileStore()
 
 provideApolloClient(apolloClient)
 
-const { mutate } = useMutation(filesUpload)
-
 const uploadFiles = async (files) => {
-  console.log(files)
+  const { mutate } = useMutation(filesUpload)
 
-  const data = await mutate(
+  await mutate(
     {
       files,
     },
@@ -30,12 +28,18 @@ const uploadFiles = async (files) => {
     },
   )
 
-  console.log(BigInt(data.data.filesUpload.ids[0]).toString())
+  const data = await response(
+    'Файл добавлен',
+    'Ошибка',
+    () => {},
+    fileStore.refetchFiles,
+  )
+
+  // console.log(BigInt(data.data.filesUpload.ids[0]).toString())
 }
 
 const getFileHtmlByUrl = async (path, id, name) => {
   //mode: no-cores
-  console.log(path, id, name)
   const response = await fetch(
     `https://cdn.stud.druid.1t.ru/${path}/${id}.html?n=${name}`,
   )
@@ -48,21 +52,13 @@ const getFileHtmlByUrl = async (path, id, name) => {
 
 const upload = async (files) => {
   try {
-    console.log(files)
     await uploadFiles(files)
   } catch (error) {
     console.log(error)
   }
 }
 
-const createHtmlFile = async function (
-  editorValue = '',
-  fileName = 'Придумайте название документа',
-) {
-  console.log(2)
-  console.log(editorValue)
-  console.log(fileName)
-
+const createHtmlFile = async function (editorValue = '', fileName = 'UNKNOWN') {
   const blob = new Blob([editorValue], { type: 'text/html' })
 
   const formData = new FormData()
@@ -77,8 +73,6 @@ const setTimeoutFunc = ({ minutes, func }) => {
 }
 
 const updateFile = (name, doc) => {
-  console.log(name)
-  console.log(doc)
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {
@@ -94,7 +88,8 @@ const updateFile = (name, doc) => {
       id: doc.id,
     },
   }))
-  mutate()
+
+  response('Файл обновлен', 'Ошибка', mutate, fileStore.refetchFiles)
 }
 
 const deleteDoc = function (id) {
@@ -105,14 +100,12 @@ const deleteDoc = function (id) {
       id: id,
     },
   }))
-  console.log('funDel refetch', fileStore.refetchFiles)
-  console.log('files', fileStore.files)
+
   response('Документ удален', 'Ошибка', mutate, fileStore.refetchFiles)
 }
 
 const updateRouteId = (id_route, routeParamsId) => {
   id_route = routeParamsId
-  console.log(id_route)
 }
 
 const response = async function (
@@ -126,13 +119,13 @@ const response = async function (
   },
 ) {
   try {
-    await mutation()
+    let data = await mutation()
     await refetch()
-    console.log(refetch)
     Notify.create({
       type: 'positive',
       message: ms1,
     })
+    return data
   } catch (err) {
     console.log(err)
     Notify.create({
