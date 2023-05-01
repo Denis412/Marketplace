@@ -1,6 +1,6 @@
 <template>
     <q-page class="c-pa-32">
-        <c-search-team-page-header class="club-mb-32"/>
+        <c-search-team-page-header class="c-mb-32"/>
         <c-search-team-page-list :teams="teams"/>
     </q-page>
 </template>

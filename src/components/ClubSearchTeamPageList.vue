@@ -1,5 +1,5 @@
 <template>
-  <q-list class="row justify-between club-mb-32">
+  <q-list class="row justify-between c-mb-32">
     <slot name="list-item" :teams="teams">
       <c-search-team-page-item
         v-for="team in teams"

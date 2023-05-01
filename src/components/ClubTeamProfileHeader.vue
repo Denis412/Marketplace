@@ -12,7 +12,6 @@
       <div class="c-ml-32">
         <h4 class="text-h4">{{ title }}</h4>
 
-        <q-list class="c-mt-32 q-gutter-sm">
         <div v-if="fullDes">
           <div class="text-body2 q-mt-sm">{{ description.substr(0, 121) }} ...</div>
           <c-button label="Подробнее" class="text-grey-8 text-body1 btn-text-align" @click="fullDes=!fullDes" />  
@@ -23,7 +22,7 @@
           <c-button label="Cкрыть" class="text-grey-8 text-body1 btn-text-align" @click="fullDes=!fullDes" />
         </div>
 
-        <q-list class="club-mt-32 q-gutter-sm text-caption1">
+        <q-list class="c-mt-32 q-gutter-sm text-caption1">
           <c-button
             outline
             v-for="direction in directions"
@@ -35,7 +34,7 @@
       <c-button
           background
           label="Вступить в команду"
-          class="text-body1 club-my-32"
+          class="text-body1 c-mt-32"
         />
 
       </div>

@@ -1,5 +1,5 @@
 <template>
-<q-card class="col-5 club-mb-32 c-py-24">
+<q-card class="col-5 c-mb-32 c-py-24">
     <q-item class="flex items-center rounded-borders-10">
         <q-avatar class="medium-avatar">
         <q-img src="/src/assets/previews/avatar-140.png" />

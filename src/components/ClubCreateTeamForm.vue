@@ -49,7 +49,7 @@
 
     <footer class="flex justify-center q-mt-xl">
       <c-button background size="lg" label="Создать" type="submit"/>
-      <c-button outline class="club-ml-32" size="lg" label="Отмена" to="/club/teams"/>
+      <c-button outline class="c-ml-32" size="lg" label="Отмена" to="/club/teams"/>
     </footer>
   </q-form>
 </template>
