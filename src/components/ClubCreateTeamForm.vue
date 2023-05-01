@@ -81,6 +81,7 @@ const id = ref("")
 const team_img = ref("")
 
 const createTeam = async () => {
+if (await userTeams.checkName(form.value)) {
   try {
     id.value = await userTeams.userTeamCreate(form.value);
   } 
@@ -98,6 +99,9 @@ const createTeam = async () => {
   }
   catch (error) {
     console.log(error);
+  }
+} else {
+  $q.notify('Такое название уже есть, придумайте новое.')
   }
 };
 
