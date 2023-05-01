@@ -201,13 +201,13 @@ const color = (cmd, name) => {
 };
 
 watch(route, async () => {
-  console.log(route.params.id);
-  if (!previousRout.value && editor.value) {
-    filesApi.createHtmlFile(
-      editor.value,
-      titleDocument.value ? titleDocument.value : "Unknown"
-    );
-  }
+  // console.log(route.params.id);
+  // if (!previousRout.value && editor.value) {
+  //   filesApi.createHtmlFile(
+  //     editor.value,
+  //     titleDocument.value ? titleDocument.value : "Unknown"
+  //   );
+  // }
 
   if (route.params.id && FILES.value) {
     // console.log(11111, FILES.value[route.params.id].id);
@@ -223,6 +223,7 @@ watch(route, async () => {
     editor.value = "";
     titleDocument.value = "";
   }
+
   previousRout.value = route.params.id;
 });
 
@@ -232,6 +233,7 @@ onMounted(async () => {
     // console.log(22222, titleDocument.value + ".html");
     // console.log(33333, editor.value);
     titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
+
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,

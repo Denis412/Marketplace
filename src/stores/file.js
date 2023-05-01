@@ -6,6 +6,7 @@ export const useFileStore = defineStore('file', {
   id: 'file',
   state: () => ({
     files: [],
+    refetchFiles: {},
   }),
 
   getters: {
@@ -20,6 +21,7 @@ export const useFileStore = defineStore('file', {
         const { onResult, refetch } = useQuery(getFiles)
         onResult((queryResult) => {
           this.files = queryResult.data['paginate_file'].data
+          this.refetchFiles = refetch
         })
       } catch (e) {
         console.log('Ошибка:', e)

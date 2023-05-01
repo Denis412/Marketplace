@@ -7,12 +7,12 @@ import {
 } from 'src/graphql/files/mutations'
 import { ApolloClient } from '@apollo/client/core'
 import { getClientOptions } from 'src/apollo/index'
-import { useQuasar } from "quasar";
 import { Notify } from 'quasar'
+import { useFileStore } from 'src/stores/file'
+
+const fileStore = useFileStore()
 
 provideApolloClient(apolloClient)
-
-
 
 const { mutate } = useMutation(filesUpload)
 
@@ -98,23 +98,48 @@ const updateFile = (name, doc) => {
 }
 
 const deleteDoc = function (id) {
-  console.log(1)
   const apolloClient = new ApolloClient(getClientOptions())
   provideApolloClient(apolloClient)
   const { mutate } = useMutation(fileDelete, () => ({
     variables: {
       id: id,
     },
-    
   }))
-
-  const $q = useQuasar();
-  response("Документ удален", "Ошибка", mutate);
+  console.log('funDel refetch', fileStore.refetchFiles)
+  console.log('files', fileStore.files)
+  response('Документ удален', 'Ошибка', mutate, fileStore.refetchFiles)
 }
 
 const updateRouteId = (id_route, routeParamsId) => {
   id_route = routeParamsId
   console.log(id_route)
+}
+
+const response = async function (
+  ms1,
+  ms2,
+  mutation = async () => {
+    console.log('empty refetch')
+  },
+  refetch = async () => {
+    console.log('empty refetch')
+  },
+) {
+  try {
+    await mutation()
+    await refetch()
+    console.log(refetch)
+    Notify.create({
+      type: 'positive',
+      message: ms1,
+    })
+  } catch (err) {
+    console.log(err)
+    Notify.create({
+      type: 'negative',
+      message: ms2,
+    })
+  }
 }
 
 const filesApi = {
@@ -126,32 +151,6 @@ const filesApi = {
   updateFile,
   deleteDoc,
   updateRouteId,
-}
-
-const response = async function (
-  ms1,
-  ms2,
-  mutation = () => {
-    console.log('empty refetch')
-  },
-  refetch = () => {
-    console.log('empty refetch')
-  },
-) {
-  try {
-    await mutation()
-    Notify.create({
-      type: 'positive',
-      message: ms1,
-    })
-    refetch()
-  } catch (err) {
-    console.log(err)
-    Notify.create({
-      type: 'negative',
-      message: ms2,
-    })
-  }
 }
 
 export default filesApi
