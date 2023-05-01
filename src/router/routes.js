@@ -29,6 +29,16 @@ const routes = [
         name: "team-create",
         component: () => import("pages/ClubCreateTeamPage.vue"),
       },
+      {
+        path: "team-page",
+        name: "team-page",
+        component: () => import("pages/ClubTeamPage.vue"),
+      },
+      {
+        path: "search-team",
+        name: "search-team",
+        component: () => import("pages/ClubSearchTeamsPage.vue"),
+      },
     ],
   },
 

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="c-pa-32 page-background">
+  <q-page class="c-pa-32">
     <c-team-profile :team="team" />
   </q-page>
 </template>
@@ -27,51 +27,83 @@ const team = ref({
       id: 1,
       first_name: "Денис",
       last_name: "Малышев",
-      speciality: "Разработчик",
+      speciality: "Лид",
     },
     {
       id: 2,
-      first_name: "Денис",
-      last_name: "Малышев",
-      speciality: "Разработчик",
-    },
-    {
-      id: 3,
       first_name: "Артем",
       last_name: "Янин",
-      speciality: "Разработчик",
-    },
-    {
-      id: 4,
-      first_name: "Денис",
-      last_name: "Малышев",
-      speciality: "Разработчик",
+      speciality: "Участник",
     },
   ],
   designers: [
     {
       id: 1,
-      first_name: "Денис",
-      last_name: "Малышев",
-      speciality: "Дизайнер",
+      first_name: "Даниил",
+      last_name: "Шашкин",
+      speciality: "Участник",
     },
     {
       id: 2,
-      first_name: "Денис",
-      last_name: "Малышев",
-      speciality: "Дизайнер",
+      first_name: "Марьям",
+      last_name: "Агзамова",
+      speciality: "Участник",
+    },
+  ],
+  managers: [
+    {
+      id: 1,
+      first_name: "Аделина",
+      last_name: "Саулян",
+      speciality: "Участник",
     },
     {
-      id: 3,
-      first_name: "Артем",
-      last_name: "Янин",
-      speciality: "Дизайнер",
+      id: 2,
+      first_name: "Виктория",
+      last_name: "Харсева",
+      speciality: "Участник",
+    },
+  ],
+  marketers: [
+    {
+      id: 1,
+      first_name: "Лада",
+      last_name: "Усольцева",
+      speciality: "Участник",
     },
     {
-      id: 4,
-      first_name: "Денис",
-      last_name: "Малышев",
-      speciality: "Дизайнер",
+      id: 2,
+      first_name: "Евгений",
+      last_name: "Медведев",
+      speciality: "Участник",
+    },
+  ],
+  analitics: [
+    {
+      id: 1,
+      first_name: "Григорий",
+      last_name: "Ордин",
+      speciality: "Участник",
+    },
+    {
+      id: 2,
+      first_name: "Давид",
+      last_name: "Акапян",
+      speciality: "Участник",
+    },
+  ],
+  customers: [
+    {
+      id: 1,
+      first_name: "Алексей",
+      last_name: "Мыльников",
+      speciality: "Участник",
+    },
+    {
+      id: 2,
+      first_name: "Александра",
+      last_name: "Качаева",
+      speciality: "Участник",
     },
   ],
 });

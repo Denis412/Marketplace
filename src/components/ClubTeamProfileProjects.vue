@@ -9,7 +9,7 @@
         v-model="selectProjectsList"
         flat
         stretch
-        class="text-body1 text-violet-6"
+        class="text-body1"
         toggle-color="purple-7"
         :options="typesProjectsList"
       />
@@ -18,17 +18,17 @@
     <main>
       <div v-if="!projects || !projects.length">
         <q-list
-          class="flex justify-between w-100p no-wrap q-gutter-x-lg"
+          class="q-gutter-x-md row no-wrap justify-between"
           style="overflow-x: auto"
         >
           <q-card
             v-for="n in 3"
             :key="n"
             flat
-            class="flex flex-center project-card"
+            class="flex flex-center project-card col-3"
           >
-            <q-card-section class="text-center" v-if="n === 2">
-              <div class="text-body2">
+            <!-- <q-card-section class="text-center" v-if="n === 1">
+              <div class="text-body2 text-violet-6">
                 Чтобы ваш проект был доступнен всем, добавьте его в это поле
               </div>
 
@@ -38,6 +38,11 @@
                 class="q-mt-md"
                 icon-left="img:/src/assets/icons/Plus/plusPrimaryGradient.svg"
               />
+            </q-card-section> -->
+            <q-card-section class="text-center">
+              <div class="text-h4 text-violet-6 text-uppercase">
+                Проект
+              </div>
             </q-card-section>
           </q-card>
         </q-list>
@@ -57,8 +62,9 @@ const { projects } = defineProps({
 });
 
 const typesProjectsList = ref([
-  { label: "Завершенные", value: "finished" },
   { label: "Активные", value: "active" },
+  { label: "Завершенные", value: "finished" },
+ 
 ]);
 
 const selectProjectsList = ref("");
@@ -66,11 +72,14 @@ const selectProjectsList = ref("");
 
 <style scoped lang="scss">
 .project-card {
-  width: 352px;
   min-width: 300px;
   height: 256px;
 
   border: 1px dashed $violet-6;
   border-radius: 5px;
+}
+
+.q-toolbar{
+  padding: 0px;
 }
 </style>

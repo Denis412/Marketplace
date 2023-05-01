@@ -1,5 +1,5 @@
 <template>
-  <q-page class="c-pa-32 page-background flex flex-center" style="z-index: 0">
+  <q-page class="c-pa-32 flex flex-center" style="z-index: 0">
     <c-create-team-form />
   </q-page>
 </template>
