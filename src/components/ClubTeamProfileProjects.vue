@@ -27,22 +27,8 @@
             flat
             class="flex flex-center project-card col-3"
           >
-            <!-- <q-card-section class="text-center" v-if="n === 1">
-              <div class="text-body2 text-violet-6">
-                Чтобы ваш проект был доступнен всем, добавьте его в это поле
-              </div>
-
-              <c-button
-                outline
-                label="Создать проект"
-                class="q-mt-md"
-                icon-left="img:/src/assets/icons/Plus/plusPrimaryGradient.svg"
-              />
-            </q-card-section> -->
             <q-card-section class="text-center">
-              <div class="text-h4 text-violet-6 text-uppercase">
-                Проект
-              </div>
+              <div class="text-h4 text-violet-6 text-uppercase">Проект</div>
             </q-card-section>
           </q-card>
         </q-list>

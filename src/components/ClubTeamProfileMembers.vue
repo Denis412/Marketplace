@@ -13,22 +13,6 @@
           :options="membersTeamList"
         />  
       </q-toolbar>
-
-      <!-- <q-toolbar class="overflow-auto">
-        <q-btn-toggle
-          v-model="selectSpecialistsList"
-          flat
-          stretch
-          class="text-caption1 text-violet-6"
-          toggle-color="purple-7"
-          :options="specialtiesList"
-        />
-      </q-toolbar>
-
-      <c-specialists-list
-        class="flex q-mt-md q-gutter-x-md"
-        :specialists="team[selectSpecialistsList]"
-      /> -->
     </div>
 
     <div v-for="specialties in specialtiesList" :key="specialties.index">

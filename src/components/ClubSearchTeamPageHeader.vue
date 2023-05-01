@@ -8,8 +8,7 @@
           <c-input class="col-5"/>  
           <q-select outlined :options="filterOptions" label="Фильтрация" class="col-3"/>
         </div>
-
-        
+         
     </section>
 </template>
 
