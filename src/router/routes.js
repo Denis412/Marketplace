@@ -79,6 +79,8 @@ const routes = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
   },
+  { path: "/task", component: () => import("src/components/ClubTaskInformation.vue") }
+
 ]
 
 export default routes
