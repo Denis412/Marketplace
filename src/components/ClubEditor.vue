@@ -210,11 +210,14 @@ watch(route, async () => {
     );
   }
 
-  if (route.params.id && FILES.value) {
+  if (route.params.id && FILES.value.length) {
     // console.log(11111, FILES.value[route.params.id].id);
     // console.log(22222, titleDocument.value + ".html");
     // console.log(33333, editor.value);
-    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
+    console.log(FILES.value[route.params.id].title);
+    console.log(FILES.value[route.params.id]);
+
+    titleDocument.value = FILES.value[route.params.id].title;
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
@@ -229,11 +232,11 @@ watch(route, async () => {
 });
 
 onMounted(async () => {
-  if (route.params.id && FILES.value) {
+  if (route.params.id && FILES.value.length) {
     // console.log(11111, FILES.value[route.params.id].id);
     // console.log(22222, titleDocument.value + ".html");
     // console.log(33333, editor.value);
-    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
+    titleDocument.value = FILES.value[route.params.id].title;
 
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,

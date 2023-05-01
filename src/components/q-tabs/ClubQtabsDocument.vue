@@ -11,12 +11,17 @@
         name: 'Document',
         params: { id: `${index}` },
       }"
-      
     >
       <div class="item_doc">
-        <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" class="q-pr-md"/>
-        <div class="item_doc">{{ (doc.name.replace('.html', '').length > 10) ? doc.name.replace('.html', '').slice(0, 10) + '...' : doc.name.replace('.html', '') }} </div>
-        
+        <img
+          :src="`/src/assets/icons/file/file-grey.svg`"
+          alt=""
+          class="q-pr-md"
+        />
+        <div class="item_doc">
+          {{ doc.name.length > 10 ? doc.name.slice(0, 10) + "..." : doc.name }}
+        </div>
+
         <div class="menu-wrapper" clickable>
           ⋮
           <q-menu class="popup" anchor="bottom right" self="top left">
@@ -47,21 +52,25 @@
             </q-item>
 
             <q-dialog v-model="showDialog">
-                <q-card>
-                  <q-card-section>
-                    <div class="text-h6">Удаление файла</div>
-                  </q-card-section>
+              <q-card>
+                <q-card-section>
+                  <div class="text-h6">Удаление файла</div>
+                </q-card-section>
 
-                  <q-card-section class="q-pt-none">
-                    Вы уверены, что хотите удалить этот файл? Отменить это действие будет невозможно
-                  </q-card-section>
+                <q-card-section class="q-pt-none">
+                  Вы уверены, что хотите удалить этот файл? Отменить это
+                  действие будет невозможно
+                </q-card-section>
 
-                  <q-card-actions align="right">
-                    <q-btn label="Да" @click="filesApi.deleteDoc(doc.id), showDialog = false" />
-                    <q-btn label="Нет" @click="showDialog = false" />
-                  </q-card-actions>
-                  </q-card>
-              </q-dialog>
+                <q-card-actions align="right">
+                  <q-btn
+                    label="Да"
+                    @click="filesApi.deleteDoc(doc.id), (showDialog = false)"
+                  />
+                  <q-btn label="Нет" @click="showDialog = false" />
+                </q-card-actions>
+              </q-card>
+            </q-dialog>
 
             <q-item class="popup-component" clickable>
               <q-img
@@ -132,8 +141,9 @@ import { useFileStore } from "src/stores/file";
 import filesApi from "src/sdk/file";
 
 const storeFile = useFileStore();
-let showDialog = ref(false);
 const FILES = computed(() => storeFile.GET_FILES);
+
+let showDialog = ref(false);
 
 watch(FILES, () => {
   console.log(FILES.value);

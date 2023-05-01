@@ -60,11 +60,14 @@ const upload = async (files) => {
 
 const createHtmlFile = async function (editorValue = '', fileName = 'UNKNOWN') {
   const blob = new Blob([editorValue], { type: 'text/html' })
-
+  console.log('blob', blob)
   const formData = new FormData()
+
   formData.append('files', blob, `${fileName}.html`)
+
   const file = formData.getAll('files')
 
+  console.log(file)
   upload(file)
 }
 
@@ -73,13 +76,14 @@ const setTimeoutFunc = ({ minutes, func }) => {
 }
 
 const updateFile = (name, doc) => {
+  console.log(name)
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {
         title: name,
         path: doc.path,
         size: doc.size,
-        name: name,
+        name: name + '.html',
         short_link: doc.short_link,
         extension: doc.extension,
         disk: doc.disk,

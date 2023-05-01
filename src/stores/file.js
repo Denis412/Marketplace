@@ -22,6 +22,7 @@ export const useFileStore = defineStore('file', {
         onResult((queryResult) => {
           this.files = queryResult.data['paginate_file'].data
           this.refetchFiles = refetch
+          console.log(queryResult.data['paginate_file'].data)
         })
       } catch (e) {
         console.log('Ошибка:', e)
