@@ -1,5 +1,5 @@
 <template>
-  <q-form class="create-form c-pa-32 bg-white rounded-borders-15" @submit.prevent="createTeam">
+  <q-form class="create-form c-pa-32 bg-grey-12 rounded-borders-15" @submit.prevent="createTeam">
     <header>
       <h3 class="text-h3 text-center">Создание команды</h3>
     </header>
@@ -27,14 +27,16 @@
           @update:model-value="updateFile()"/>
       </section>
 
-      <section class="w-100p q-mt-md q-gutter-y-md">
-        <c-input 
+      <section class="w-100p q-mt-md q-gutter-y-md ">
+        <c-input
+          bg-color="white"
           placeholder="Название"
           class="text-body2"
           v-model="form.name"
           :rules="[required, maxLength(20)]" />
 
         <c-input
+          bg-color="white"
           placeholder="Описание"
           class="club-textarea-mh-150 text-body2"
           autogrow
@@ -71,7 +73,7 @@ const form = ref({
 })
 
 const upload_img = ref(null)
-const team_img_URL = ref("/src/assets/previews/preview-create-team.png");
+const team_img_URL = ref("/src/assets/previews/avatar-140.png");
 const uploadFile = ref(null)
 // const obj=ref({
 //   id:"",
@@ -129,7 +131,7 @@ const triggerInput = () => {
   &-avatar {
     &-create {
       bottom: 15px;
-      right: -13px;
+      right: -8px;
       width: 30px;
       height: 30px;
     }
