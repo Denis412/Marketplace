@@ -67,7 +67,6 @@ const createHtmlFile = async function (editorValue = '', fileName = 'UNKNOWN') {
 
   const file = formData.getAll('files')
 
-  console.log(file)
   upload(file)
 }
 

@@ -214,8 +214,6 @@ watch(route, async () => {
     // console.log(11111, FILES.value[route.params.id].id);
     // console.log(22222, titleDocument.value + ".html");
     // console.log(33333, editor.value);
-    console.log(FILES.value[route.params.id].title);
-    console.log(FILES.value[route.params.id]);
 
     titleDocument.value = FILES.value[route.params.id].title;
     editor.value = await filesApi.getFileHtmlByUrl(
