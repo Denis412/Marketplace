@@ -69,7 +69,6 @@ watch(FILES, () => {
   animation: ani 0.3s forwards;
   display: flex;
 }
-
 @keyframes ani {
   0% {opacity: 0;}
   100% {opacity: 1;}

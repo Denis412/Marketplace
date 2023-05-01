@@ -3,7 +3,7 @@
     <q-img class="popup-png" src="/src/assets/icons/doc_popup/pen.png" />
     <q-item-section>Переименовать</q-item-section>
     <q-popup-edit
-      v-model="props.prop_doc.name"
+      v-model="cur_name"
       :validate="(val) => val.length < 150"
       v-slot="scope"
     >
@@ -42,22 +42,22 @@
 
 <script setup>
 import filesApi from "src/sdk/file";
+import { ref } from "vue";
 
 const props = defineProps({
   prop_doc: Object,
 });
+
+const cur_name = ref(props.prop_doc.name.slice(0,-5))
 </script>
 
 <style lang="scss" scoped>
-//
+
 .popup-component {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 10px 29px 10px 20px;
-  gap: 18px;
-  width: 290px;
-  height: 40px;
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;

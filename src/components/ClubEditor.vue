@@ -216,7 +216,7 @@ watch(route, async () => {
     // console.log(22222, titleDocument.value + ".html");
     // console.log(33333, editor.value);
 
-    titleDocument.value = FILES.value[route.params.id].name;
+    titleDocument.value = FILES.value[route.params.id].name.slice(0,-5);
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
@@ -235,7 +235,7 @@ onMounted(async () => {
     // console.log(11111, FILES.value[route.params.id].id);
     // console.log(22222, titleDocument.value + ".html");
     // console.log(33333, editor.value);
-    titleDocument.value = FILES.value[route.params.id].title;
+    titleDocument.value = FILES.value[route.params.id].title.slice(0,-5);
 
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
