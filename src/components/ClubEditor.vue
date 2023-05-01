@@ -201,6 +201,8 @@ const color = (cmd, name) => {
 };
 
 watch(route, async () => {
+  console.log(route.params.id);
+
   // console.log(route.params.id);
   if (!previousRout.value && editor.value) {
     console.log(1);

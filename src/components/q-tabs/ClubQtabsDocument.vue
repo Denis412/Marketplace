@@ -36,7 +36,7 @@
             no-wrap
             label=""
           >
-            <c-qmenu-document :prop_doc="doc" />
+            <c-qmenu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
           </q-btn-dropdown>
         </div>
       </div>
