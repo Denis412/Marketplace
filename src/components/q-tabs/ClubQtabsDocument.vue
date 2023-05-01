@@ -2,16 +2,19 @@
   <q-tabs
     class="row no-wrap q-pl-lg drawer-item"
     indicator-color="transparent"
-    v-for="(doc) in FILES"
+    v-for="(doc, index) in FILES"
     :key="doc.id"
     align="left"
   >
     <q-route-tab>
       <div class="item_doc">
         <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" class="q-pr-md"/>
-        <div class="item_doc">
+        <router-link class="item_doc link" :to="{
+        name: 'Document',
+        params: { id: `${index}` },
+        }">
           {{ (doc.name.replace('.html', '').length > 10) ? doc.name.replace('.html', '').slice(0, 10) + '...' : doc.name.replace('.html', '') }}
-        </div>
+        </router-link>
         <div class="menu-wrapper" clickable>
           <q-btn-dropdown no-icon-animation dropdown-icon="more_vert" size="sm" no-caps unelevated no-wrap label="">
             <c-qmenu-document :prop_doc = "doc"/>
@@ -45,5 +48,10 @@ watch(FILES, () => {
   justify-content: space-between;
   align-items: center;
 }
-
+.link{
+  text-decoration: none;
+}
+.link:visited{
+  color: inherit;
+}
 </style>
