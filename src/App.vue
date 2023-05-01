@@ -17,11 +17,11 @@ import { Cookies } from "quasar";
 
 const store = useUserStore();
 
-const queue = stompApi.queueCreate();
+// const queue = stompApi.queueCreate();
 
 onMounted(() => {
   userApi.isAuth() ? store.SET_CURRENT_USER() : null;
 
-  stompApi.connectQueue(Cookies.get("queue"));
+  // stompApi.connectQueue(Cookies.get("queue"));
 });
 </script>

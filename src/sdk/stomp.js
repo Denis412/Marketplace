@@ -4,6 +4,7 @@ import { createQueue } from "src/graphql/stomp/mutations";
 import apolloClient from "src/apollo/apollo-client";
 import stompClient from "src/lib/stompClient";
 import { Cookies } from "quasar";
+import typeApi from "./type";
 
 provideApolloClient(apolloClient);
 
@@ -20,8 +21,9 @@ const queueCreate = async () => {
 const connectQueue = (queue) => {
   console.log("queue", queue);
 
-  const timerId = setInterval(() => {
-    stompClient.send(`/amq/queue/${queue}1`, {}, "Hello, STOMP");
+  const timerId = setInterval(async () => {
+    const id = await typeApi.createType();
+    await typeApi.deleteType(id);
   }, 27_000);
 
   const onConnect = () => {

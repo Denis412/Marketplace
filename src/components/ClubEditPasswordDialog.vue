@@ -11,10 +11,12 @@
             placeholder="Ваш старый пароль"
             visibility
             :rules="[required, minLength(8), passwordValid]"
+            lazy-rules
           />
 
           <c-input
             id="password"
+            class="q-mt-md"
             v-model="form.password"
             type="password"
             placeholder="Введите новый пароль"
@@ -25,20 +27,28 @@
               passwordValid,
               notEqual(form.oldPassword),
             ]"
+            lazy-rules
           />
 
           <c-input
             id="confirm"
+            class="q-mt-md"
             v-model="form.confirmPassword"
             type="password"
             placeholder="Подтвердите новый пароль"
             visibility
             :rules="[required, minLength(8), equal(form.password)]"
+            lazy-rules
           />
         </main>
 
         <footer class="flex flex-center c-mt-32">
-          <c-button background label="Далее" type="submit" class="text-body2" />
+          <c-button
+            background
+            :label="recovery ? 'Изменить пароль' : 'Далее'"
+            type="submit"
+            class="text-body2"
+          />
         </footer>
       </q-form>
 

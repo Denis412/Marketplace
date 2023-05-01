@@ -1,8 +1,25 @@
 @import "fonts.scss";
 
 .c-input-outline {
+  padding-bottom: 0 !important;
   div {
     border-radius: 8px !important;
+
+    & .q-field__bottom {
+      min-height: 0;
+      padding: 0;
+    }
+
+    & .q-field__bottom--animated {
+      transform: none;
+      position: relative;
+
+      div div {
+        @extend .text-caption2;
+
+        margin-top: 16px;
+      }
+    }
 
     & .q-field__control {
       // outline: 1px solid #cacaca !important;
