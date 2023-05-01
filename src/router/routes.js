@@ -32,6 +32,11 @@ const routes = [
         component: () => import("pages/ClubTeamsPage.vue"),
       },
       {
+        path: "team-create",
+        name: "team-create",
+        component: () => import("pages/ClubCreateTeamPage.vue"),
+      },
+      {
         path: "teams/my-teams",
         name: "my-teams",
         component: () => import("pages/ClubMyTeams.vue"),
@@ -54,6 +59,16 @@ const routes = [
         component: () => import("pages/ErrorNotFound.vue"),
       },
       //
+      {
+        path: "team-page",
+        name: "team-page",
+        component: () => import("pages/ClubTeamPage.vue"),
+      },
+      {
+        path: "search-team",
+        name: "search-team",
+        component: () => import("pages/ClubSearchTeamsPage.vue"),
+      },
     ],
   },
 

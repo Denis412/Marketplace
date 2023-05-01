@@ -20,7 +20,9 @@ const uploadFiles = async (files) => {
     }
   );
 
-  console.log(BigInt(data.data.filesUpload.ids[0]).toString());
+  console.log(typeof(BigInt(data.data.filesUpload.ids[0]).toString()))
+
+  return BigInt(data.data.filesUpload.ids[0]).toString();
 };
 
 const filesApi = { uploadFiles };

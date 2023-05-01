@@ -1,5 +1,5 @@
 <template>
-  <q-list>
+  <q-list class="row justify-start club-mb-32">
     <slot name="list-item" :specialists="specialists">
       <c-specialist-item
         v-for="specialist in specialists"
