@@ -2,6 +2,7 @@
   <q-item class="popup-component" clickable>
     <q-img class="popup-png" src="/src/assets/icons/doc_popup/pen.png" />
     <q-item-section>Переименовать</q-item-section>
+
     <q-popup-edit
       v-model="cur_name"
       :validate="(val) => val.length < 150"
@@ -48,11 +49,10 @@ const props = defineProps({
   prop_doc: Object,
 });
 
-const cur_name = ref(props.prop_doc.name.slice(0,-5))
+const cur_name = ref(props.prop_doc.name.slice(0, -5));
 </script>
 
 <style lang="scss" scoped>
-
 .popup-component {
   display: flex;
   flex-direction: row;
