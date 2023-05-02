@@ -6,13 +6,6 @@
     :key="doc.id"
     align="left"
   >
-    <router-link
-      class="item_doc link"
-      :to="{
-        name: 'Document',
-        params: { id: `${index}` },
-      }"
-    >
       <q-route-tab>
         <div class="item_doc">
           <img
@@ -20,13 +13,19 @@
             alt=""
             class="q-pr-md"
           />
-
+          <router-link
+            class="item_doc link"
+            :to="{
+              name: 'Document',
+              params: { id: `${index}` },
+            }"
+          >
           {{
             doc.name.replace(".html", "").length > 10
               ? doc.name.replace(".html", "").slice(0, 10) + "..."
               : doc.name.replace(".html", "")
           }}
-
+          </router-link>
           <div class="menu-wrapper" clickable>
             <q-btn-dropdown
               no-icon-animation
@@ -46,7 +45,6 @@
           </div>
         </div>
       </q-route-tab>
-    </router-link>
   </q-tabs>
 </template>
 

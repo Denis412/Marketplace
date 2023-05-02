@@ -165,6 +165,6 @@ const isActive = (path) => {
   transform: rotate(-180deg);
 }
 .addDoc{
-  padding-left: 6rem;
+  padding-left: 5rem;
 }
 </style>
