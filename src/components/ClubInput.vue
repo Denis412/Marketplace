@@ -9,8 +9,15 @@
     :placeholder="placeholder"
     :rules="rules"
   >
-    <template v-slot:append v-if="visibility">
-      <q-icon class="cursor-pointer" :name="iconName" @click="toggleShowText" />
+    <template v-slot:append>
+      <q-icon
+        v-if="visibility"
+        class="cursor-pointer"
+        :name="iconName"
+        @click="toggleShowText"
+      />
+
+      <slot name="icon"></slot>
     </template>
   </q-input>
 </template>

@@ -32,10 +32,32 @@
 
       <c-label-control label="Дата рождения" class="c-ml-32">
         <template #control>
-          <c-input
+          <q-input
             v-model="form.birthday"
-            :placeholder="currentUser.birthday"
-          />
+            :placeholder="currentUser.birthday || 'ДД.ММ.ГГГГ'"
+            class="date-input c-input-outline"
+            outlined
+            readonly
+          >
+            <template #append>
+              <q-icon
+                name="img:/src/assets/icons/calendar/calendar-grey.svg"
+                class="cursor-pointer"
+              >
+                <q-popup-proxy
+                  cover
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-date
+                    v-model="form.birthday"
+                    mask="DD.MM.YYYY"
+                    :options="optionsDateSelect"
+                  />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
         </template>
       </c-label-control>
     </section>
@@ -59,7 +81,7 @@
 
     <c-label-control label="Адрес электронной почты">
       <template #control>
-        <c-input :label="form.email" disable />
+        <c-input :placeholder="currentUser.email" readonly />
       </template>
     </c-label-control>
   </q-form>
@@ -86,8 +108,15 @@ const form = ref({
   birthday: "",
   sex: "",
   city: "",
-  email: currentUser.value.email,
+  email: "",
 });
+const dateSelect = ref(false);
+
+const optionsDateSelect = (date) => new Date(date).getTime() > Date.now();
+
+const showDateSelect = () => {
+  dateSelect.value = true;
+};
 </script>
 
 <style scoped lang="scss">
@@ -99,6 +128,18 @@ label {
 
   button {
     width: $control-width;
+  }
+}
+
+.date {
+  &-input {
+    position: relative;
+  }
+
+  &-dialog {
+    position: absolute;
+
+    // top: 60px;
   }
 }
 </style>

@@ -22,7 +22,6 @@
     }
 
     & .q-field__control {
-      // outline: 1px solid #cacaca !important;
       padding: 0 24px !important;
       height: $input-height-md;
 
@@ -38,6 +37,10 @@
             color: #6d6d6d4d;
           }
         }
+      }
+
+      &:before {
+        border-style: solid !important;
       }
     }
   }
@@ -191,6 +194,16 @@
       &:before {
         border-bottom: none !important;
       }
+    }
+  }
+}
+
+.club-date {
+  position: absolute;
+  div div {
+    // height: 100% !important;
+    .q-date__view {
+      height: 100% !important;
     }
   }
 }
