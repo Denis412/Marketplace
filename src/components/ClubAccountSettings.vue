@@ -34,7 +34,7 @@
                   outline
                   label="Удалить фото"
                   class="c-mt-32"
-                  @click="deletePhoto"
+                  @click="toggleIsDeletePhoto"
                 />
               </div>
 
@@ -74,6 +74,24 @@
           class="col password-image"
         />
       </section>
+
+      <q-dialog v-model="isDeletePhoto">
+        <q-card class="confirm-delete">
+          <q-card-section class="text-body2 confirm-delete-content">
+            Вы действительно хотите удалить фото?
+          </q-card-section>
+
+          <q-card-section class="flex justify-end c-mt-32">
+            <c-button background label="Да" />
+            <c-button
+              outline
+              label="Отмена"
+              class="c-ml-32"
+              @click="toggleIsDeletePhoto"
+            />
+          </q-card-section>
+        </q-card>
+      </q-dialog>
     </main>
 
     <footer></footer>
@@ -103,9 +121,24 @@ const currentUser = computed(() => userStore.GET_CURRENT_USER);
 const avatarUrl = computed(
   () => currentUser.value.avatar || "/src/assets/images/default-avatar.svg"
 );
+const isDeletePhoto = ref(false);
 const isChanging = ref(false);
 const authInfo = ref({});
 const selectAvatar = ref(null);
+
+const uploadAvatar = async () => {
+  document.querySelector("input[type='file']").click();
+};
+const toggleIsDeletePhoto = () => {
+  isDeletePhoto.value = !isDeletePhoto.value;
+};
+const deletePhoto = () => {};
+
+const changePassword = () => {
+  authInfo.value.email = currentUser.value.email;
+
+  isChanging.value = true;
+};
 
 watch(selectAvatar, async (value) => {
   if (!value) return;
@@ -129,17 +162,6 @@ watch(selectAvatar, async (value) => {
     `${process.env.FILE_STORAGE_URI}/${files[0].path}/${avatarId}/${files[0].extension}?n=${files[0].name}`
   );
 });
-
-const uploadAvatar = async () => {
-  document.querySelector("input[type='file']").click();
-};
-const deletePhoto = () => {};
-
-const changePassword = () => {
-  authInfo.value.email = currentUser.value.email;
-
-  isChanging.value = true;
-};
 </script>
 
 <style scoped lang="scss">
@@ -159,5 +181,19 @@ const changePassword = () => {
 
 .image-wrapper {
   max-width: 505px;
+}
+
+.confirm-delete {
+  padding: 32px;
+  border-radius: 10px;
+
+  &-content {
+    width: 480px;
+    max-width: 480px;
+  }
+
+  & .q-card__section {
+    padding: 0;
+  }
 }
 </style>

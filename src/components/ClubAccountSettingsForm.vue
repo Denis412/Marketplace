@@ -4,7 +4,7 @@
       <c-label-control label="Фамилия">
         <template #control>
           <c-input
-            v-model="form.last_name"
+            v-model.capitalize="form.last_name"
             :placeholder="currentUser.last_name"
           />
         </template>
@@ -13,7 +13,7 @@
       <c-label-control label="Имя" class="c-ml-32">
         <template #control>
           <c-input
-            v-model="form.first_name"
+            v-model.capitalize="form.first_name"
             :placeholder="currentUser.first_name"
           />
         </template>
@@ -24,7 +24,7 @@
       <c-label-control label="Отчество">
         <template #control>
           <c-input
-            v-model="form.middle_name"
+            v-model.capitalize="form.middle_name"
             :placeholder="currentUser.middle_name"
           />
         </template>
@@ -81,7 +81,13 @@
 
     <c-label-control label="Адрес электронной почты">
       <template #control>
-        <c-input :placeholder="currentUser.email" readonly />
+        <q-input
+          v-model="form.email"
+          :placeholder="currentUser.email"
+          class="c-input-outline"
+          outlined
+          readonly
+        />
       </template>
     </c-label-control>
   </q-form>
@@ -108,11 +114,11 @@ const form = ref({
   birthday: "",
   sex: "",
   city: "",
-  email: "",
+  email: currentUser.value.email,
 });
 const dateSelect = ref(false);
 
-const optionsDateSelect = (date) => new Date(date).getTime() > Date.now();
+const optionsDateSelect = (date) => new Date(date).getTime() < Date.now();
 
 const showDateSelect = () => {
   dateSelect.value = true;
