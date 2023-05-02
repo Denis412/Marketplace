@@ -34,7 +34,13 @@ const { mutate: signUp } = useMutation(userSignUp);
 const { mutate: signIn } = useMutation(userSignIn);
 const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
 const { mutate: invitingUser } = useMutation(userGroupInviteUser);
-const { mutate: updatingUser } = useMutation(updateSubject);
+const { mutate: updatingUser } = useMutation(updateSubject, {
+  context: {
+    headers: {
+      space: process.env.MAIN_SPACE_ID,
+    },
+  },
+});
 const { mutate: resetPasswordSendCode } = useMutation(
   userResetPasswordSendCode
 );

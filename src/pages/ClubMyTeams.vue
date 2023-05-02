@@ -1,40 +1,23 @@
 <template>
   <q-page class="c-pa-32">
-    <h3 class="text-h3">Мои команды</h3>
+    <div class="flex justify-between c-mb-32">
+      <h3 class="text-h3">Мои команды</h3>
 
-    <nav>
-      <q-list class="row justify-between c-mt-24">
-        <q-item class="col-8">
-          <q-item-section v-for="(btn, index) in options" :key="index">
-            <c-button
-              class="text-body1 btn-text"
-              :label="btn"
-              :flat="true"
-              :rippleColor="'violet-6'"
-              @click="screenChoose(index + 1)"
-            />
-          </q-item-section>
-        </q-item>
+      <c-add-buttons v-if="teams.length" />
+    </div>
 
-        <q-item class="col-3">
-          <c-button
-            class="text-body1"
-            :label="'Создать команду'"
-            :outline="true"
-          />
-        </q-item>
-      </q-list>
-    </nav>
+    <div>
+      <div v-if="teams.length" class="flex club-mb-32 q-gutter-lg">
+        <c-my-team v-for="team in teams" :key="team.id" :team="team" />
+      </div>
 
-    <section v-show="screen == 1" class="row">
-      <c-my-team :team="team" v-for="team in teams" :key="team.id" />
-    </section>
+      <div v-else>
+        <c-not-found-teams />
+      </div>
+    </div>
 
-    <section v-show="screen == 2">Входящие заявки</section>
-
-    <section v-show="screen == 3">Исходящие заявки</section>
-
-    <section v-show="screen == 4">Архив</section>
+    <c-team-request :title="'Входящие заявки'" :requests="requestsIn" />
+    <c-team-request :title="'Исходящие заявки'" :requests="requestsOut" />
   </q-page>
 </template>
 
@@ -42,13 +25,10 @@
 import { ref } from "vue";
 import CButton from "src/components/ClubButton.vue";
 import CMyTeam from "src/components/ClubMyTeam.vue";
-
-const options = ref([
-  "Активные",
-  "Входящие заявки",
-  "Исходящие заявки",
-  "Архив",
-]);
+import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
+import CCreateTeamForm from "src/components/ClubCreateTeamForm.vue";
+import CTeamRequest from "src/components/ClubTeamRequest.vue";
+import CAddButtons from "src/components/ClubTeamAddButtons.vue";
 
 const teams = ref([
   {
@@ -60,11 +40,9 @@ const teams = ref([
   },
 ]);
 
-const screen = ref(1);
-
-const screenChoose = (screenIndex) => {
-  screen.value = screenIndex;
-};
+//массивы заявок
+const requestsIn = ref([]);
+const requestsOut = ref([]);
 </script>
 
 <style lang="scss" scoped>
