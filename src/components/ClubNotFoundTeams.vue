@@ -1,31 +1,27 @@
 <template>
   <section class="section-wrapper">
-    <q-img src="/src/assets/images/support-service.png" style="width: 352px" />
+    <q-img
+      src="/src/assets/images/TeamNotFound.png"
+      style="width: 255px"
+      class="c-my-64 c-mr-128"
+    />
 
     <div class="flex items-center c-ml-32">
       <div>
-        <div class="text-h3 text-primary-gradient">У вас нет команды?</div>
+        <div class="text-h3 text-dark">У вас нет команды?</div>
 
-        <div class="text-subtitle3 q-mt-md">
+        <div class="text-subtitle3 q-mt-md c-mb-24">
           Создай сам или найди, чтобы приступить к работе!
         </div>
 
-        <div class="flex buttons-wrapper q-mt-xl">
-          <c-button background size="lg" label="Создать команду" />
-          <c-button
-            outline
-            size="lg"
-            label="Найти команду"
-            class="page-background"
-          />
-        </div>
+        <c-add-buttons />
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import CButton from "src/components/ClubButton.vue";
+import CAddButtons from "src/components/ClubTeamAddButtons.vue";
 </script>
 
 <style scoped lang="scss">
@@ -36,8 +32,8 @@ import CButton from "src/components/ClubButton.vue";
   flex-wrap: nowrap;
 }
 
-.buttons-wrapper {
-  justify-content: space-between;
+.c-mr-128 {
+  margin-right: 128px;
 }
 
 @media screen and (max-width: 670px) {

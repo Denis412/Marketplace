@@ -75,7 +75,7 @@
             use-input
             @update:model-value="changeUSerData('city', $event)"
             @filter="filterFn"
-            :list="calcCities"
+            :list="filteredCities"
           />
         </template>
       </c-label-control>
@@ -85,7 +85,6 @@
           <c-dropdown
             v-model="form.gender"
             @update:model-value="changeUSerData('gender', $event)"
-            :display-value="form.gender"
             :list="['Мужской', 'Женский']"
           />
         </template>
@@ -130,22 +129,16 @@ const form = ref({
   city: currentUser.value.city,
   email: currentUser.value.email,
 });
-const cities = ["Москва", "Санкт-Петербург"];
-const calcCities = ref(cities);
+const cities = ["Москва", "Санкт-Петербург", "Воронеж"];
+const filteredCities = ref(cities);
 
 const optionsDateSelect = (date) => new Date(date).getTime() < Date.now();
 
 const filterFn = (val, update) => {
-  if (val.trim() === "") {
-    update(() => {
-      calcCities.value = cities;
-    });
-    return;
-  }
 
   update(() => {
-    calcCities.value = cities.filter(
-      (v) => v.toLowerCase().indexOf(val.toLowerCase) > -1
+    filteredCities.value = cities.filter((v) =>
+      v.toLowerCase().includes(val.toLowerCase())
     );
   });
 };

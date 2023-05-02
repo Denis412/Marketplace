@@ -26,7 +26,9 @@ const uploadFiles = async (files) => {
     }
   );
 
-  return uploadedData.filesUpload.ids;
+  console.log(typeof BigInt(data.data.filesUpload.ids[0]).toString());
+
+  return BigInt(data.data.filesUpload.ids[0]).toString();
 };
 
 const get = async (file_id) => {

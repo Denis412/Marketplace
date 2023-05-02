@@ -58,6 +58,8 @@ module.exports = configure(function (/* ctx */) {
         FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru/",
         RABBIT_URI: "wss://stud.druid.1t.ru/ws",
 
+        MAIN_SPACE_ID: 34,
+
         USERS_GROUP_ID: "1319554634306561363",
 
         SUBJECT_TYPE_ID: "1",
