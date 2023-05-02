@@ -46,7 +46,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/q-tabs/ClubQtabsDocument.vue";
-import filesApi from "src/sdk/file";
+import { filesApi } from "src/sdk/file";
 
 const { side } = defineProps({
   side: String,

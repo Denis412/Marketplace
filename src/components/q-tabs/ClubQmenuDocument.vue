@@ -31,7 +31,7 @@
 
 <script setup>
 import { ref } from "vue";
-import filesApi from "src/sdk/file";
+import { filesApi } from "src/sdk/file";
 import CDeleteDialogDocument from "./ClubDeleteDialogDocument.vue";
 import CRenameItemDocument from "./ClubRenameItemDocument.vue";
 import { useRouter } from "vue-router";

@@ -6,7 +6,7 @@
     :content-style="{ borderTop: '1px solid grey' }"
     min-height="15rem"
     :content-class="'q-px-xl'"
-    :toolbar="toolbar"
+    :toolbar="data.toolbar"
   >
     <template v-slot:token>
       <q-btn-dropdown
@@ -31,7 +31,7 @@
                 default-view="palette"
                 no-header
                 no-footer
-                :palette="lightPalette"
+                :palette="data.lightPalette"
                 class="my-picker"
               />
             </q-item-section>
@@ -48,7 +48,7 @@
                 no-header-tabs
                 no-footer
                 default-view="palette"
-                :palette="textPalette"
+                :palette="data.textPalette"
                 class="my-picker"
               />
             </q-item-section>
@@ -61,10 +61,9 @@
 
 <script setup>
 import { computed, ref, watch, onMounted, onBeforeMount } from "vue";
-import { useQuasar } from "quasar";
 import { useFileStore } from "src/stores/file";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
-import filesApi from "src/sdk/file";
+import { filesApi, data } from "src/sdk/file";
 
 const titleDocument = ref("");
 
@@ -73,72 +72,6 @@ const emit = defineEmits("update:titleDocument");
 watch(titleDocument, () => {
   emit("update:titleDocument", titleDocument.value);
 });
-
-const $q = useQuasar();
-
-const lightPalette = [
-  "#ffccccaa",
-  "#ffe6ccaa",
-  "#ffffccaa",
-  "#ccffccaa",
-  "#ccffe6aa",
-  "#ccffffaa",
-  "#cce6ffaa",
-  "#ccccffaa",
-  "#e6ccffaa",
-  "#ffccffaa",
-  "#ffffffaa",
-  "#00ff00aa",
-  "#ff0000aa",
-  "#ff8000aa",
-  "#00ff80aa",
-  "#00ffffaa",
-  "#0080ffaa",
-  "#0000ffaa",
-  "#8000ffaa",
-  "#ff00ffaa",
-];
-
-const textPalette = [
-  "#ff0000",
-  "#ff8000",
-  "#ffff00",
-  "#000000",
-  "#00ff80",
-  "#00ffff",
-  "#0080ff",
-  "#0000ff",
-  "#8000ff",
-  "#ff00ff",
-];
-
-const toolbar = [
-  ["undo", "redo"],
-  [
-    {
-      label: $q.lang.editor.fontSize,
-      fixedIcon: true,
-      list: "no-icons",
-      options: ["p", "h4", "h5", "h6"],
-    },
-  ],
-  ["token"],
-  ["underline", "strike", "bold", "italic"],
-  [
-    {
-      icon: $q.iconSet.editor.align,
-      fixedLabel: true,
-      list: "only-icons",
-      options: ["left", "center", "right", "justify"],
-    },
-    "outdent",
-    "indent",
-    "ordered",
-    "unordered",
-  ],
-  ["removeFormat", "link", "hr"],
-  ["print"],
-];
 
 const route = useRoute();
 const router = useRouter();

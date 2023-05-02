@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import filesApi from "src/sdk/file";
+import { filesApi } from "src/sdk/file";
 
 const props = defineProps({
   prop_doc_id: String,

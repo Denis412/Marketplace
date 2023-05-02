@@ -18,6 +18,8 @@
 </template>
 
 <script setup>
+import { data } from "src/sdk/file";
+
 const props = defineProps({
   titleDocument: String,
 });
