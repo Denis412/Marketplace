@@ -1,6 +1,9 @@
 <template>
   <div class="team c-pa-32 c-mt-20">
-    <div class="content relative-position row justify-between">
+    <div
+      @click="to()"
+      class="all-pointer-events cursor-pointer content relative-position row justify-between"
+    >
       <q-img
         class="image c-mt-16"
         :src="
@@ -25,10 +28,15 @@
 
 <script setup>
 import CButton from "src/components/ClubButton.vue";
+import router from "../router";
 
 const { team } = defineProps({
   team: Object,
 });
+
+const to = () => {
+  router.push("team-page");
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,12 @@
 <template>
   <div class="flex">
-    <c-button background size="lg" label="Найти команду" class="c-mr-32" />
+    <c-button
+      background
+      size="lg"
+      label="Найти команду"
+      to="/club/search-team"
+      class="c-mr-32"
+    />
 
     <c-button
       outline

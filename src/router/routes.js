@@ -60,7 +60,7 @@ const routes = [
       },
       //
       {
-        path: "team-page",
+        path: "teams/team-page",
         name: "team-page",
         component: () => import("pages/ClubTeamPage.vue"),
       },
