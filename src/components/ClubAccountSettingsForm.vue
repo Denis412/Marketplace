@@ -5,6 +5,7 @@
         <template #control>
           <c-input
             v-model.capitalize="form.last_name"
+            @update:model-value="changeUSerData('last_name', $event)"
             :placeholder="currentUser.last_name"
           />
         </template>
@@ -14,6 +15,7 @@
         <template #control>
           <c-input
             v-model.capitalize="form.first_name"
+            @update:model-value="changeUSerData('first_name', $event)"
             :placeholder="currentUser.first_name"
           />
         </template>
@@ -25,6 +27,7 @@
         <template #control>
           <c-input
             v-model.capitalize="form.middle_name"
+            @update:model-value="changeUSerData('middle_name', $event)"
             :placeholder="currentUser.middle_name"
           />
         </template>
@@ -37,7 +40,6 @@
             :placeholder="currentUser.birthday || 'ДД.ММ.ГГГГ'"
             class="date-input c-input-outline"
             outlined
-            readonly
           >
             <template #append>
               <q-icon
@@ -53,6 +55,8 @@
                     v-model="form.birthday"
                     @update:model-value="changeUSerData('birthday', $event)"
                     mask="DD.MM.YYYY"
+                    navigation-min-year-month="1901/01"
+                    navigation-max-year-month="2009/01"
                     :options="optionsDateSelect"
                   />
                 </q-popup-proxy>
@@ -68,7 +72,10 @@
         <template #control>
           <c-dropdown
             v-model="form.city"
-            :list="['Москва', 'Санкт-Петербург']"
+            use-input
+            @update:model-value="changeUSerData('city', $event)"
+            @filter="filterFn"
+            :list="calcCities"
           />
         </template>
       </c-label-control>
@@ -100,12 +107,13 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "src/stores/user";
 
 import CInput from "./ClubInput.vue";
 import CDropdown from "./ClubDropdown.vue";
 import CLabelControl from "./ClubLabelControl.vue";
+import userApi from "src/sdk/user";
 
 const emit = defineEmits(["form-submit"]);
 
@@ -114,25 +122,64 @@ const userStore = useUserStore();
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
 
 const form = ref({
-  last_name: "",
-  first_name: "",
-  middle_name: "",
-  birthday: "",
+  last_name: currentUser.value.last_name,
+  first_name: currentUser.value.first_name,
+  middle_name: currentUser.value.middle_name,
+  birthday: currentUser.value.birthday,
   gender: currentUser.value.gender,
-  city: "",
+  city: currentUser.value.city,
   email: currentUser.value.email,
 });
-const dateSelect = ref(false);
+const cities = ["Москва", "Санкт-Петербург"];
+const calcCities = ref(cities);
 
 const optionsDateSelect = (date) => new Date(date).getTime() < Date.now();
 
-const changeUSerData = (prop, value) => {
-  userStore.SET_PROP(prop, value);
+const filterFn = (val, update) => {
+  if (val.trim() === "") {
+    update(() => {
+      calcCities.value = cities;
+    });
+    return;
+  }
+
+  update(() => {
+    calcCities.value = cities.filter(
+      (v) => v.toLowerCase().indexOf(val.toLowerCase) > -1
+    );
+  });
 };
 
-// const showDateSelect = () => {
-//   dateSelect.value = true;
-// };
+const changeUSerData = async (prop, value) => {
+  try {
+    if (prop === "birthday")
+      await userApi.update(currentUser.value.subject_id, {
+        [prop]: {
+          date: value,
+        },
+      });
+    else if (
+      prop === "first_name" ||
+      prop === "middle_name" ||
+      prop === "last_name"
+    )
+      await userApi.update(currentUser.value.subject_id, {
+        fullname: {
+          first_name: form.value.first_name,
+          middle_name: form.value.middle_name,
+          last_name: form.value.last_name,
+        },
+      });
+    else
+      await userApi.update(currentUser.value.subject_id, {
+        [prop]: value,
+      });
+
+    userStore.SET_PROP(prop, value);
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <style scoped lang="scss">

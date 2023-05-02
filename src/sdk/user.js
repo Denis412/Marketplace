@@ -13,6 +13,7 @@ import {
   updateSubject,
 } from "src/graphql/user/mutations";
 import { getUser, getSubject } from "src/graphql/user/queries";
+import { convertSubject, convertUserData } from "src/utils/subject";
 
 import apolloClient from "src/apollo/apollo-client";
 import tokenApi from "./token";
@@ -41,6 +42,30 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
   userResetPasswordConfirmCodeSetPassword
 );
 
+const subjectGetByUserId = async (id) => {
+  const { data: subjectData } = await refetchSubject({
+    where: {
+      column: "user_id",
+      operator: "EQ",
+      value: `${id}`,
+    },
+  });
+
+  return subjectData.paginate_subject.data[0];
+};
+
+const subjectGetById = async (id) => {
+  const { data: subjectData } = await refetchSubject({
+    where: {
+      column: "id",
+      operator: "EQ",
+      value: `${id}`,
+    },
+  });
+
+  return subjectData.paginate_subject.data[0];
+};
+
 const inviteGroup = async ({ name, surname, email, group_id }) => {
   console.log(name, surname, email, group_id);
 
@@ -65,17 +90,6 @@ const registration = async ({ name, surname, email }) => {
       email,
     },
   });
-
-  // console.log(userInfo, process.env.USERS_GROUP_ID);
-
-  // const data = await inviteGroup({
-  //   name,
-  //   surname,
-  //   email,
-  //   group_id: process.env.USERS_GROUP_ID,
-  // });
-
-  // console.log(data, process.env.USERS_GROUP_ID);
 
   return userInfo.userSignUp;
 };
@@ -111,8 +125,11 @@ const userPasswordConfirmCode = async ({ user_id, code, password }) => {
   });
 };
 
+const saveLocalUserData = (saveData) => {
+  localStorage.setItem("user-data", JSON.stringify(saveData));
+};
+
 const saveUserData = async (userInfo) => {
-  console.log("hehehehehehe");
   tokenApi.save(userInfo.userSignIn.record);
 
   const { data: userData } = await refetchUser({
@@ -121,44 +138,14 @@ const saveUserData = async (userInfo) => {
 
   console.log("userData", userData, userInfo);
 
-  const { data: subjectData } = await refetchSubject({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "user_id",
-      operator: "EQ",
-      value: `${userInfo.userSignIn.recordId}`,
-    },
+  const subject = await subjectGetByUserId(userInfo.userSignIn.recordId);
+
+  console.log("subjectData", subject);
+
+  saveLocalUserData({
+    ...convertSubject(subject),
+    ...convertUserData(userData),
   });
-
-  console.log("subjectData", subjectData);
-
-  // const saveUserData = {
-  //   first_name: userData.user.name,
-  //   middle_name: userData.user.surname,
-  //   last_name: userData.user.surname,
-  //   user_id: userInfo.userSignIn.recordId,
-  //   email: userData.user.email,
-  //   avatar: userData.user.avatar,
-  //   telegram_chat_id: userData.user.telegram_chat_id,
-  // };
-
-  const subject = subjectData.paginate_subject.data[0];
-
-  const saveUserData = {
-    first_name: subject.fullname.first_name || "",
-    middle_name: subject.fullname.middle_name || "",
-    last_name: subject.fullname.last_name || "",
-    gender: subject.gender || "",
-    city: subject.city || "",
-    birthday: subject.birthday?.date || "",
-    user_id: userInfo.userSignIn.recordId,
-    email: userData.user.email,
-    avatar: userData.user.avatar,
-    telegram_chat_id: userData.user.telegram_chat_id,
-  };
-
-  localStorage.setItem("user-data", JSON.stringify(saveUserData));
 
   return userData;
 };
@@ -177,6 +164,8 @@ const login = async ({ login, password }, recovery = false) => {
 };
 
 const update = async (id, updateData) => {
+  console.log(id, updateData);
+
   const { data: subjectData } = await updatingUser({
     id,
     input: updateData,
@@ -207,6 +196,9 @@ const userApi = {
   userPasswordConfirmCode,
   login,
   inviteGroup,
+  subjectGetById,
+  saveLocalUserData,
+  update,
   logout,
   isAuth,
   uploadAvatar,

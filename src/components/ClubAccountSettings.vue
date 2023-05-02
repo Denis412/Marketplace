@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useUserStore } from "src/stores/user";
 
 import CButton from "src/components/ClubButton.vue";
