@@ -16,6 +16,11 @@ export const useUserStore = defineStore("user", {
       this.currentUser = JSON.parse(localStorage.getItem("user-data"));
     },
 
+    SET_PROP(prop, value) {
+      console.log(prop, value);
+      this.currentUser[prop] = value;
+    },
+
     SET_AVATAR(avatar_url) {
       this.currentUser.avatar = avatar_url;
     },

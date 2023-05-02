@@ -82,7 +82,7 @@
           </q-card-section>
 
           <q-card-section class="flex justify-end c-mt-32">
-            <c-button background label="Да" />
+            <c-button background label="Да" @click="deletePhoto" />
             <c-button
               outline
               label="Отмена"
@@ -117,10 +117,10 @@ import filesApi from "src/sdk/file";
 const userStore = useUserStore();
 
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
-
 const avatarUrl = computed(
   () => currentUser.value.avatar || "/src/assets/images/default-avatar.svg"
 );
+
 const isDeletePhoto = ref(false);
 const isChanging = ref(false);
 const authInfo = ref({});

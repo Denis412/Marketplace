@@ -26,6 +26,11 @@ export const getSubject = gql`
         email {
           email
         }
+        gender
+        city
+        birthday {
+          date
+        }
         group {
           id
           name

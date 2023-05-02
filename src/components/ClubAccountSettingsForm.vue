@@ -51,6 +51,7 @@
                 >
                   <q-date
                     v-model="form.birthday"
+                    @update:model-value="changeUSerData('birthday', $event)"
                     mask="DD.MM.YYYY"
                     :options="optionsDateSelect"
                   />
@@ -74,7 +75,12 @@
 
       <c-label-control label="Пол" class="c-ml-32">
         <template #control>
-          <c-dropdown v-model="form.sex" :list="['Мужской', 'Женский']" />
+          <c-dropdown
+            v-model="form.gender"
+            @update:model-value="changeUSerData('gender', $event)"
+            :display-value="form.gender"
+            :list="['Мужской', 'Женский']"
+          />
         </template>
       </c-label-control>
     </section>
@@ -112,7 +118,7 @@ const form = ref({
   first_name: "",
   middle_name: "",
   birthday: "",
-  sex: "",
+  gender: currentUser.value.gender,
   city: "",
   email: currentUser.value.email,
 });
@@ -120,9 +126,13 @@ const dateSelect = ref(false);
 
 const optionsDateSelect = (date) => new Date(date).getTime() < Date.now();
 
-const showDateSelect = () => {
-  dateSelect.value = true;
+const changeUSerData = (prop, value) => {
+  userStore.SET_PROP(prop, value);
 };
+
+// const showDateSelect = () => {
+//   dateSelect.value = true;
+// };
 </script>
 
 <style scoped lang="scss">

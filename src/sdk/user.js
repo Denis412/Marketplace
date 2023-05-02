@@ -10,6 +10,7 @@ import {
   userResetPasswordSendCode,
   userResetPasswordConfirmCodeSetPassword,
   userGroupInviteUser,
+  updateSubject,
 } from "src/graphql/user/mutations";
 import { getUser, getSubject } from "src/graphql/user/queries";
 
@@ -32,6 +33,7 @@ const { mutate: signUp } = useMutation(userSignUp);
 const { mutate: signIn } = useMutation(userSignIn);
 const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
 const { mutate: invitingUser } = useMutation(userGroupInviteUser);
+const { mutate: updatingUser } = useMutation(updateSubject);
 const { mutate: resetPasswordSendCode } = useMutation(
   userResetPasswordSendCode
 );
@@ -119,22 +121,37 @@ const saveUserData = async (userInfo) => {
 
   console.log("userData", userData, userInfo);
 
-  // const { data: subjectData } = await refetchSubject({
-  //   page: 1,
-  //   perPage: 1,
-  //   where: {
-  //     column: "user_id",
-  //     operator: "EQ",
-  //     value: `${userInfo.userSignIn.recordId}`,
-  //   },
-  // });
+  const { data: subjectData } = await refetchSubject({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "user_id",
+      operator: "EQ",
+      value: `${userInfo.userSignIn.recordId}`,
+    },
+  });
 
-  // console.log("subjectData", subjectData);
+  console.log("subjectData", subjectData);
+
+  // const saveUserData = {
+  //   first_name: userData.user.name,
+  //   middle_name: userData.user.surname,
+  //   last_name: userData.user.surname,
+  //   user_id: userInfo.userSignIn.recordId,
+  //   email: userData.user.email,
+  //   avatar: userData.user.avatar,
+  //   telegram_chat_id: userData.user.telegram_chat_id,
+  // };
+
+  const subject = subjectData.paginate_subject.data[0];
 
   const saveUserData = {
-    first_name: userData.user.name,
-    middle_name: userData.user.surname,
-    last_name: userData.user.surname,
+    first_name: subject.fullname.first_name || "",
+    middle_name: subject.fullname.middle_name || "",
+    last_name: subject.fullname.last_name || "",
+    gender: subject.gender || "",
+    city: subject.city || "",
+    birthday: subject.birthday?.date || "",
     user_id: userInfo.userSignIn.recordId,
     email: userData.user.email,
     avatar: userData.user.avatar,
@@ -157,6 +174,15 @@ const login = async ({ login, password }, recovery = false) => {
   const userData = recovery ? null : saveUserData(userInfo);
 
   return userData?.user;
+};
+
+const update = async (id, updateData) => {
+  const { data: subjectData } = await updatingUser({
+    id,
+    input: updateData,
+  });
+
+  console.log(subjectData);
 };
 
 const logout = () => {
