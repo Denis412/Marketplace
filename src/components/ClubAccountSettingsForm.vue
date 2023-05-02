@@ -106,7 +106,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "src/stores/user";
 
 import CInput from "./ClubInput.vue";
@@ -135,6 +135,7 @@ const filteredCities = ref(cities);
 const optionsDateSelect = (date) => new Date(date).getTime() < Date.now();
 
 const filterFn = (val, update) => {
+
   update(() => {
     filteredCities.value = cities.filter((v) =>
       v.toLowerCase().includes(val.toLowerCase())
