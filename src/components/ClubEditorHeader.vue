@@ -24,25 +24,10 @@ const props = defineProps({
   titleDocument: String,
 });
 
-const monthNames = [
-  "Января",
-  "Февраля",
-  "Марта",
-  "Апреля",
-  "Мая",
-  "Июня",
-  "Июля",
-  "Августа",
-  "Сентября",
-  "Октября",
-  "Ноября",
-  "Декабря",
-];
-
 const path = "Главная/Сайт с каталогом/Без названия"; //Placeholder
 const date = new Date();
 const day = date.getDate();
-const month = monthNames[date.getMonth()];
+const month = data.monthNames[date.getMonth()];
 const year = date.getFullYear();
 </script>
 
