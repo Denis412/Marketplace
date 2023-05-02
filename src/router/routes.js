@@ -60,6 +60,11 @@ const routes = [
         name: 'Document',
         component: () => import('pages/ClubAddNewDocument.vue'),
       },
+      {
+        path: 'orders',
+        name: 'orders',
+        component: () => import('pages/ClubOrdersPage.vue'),
+      },
     ],
   },
 
