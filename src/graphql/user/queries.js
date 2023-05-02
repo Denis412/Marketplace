@@ -13,8 +13,8 @@ export const getUser = gql`
 `;
 
 export const getSubject = gql`
-  query getSubject($perPage: Int!, $page: Int!, $where: ObjectPaginatorWhere) {
-    paginate_subject(page: $page, perPage: $perPage, where: $where) {
+  query getSubject($where: ObjectPaginatorWhere) {
+    paginate_subject(page: 1, perPage: 1, where: $where) {
       data {
         id
         user_id

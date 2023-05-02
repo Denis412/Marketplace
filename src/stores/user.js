@@ -17,7 +17,11 @@ export const useUserStore = defineStore("user", {
     },
 
     SET_PROP(prop, value) {
-      console.log(prop, value);
+      const userData = JSON.parse(localStorage.getItem("user-data"));
+      userData[prop] = value;
+
+      localStorage.setItem("user-data", JSON.stringify(userData));
+
       this.currentUser[prop] = value;
     },
 
