@@ -12,18 +12,10 @@
         </q-avatar>
 
         <transition name="slide">
-          <q-list v-if="showIconMenu" class="dropdown">
-            <q-item
-              clickable
-              class="flex flex-center no-wrap rounded-borders-10 itemDropdown"
-              v-for="menuItem in menuIcon"
-              :class="menuItem.textColor"
-              :key="menuItem.title"
-              @click="menuItem.callback"
-            >
-              {{ menuItem.title }}
-            </q-item>
-          </q-list>
+          <c-right-person-menu
+            v-if="showIconMenu"
+            :current-user="currentUser"
+          />
         </transition>
       </div>
     </q-toolbar>
@@ -31,34 +23,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import userApi from "src/sdk/user";
-import { useRouter } from "vue-router";
+import { computed, ref } from "vue";
 import { useUserStore } from "src/stores/user";
-import stompApi from "src/sdk/stomp";
 
-const router = useRouter();
+import CRightPersonMenu from "./ClubRightPersonMenu.vue";
+
 const userStore = useUserStore();
+const currentUser = computed(() => userStore.GET_CURRENT_USER);
 
 const showIconMenu = ref(false);
-
-const menuIcon = ref([
-  { title: "Учетная запись", textColor: "text-black" },
-  { title: "Профиль", textColor: "text-black" },
-  {
-    title: "Выход",
-    textColor: "text-negative",
-    callback: () => {
-      userApi.logout();
-      stompApi.disconnect();
-      userStore.LOGOUT_CURRENT_USER();
-
-      router.push({
-        name: "auth",
-      });
-    },
-  },
-]);
 
 const toggleShowIconMenu = () => {
   showIconMenu.value = !showIconMenu.value;
@@ -67,7 +40,7 @@ const toggleShowIconMenu = () => {
     ? document.body.addEventListener("click", (event) => {
         const clicked = event.target;
 
-        if (!clicked.closest(".itemDropdown") && !clicked.closest(".avatar"))
+        if (!clicked.closest(".avatar") && !clicked.closest(".dropdown"))
           showIconMenu.value = false;
       })
     : document.body.removeEventListener("click");
@@ -75,16 +48,6 @@ const toggleShowIconMenu = () => {
 </script>
 
 <style scoped lang="scss">
-.dropdown {
-  position: absolute;
-  width: max-content;
-  top: calc(100% + 8px);
-  right: 0;
-
-  background: lightgray;
-  border-radius: 12px;
-}
-
 .slide-enter-from,
 .slide-leave-to {
   transform: translateX(300px);
