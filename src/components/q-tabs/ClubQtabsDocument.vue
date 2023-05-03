@@ -1,52 +1,27 @@
 <template>
-  <q-tabs
-    class="row no-wrap q-pl-lg drawer-item"
-    indicator-color="transparent"
-    v-for="(doc, index) in FILES"
-    :key="doc.id"
-    align="left"
-  >
-    <router-link
-      class="item_doc link"
-      :to="{
-        name: 'Document',
-        params: { id: `${index}` },
-      }"
-    >
-      <q-route-tab>
-        <div class="item_doc">
-          <img
-            :src="`/src/assets/icons/file/file-grey.svg`"
-            alt=""
-            class="q-pr-md"
-          />
-
+  <q-tabs class="row no-wrap q-pl-lg drawer-item" indicator-color="transparent" v-for="(doc, index) in FILES"
+    :key="doc.id" align="left">
+    <q-route-tab>
+      <div class="item_doc">
+        <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" class="q-pr-md" />
+        <router-link class="item_doc link" :to="{
+            name: 'Document',
+            params: { id: `${index}` },
+          }">
           {{
             doc.name.replace(".html", "").length > 10
-              ? doc.name.replace(".html", "").slice(0, 10) + "..."
-              : doc.name.replace(".html", "")
+            ? doc.name.replace(".html", "").slice(0, 10) + "..."
+            : doc.name.replace(".html", "")
           }}
-
-          <div class="menu-wrapper" clickable>
-            <q-btn-dropdown
-              no-icon-animation
-              dropdown-icon="more_vert"
-              size="sm"
-              no-caps
-              unelevated
-              no-wrap
-              label=""
-              class="btn-dropdown-doc"
-            >
-              <c-qmenu-document
-                :prop_clicked_index_doc="index"
-                :prop_doc="doc"
-              />
-            </q-btn-dropdown>
-          </div>
+        </router-link>
+        <div class="menu-wrapper" clickable>
+          <q-btn-dropdown no-icon-animation dropdown-icon="more_vert" size="sm" no-caps unelevated no-wrap label=""
+            class="btn-dropdown-doc">
+            <c-qmenu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
+          </q-btn-dropdown>
         </div>
-      </q-route-tab>
-    </router-link>
+      </div>
+    </q-route-tab>
   </q-tabs>
 </template>
 
@@ -86,18 +61,20 @@ watch(FILES, () => {
 }
 
 .btn-dropdown-doc {
-  display: none;
+  visibility: hidden;
 }
 
 .item_doc:hover .btn-dropdown-doc {
   opacity: 0;
   animation: ani 0.3s forwards;
-  display: flex;
+  visibility: visible;
 }
+
 @keyframes ani {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }

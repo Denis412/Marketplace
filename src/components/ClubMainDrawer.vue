@@ -23,9 +23,9 @@
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
+            <q-icon @click="addDocument" v-if="item.title == 'Лендинг'" name="add" class="addDoc"/>
           </div>
-
-          <span @click="addDocument" v-if="item.title == 'Лендинг'">+</span>
+          
         </router-link>
 
         <c-qtabs-document v-if="item.title == 'Лендинг'" />
@@ -100,6 +100,7 @@ const toggleDrawer = () => {
 
 const addDocument = () => {
   filesApi.createHtmlFile();
+
 };
 
 const isActive = (path) => {
@@ -162,5 +163,8 @@ const isActive = (path) => {
 
 .rotate {
   transform: rotate(-180deg);
+}
+.addDoc{
+  padding-left: 5rem;
 }
 </style>
