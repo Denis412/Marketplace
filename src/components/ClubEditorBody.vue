@@ -95,7 +95,6 @@ const color = (cmd, name) => {
 
 watch(route, async () => {
   if (!previousRout.value && editor.value) {
-    console.log(1);
     filesApi.createHtmlFile(
       editor.value,
       titleDocument.value ? titleDocument.value : "Unknown"
@@ -109,6 +108,9 @@ watch(route, async () => {
       FILES.value[route.params.id].id,
       FILES.value[route.params.id].name
     );
+
+    storeFile.SET_CURRENT_TITLE_DOC(titleDocument.value);
+    storeFile.SET_CURRENT_EDITOR_VALUE(editor.value);
   } else {
     editor.value = "";
     titleDocument.value = "";

@@ -7,6 +7,8 @@ export const useFileStore = defineStore('file', {
   state: () => ({
     files: [],
     refetchFiles: {},
+    currentTitleDoc: '',
+    currentEditorValue: '',
   }),
 
   getters: {
@@ -27,6 +29,14 @@ export const useFileStore = defineStore('file', {
       } catch (e) {
         console.log('Ошибка:', e)
       }
+    },
+
+    SET_CURRENT_TITLE_DOC(value) {
+      this.currentTitleDoc = value
+    },
+
+    SET_CURRENT_EDITOR_VALUE(value) {
+      this.currentEditorValue = value
     },
   },
 })
