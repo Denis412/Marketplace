@@ -3,8 +3,15 @@ import userApi from "src/sdk/user";
 const routes = [
   {
     path: "/",
+
     component: () => import("layouts/ClubLandingLayout.vue"),
-    children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
+    children: [
+      {
+        path: "",
+        name: "landing-main",
+        component: () => import("pages/IndexPage.vue"),
+      },
+    ],
   },
   {
     path: "/club",

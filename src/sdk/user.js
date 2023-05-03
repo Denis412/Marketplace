@@ -31,7 +31,13 @@ const { refetch: refetchSubject } = useQuery(getSubject, {
 });
 
 const { mutate: signUp } = useMutation(userSignUp);
-const { mutate: signIn } = useMutation(userSignIn);
+const { mutate: signIn } = useMutation(userSignIn, {
+  context: {
+    headers: {
+      space: process.env.MAIN_SPACE_ID,
+    },
+  },
+});
 const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
 const { mutate: invitingUser } = useMutation(userGroupInviteUser);
 const { mutate: updatingUser } = useMutation(updateSubject, {
