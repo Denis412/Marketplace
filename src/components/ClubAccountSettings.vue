@@ -75,6 +75,15 @@
         />
       </section>
 
+      <c-confirm-dialog
+        v-model="isDeletePhoto"
+        title="Вы действительно хотите удалить фото?"
+        cancel-label="Отмена"
+        confirm-label="Да"
+        @confirm="deletePhoto"
+        @cancel="toggleIsDeletePhoto"
+      />
+      <!--
       <q-dialog v-model="isDeletePhoto">
         <q-card class="confirm-delete">
           <q-card-section class="text-body2 confirm-delete-content">
@@ -91,7 +100,7 @@
             />
           </q-card-section>
         </q-card>
-      </q-dialog>
+      </q-dialog> -->
     </main>
 
     <footer></footer>
@@ -111,6 +120,7 @@ import { useUserStore } from "src/stores/user";
 import CButton from "src/components/ClubButton.vue";
 import CAccountSettingsForm from "./ClubAccountSettingsForm.vue";
 import CEditPasswordDialog from "./ClubEditPasswordDialog.vue";
+import CConfirmDialog from "./ClubConfirmDialog.vue";
 import userApi from "src/sdk/user";
 import filesApi from "src/sdk/file";
 
@@ -181,19 +191,5 @@ watch(selectAvatar, async (value) => {
 
 .image-wrapper {
   max-width: 505px;
-}
-
-.confirm-delete {
-  padding: 32px;
-  border-radius: 10px;
-
-  &-content {
-    width: 480px;
-    max-width: 480px;
-  }
-
-  & .q-card__section {
-    padding: 0;
-  }
 }
 </style>

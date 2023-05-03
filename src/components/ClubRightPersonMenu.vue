@@ -28,7 +28,11 @@
         Профиль
       </q-card>
 
-      <q-card flat class="text-body2 cursor-pointer q-mt-md" @click="logout">
+      <q-card
+        flat
+        class="text-body2 cursor-pointer q-mt-md"
+        @click="toggleIsExit"
+      >
         <q-icon
           name="img:/src/assets/icons/exit/exit-grey.svg"
           class="q-mr-sm"
@@ -41,20 +45,35 @@
         src="/src/assets/images/account-settings/settings.svg"
       />
     </q-card-section>
+
+    <c-confirm-dialog
+      v-model="isExit"
+      title="Вы действительно хотите выйти из системы?"
+      cancel-label="Отмена"
+      confirm-label="Да"
+      @confirm="logout"
+      @cancel="toggleIsExit"
+    />
   </q-card>
 </template>
 
 <script setup>
-import userApi from "src/sdk/user";
-import stompApi from "src/sdk/stomp";
+import { ref } from "vue";
 import { useUserStore } from "src/stores/user";
 import { useRouter } from "vue-router";
+
+import CConfirmDialog from "./ClubConfirmDialog.vue";
+
+import userApi from "src/sdk/user";
+import stompApi from "src/sdk/stomp";
 
 const router = useRouter();
 const userStore = useUserStore();
 const { currentUser } = defineProps({
   currentUser: Object,
 });
+
+const isExit = ref(false);
 
 const logout = () => {
   userApi.logout();
@@ -64,6 +83,10 @@ const logout = () => {
   router.push({
     name: "landing-main",
   });
+};
+
+const toggleIsExit = () => {
+  isExit.value = !isExit.value;
 };
 </script>
 
