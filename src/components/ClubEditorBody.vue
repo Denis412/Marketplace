@@ -68,7 +68,7 @@ import { data } from "src/utils/documentData";
 
 const titleDocument = ref("");
 
-const emit = defineEmits("update:titleDocument");
+const emit = defineEmits(["update:titleDocument"]);
 
 watch(titleDocument, () => {
   emit("update:titleDocument", titleDocument.value);
