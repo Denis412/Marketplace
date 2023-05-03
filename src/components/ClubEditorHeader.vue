@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { data } from "src/sdk/file";
+import { data } from "src/utils/documentData";
 
 const props = defineProps({
   titleDocument: String,

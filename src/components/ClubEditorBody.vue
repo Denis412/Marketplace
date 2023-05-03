@@ -63,7 +63,8 @@
 import { computed, ref, watch, onMounted, onBeforeMount } from "vue";
 import { useFileStore } from "src/stores/file";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
-import { filesApi, data } from "src/sdk/file";
+import { filesApi } from "src/sdk/file";
+import { data } from "src/utils/documentData";
 
 const titleDocument = ref("");
 
