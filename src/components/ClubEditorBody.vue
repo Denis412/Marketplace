@@ -126,7 +126,8 @@ onMounted(async () => {
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
-      FILES.value[route.params.id].name
+      FILES.value[route.params.id].name,
+      FILES.value[route.params.id].extension
     );
   }
 });

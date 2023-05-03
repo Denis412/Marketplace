@@ -38,10 +38,10 @@ const uploadFiles = async (files) => {
   // console.log(BigInt(data.data.filesUpload.ids[0]).toString())
 }
 
-const getFileHtmlByUrl = async (path, id, name) => {
+const getFileHtmlByUrl = async (path, id, name, extension) => {
   //mode: no-cores
   const response = await fetch(
-    `https://cdn.stud.druid.1t.ru/${path}/${id}.html?n=${name}`,
+    `https://cdn.stud.druid.1t.ru/${path}/${id}.${extension}?n=${name}`,
     {
       mode: 'cors',
     },
