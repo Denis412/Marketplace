@@ -67,7 +67,7 @@ import { filesApi, data } from "src/sdk/file";
 
 const titleDocument = ref("");
 
-const emit = defineEmits("update:titleDocument");
+const emit = defineEmits(["update:titleDocument"]);
 
 watch(titleDocument, () => {
   emit("update:titleDocument", titleDocument.value);
