@@ -4,7 +4,7 @@
       background
       size="lg"
       label="Найти команду"
-      to="/club/search-team"
+      @click="to"
       class="c-mr-32"
     />
 
@@ -20,4 +20,13 @@
 
 <script setup>
 import CButton from "src/components/ClubButton.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const to = () => {
+  router.push({
+    name: "teams",
+  });
+};
 </script>

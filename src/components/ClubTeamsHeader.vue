@@ -4,28 +4,42 @@
       <h3 class="text-h3">Все команды</h3>
     </header>
 
-    <div class="row no-wrap justify-between qwerty c-mb-32">
-      <c-input class="col-5" />
+    <section class="flex justify-between c-mb-32 q-gutter-x-lg">
+      <q-input
+        class="search-input c-input-outline col"
+        outlined
+        @update:model-value="emit('filterTeamName', $event)"
+        v-model="search_team_name"
+      >
+        <template #prepend>
+          <q-icon
+            name="img:/src/assets/icons/search/search-grey.svg"
+            class="cursor-pointer"
+          />
+        </template>
+      </q-input>
 
       <q-select
-        outlined
+        no-caps
+        borderless
+        v-model="team_status"
+        @update:model-value="emit('filterTeamStatus', $event)"
         :options="filterOptions"
-        label="Фильтрация"
-        class="col-3"
+        class="club-dropdown col"
+        dropdown-icon="img:/src/assets/icons/arrow/arrow-down-grey.svg"
       />
-    </div>
+    </section>
   </section>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import CInput from "./ClubInput.vue";
+
+const emit = defineEmits(["filterTeamStatus", "filterTeamName"]);
 
 const filterOptions = ref(["Готовы к заказам", "Не готовы к заказам"]);
+const team_status = ref("");
+const search_team_name = ref("");
 </script>
 
-<style scoped lang="scss">
-.qwerty {
-  width: 50%;
-}
-</style>
+<style scoped lang="scss"></style>

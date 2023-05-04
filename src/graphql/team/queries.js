@@ -41,6 +41,7 @@ export const filterTeamsName = gql`
         updated_at
         name
         description
+        status
       }
       paginatorInfo {
         perPage

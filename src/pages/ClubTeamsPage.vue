@@ -1,19 +1,45 @@
 <template>
   <q-page class="c-pa-32">
-    <c-teams-header class="c-mb-32" />
-    <c-team-card-list :teams="teams" />
+    <div v-if="loading" class="loader loader-lg"></div>
+
+    <div v-else>
+      <c-teams-header
+        class="c-mb-32"
+        @filter-team-status="teamListByStatus"
+        @filter-team-name="teamListByChar"
+      />
+      <c-team-card-list :teams="currentTeams" />
+    </div>
   </q-page>
 </template>
 
 <script setup>
 import CTeamsHeader from "src/components/ClubTeamsHeader.vue";
 import CTeamCardList from "src/components/ClubTeamCardList.vue";
-import { ref } from "vue";
-import userTeams from "src/sdk/team";
+import { ref, watch } from "vue";
+import teamApi from "src/sdk/team";
 
-const teams = ref([]);
+const { result: teams, loading } = teamApi.queryAllTeams();
+const currentTeams = ref([]);
 
-userTeams.getAllTeams().then((allTeams) => (teams.value = allTeams));
+const teamListByStatus = async (new_status) => {
+  currentTeams.value = await teamApi.checkStatus(new_status);
+};
+
+const teamListByChar = async (char) => {
+  try {
+    currentTeams.value =
+      char !== "" ? await teamApi.checkChar(char) : await teamApi.getAllTeams();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+watch(loading, (value) => {
+  if (value) return;
+
+  currentTeams.value = teams.value?.paginate_team.data;
+});
 </script>
 
 <style scoped lang="scss"></style>

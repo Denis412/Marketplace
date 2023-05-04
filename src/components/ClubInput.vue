@@ -5,9 +5,6 @@
     v-model="value"
     @update:model-value="emitChange"
     :type="calcType"
-    :autogrow="autogrow"
-    :placeholder="placeholder"
-    :rules="rules"
   >
     <template v-slot:append>
       <q-icon
@@ -26,27 +23,17 @@
 import { computed, ref } from "vue";
 import capitalizeWord from "src/utils/capitalizeWord";
 
-const {
-  type,
-  placeholder,
-  visibility,
-  autogrow,
-  rules,
-  modelValue,
-  modelModifiers,
-  countInput,
-} = defineProps({
-  type: String,
-  placeholder: String,
-  visibility: Boolean,
-  autogrow: Boolean,
-  countInput: String,
-  rules: Array,
-  modelValue: String,
-  modelModifiers: {
-    default: () => ({}),
-  },
-});
+const { type, visibility, modelValue, modelModifiers, countInput, iconLeft } =
+  defineProps({
+    type: String,
+    visibility: Boolean,
+    countInput: String,
+    iconLeft: String,
+    modelValue: String,
+    modelModifiers: {
+      default: () => ({}),
+    },
+  });
 const emit = defineEmits(["update:modelValue"]);
 
 const showText = ref(visibility);
