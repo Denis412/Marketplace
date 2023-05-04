@@ -1,6 +1,7 @@
 <template>
   <q-card
     class="team rounded-borders-10 c-pa-32 all-pointer-events cursor-pointer flex no-wrap"
+    @click="to()"
   >
     <q-card-section class="flex flex-center">
       <q-avatar class="avatar-108">

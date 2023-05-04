@@ -1,9 +1,9 @@
 <template>
-  <div v-if="teams" class="row c-mb-32 q-col-gutter-lg">
+  <q-list v-if="teams" class="row c-mb-32 q-col-gutter-lg">
     <section class="col-6" v-for="team in teams" :key="team.id">
       <c-team-card :team="team" />
     </section>
-  </div>
+  </q-list>
 </template>
 
 <script setup>
@@ -16,5 +16,4 @@ const { teams } = defineProps({
 console.log(teams);
 </script>
 
-<style lang="sass" scoped>
-</style>
+<style lang="sass" scoped></style>

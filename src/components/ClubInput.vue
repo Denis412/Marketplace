@@ -73,7 +73,6 @@ const toggleShowText = () => {
 
 const emitChange = (targetValue) => {
   let text = targetValue;
-  console.log(targetValue);
 
   if (modelModifiers.capitalize) text = capitalizeWord(text);
 
