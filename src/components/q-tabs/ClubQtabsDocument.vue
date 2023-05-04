@@ -13,7 +13,6 @@
           alt=""
           class="q-pr-md"
         />
-
         <router-link
           class="item_doc link"
           :to="{
