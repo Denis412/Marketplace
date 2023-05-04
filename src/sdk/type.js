@@ -4,8 +4,20 @@ import { typeCreate, typeDelete } from "src/graphql/types/mutations";
 
 provideApolloClient(apolloClient);
 
-const { mutate: creatingType } = useMutation(typeCreate);
-const { mutate: deletingType } = useMutation(typeDelete);
+const { mutate: creatingType } = useMutation(typeCreate, {
+  context: {
+    headers: {
+      space: 34,
+    },
+  },
+});
+const { mutate: deletingType } = useMutation(typeDelete, {
+  context: {
+    headers: {
+      space: 34,
+    },
+  },
+});
 
 const createType = async () => {
   const { data: typeData } = await creatingType({

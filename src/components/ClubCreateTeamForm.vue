@@ -10,7 +10,7 @@
     <main class="flex column flex-center c-mt-32">
       <section class="relative-position">
         <q-avatar class="large-avatar">
-          <q-img :src="team_img_URL" />
+          <q-img :src="avatar_URL" />
         </q-avatar>
 
         <q-img
@@ -85,14 +85,14 @@ const form = ref({
 });
 
 const upload_img = ref(null);
-const team_img_URL = ref("/src/assets/previews/avatar-140.png");
+const avatar_URL = ref("/src/assets/previews/avatar-140.png");
 const uploadFile = ref(null);
 // const obj=ref({
 //   id:"",
-//   team_img:""
+//   avatar:""
 // })
 const id = ref("");
-const team_img = ref("");
+const avatar = ref("");
 
 const createTeam = async () => {
   if (await userTeams.checkName(form.value)) {
@@ -102,12 +102,12 @@ const createTeam = async () => {
       console.log(error);
     }
     try {
-      team_img.value = await filesApi.uploadFiles(upload_img.value);
+      avatar.value = await filesApi.uploadFiles(upload_img.value);
     } catch (error) {
       console.log(error);
     }
     try {
-      await userTeams.userTeamUpdate(id.value, team_img.value, form.value.name);
+      await userTeams.userTeamUpdate(id.value, avatar.value, form.value.name);
     } catch (error) {
       console.log(error);
     }
@@ -118,7 +118,7 @@ const createTeam = async () => {
 
 const updateFile = () => {
   if (Math.round(upload_img.value.size / Math.pow(1024, 2)) <= 10) {
-    team_img_URL.value = URL.createObjectURL(upload_img.value);
+    avatar_URL.value = URL.createObjectURL(upload_img.value);
   } else {
     $q.notify("Максимальный вес картинки 10Mb!");
   }
