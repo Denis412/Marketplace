@@ -11,13 +11,14 @@ import { filterTeamsName, getTeams } from "src/graphql/team/queries";
 
 provideApolloClient(apolloClient);
 
-const { mutate: createTeam } = useMutation(teamCreate, {
+const { mutate: creatingTeam } = useMutation(teamCreate, {
   context: {
     headers: {
       space: process.env.MAIN_SPACE_ID,
     },
   },
 });
+
 const { mutate: creatingSpace } = useMutation(createSpace, {
   context: {
     headres: {
@@ -25,13 +26,15 @@ const { mutate: creatingSpace } = useMutation(createSpace, {
     },
   },
 });
-const { mutate: updateTeam } = useMutation(teamUpdate, {
+
+const { mutate: updatingTeam } = useMutation(teamUpdate, {
   context: {
     headers: {
       space: process.env.MAIN_SPACE_ID,
     },
   },
 });
+
 const { refetch: refetchAllTeams } = useQuery(
   getTeams,
   {},
@@ -43,6 +46,7 @@ const { refetch: refetchAllTeams } = useQuery(
     },
   }
 );
+
 const { refetch: refetchTeams } = useQuery(
   filterTeamsName,
   {
@@ -61,12 +65,12 @@ const { refetch: refetchTeams } = useQuery(
   }
 );
 
-const getAllTeams = async () => {
-  const { data: allTeams } = await refetchAllTeams();
-  return allTeams.paginate_team.data;
+const getAll = async () => {
+  const { data: teamsData } = await refetchAllTeams();
+  return teamsData.paginate_team.data;
 };
 
-const userTeamCreate = async ({ name, description }) => {
+const create = async ({ name, description }) => {
   const { data: spaceData } = await creatingSpace({
     input: {
       name,
@@ -74,7 +78,7 @@ const userTeamCreate = async ({ name, description }) => {
     },
   });
 
-  const { data: userTeamInfo } = await createTeam({
+  const { data: teamData } = await creatingTeam({
     input: {
       name,
       description,
@@ -82,11 +86,11 @@ const userTeamCreate = async ({ name, description }) => {
     },
   });
 
-  return userTeamInfo.create_team.record.id;
+  return teamData.create_team.record.id;
 };
 
-const userTeamUpdate = async (id, avatar, name) => {
-  const { data: userUpdateTeamInfo } = await updateTeam({
+const update = async (id, avatar, name) => {
+  const { data: teamData } = await updatingTeam({
     id,
     input: {
       name,
@@ -94,11 +98,11 @@ const userTeamUpdate = async (id, avatar, name) => {
     },
   });
 
-  return userUpdateTeamInfo.update_team.status;
+  return teamData.update_team.status;
 };
 
 const checkName = async ({ name }) => {
-  const { data: filteredTeam } = await refetchTeams({
+  const { data: teamData } = await refetchTeams({
     where: {
       column: "name",
       operator: "EQ",
@@ -106,14 +110,14 @@ const checkName = async ({ name }) => {
     },
   });
 
-  return filteredTeam.paginate_team.paginatorInfo.count == 0;
+  return teamData.paginate_team.paginatorInfo.count == 0;
 };
 
-const userTeams = {
-  userTeamCreate,
-  userTeamUpdate,
+const teamApi = {
+  create,
+  update,
   checkName,
-  getAllTeams,
+  getAll,
 };
 
-export default userTeams;
+export default teamApi;

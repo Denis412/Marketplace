@@ -13,7 +13,7 @@ import userTeams from "src/sdk/team";
 
 const teams = ref([]);
 
-userTeams.getAllTeams().then((allTeams) => (teams.value = allTeams));
+userTeams.getAll().then((allTeams) => (teams.value = allTeams));
 </script>
 
 <style scoped lang="scss"></style>

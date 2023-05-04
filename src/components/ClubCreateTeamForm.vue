@@ -71,7 +71,7 @@ import { ref } from "vue";
 
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
-import userTeams from "src/sdk/team";
+import teamApi from "src/sdk/team";
 import filesApi from "src/sdk/file";
 import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
@@ -95,9 +95,9 @@ const id = ref("");
 const avatar = ref("");
 
 const createTeam = async () => {
-  if (await userTeams.checkName(form.value)) {
+  if (await teamApi.checkName(form.value)) {
     try {
-      id.value = await userTeams.userTeamCreate(form.value);
+      id.value = await teamApi.create(form.value);
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +107,7 @@ const createTeam = async () => {
       console.log(error);
     }
     try {
-      await userTeams.userTeamUpdate(id.value, avatar.value, form.value.name);
+      await teamApi.update(id.value, avatar.value, form.value.name);
     } catch (error) {
       console.log(error);
     }
