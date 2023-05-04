@@ -79,7 +79,7 @@ const routes = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
   },
-  { path: "/task", component: () => import("src/components/ClubTaskInformation.vue") }
+  { path: "/task", component: () => import("src/components/ClubOrderInformation.vue") }
 
 ]
 
