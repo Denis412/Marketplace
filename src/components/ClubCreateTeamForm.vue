@@ -75,9 +75,11 @@ import teamApi from "src/sdk/team";
 import filesApi from "src/sdk/file";
 import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const { required, maxLength } = useValidators();
 const $q = useQuasar();
+const router = useRouter();
 
 const form = ref({
   name: "",
@@ -98,6 +100,10 @@ const createTeam = async () => {
   if (await teamApi.checkName(form.value)) {
     try {
       id.value = await teamApi.create(form.value);
+
+      router.push({
+        name: "my-teams",
+      });
     } catch (error) {
       console.log(error);
     }

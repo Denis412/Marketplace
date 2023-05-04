@@ -55,3 +55,20 @@ export const filterTeamsName = gql`
     }
   }
 `;
+
+export const getMyTeams = gql`
+  query getMyTeams($where: ObjectPaginatorWhere!) {
+    paginate_team(page: 1, perPage: 100, where: $where) {
+      data {
+        id
+        name
+        description
+        avatar
+        space
+        created_at
+        updated_at
+        name
+      }
+    }
+  }
+`;

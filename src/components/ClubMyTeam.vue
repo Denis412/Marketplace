@@ -7,19 +7,19 @@
       <q-img
         class="image c-mt-16"
         :src="
-          team.img.length
-            ? `/src/assets/images/${team.img}`
+          team.avatar.length
+            ? `/src/assets/images/${team.avatar}`
             : '/src/assets/images/TeamPlaceholder.png'
         "
       />
 
       <div class="text-area col-8">
         <h4 class="text-h4">
-          {{ team.title }}
+          {{ team.name }}
         </h4>
 
         <div class="text-body2 c-mt-16">
-          {{ team.content }}
+          {{ team.description }}
         </div>
       </div>
     </div>

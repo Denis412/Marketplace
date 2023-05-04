@@ -7,7 +7,11 @@ import { data } from "autoprefixer";
 import apolloClient from "src/apollo/apollo-client";
 import { createSpace } from "src/graphql/space/mutations";
 import { teamCreate, teamUpdate } from "src/graphql/team/mutations";
-import { filterTeamsName, getTeams } from "src/graphql/team/queries";
+import {
+  filterTeamsName,
+  getMyTeams,
+  getTeams,
+} from "src/graphql/team/queries";
 
 provideApolloClient(apolloClient);
 
@@ -37,6 +41,18 @@ const { mutate: updatingTeam } = useMutation(teamUpdate, {
 
 const { refetch: refetchAllTeams } = useQuery(
   getTeams,
+  {},
+  {
+    context: {
+      headers: {
+        space: process.env.MAIN_SPACE_ID,
+      },
+    },
+  }
+);
+
+const { refetch: refetchMyTeams } = useQuery(
+  getMyTeams,
   {},
   {
     context: {
@@ -113,11 +129,24 @@ const checkName = async ({ name }) => {
   return teamData.paginate_team.paginatorInfo.count == 0;
 };
 
+const getMy = async (author_id) => {
+  const { data: teamsData } = await refetchMyTeams({
+    where: {
+      column: "author_id",
+      operator: "EQ",
+      value: `${author_id}`,
+    },
+  });
+
+  return teamsData.paginate_team.data;
+};
+
 const teamApi = {
   create,
   update,
   checkName,
   getAll,
+  getMy,
 };
 
 export default teamApi;

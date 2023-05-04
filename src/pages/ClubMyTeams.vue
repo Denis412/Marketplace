@@ -8,7 +8,7 @@
 
     <div>
       <div v-if="teams.length" class="flex club-mb-32 q-gutter-lg">
-        <c-my-team v-for="team in teams" :key="team.id" :team="team" />
+        <c-my-team v-for="team in myTeams" :key="team.id" :team="team" />
       </div>
 
       <div v-else>
@@ -22,13 +22,19 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import CButton from "src/components/ClubButton.vue";
 import CMyTeam from "src/components/ClubMyTeam.vue";
 import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
 import CCreateTeamForm from "src/components/ClubCreateTeamForm.vue";
 import CTeamRequest from "src/components/ClubTeamRequest.vue";
 import CAddButtons from "src/components/ClubTeamAddButtons.vue";
+import teamApi from "src/sdk/team";
+import { useUserStore } from "src/stores/user";
+
+const userStore = useUserStore();
+
+const myTeams = ref([]);
 
 const teams = ref([
   {
@@ -43,6 +49,10 @@ const teams = ref([
 //массивы заявок
 const requestsIn = ref([]);
 const requestsOut = ref([]);
+
+onMounted(async () => {
+  myTeams.value = await teamApi.getMy(userStore.GET_CURRENT_USER.subject_id);
+});
 </script>
 
 <style lang="scss" scoped>
