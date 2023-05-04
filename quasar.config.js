@@ -58,12 +58,12 @@ module.exports = configure(function (/* ctx */) {
         FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru/",
         RABBIT_URI: "wss://stud.druid.1t.ru/ws",
 
-        MAIN_SPACE_ID: 34,
+        MAIN_SPACE_ID: 42,
 
-        USERS_GROUP_ID: "1319554634306561363",
+        USERS_GROUP_ID: "2954744714133191151", // Группа разработчиков
 
-        SUBJECT_TYPE_ID: "1",
-        TEAM_TYPE_ID: "2",
+        SUBJECT_TYPE_ID: "6410837257365292951",
+        TEAM_TYPE_ID: "5546930648465563539",
         TASK_TYPE_ID: "3",
         PROJECT_TYPE_ID: "4",
         FILE_TYPE_ID: "5",

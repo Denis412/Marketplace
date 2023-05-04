@@ -5,13 +5,39 @@ import {
 } from "@vue/apollo-composable";
 import { data } from "autoprefixer";
 import apolloClient from "src/apollo/apollo-client";
+import { createSpace } from "src/graphql/space/mutations";
 import { teamCreate, teamUpdate } from "src/graphql/team/mutations";
-import { filterTeamsName, getTeams } from "src/graphql/team/queries";
+import {
+  filterTeamsName,
+  getMyTeams,
+  getTeams,
+} from "src/graphql/team/queries";
 
 provideApolloClient(apolloClient);
 
-const { mutate: createTeam } = useMutation(teamCreate);
-const { mutate: updateTeam } = useMutation(teamUpdate);
+const { mutate: creatingTeam } = useMutation(teamCreate, {
+  context: {
+    headers: {
+      space: process.env.MAIN_SPACE_ID,
+    },
+  },
+});
+
+const { mutate: creatingSpace } = useMutation(createSpace, {
+  context: {
+    headres: {
+      space: process.env.MAIN_SPACE_ID,
+    },
+  },
+});
+
+const { mutate: updatingTeam } = useMutation(teamUpdate, {
+  context: {
+    headers: {
+      space: process.env.MAIN_SPACE_ID,
+    },
+  },
+});
 
 const { refetch: refetchAllTeams } = useQuery(
   getTeams,
@@ -19,64 +45,108 @@ const { refetch: refetchAllTeams } = useQuery(
   {
     context: {
       headers: {
-        space: 4,
+        space: process.env.MAIN_SPACE_ID,
       },
     },
   }
 );
-const { refetch: refetchTeams } = useQuery(filterTeamsName, {
-  where: {
-    column: "name",
-    operator: "EQ",
-    value: "",
-  },
-});
 
-const getAllTeams = async () => {
-  const { data: allTeams } = await refetchAllTeams();
-  return allTeams.paginate_Teams.data;
+const { refetch: refetchMyTeams } = useQuery(
+  getMyTeams,
+  {},
+  {
+    context: {
+      headers: {
+        space: process.env.MAIN_SPACE_ID,
+      },
+    },
+  }
+);
+
+const { refetch: refetchTeams } = useQuery(
+  filterTeamsName,
+  {
+    where: {
+      column: "name",
+      operator: "EQ",
+      value: "",
+    },
+  },
+  {
+    context: {
+      headers: {
+        space: process.env.MAIN_SPACE_ID,
+      },
+    },
+  }
+);
+
+const getAll = async () => {
+  const { data: teamsData } = await refetchAllTeams();
+  return teamsData.paginate_team.data;
 };
 
-const userTeamCreate = async ({ name, description }) => {
-  const { data: userTeamInfo } = await createTeam({
+const create = async ({ name, description }) => {
+  const { data: spaceData } = await creatingSpace({
     input: {
       name,
       description,
     },
   });
 
-  return userTeamInfo.create_Teams.record.id;
+  const { data: teamData } = await creatingTeam({
+    input: {
+      name,
+      description,
+      space: `${spaceData.spaceCreate.recordId}`,
+    },
+  });
+
+  return teamData.create_team.record.id;
 };
 
-const userTeamUpdate = async (id, team_img, name) => {
-  console.log(id, typeof team_img);
-  const { data: userUpdateTeamInfo } = await updateTeam({
+const update = async (id, avatar, name) => {
+  const { data: teamData } = await updatingTeam({
     id,
     input: {
       name,
-      team_img,
+      avatar,
     },
   });
-  console.log(userUpdateTeamInfo.update_Teams.status);
-  return userUpdateTeamInfo.update_Teams.status;
+
+  return teamData.update_team.status;
 };
 
 const checkName = async ({ name }) => {
-  const { data: filteredTeam } = await refetchTeams({
+  const { data: teamData } = await refetchTeams({
     where: {
       column: "name",
       operator: "EQ",
       value: `${name}`,
     },
   });
-  return filteredTeam.paginate_Teams.paginatorInfo.count == 0;
+
+  return teamData.paginate_team.paginatorInfo.count == 0;
 };
 
-const userTeams = {
-  userTeamCreate,
-  userTeamUpdate,
+const getMy = async (author_id) => {
+  const { data: teamsData } = await refetchMyTeams({
+    where: {
+      column: "author_id",
+      operator: "EQ",
+      value: `${author_id}`,
+    },
+  });
+
+  return teamsData.paginate_team.data;
+};
+
+const teamApi = {
+  create,
+  update,
   checkName,
-  getAllTeams,
+  getAll,
+  getMy,
 };
 
-export default userTeams;
+export default teamApi;

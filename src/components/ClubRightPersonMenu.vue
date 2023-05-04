@@ -15,7 +15,7 @@
     </q-card-section>
 
     <q-card-section class="c-mt-20">
-      <q-card flat class="text-body2 cursor-pointer">
+      <q-card flat class="text-body2 cursor-pointer" @click="toAccountSettings">
         <q-icon name="img:/src/assets/icons/pen/pen-grey.svg" class="q-mr-sm" />
         Учетная запись
       </q-card>
@@ -75,6 +75,12 @@ const { currentUser } = defineProps({
 
 const isExit = ref(false);
 
+const toAccountSettings = () => {
+  router.push({
+    name: "account",
+  });
+};
+
 const logout = () => {
   userApi.logout();
   stompApi.disconnect();
@@ -94,6 +100,7 @@ const toggleIsExit = () => {
 .dropdown {
   position: absolute;
   padding: 32px 20px;
+  border: 3px solid $violet-6;
   border-radius: 32px;
   width: max-content;
   top: calc(100% + 8px);

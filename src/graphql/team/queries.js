@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const getTeams = gql`
   query getTeams {
-    paginate_Teams(page: 1, perPage: 100) {
+    paginate_team(page: 1, perPage: 100) {
       data {
         id
         type_id
@@ -30,7 +30,7 @@ export const getTeams = gql`
 
 export const filterTeamsName = gql`
   query filterTeamsName($where: ObjectPaginatorWhere) {
-    paginate_Teams(page: 1, perPage: 100, where: $where) {
+    paginate_team(page: 1, perPage: 100, where: $where) {
       data {
         id
         type_id
@@ -51,6 +51,23 @@ export const filterTeamsName = gql`
         from
         to
         hasMorePages
+      }
+    }
+  }
+`;
+
+export const getMyTeams = gql`
+  query getMyTeams($where: ObjectPaginatorWhere!) {
+    paginate_team(page: 1, perPage: 100, where: $where) {
+      data {
+        id
+        name
+        description
+        avatar
+        space
+        created_at
+        updated_at
+        name
       }
     }
   }

@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const teamCreate = gql`
-  mutation TeamCreate($input: create_Teams_input!) {
-    create_Teams(input: $input) {
+  mutation TeamCreate($input: create_team_input!) {
+    create_team(input: $input) {
       status
       recordId
       record {
@@ -15,14 +15,15 @@ export const teamCreate = gql`
         updated_at
         name
         description
+        space
       }
     }
   }
 `;
 
 export const teamUpdate = gql`
-  mutation ($id: String!, $input: update_Teams_input!) {
-    update_Teams(id: $id, input: $input) {
+  mutation ($id: String!, $input: update_team_input!) {
+    update_team(id: $id, input: $input) {
       status
       recordId
       record {
@@ -35,7 +36,7 @@ export const teamUpdate = gql`
         updated_at
         name
         description
-        team_img
+        avatar
       }
     }
   }
