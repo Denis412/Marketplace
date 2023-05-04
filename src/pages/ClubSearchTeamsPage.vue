@@ -1,6 +1,6 @@
 <template>
   <q-page class="c-pa-32">
-    <c-search-team-page-header class="c-mb-32" @filter-team-list="newTeamList"/>
+    <c-search-team-page-header class="c-mb-32" @filter-team-status="teamListByStatus" @filter-team-name="teamListByChar"/>
     <c-search-team-page-list :teams="teams" />
   </q-page>
 </template>
@@ -12,15 +12,24 @@ import { ref } from "vue";
 import teamApi from "src/sdk/team";
 
 const teams = ref([]);
-const status = ref('');
-
 
 teamApi.getAll().then((allTeams) => (teams.value = allTeams));
 
-const newTeamList = (new_status) =>{
-  status.value = new_status
-  teamApi.checkStatus(status.value).then((filterTeams) => (teams.value = filterTeams));
+const teamListByStatus = async (new_status) => {
+  teams.value = await teamApi.checkStatus(new_status)
 }
+
+const teamListByChar = async (char) => {
+  if (char!=""){
+    teams.value = await teamApi.checkChar(char)
+  }
+  else{
+    teams.value = await teamApi.getAll()
+  }
+
+}
+
+
 </script>
 
 <style scoped lang="scss"></style>

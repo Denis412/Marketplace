@@ -100,6 +100,24 @@ const { refetch: refetchFilterTeams } = useQuery(
   }
 );
 
+const { refetch: refetchFilterTeamsByChar } = useQuery(
+  filterTeamsName,
+  {
+    where: {
+      column: "name",
+      operator: "FTS",
+      value: "",
+    },
+  },
+  {
+    context: {
+      headers: {
+        space: process.env.MAIN_SPACE_ID,
+      },
+    },
+  }
+);
+
 const getAll = async () => {
   const { data: teamsData } = await refetchAllTeams();
   return teamsData.paginate_team.data;
@@ -160,6 +178,18 @@ const checkStatus = async (status) => {
   return teamData.paginate_team.data;
 };
 
+const checkChar = async (char) => {
+  const { data: teamData } = await refetchFilterTeamsByChar({
+    where: {
+      column: "name",
+      operator: "FTS",
+      value: `${char}`,
+    },
+  });
+
+  return teamData.paginate_team.data;
+};
+
 const getMy = async (author_id) => {
   const { data: teamsData } = await refetchMyTeams({
     where: {
@@ -179,6 +209,7 @@ const teamApi = {
   getAll,
   getMy,
   checkStatus,
+  checkChar,
 };
 
 export default teamApi;
