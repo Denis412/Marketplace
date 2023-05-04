@@ -3,7 +3,7 @@
     class="c-input-outline"
     outlined
     v-model="value"
-    @update:modelValue="emitChange"
+    @update:model-value="emitChange"
     :type="calcType"
     :autogrow="autogrow"
     :placeholder="placeholder"
@@ -73,6 +73,7 @@ const toggleShowText = () => {
 
 const emitChange = (targetValue) => {
   let text = targetValue;
+  console.log(targetValue);
 
   if (modelModifiers.capitalize) text = capitalizeWord(text);
 

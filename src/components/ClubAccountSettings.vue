@@ -83,24 +83,6 @@
         @confirm="deletePhoto"
         @cancel="toggleIsDeletePhoto"
       />
-      <!--
-      <q-dialog v-model="isDeletePhoto">
-        <q-card class="confirm-delete">
-          <q-card-section class="text-body2 confirm-delete-content">
-            Вы действительно хотите удалить фото?
-          </q-card-section>
-
-          <q-card-section class="flex justify-end c-mt-32">
-            <c-button background label="Да" @click="deletePhoto" />
-            <c-button
-              outline
-              label="Отмена"
-              class="c-ml-32"
-              @click="toggleIsDeletePhoto"
-            />
-          </q-card-section>
-        </q-card>
-      </q-dialog> -->
     </main>
 
     <footer></footer>
