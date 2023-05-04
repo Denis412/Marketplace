@@ -51,7 +51,7 @@ const { refetch: refetchAllTeams } = useQuery(
   }
 );
 
-const { refetch: refetchMyTeams } = useQuery(
+const { refetch: refetchingMyTeams } = useQuery(
   getMyTeams,
   {},
   {
@@ -86,6 +86,18 @@ const getAll = async () => {
   return teamsData.paginate_team.data;
 };
 
+const refetchMyTeams = async (author_id) => {
+  const { data: teamsData } = await refetchingMyTeams({
+    where: {
+      column: "author_id",
+      operator: "EQ",
+      value: `${author_id}`,
+    },
+  });
+
+  return teamsData.paginate_team.data;
+};
+
 const create = async ({ name, description }) => {
   const { data: spaceData } = await creatingSpace({
     input: {
@@ -101,6 +113,8 @@ const create = async ({ name, description }) => {
       space: `${spaceData.spaceCreate.recordId}`,
     },
   });
+
+  refetchMyTeams(teamData.create_team.record.author_id);
 
   return teamData.create_team.record.id;
 };
@@ -129,16 +143,24 @@ const checkName = async ({ name }) => {
   return teamData.paginate_team.paginatorInfo.count == 0;
 };
 
-const getMy = async (author_id) => {
-  const { data: teamsData } = await refetchMyTeams({
-    where: {
-      column: "author_id",
-      operator: "EQ",
-      value: `${author_id}`,
+const queryMyTeams = (author_id) => {
+  return useQuery(
+    getMyTeams,
+    {
+      where: {
+        column: "author_id",
+        operator: "EQ",
+        value: `${author_id}`,
+      },
     },
-  });
-
-  return teamsData.paginate_team.data;
+    {
+      context: {
+        headers: {
+          space: process.env.MAIN_SPACE_ID,
+        },
+      },
+    }
+  );
 };
 
 const teamApi = {
@@ -146,7 +168,8 @@ const teamApi = {
   update,
   checkName,
   getAll,
-  getMy,
+  refetchingMyTeams,
+  queryMyTeams,
 };
 
 export default teamApi;

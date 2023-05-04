@@ -46,7 +46,7 @@ const routes = [
       {
         path: "teams/my-teams",
         name: "my-teams",
-        component: () => import("pages/ClubMyTeams.vue"),
+        component: () => import("src/pages/ClubMyTeamsPage.vue"),
       },
 
       //тестовые роуты
