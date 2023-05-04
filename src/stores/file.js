@@ -27,6 +27,7 @@ export const useFileStore = defineStore('file', {
 
     SET_CURRENT_TITLE_DOC(value) {
       this.currentTitleDoc = value
+      console.log(this.currentTitleDoc)
     },
 
     SET_CURRENT_EDITOR_VALUE(value) {

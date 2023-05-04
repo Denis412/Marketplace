@@ -12,28 +12,31 @@
       class="text-h3 q-mb-sm col-12"
       id="id"
       placeholder="Придумайте название документа"
-      v-model="titleDocument"
+      v-model="vModelTitleDocument"
     />
   </div>
 </template>
 
 <script setup>
 import { data } from "src/utils/documentData";
-import { ref, watch } from "vue";
-
-const props = defineProps({
-  titleDocument: String,
-});
+import { ref, watch, computed } from "vue";
+import { useFileStore } from "src/stores/file";
+const storeFile = useFileStore();
 
 const path = "Главная/Сайт с каталогом/Без названия"; //Placeholder
 const date = new Date();
 const day = date.getDate();
 const month = data.monthNames[date.getMonth()];
 const year = date.getFullYear();
-const titleDocument = ref();
+const titleDocument = computed(() => storeFile.currentTitleDoc);
+const vModelTitleDocument = ref();
 
-watch(props, () => {
-  titleDocument.value = props.titleDocument;
+watch(titleDocument, () => {
+  vModelTitleDocument.value = titleDocument.value;
+});
+
+watch(vModelTitleDocument, () => {
+  storeFile.currentTitleDoc = vModelTitleDocument.value;
 });
 </script>
 

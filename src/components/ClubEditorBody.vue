@@ -66,8 +66,6 @@ import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import { filesApi } from "src/sdk/files/file";
 import { data } from "src/utils/documentData";
 
-const titleDocument = ref("");
-
 const route = useRoute();
 const router = useRouter();
 const storeFile = useFileStore();
@@ -79,7 +77,6 @@ const foreColor = ref("#000000");
 const highlight = ref("#ffff00aa");
 const FILES = computed(() => storeFile.GET_FILES);
 const previousRout = ref("d");
-const emit = defineEmits(["update:titleDocument"]);
 
 const color = (cmd, name) => {
   token._value.hide();
@@ -88,31 +85,29 @@ const color = (cmd, name) => {
   edit._value.focus();
 };
 
-watch(titleDocument, () => {
-  emit("update:titleDocument", titleDocument.value);
-});
-
 watch(route, async () => {
   if (!previousRout.value && editor.value) {
     filesApi.createHtmlFile(
       editor.value,
-      titleDocument.value ? titleDocument.value : "Unknown"
+      storeFile.currentTitleDoc ? storeFile.currentTitleDoc : "Unknown"
     );
   }
 
   if (route.params.id && FILES.value.length) {
-    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
+    storeFile.SET_CURRENT_TITLE_DOC(
+      FILES.value[route.params.id].name.slice(0, -5)
+    );
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
-      FILES.value[route.params.id].name
+      FILES.value[route.params.id].name,
+      FILES.value[route.params.id].extension
     );
 
-    storeFile.SET_CURRENT_TITLE_DOC(titleDocument.value);
     storeFile.SET_CURRENT_EDITOR_VALUE(editor.value);
   } else {
     editor.value = "";
-    titleDocument.value = "";
+    storeFile.SET_CURRENT_TITLE_DOC("");
   }
 
   previousRout.value = route.params.id;
@@ -120,8 +115,9 @@ watch(route, async () => {
 
 onMounted(async () => {
   if (route.params.id && FILES.value.length) {
-    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
-
+    storeFile.SET_CURRENT_TITLE_DOC(
+      FILES.value[route.params.id].name.slice(0, -5)
+    );
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
@@ -133,7 +129,7 @@ onMounted(async () => {
 
 onBeforeMount(() => {
   editor.value = "";
-  titleDocument.value = "";
+  storeFile.SET_CURRENT_TITLE_DOC("");
   router.push("/club/addDocument");
 });
 </script>
