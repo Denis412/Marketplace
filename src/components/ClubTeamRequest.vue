@@ -3,7 +3,7 @@
     <h4 class="text-h4 club-mb-16">{{ title }}</h4>
 
     <div v-if="requests.length">
-      <c-my-team
+      <c-team-card
         v-for="request in requests"
         :key="request.id"
         :team="request"
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import CMyTeam from "src/components/ClubMyTeam.vue";
+import CTeamCard from "src/components/ClubTeamCard.vue";
 
 const { title, requests } = defineProps({
   title: String,
