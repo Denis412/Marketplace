@@ -9,21 +9,13 @@
         <c-add-buttons v-if="myTeams.paginate_team.data.length" />
       </div>
 
-      <div
-        v-if="myTeams.paginate_team.data.length"
-        class="row c-mb-32 q-col-gutter-lg"
-      >
-        <section
-          class="col-6"
-          v-for="team in myTeams.paginate_team.data"
-          :key="team.id"
-        >
-          <c-my-team :team="team" />
-        </section>
-      </div>
+      <div>
+        <c-team-card-list
+          v-if="myTeams.paginate_team.data.length"
+          :teams="myTeams.paginate_team.data"
+        />
 
-      <div v-else>
-        <c-not-found-teams />
+        <c-not-found-teams v-else />
       </div>
 
       <c-team-request :title="'Входящие заявки'" :requests="requestsIn" />
@@ -34,7 +26,7 @@
 
 <script setup>
 import { ref } from "vue";
-import CMyTeam from "src/components/ClubMyTeam.vue";
+import CTeamCardList from "src/components/ClubTeamCardList.vue";
 import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
 import CTeamRequest from "src/components/ClubTeamRequest.vue";
 import CAddButtons from "src/components/ClubTeamAddButtons.vue";

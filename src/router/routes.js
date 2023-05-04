@@ -65,11 +65,6 @@ const routes = [
         name: "space",
         component: () => import("pages/ErrorNotFound.vue"),
       },
-      {
-        path: "search-team",
-        name: "search-team",
-        component: () => import("pages/ClubSearchTeamsPage.vue"),
-      },
     ],
   },
 
