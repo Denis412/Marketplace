@@ -7,7 +7,7 @@
       <q-img
         class="image c-mt-16"
         :src="
-          team.avatar.length
+          team.avatar?.length
             ? `/src/assets/images/${team.avatar}`
             : '/src/assets/images/TeamPlaceholder.png'
         "

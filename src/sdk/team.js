@@ -65,9 +65,28 @@ const { refetch: refetchMyTeams } = useQuery(
 
 const { refetch: refetchTeams } = useQuery(
   filterTeamsName,
+  {},
   {
     where: {
       column: "name",
+      operator: "EQ",
+      value: "",
+    },
+  },
+  {
+    context: {
+      headers: {
+        space: process.env.MAIN_SPACE_ID,
+      },
+    },
+  }
+);
+
+const { refetch: refetchFilterTeams } = useQuery(
+  filterTeamsName,
+  {
+    where: {
+      column: "status",
       operator: "EQ",
       value: "",
     },
@@ -129,6 +148,18 @@ const checkName = async ({ name }) => {
   return teamData.paginate_team.paginatorInfo.count == 0;
 };
 
+const checkStatus = async (status) => {
+  const { data: teamData } = await refetchFilterTeams({
+    where: {
+      column: "status",
+      operator: "EQ",
+      value: `${status}`,
+    },
+  });
+
+  return teamData.paginate_team.data;
+};
+
 const getMy = async (author_id) => {
   const { data: teamsData } = await refetchMyTeams({
     where: {
@@ -147,6 +178,7 @@ const teamApi = {
   checkName,
   getAll,
   getMy,
+  checkStatus,
 };
 
 export default teamApi;

@@ -8,6 +8,8 @@
       <c-input class="col-5" />
 
       <q-select
+        v-model="team_status"
+        @update:model-value="emit('filterTeamList', team_status)"
         outlined
         :options="filterOptions"
         label="Фильтрация"
@@ -21,7 +23,11 @@
 import { ref } from "vue";
 import CInput from "./ClubInput.vue";
 
+const emit = defineEmits(['filterTeamList'])
+
 const filterOptions = ref(["Готовы к заказам", "Не готовы к заказам"]);
+const team_status = ref("")
+
 </script>
 
 <style scoped lang="scss">
