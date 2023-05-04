@@ -81,7 +81,7 @@ const { refetch: refetchTeams } = useQuery(
   }
 );
 
-const getAll = async () => {
+const getAllTeams = async () => {
   const { data: teamsData } = await refetchAllTeams();
   return teamsData.paginate_team.data;
 };
@@ -167,7 +167,7 @@ const teamApi = {
   create,
   update,
   checkName,
-  getAll,
+  getAllTeams,
   refetchingMyTeams,
   queryMyTeams,
 };

@@ -9,21 +9,21 @@
         <c-add-buttons v-if="myTeams.paginate_team.data.length" />
       </div>
 
-      <div>
-        <div
-          v-if="myTeams.paginate_team.data.length"
-          class="flex club-mb-32 q-gutter-lg"
+      <div
+        v-if="myTeams.paginate_team.data.length"
+        class="row c-mb-32 q-col-gutter-lg"
+      >
+        <section
+          class="col-6"
+          v-for="team in myTeams.paginate_team.data"
+          :key="team.id"
         >
-          <c-my-team
-            v-for="team in myTeams.paginate_team.data"
-            :key="team.id"
-            :team="team"
-          />
-        </div>
+          <c-my-team :team="team" />
+        </section>
+      </div>
 
-        <div v-else>
-          <c-not-found-teams />
-        </div>
+      <div v-else>
+        <c-not-found-teams />
       </div>
 
       <c-team-request :title="'Входящие заявки'" :requests="requestsIn" />
