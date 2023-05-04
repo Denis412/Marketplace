@@ -63,16 +63,10 @@
 import { computed, ref, watch, onMounted, onBeforeMount } from "vue";
 import { useFileStore } from "src/stores/file";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
-import { filesApi } from "src/sdk/file";
+import { filesApi } from "src/sdk/files/file";
 import { data } from "src/utils/documentData";
 
 const titleDocument = ref("");
-
-const emit = defineEmits(["update:titleDocument"]);
-
-watch(titleDocument, () => {
-  emit("update:titleDocument", titleDocument.value);
-});
 
 const route = useRoute();
 const router = useRouter();
@@ -85,6 +79,7 @@ const foreColor = ref("#000000");
 const highlight = ref("#ffff00aa");
 const FILES = computed(() => storeFile.GET_FILES);
 const previousRout = ref("d");
+const emit = defineEmits(["update:titleDocument"]);
 
 const color = (cmd, name) => {
   token._value.hide();
@@ -92,6 +87,10 @@ const color = (cmd, name) => {
   edit._value.runCmd(cmd, name);
   edit._value.focus();
 };
+
+watch(titleDocument, () => {
+  emit("update:titleDocument", titleDocument.value);
+});
 
 watch(route, async () => {
   if (!previousRout.value && editor.value) {

@@ -23,9 +23,13 @@
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
-            <q-icon @click="addDocument" v-if="item.title == 'Лендинг'" name="add" class="addDoc"/>
+            <q-icon
+              @click="addDocument"
+              v-if="item.title == 'Лендинг'"
+              name="add"
+              class="addDoc"
+            />
           </div>
-          
         </router-link>
 
         <c-qtabs-document v-if="item.title == 'Лендинг'" />
@@ -46,7 +50,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/q-tabs/ClubQtabsDocument.vue";
-import { filesApi } from "src/sdk/file";
+import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
   side: String,
@@ -100,7 +104,6 @@ const toggleDrawer = () => {
 
 const addDocument = () => {
   filesApi.createHtmlFile();
-
 };
 
 const isActive = (path) => {
@@ -164,7 +167,7 @@ const isActive = (path) => {
 .rotate {
   transform: rotate(-180deg);
 }
-.addDoc{
+.addDoc {
   padding-left: 5rem;
 }
 </style>

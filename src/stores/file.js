@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { useQuery } from '@vue/apollo-composable'
-import { getFiles } from 'src/graphql/files/queries'
+import { onResult, refetch } from 'src/sdk/files/fileQuery'
 
 export const useFileStore = defineStore('file', {
   id: 'file',
@@ -19,16 +18,11 @@ export const useFileStore = defineStore('file', {
 
   actions: {
     SET_FILES() {
-      try {
-        const { onResult, refetch } = useQuery(getFiles)
-        onResult((queryResult) => {
-          this.files = queryResult.data['paginate_file'].data
-          this.refetchFiles = refetch
-          console.log(queryResult.data['paginate_file'].data)
-        })
-      } catch (e) {
-        console.log('Ошибка:', e)
-      }
+      onResult((queryResult) => {
+        this.files = queryResult.data['paginate_file'].data
+        this.refetchFiles = refetch
+        console.log(queryResult.data['paginate_file'].data)
+      })
     },
 
     SET_CURRENT_TITLE_DOC(value) {

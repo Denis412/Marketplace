@@ -12,13 +12,14 @@
       class="text-h3 q-mb-sm col-12"
       id="id"
       placeholder="Придумайте название документа"
-      v-model="props.titleDocument"
+      v-model="titleDocument"
     />
   </div>
 </template>
 
 <script setup>
 import { data } from "src/utils/documentData";
+import { ref, watch } from "vue";
 
 const props = defineProps({
   titleDocument: String,
@@ -29,6 +30,11 @@ const date = new Date();
 const day = date.getDate();
 const month = data.monthNames[date.getMonth()];
 const year = date.getFullYear();
+const titleDocument = ref();
+
+watch(props, () => {
+  titleDocument.value = props.titleDocument;
+});
 </script>
 
 <style lang="scss" scoped>
