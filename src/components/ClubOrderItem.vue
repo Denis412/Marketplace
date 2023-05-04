@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <q-page class="q-pa-md">
-      <q-card class="oItem">
+      <q-card class="oItem" >
         <q-card-section class="oNum">
           {{ item.number }}
         </q-card-section>
@@ -9,6 +9,7 @@
           {{ item.name }}
         </q-card-section>
         <q-card-section class="oState">
+          <div class="oStateIndicator" :style="{ backgroundColor: item.color }"></div>
           {{ item.state }}
         </q-card-section>
         <q-card-section class="oDateUpdate">
@@ -21,7 +22,7 @@
           <img src="../assets/icons/orderIcons/wait.png" alt="img">
         </q-card-section>
         <q-card-section class="oEdit">
-          <button><img src="../assets/icons/orderIcons/tripleDot.png" alt="img"></button>
+          <a href="#"><img src="../assets/icons/orderIcons/tripleDot.png" alt="img"></a>
         </q-card-section>
       </q-card>
     </q-page>
@@ -44,7 +45,6 @@ const { item } = defineProps({
   max-height: 140px;
 }
 .oItem{
-  background-color: #DFD1F6;
   width: 1109px;
   display: flex;
   justify-content:space-between;
@@ -60,5 +60,12 @@ const { item } = defineProps({
 }
 .oName{
   max-width: 165px;
+}
+.oStateIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
 }
 </style>
