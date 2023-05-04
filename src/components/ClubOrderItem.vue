@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <q-page class="q-pa-md">
+    <q-page class="qPage">
       <q-card class="oItem" >
         <q-card-section class="oNum">
           {{ item.number }}
@@ -42,7 +42,10 @@ const { item } = defineProps({
 
 <style scoped>
 .item{
-  max-height: 140px;
+  padding: 10px;
+}
+.qPage{
+  min-height: 70px !important;
 }
 .oItem{
   width: 1109px;
