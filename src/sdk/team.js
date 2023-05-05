@@ -177,7 +177,7 @@ const checkStatus = async (status) => {
     where: {
       column: "ready_for_orders",
       operator: "EQ",
-      value: `${status}`,
+      value: status.value,
     },
   });
 

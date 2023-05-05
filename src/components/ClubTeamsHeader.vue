@@ -37,7 +37,18 @@ import { ref } from "vue";
 
 const emit = defineEmits(["filterTeamStatus", "filterTeamName"]);
 
-const filterOptions = ref(["Готовы к заказам", "Не готовы к заказам"]);
+const filterOptions = ref([
+  {
+    label: "Готовы к заказам",
+    value: true,
+  },
+  {
+    label: "Не готовы к заказам",
+    value: false,
+  },
+]);
+
+// "Готовы к заказам", "Не готовы к заказам"
 const team_status = ref("");
 const search_team_name = ref("");
 </script>
