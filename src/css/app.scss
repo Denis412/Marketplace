@@ -59,6 +59,10 @@
 
   &-main {
     min-height: 84px;
+
+    .q-toolbar {
+      padding: 0;
+    }
   }
 }
 

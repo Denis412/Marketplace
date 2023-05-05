@@ -18,6 +18,7 @@ import { convertSubject, convertUserData } from "src/utils/subject";
 import apolloClient from "src/apollo/apollo-client";
 import tokenApi from "./token";
 import filesApi from "./file";
+import { createSpace } from "src/graphql/space/mutations";
 
 provideApolloClient(apolloClient);
 
@@ -30,6 +31,7 @@ const { refetch: refetchSubject } = useQuery(getSubject, {
   },
 });
 
+const { mutate: creatingSpace } = useMutation(createSpace);
 const { mutate: signUp } = useMutation(userSignUp);
 const { mutate: signIn } = useMutation(userSignIn, {
   context: {
@@ -102,6 +104,13 @@ const registration = async ({ name, surname, email }) => {
       email,
     },
   });
+
+  // const { data: spaceData } = await createSpace({
+  //   input: {
+  //     name,
+  //     description: surname,
+  //   },
+  // });
 
   return userInfo.userSignUp;
 };

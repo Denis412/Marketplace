@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-img
         class="logo-header"
-        src="src/assets/images/LogologoSprint.svg"
+        src="/src/assets/images/LogoWhite.svg"
         alt="logo"
       />
 

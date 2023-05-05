@@ -36,11 +36,11 @@ const projects = ref([
   },
   {
     id: 2,
-    name: "Проект1",
+    name: "Проект2",
   },
   {
     id: 3,
-    name: "Проект1",
+    name: "Проект3",
   },
 ]);
 
@@ -48,8 +48,10 @@ const userStore = useUserStore();
 
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
 const isOwner = computed(() => currentUser.value.subject_id === team.author_id);
+// const isMember = computed(() => currentUser.subject_id === team.members[0].id);
 
 provide("isOwner", isOwner);
+// provide("isMember", isMember);
 </script>
 
 <style scoped lang="scss"></style>

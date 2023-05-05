@@ -1,7 +1,8 @@
 <template>
-  <q-header class="header-main flex flex-center bg-dark-purple">
+  <q-header class="header-main flex flex-center bg-dark-purple c-px-32">
     <q-toolbar>
-      <q-toolbar-title> 1Т Клуб </q-toolbar-title>
+      <q-img class="logo" src="/src/assets/images/LogoWhite.svg" alt="logo" />
+      <q-toolbar-title class="text-h3"> Клуб </q-toolbar-title>
 
       <div class="relative-position">
         <q-avatar
@@ -48,6 +49,10 @@ const toggleShowIconMenu = () => {
 </script>
 
 <style scoped lang="scss">
+.logo {
+  max-width: 40px;
+}
+
 .slide-enter-from,
 .slide-leave-to {
   transform: translateX(300px);

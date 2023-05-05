@@ -1,6 +1,7 @@
 <template>
   <q-layout view="hHh LpR lff">
-    <c-landing-main-header />
+    <c-landing-main-header v-if="!currentUser" />
+    <c-main-header v-else />
 
     <q-page-container>
       <router-view v-slot="{ Component }">
@@ -16,7 +17,14 @@
 
 <script setup>
 import CLandingMainHeader from "components/Landing/ClubLandingMainHeader.vue";
+import CMainHeader from "src/components/ClubMainHeader.vue";
 import CMainFooter from "components/Landing/ClubMainFooter.vue";
+import { useUserStore } from "src/stores/user";
+import { computed } from "vue";
+
+const userStore = useUserStore();
+
+const currentUser = computed(() => userStore.GET_CURRENT_USER);
 </script>
 
 <style lang="scss"></style>
