@@ -29,16 +29,17 @@
 
 <script setup>
 import CButton from "src/components/ClubButton.vue";
+import teamApi from "src/sdk/team";
 import router from "../router";
 
 const { team } = defineProps({
   team: Object,
 });
 
-const to = () => {
+const to = async () => {
   router.push({
     name: "team",
-    params: { id: 1 },
+    params: { name: team.name },
   });
 };
 </script>

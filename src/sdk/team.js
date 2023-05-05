@@ -39,7 +39,7 @@ const { mutate: updatingTeam } = useMutation(teamUpdate, {
   },
 });
 
-const { refetch: refetchAllTeams } = useQuery(
+const { refetch: refetchingAllTeams } = useQuery(
   getTeams,
   {},
   {
@@ -118,8 +118,9 @@ const { refetch: refetchFilterTeamsByChar } = useQuery(
   }
 );
 
-const getAllTeams = async () => {
-  const { data: teamsData } = await refetchAllTeams();
+const refetchAllTeams = async () => {
+  const { data: teamsData } = await refetchingAllTeams();
+
   return teamsData.paginate_team.data;
 };
 
@@ -214,6 +215,38 @@ const queryAllTeams = () => {
   );
 };
 
+const queryTeamByName = (name) => {
+  return useQuery(
+    getMyTeams,
+    {
+      where: {
+        column: "name",
+        operator: "EQ",
+        value: `${name}`,
+      },
+    },
+    {
+      context: {
+        headers: {
+          space: process.env.MAIN_SPACE_ID,
+        },
+      },
+    }
+  );
+};
+
+const refetchTeamByName = async (name) => {
+  const { data: teamData } = await refetchingMyTeams({
+    where: {
+      column: "name",
+      operator: "EQ",
+      value: `${name}`,
+    },
+  });
+
+  return teamData.paginate_team.data[0];
+};
+
 const checkStatus = async (status) => {
   const { data: teamData } = await refetchFilterTeams({
     where: {
@@ -242,11 +275,14 @@ const teamApi = {
   create,
   update,
   checkName,
-  getAllTeams,
-  refetchingMyTeams,
+  refetchAllTeams,
   queryMyTeams,
   queryAllTeams,
   checkStatus,
+  queryTeamByName,
+  refetchMyTeams,
+  refetchAllTeams,
+  refetchTeamByName,
   checkChar,
 };
 

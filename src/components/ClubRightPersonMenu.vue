@@ -6,11 +6,11 @@
       </q-avatar>
 
       <div class="text-body2 text-violet-6 q-mt-md">
-        {{ currentUser.first_name }} {{ currentUser.last_name }}
+        {{ currentUser?.first_name }} {{ currentUser?.last_name }}
       </div>
 
       <div class="text-caption1 text-violet-6 q-mt-sm c-mb-20">
-        {{ currentUser.email }}
+        {{ currentUser?.email }}
       </div>
     </q-card-section>
 
@@ -82,6 +82,8 @@ const toAccountSettings = () => {
 };
 
 const logout = () => {
+  isExit.value = false;
+
   userApi.logout();
   stompApi.disconnect();
   userStore.LOGOUT_CURRENT_USER();

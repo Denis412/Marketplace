@@ -33,7 +33,7 @@
           />
         </div>
 
-        <q-list class="c-mt-32 q-gutter-sm text-caption1">
+        <q-list v-if="directions" class="c-mt-32 q-gutter-sm text-caption1">
           <c-button
             outline
             v-for="direction in directions"

@@ -8,7 +8,8 @@
         @filter-team-status="teamListByStatus"
         @filter-team-name="teamListByChar"
       />
-      <c-team-card-list :teams="currentTeams" />
+
+      <c-team-card-list :teams="filteredTeams ?? teams.paginate_team.data" />
     </div>
   </q-page>
 </template>
@@ -20,16 +21,18 @@ import { ref, watch } from "vue";
 import teamApi from "src/sdk/team";
 
 const { result: teams, loading } = teamApi.queryAllTeams();
-const currentTeams = ref([]);
+const filteredTeams = ref(null);
 
 const teamListByStatus = async (new_status) => {
-  currentTeams.value = await teamApi.checkStatus(new_status);
+  filteredTeams.value = await teamApi.checkStatus(new_status);
 };
 
 const teamListByChar = async (char) => {
   try {
-    currentTeams.value =
-      char !== "" ? await teamApi.checkChar(char) : await teamApi.getAllTeams();
+    filteredTeams.value =
+      char !== ""
+        ? await teamApi.checkChar(char)
+        : await teamApi.refetchAllTeams();
   } catch (error) {
     console.log(error);
   }
@@ -38,7 +41,7 @@ const teamListByChar = async (char) => {
 watch(loading, (value) => {
   if (value) return;
 
-  currentTeams.value = teams.value?.paginate_team.data;
+  filteredTeams.value = teams.value?.paginate_team.data;
 });
 </script>
 

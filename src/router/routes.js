@@ -3,7 +3,6 @@ import userApi from "src/sdk/user";
 const routes = [
   {
     path: "/",
-
     component: () => import("layouts/ClubLandingLayout.vue"),
     children: [
       {
@@ -17,6 +16,7 @@ const routes = [
     path: "/club",
     name: "club",
     component: () => import("layouts/ClubMainLayout.vue"),
+    meta: { requiresAuth: true },
     children: [
       {
         path: "account",
@@ -24,12 +24,12 @@ const routes = [
         component: () => import("pages/ClubAccountSettingsPage.vue"),
       },
       {
-        path: "team/:id",
+        path: "team/:name",
         name: "team",
         component: () => import("pages/ClubTeamPage.vue"),
       },
       {
-        path: "team/:id/invite",
+        path: "team/:name/invite",
         name: "teamInvite",
         component: () => import("pages/ClubTeamInvitePage.vue"),
       },

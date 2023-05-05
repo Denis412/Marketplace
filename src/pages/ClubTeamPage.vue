@@ -1,111 +1,28 @@
 <template>
   <q-page class="c-pa-32">
-    <c-team-profile :team="team" />
+    <div v-if="loadingRefetch" class="loader loader-lg"></div>
+
+    <c-team-profile v-else :team="currentTeam" />
   </q-page>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onUpdated, ref } from "vue";
 import CTeamProfile from "src/components/ClubTeamProfile.vue";
+import teamApi from "src/sdk/team";
+import { useRoute } from "vue-router";
 
-const team = ref({
-  title: "Крутые перцы",
-  description:
-    "Наша команда делает сервис, где человек смог бы следить за своим развитием в каждой из сфер жизни.Наша команда делает сервис, где человек смог бы следить за своим развитием в каждой из сфер жизниghhhh",
-  directions: [
-    { id: 1, title: "Дизайн" },
-    { id: 2, title: "Разработка сайтов" },
-    { id: 3, title: "Лендинги" },
-    { id: 4, title: "Аналитика данных" },
-    { id: 5, title: "Лендинги" },
-    { id: 6, title: "Дизайн" },
-    { id: 7, title: "Аналитика данных" },
-    { id: 8, title: "Лендинги" },
-  ],
-  developers: [
-    {
-      id: 1,
-      first_name: "Денис",
-      last_name: "Малышев",
-      speciality: "Лид",
-    },
-    {
-      id: 2,
-      first_name: "Артем",
-      last_name: "Янин",
-      speciality: "Участник",
-    },
-  ],
-  designers: [
-    {
-      id: 1,
-      first_name: "Даниил",
-      last_name: "Шашкин",
-      speciality: "Участник",
-    },
-    {
-      id: 2,
-      first_name: "Марьям",
-      last_name: "Агзамова",
-      speciality: "Участник",
-    },
-  ],
-  managers: [
-    {
-      id: 1,
-      first_name: "Аделина",
-      last_name: "Саулян",
-      speciality: "Участник",
-    },
-    {
-      id: 2,
-      first_name: "Виктория",
-      last_name: "Харсева",
-      speciality: "Участник",
-    },
-  ],
-  marketers: [
-    {
-      id: 1,
-      first_name: "Лада",
-      last_name: "Усольцева",
-      speciality: "Участник",
-    },
-    {
-      id: 2,
-      first_name: "Евгений",
-      last_name: "Медведев",
-      speciality: "Участник",
-    },
-  ],
-  analitics: [
-    {
-      id: 1,
-      first_name: "Григорий",
-      last_name: "Ордин",
-      speciality: "Участник",
-    },
-    {
-      id: 2,
-      first_name: "Давид",
-      last_name: "Акапян",
-      speciality: "Участник",
-    },
-  ],
-  customers: [
-    {
-      id: 1,
-      first_name: "Алексей",
-      last_name: "Мыльников",
-      speciality: "Участник",
-    },
-    {
-      id: 2,
-      first_name: "Александра",
-      last_name: "Качаева",
-      speciality: "Участник",
-    },
-  ],
+const route = useRoute();
+
+const loadingRefetch = ref(true);
+const currentTeam = ref(null);
+
+onUpdated(async () => {
+  loadingRefetch.value = true;
+
+  currentTeam.value = await teamApi.refetchTeamByName(route.params.name);
+
+  loadingRefetch.value = false;
 });
 </script>
 

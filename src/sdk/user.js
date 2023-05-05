@@ -170,7 +170,7 @@ const login = async ({ login, password }, recovery = false) => {
     },
   });
 
-  const userData = recovery ? null : saveUserData(userInfo);
+  const userData = recovery ? null : await saveUserData(userInfo);
 
   return userData?.user;
 };

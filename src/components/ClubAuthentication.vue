@@ -102,8 +102,10 @@ const authorization = async () => {
 
     store.SET_CURRENT_USER();
 
-    router.push({
-      name: "club",
+    console.log("store", store.GET_CURRENT_USER);
+
+    await router.push({
+      path: "/club",
     });
   } catch (error) {
     console.log(error);

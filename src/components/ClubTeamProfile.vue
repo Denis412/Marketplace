@@ -4,15 +4,14 @@
       <h3 class="text-h3">Профиль команды</h3>
     </header>
 
-    <main class="c-mt-24">
+    <main v-if="team" class="c-mt-24">
       <c-team-profile-header
-        :title="team.title"
+        :title="team.name"
         :description="team.description"
-        :directions="team.directions"
       />
 
-      <c-team-profile-projects :projects="team.projects" />
-      <c-team-profile-members :team="team" />
+      <!-- <c-team-profile-projects :projects="team?.projects" /> -->
+      <!-- <c-team-profile-members :team="team" /> -->
     </main>
   </section>
 </template>
