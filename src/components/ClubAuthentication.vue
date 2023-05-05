@@ -104,7 +104,7 @@ import CConfirmationCodeDialog from "./ClubConfirmationCodeDialog.vue";
 import CEditPasswordDialog from "src/components/ClubEditPasswordDialog.vue";
 import userApi from "src/sdk/user";
 import { useTimer } from "src/use/timer";
-import { filesApi } from "src/sdk/file";
+import { filesApi } from "src/sdk/files/file";
 
 const files = ref(null);
 

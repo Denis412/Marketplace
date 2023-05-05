@@ -63,15 +63,8 @@
 import { computed, ref, watch, onMounted, onBeforeMount } from "vue";
 import { useFileStore } from "src/stores/file";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
-import { filesApi, data } from "src/sdk/file";
-
-const titleDocument = ref("");
-
-const emit = defineEmits("update:titleDocument");
-
-watch(titleDocument, () => {
-  emit("update:titleDocument", titleDocument.value);
-});
+import { filesApi } from "src/sdk/files/file";
+import { data } from "src/utils/documentData";
 
 const route = useRoute();
 const router = useRouter();
@@ -94,23 +87,27 @@ const color = (cmd, name) => {
 
 watch(route, async () => {
   if (!previousRout.value && editor.value) {
-    console.log(1);
     filesApi.createHtmlFile(
       editor.value,
-      titleDocument.value ? titleDocument.value : "Unknown"
+      storeFile.currentTitleDoc ? storeFile.currentTitleDoc : "Unknown"
     );
   }
 
   if (route.params.id && FILES.value.length) {
-    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
+    storeFile.SET_CURRENT_TITLE_DOC(
+      FILES.value[route.params.id].name.slice(0, -5)
+    );
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
-      FILES.value[route.params.id].name
+      FILES.value[route.params.id].name,
+      FILES.value[route.params.id].extension
     );
+
+    storeFile.SET_CURRENT_EDITOR_VALUE(editor.value);
   } else {
     editor.value = "";
-    titleDocument.value = "";
+    storeFile.SET_CURRENT_TITLE_DOC("");
   }
 
   previousRout.value = route.params.id;
@@ -118,19 +115,21 @@ watch(route, async () => {
 
 onMounted(async () => {
   if (route.params.id && FILES.value.length) {
-    titleDocument.value = FILES.value[route.params.id].name.slice(0, -5);
-
+    storeFile.SET_CURRENT_TITLE_DOC(
+      FILES.value[route.params.id].name.slice(0, -5)
+    );
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
-      FILES.value[route.params.id].name
+      FILES.value[route.params.id].name,
+      FILES.value[route.params.id].extension
     );
   }
 });
 
 onBeforeMount(() => {
   editor.value = "";
-  titleDocument.value = "";
+  storeFile.SET_CURRENT_TITLE_DOC("");
   router.push("/club/addDocument");
 });
 </script>
