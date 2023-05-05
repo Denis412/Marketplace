@@ -5,7 +5,16 @@
       <q-item-section>Открыть</q-item-section>
     </q-item>
 
-    <q-item class="popup-component" clickable>
+    <q-item
+      @click="
+        filesApi.createHtmlFile(
+          storeFile.currentEditorValue,
+          storeFile.currentTitleDoc
+        )
+      "
+      class="popup-component"
+      clickable
+    >
       <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
       <q-item-section>Дублировать</q-item-section>
     </q-item>
@@ -31,10 +40,13 @@
 
 <script setup>
 import { ref } from "vue";
-import { filesApi } from "src/sdk/file";
+import { filesApi } from "src/sdk/files/file";
 import CDeleteDialogDocument from "./ClubDeleteDialogDocument.vue";
 import CRenameItemDocument from "./ClubRenameItemDocument.vue";
 import { useRouter } from "vue-router";
+import { useFileStore } from "src/stores/file";
+
+const storeFile = useFileStore();
 
 const router = useRouter();
 

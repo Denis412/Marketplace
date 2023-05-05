@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { filesApi } from "src/sdk/file";
+import { filesApi } from "src/sdk/files/file";
 import { ref } from "vue";
 
 const props = defineProps({
