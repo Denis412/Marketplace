@@ -1,70 +1,29 @@
 <template>
-  <div>
-    <q-tabs
-      class="row no-wrap q-pl-lg drawer-item"
-      indicator-color="transparent"
-      v-for="(doc, index) in FILES"
-      :key="doc.id"
-      align="left"
-    >
-      <q-route-tab>
-        <div class="item_doc" @contextmenu.prevent="showMenu(index)">
-          <img
-            :src="`/src/assets/icons/file/file-grey.svg`"
-            alt=""
-            class="q-pr-md"
-          />
-          <router-link
-            class="item_doc link"
-            :to="{
-              name: 'Document',
-              params: { id: `${index}` },
-            }"
-          >
-            {{
-              doc.name.replace(".html", "").length > 10
-                ? doc.name.replace(".html", "").slice(0, 10) + "..."
-                : doc.name.replace(".html", "")
-            }}
-          </router-link>
-          <div class="menu-wrapper" clickable>
-            <q-btn icon="more_vert" @click.stop="showMenu(index)" />
-          </div>
-        </div>
-      </q-route-tab>
-    </q-tabs>
-    <q-menu v-model="menuShow">
-      <c-qmenu-document
-        :prop_clicked_index_doc="clickedIndex"
-        :prop_doc="FILES[clickedIndex]"
-      />
-    </q-menu>
-  </div>
+  <q-tabs
+    class="row no-wrap q-pl-lg drawer-item"
+    indicator-color="transparent"
+    v-for="(doc, index) in FILES"
+    :key="doc.id"
+    align="left"
+  >
+    <q-tabs-item :doc="doc" :index="index" />
+  </q-tabs>
 </template>
 
 <script setup>
 import { computed, watch, ref } from "vue";
 import { useFileStore } from "src/stores/file";
-import CQmenuDocument from "./ClubQmenuDocument.vue";
+
+import QTabsItem from './ClubQtabsItemComponent.vue';
 
 const storeFile = useFileStore();
 const FILES = computed(() => storeFile.GET_FILES);
 
 let showDialog = ref(false);
-const menuShow = ref(false);
-const clickedIndex = ref(null);
-
-const showMenu = (index) => {
-  clickedIndex.value = index;
-  menuShow.value = !menuShow.value;
-};
+const tab = ref("tab0");
 
 watch(FILES, () => {
   console.log(FILES.value);
-});
-
-watch(menuShow, () => {
-  console.log(menuShow.value);
 });
 </script>
 
