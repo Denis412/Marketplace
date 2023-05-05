@@ -1,6 +1,6 @@
-import { useQuasar } from 'quasar'
+import { Quasar } from 'quasar'
 
-const $q = useQuasar()
+const $q = Quasar
 
 const lightPalette = [
   '#ffccccaa',
@@ -42,7 +42,7 @@ const toolbar = [
   ['undo', 'redo'],
   [
     {
-      label: $q?.lang.editor.fontSize,
+      label: $q?.lang.props.editor.fontSize,
       fixedIcon: true,
       list: 'no-icons',
       options: ['p', 'h4', 'h5', 'h6'],
@@ -52,7 +52,7 @@ const toolbar = [
   ['underline', 'strike', 'bold', 'italic'],
   [
     {
-      icon: $q?.iconSet.editor.align,
+      icon: $q?.iconSet.__icons.editor.align,
       fixedLabel: true,
       list: 'only-icons',
       options: ['left', 'center', 'right', 'justify'],

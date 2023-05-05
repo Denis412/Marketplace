@@ -9,10 +9,6 @@ import { ApolloClient } from '@apollo/client/core'
 import { getClientOptions } from 'src/apollo/index'
 import { Notify } from 'quasar'
 import { useFileStore } from 'src/stores/file'
-import { Quasar } from 'quasar'
-
-const $q = Quasar
-console.log($q);
 
 const fileStore = useFileStore()
 
