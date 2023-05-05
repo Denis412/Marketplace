@@ -20,19 +20,11 @@
         v-if="!projects || !projects.length"
         class="row ptojects-wrapper q-gutter-x-md"
       >
-        <q-card
+        <c-card-add-project
           v-if="isOwner"
           flat
-          class="flex flex-center project-card project-card-add col-4"
-        >
-          <q-card-section class="flex justify-center">
-            <p class="text-body2 text-center text-violet-6">
-              Чтобы ваш проект был доступен всем, добавьте его в это поле
-            </p>
-
-            <c-button background label="Создать проект" class="text-body2" />
-          </q-card-section>
-        </q-card>
+          class="flex flex-center project-card col-4"
+        />
 
         <q-card flat class="flex flex-center project-card col">
           <q-img
@@ -46,43 +38,32 @@
         </q-card>
       </section>
 
-      <section v-else>
-        <q-list class="row q-gutter-md" style="overflow-x: auto">
-          <q-card
+      <section v-else class="ptojects-wrapper">
+        <q-list class="row no-wrap q-gutter-md" style="overflow-x: auto">
+          <c-card-add-project
             v-if="isOwner"
             flat
-            class="flex flex-center project-card project-card-add"
-          >
-            <q-card-section class="flex justify-center">
-              <p class="text-body2 text-center text-violet-6">
-                Чтобы ваш проект был доступен всем, добавьте его в это поле
-              </p>
-
-              <c-button background label="Создать проект" class="text-body2" />
-            </q-card-section>
-          </q-card>
-
-          <q-card
-            flat
-            v-for="project in projects"
-            :key="project.id"
             class="flex flex-center project-card col-4"
-          >
-            <q-card-section>
-              <h4 class="text-h4 text-violet-6">{{ project.name }}</h4>
-            </q-card-section>
-          </q-card>
+          />
+
+          <c-project-card
+            v-for="project in projects"
+            flat
+            class="flex flex-center project-card col-4"
+            :key="project.id"
+            :project="project"
+          />
         </q-list>
       </section>
-
-      <div></div>
     </main>
   </section>
 </template>
 
 <script setup>
 import { inject, ref } from "vue";
-import CButton from "src/components/ClubButton.vue";
+
+import CCardAddProject from "./ClubCardAddProject.vue";
+import CProjectCard from "./ClubProjectCard.vue";
 
 const { projects, currentUser } = defineProps({
   projects: Array,
@@ -100,7 +81,7 @@ const isOwner = inject("isOwner");
 
 <style scoped lang="scss">
 .no-projects-img {
-  max-width: 211px;
+  max-width: 212px;
 }
 
 .ptojects-wrapper {

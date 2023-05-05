@@ -38,6 +38,10 @@ const projects = ref([
     id: 2,
     name: "Проект1",
   },
+  {
+    id: 3,
+    name: "Проект1",
+  },
 ]);
 
 const userStore = useUserStore();
