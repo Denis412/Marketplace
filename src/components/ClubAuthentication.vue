@@ -5,6 +5,21 @@
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
+        <q-file
+          v-model="files"
+          label="Pick files"
+          filled
+          multiple
+          append
+          style="max-width: 300px"
+        />
+        <c-button
+          background
+          label="Загрузить"
+          @click="upload"
+          style="height: 50px"
+        />
+
         <c-input
           class="c-input-400"
           v-model="form.login"
@@ -83,6 +98,7 @@ import CButton from "src/components/ClubButton.vue";
 import CPasswordRecoveryDialog from "./ClubPasswordRecoveryDialog.vue";
 import userApi from "src/sdk/user";
 import { useQuasar } from "quasar";
+import filesApi from "src/sdk/file";
 
 const $q = useQuasar();
 const router = useRouter();
@@ -90,6 +106,18 @@ const store = useUserStore();
 
 const forgotPassword = ref(false);
 const authInfo = ref({});
+
+const files = ref(null);
+
+const upload = async () => {
+  try {
+    const data = await filesApi.uploadFiles(files.value);
+
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const form = ref({
   login: "",

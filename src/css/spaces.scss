@@ -280,26 +280,70 @@
 
 .c-m {
   &t- {
+    &40 {
+      margin-top: 40px !important;
+    }
+  }
+
+  &b- {
+    &40 {
+      margin-bottom: 40px !important;
+    }
+  }
+
+  &l- {
+    &40 {
+      margin-left: 40px !important;
+    }
+  }
+
+  &r- {
+    &40 {
+      margin-right: 40px !important;
+    }
+  }
+
+  &x- {
+    &40 {
+      margin: 0 40px;
+    }
+  }
+
+  &y- {
+    &40 {
+      margin-top: 40px 0;
+    }
+  }
+
+  &a- {
+    &40 {
+      margin: 40px;
+    }
+  }
+}
+
+.c-m {
+  &t- {
     &64 {
-      margin-top: 64px;
+      margin-top: 64px !important;
     }
   }
 
   &b- {
     &64 {
-      margin-bottom: 64px;
+      margin-bottom: 64px !important;
     }
   }
 
   &l- {
     &64 {
-      margin-left: 64px;
+      margin-left: 64px !important;
     }
   }
 
   &r- {
     &64 {
-      margin-right: 64px;
+      margin-right: 64px !important;
     }
   }
 

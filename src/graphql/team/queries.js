@@ -28,8 +28,8 @@ export const getTeams = gql`
   }
 `;
 
-export const filterTeamsName = gql`
-  query filterTeamsName($where: ObjectPaginatorWhere) {
+export const getTeamsWithWhere = gql`
+  query getTeamsWithWhere($where: ObjectPaginatorWhere) {
     paginate_team(page: 1, perPage: 100, where: $where) {
       data {
         id
@@ -39,6 +39,7 @@ export const filterTeamsName = gql`
         position
         created_at
         updated_at
+        ready_for_orders
         name
         description
         status
@@ -52,23 +53,6 @@ export const filterTeamsName = gql`
         from
         to
         hasMorePages
-      }
-    }
-  }
-`;
-
-export const getMyTeams = gql`
-  query getMyTeams($where: ObjectPaginatorWhere!) {
-    paginate_team(page: 1, perPage: 100, where: $where) {
-      data {
-        id
-        name
-        description
-        avatar
-        space
-        created_at
-        updated_at
-        name
       }
     }
   }

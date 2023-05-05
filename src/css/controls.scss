@@ -87,6 +87,22 @@
   }
 }
 
+.c-checkbox-label-pr-md {
+  .q-checkbox__label {
+    padding-right: 16px !important;
+  }
+}
+
+.c-checkbox-violet-6 {
+  .q-checkbox__label {
+    color: $violet-6;
+  }
+
+  div {
+    color: $violet-6;
+  }
+}
+
 .club-button-background {
   color: white;
   background: $primary-gradient;

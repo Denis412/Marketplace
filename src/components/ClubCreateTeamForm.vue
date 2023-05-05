@@ -109,11 +109,16 @@ const createTeam = async () => {
     }
     try {
       avatar.value = await filesApi.uploadFiles(upload_img.value);
+
+      console.log(avatar.value);
     } catch (error) {
       console.log(error);
     }
     try {
-      await teamApi.update(id.value, avatar.value, form.value.name);
+      await teamApi.update(id.value, {
+        avatar: avatar.value,
+        name: form.value.name,
+      });
     } catch (error) {
       console.log(error);
     }

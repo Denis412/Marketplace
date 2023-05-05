@@ -1,70 +1,152 @@
 <template>
-  <section class="w-100p c-px-64 c-pt-24 c-pb-24 text-violet-6">
-    <q-toolbar class="flex justify-end">
-      <q-icon class="cursor-pointer" name="more_horiz" size="40px" />
+  <q-card flat class="header-wrapper w-100p text-violet-6">
+    <q-toolbar class="absolute flex justify-end">
+      <q-icon
+        class="cursor-pointer relative-position"
+        name="more_horiz"
+        size="40px"
+      >
+        <q-menu class="w-max-content">
+          <q-list separator>
+            <q-item
+              v-if="isOwner"
+              clickable
+              class="flex no-wrap items-center text-caption1 text-black"
+              >Редактировать
+            </q-item>
+
+            <q-item
+              v-else
+              clickable
+              v-ripple
+              class="flex no-wrap items-center text-caption1 text-black"
+              >Покинуть команду
+            </q-item>
+
+            <q-item
+              clickable
+              v-ripple
+              class="flex no-wrap items-center text-caption1 text-black"
+              >Поделиться
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-icon>
     </q-toolbar>
 
-    <div class="flex no-wrap">
+    <q-card-section class="flex no-wrap c-mx-64 c-mt-64 c-mb-40">
       <q-avatar class="large-avatar">
         <q-img src="/src/assets/previews/avatar-140.png" />
       </q-avatar>
 
-      <div class="c-ml-32">
-        <h4 class="text-h4">{{ title }}</h4>
+      <section class="c-ml-32">
+        <h4 class="text-h4">{{ team.name }}</h4>
 
-        <div v-if="fullDes">
-          <div class="text-body2 q-mt-sm">
-            {{ description.substr(0, 121) }} ...
-          </div>
+        <section>
+          <p class="text-body2 q-mt-sm">
+            <span v-if="fullDes"
+              >{{ team.description.substr(0, 121) }} ...</span
+            >
+            <span v-else>{{ team.description }}</span>
+          </p>
 
-          <c-button
-            label="Подробнее"
-            class="text-grey-8 text-body1 btn-text-align"
+          <p
+            class="text-grey-8 text-body2 btn-text-align cursor-pointer"
             @click="fullDes = !fullDes"
-          />
-        </div>
+          >
+            {{ !fullDes ? "Cкрыть" : "Показать" }}
+          </p>
+        </section>
 
-        <div v-else>
-          <div class="text-body2 q-mt-sm">{{ description }}</div>
-          <c-button
-            label="Cкрыть"
-            class="text-grey-8 text-body1 btn-text-align"
-            @click="fullDes = !fullDes"
-          />
-        </div>
-
-        <q-list v-if="directions" class="c-mt-32 q-gutter-sm text-caption1">
+        <q-list
+          v-if="team?.directions"
+          class="c-mt-32 q-gutter-sm text-caption1"
+        >
           <c-button
             outline
-            v-for="direction in directions"
+            v-for="direction in team?.directions"
             :key="direction.title"
             :label="direction.title"
           />
         </q-list>
 
-        <c-button
-          background
-          label="Вступить в команду"
-          class="text-body1 c-mt-32"
-        />
-      </div>
-    </div>
-  </section>
+        <div class="flex items-center c-mt-32 header-controls">
+          <!-- <c-button background label="Вступить в команду" class="text-body1" /> -->
+
+          <q-checkbox
+            dense
+            v-if="isOwner"
+            v-model="isReady"
+            @update:model-value="updateTeamStatus"
+            left-label
+            label="Готовность к заказам"
+            class="c-mr-32 c-checkbox-violet-6 text-body2 c-checkbox-label-pr-md c-checkbox-rounded"
+          />
+
+          <a href="#" class="text-violet-6 link text-body2">
+            Чат команды
+            <q-icon
+              class="text-subtitle2"
+              name="img:/src/assets/icons/telegram/telegram-gradient.svg"
+            />
+          </a>
+        </div>
+      </section>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script setup>
-import CButton from "src/components/ClubButton.vue";
-import { ref } from "vue";
+import { computed, inject, ref } from "vue";
 
-const { title, description, directions } = defineProps({
-  title: String,
-  description: String,
-  directions: Array,
+import CButton from "src/components/ClubButton.vue";
+import teamApi from "src/sdk/team";
+
+const { team, currentUser } = defineProps({
+  team: Object,
+  currentUser: Object,
 });
+
+const isReady = ref(team.ready_for_orders ?? false);
+const isOwner = inject("isOwner");
+
+const updateTeamStatus = async () => {
+  try {
+    await teamApi.update(team.id, {
+      ready_for_orders: isReady.value,
+    });
+
+    await teamApi.refetchTeamByName(team.name);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const fullDes = ref(true);
 </script>
 
 <style scoped lang="scss">
+.header-wrapper {
+  .q-card__section {
+    padding: 0;
+  }
+}
+
+.popup {
+  top: 10px !important;
+  right: 10px !important;
+
+  &-item {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.header-controls {
+  p {
+    margin: 0;
+  }
+}
+
 .btn-text-align {
   padding-left: 0;
 }

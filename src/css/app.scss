@@ -35,6 +35,18 @@
   font-size: 24px;
 }
 
+.w-max-content {
+  min-width: max-content !important;
+}
+
+.link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .bg-dark-purple {
   background: $bg-dark-purple !important;
   background-clip: padding-box !important;

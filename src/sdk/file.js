@@ -11,6 +11,9 @@ provideApolloClient(apolloClient);
 
 const { mutate } = useMutation(filesUpload, {
   context: {
+    headers: {
+      space: process.env.MAIN_SPACE_ID,
+    },
     hasUpload: true,
   },
 });

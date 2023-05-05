@@ -3,15 +3,10 @@ import {
   useMutation,
   useQuery,
 } from "@vue/apollo-composable";
-import { data } from "autoprefixer";
 import apolloClient from "src/apollo/apollo-client";
 import { createSpace } from "src/graphql/space/mutations";
 import { teamCreate, teamUpdate } from "src/graphql/team/mutations";
-import {
-  filterTeamsName,
-  getMyTeams,
-  getTeams,
-} from "src/graphql/team/queries";
+import { getTeamsWithWhere } from "src/graphql/team/queries";
 
 provideApolloClient(apolloClient);
 
@@ -39,76 +34,9 @@ const { mutate: updatingTeam } = useMutation(teamUpdate, {
   },
 });
 
-const { refetch: refetchingAllTeams } = useQuery(
-  getTeams,
+const { refetch: refetchingTeams } = useQuery(
+  getTeamsWithWhere,
   {},
-  {
-    context: {
-      headers: {
-        space: process.env.MAIN_SPACE_ID,
-      },
-    },
-  }
-);
-
-const { refetch: refetchingMyTeams } = useQuery(
-  getMyTeams,
-  {},
-  {
-    context: {
-      headers: {
-        space: process.env.MAIN_SPACE_ID,
-      },
-    },
-  }
-);
-
-const { refetch: refetchTeams } = useQuery(
-  filterTeamsName,
-  {},
-  {
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: "",
-    },
-  },
-  {
-    context: {
-      headers: {
-        space: process.env.MAIN_SPACE_ID,
-      },
-    },
-  }
-);
-
-const { refetch: refetchFilterTeams } = useQuery(
-  filterTeamsName,
-  {
-    where: {
-      column: "status",
-      operator: "EQ",
-      value: "",
-    },
-  },
-  {
-    context: {
-      headers: {
-        space: process.env.MAIN_SPACE_ID,
-      },
-    },
-  }
-);
-
-const { refetch: refetchFilterTeamsByChar } = useQuery(
-  filterTeamsName,
-  {
-    where: {
-      column: "name",
-      operator: "FTS",
-      value: "",
-    },
-  },
   {
     context: {
       headers: {
@@ -119,13 +47,13 @@ const { refetch: refetchFilterTeamsByChar } = useQuery(
 );
 
 const refetchAllTeams = async () => {
-  const { data: teamsData } = await refetchingAllTeams();
+  const { data: teamsData } = await refetchingTeams();
 
   return teamsData.paginate_team.data;
 };
 
 const refetchMyTeams = async (author_id) => {
-  const { data: teamsData } = await refetchingMyTeams({
+  const { data: teamsData } = await refetchingTeams({
     where: {
       column: "author_id",
       operator: "EQ",
@@ -157,20 +85,17 @@ const create = async ({ name, description }) => {
   return teamData.create_team.record.id;
 };
 
-const update = async (id, avatar, name) => {
+const update = async (id, data) => {
   const { data: teamData } = await updatingTeam({
     id,
-    input: {
-      name,
-      avatar,
-    },
+    input: data,
   });
 
   return teamData.update_team.status;
 };
 
 const checkName = async ({ name }) => {
-  const { data: teamData } = await refetchTeams({
+  const { data: teamData } = await refetchingTeams({
     where: {
       column: "name",
       operator: "EQ",
@@ -183,7 +108,7 @@ const checkName = async ({ name }) => {
 
 const queryMyTeams = (author_id) => {
   return useQuery(
-    getMyTeams,
+    getTeamsWithWhere,
     {
       where: {
         column: "author_id",
@@ -203,7 +128,7 @@ const queryMyTeams = (author_id) => {
 
 const queryAllTeams = () => {
   return useQuery(
-    getTeams,
+    getTeamsWithWhere,
     {},
     {
       context: {
@@ -217,7 +142,7 @@ const queryAllTeams = () => {
 
 const queryTeamByName = (name) => {
   return useQuery(
-    getMyTeams,
+    getTeamsWithWhere,
     {
       where: {
         column: "name",
@@ -236,7 +161,7 @@ const queryTeamByName = (name) => {
 };
 
 const refetchTeamByName = async (name) => {
-  const { data: teamData } = await refetchingMyTeams({
+  const { data: teamData } = await refetchingTeams({
     where: {
       column: "name",
       operator: "EQ",
@@ -248,9 +173,9 @@ const refetchTeamByName = async (name) => {
 };
 
 const checkStatus = async (status) => {
-  const { data: teamData } = await refetchFilterTeams({
+  const { data: teamData } = await refetchingTeams({
     where: {
-      column: "status",
+      column: "ready_for_orders",
       operator: "EQ",
       value: `${status}`,
     },
@@ -260,7 +185,7 @@ const checkStatus = async (status) => {
 };
 
 const checkChar = async (char) => {
-  const { data: teamData } = await refetchFilterTeamsByChar({
+  const { data: teamData } = await refetchingTeams({
     where: {
       column: "name",
       operator: "FTS",
