@@ -7,6 +7,8 @@ import {
   updateApplication,
 } from "src/graphql/application/mutations";
 
+import { spaceHeader } from "src/utils/spaceHeader";
+
 provideApolloClient(apolloClient);
 
 const { mutate: creatingApplication } = useMutation(
