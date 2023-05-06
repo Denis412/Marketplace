@@ -1,32 +1,38 @@
 <template>
-  <div class="item_doc" @contextmenu.prevent="showMenu = true">
-    <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" class="q-pr-md" />
-    <router-link
-      class="item_doc link"
-      :to="{ name: 'Document', params: { id: `${index}` } }"
-    >
-      {{
-        doc.name.replace(".html", "").length > 10
-          ? doc.name.replace(".html", "").slice(0, 10) + "..."
-          : doc.name.replace(".html", "")
-      }}
-    </router-link>
-    <div class="menu-wrapper" clickable>
-      <q-btn-dropdown
-        no-icon-animation
-        dropdown-icon="more_vert"
-        size="sm"
-        no-caps
-        unelevated
-        no-wrap
-        label=""
-        class="btn-dropdown-doc"
-        v-model="showMenu"
+  <q-tab>
+    <div class="item_doc" @contextmenu.prevent="showMenu = true">
+      <img
+        :src="`/src/assets/icons/file/file-grey.svg`"
+        alt=""
+        class="q-pr-md"
+      />
+      <router-link
+        class="item_doc link"
+        :to="{ name: 'Document', params: { id: `${index}` } }"
       >
-        <c-qmenu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
-      </q-btn-dropdown>
+        {{
+          doc.name.replace(".html", "").length > 10
+            ? doc.name.replace(".html", "").slice(0, 10) + "..."
+            : doc.name.replace(".html", "")
+        }}
+      </router-link>
+      <div class="menu-wrapper" clickable>
+        <q-btn-dropdown
+          no-icon-animation
+          dropdown-icon="more_vert"
+          size="sm"
+          no-caps
+          unelevated
+          no-wrap
+          label=""
+          class="btn-dropdown-doc"
+          v-model="showMenu"
+        >
+          <c-qmenu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
+        </q-btn-dropdown>
+      </div>
     </div>
-  </div>
+  </q-tab>
 </template>
 
 <script setup>
