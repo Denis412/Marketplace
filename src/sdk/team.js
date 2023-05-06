@@ -186,7 +186,7 @@ const createMainSpace = async ({ name, description }) => {
 };
 
 const create = async ({ name, description }) => {
-  const spaceData = createMainSpace({ name, description });
+  const spaceData = await createMainSpace({ name, description });
 
   const { data: teamData } = await creatingTeam({
     input: {
