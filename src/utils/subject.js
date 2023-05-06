@@ -12,8 +12,8 @@ export const convertSubject = (subject) => {
 
 export const convertUserData = (userData) => {
   return {
-    email: userData.user.email,
-    avatar: userData.user.avatar,
-    telegram_chat_id: userData.user.telegram_chat_id,
+    email: userData.email,
+    avatar: userData.avatar,
+    telegram_chat_id: userData.telegram_chat_id,
   };
 };

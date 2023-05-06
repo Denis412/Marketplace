@@ -8,7 +8,9 @@ export const getTeams = gql`
         type_id
         author_id
         telegram_chat_id
-        applications
+        applications {
+          id
+        }
         space
         level
         position
@@ -39,7 +41,9 @@ export const getTeamsWithWhere = gql`
         type_id
         author_id
         telegram_chat_id
-        applications
+        applications {
+          id
+        }
         space
         level
         position

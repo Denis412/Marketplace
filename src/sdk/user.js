@@ -9,29 +9,17 @@ import {
   userSignUpSetPassword,
   userResetPasswordSendCode,
   userResetPasswordConfirmCodeSetPassword,
-  userGroupInviteUser,
   updateSubject,
 } from "src/graphql/user/mutations";
-import { getUser, getSubject } from "src/graphql/user/queries";
+import { getUser, getSubject, getSubjectById } from "src/graphql/user/queries";
 import { convertSubject, convertUserData } from "src/utils/subject";
 
 import apolloClient from "src/apollo/apollo-client";
 import tokenApi from "./token";
 import filesApi from "./file";
-import { createSpace } from "src/graphql/space/mutations";
 
 provideApolloClient(apolloClient);
 
-const { refetch: refetchUser } = useQuery(getUser);
-const { refetch: refetchSubject } = useQuery(getSubject, {
-  where: {
-    column: "user_id",
-    operator: "EQ",
-    value: "5571026735801383150",
-  },
-});
-
-const { mutate: creatingSpace } = useMutation(createSpace);
 const { mutate: signUp } = useMutation(userSignUp);
 const { mutate: signIn } = useMutation(userSignIn, {
   context: {
@@ -41,7 +29,6 @@ const { mutate: signIn } = useMutation(userSignIn, {
   },
 });
 const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
-const { mutate: invitingUser } = useMutation(userGroupInviteUser);
 const { mutate: updatingUser } = useMutation(updateSubject, {
   context: {
     headers: {
@@ -56,43 +43,76 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
   userResetPasswordConfirmCodeSetPassword
 );
 
-const subjectGetByUserId = async (id) => {
-  const { data: subjectData } = await refetchSubject({
-    where: {
-      column: "user_id",
-      operator: "EQ",
-      value: `${id}`,
+const queryPaginateSubject = (space_id, where) => {
+  return useQuery(
+    getSubject,
+    {
+      where,
     },
-  });
-
-  return subjectData.paginate_subject.data[0];
+    {
+      context: {
+        headers: {
+          space: space_id,
+        },
+      },
+    }
+  );
 };
 
-const subjectGetById = async (id) => {
-  const { data: subjectData } = await refetchSubject({
-    where: {
-      column: "id",
-      operator: "EQ",
-      value: `${id}`,
+const queryUser = (space_id, id) => {
+  return useQuery(
+    getUser,
+    {
+      id,
     },
-  });
-
-  return subjectData.paginate_subject.data[0];
+    {
+      context: {
+        headers: {
+          space: space_id,
+        },
+      },
+    }
+  );
 };
 
-const inviteGroup = async ({ name, surname, email, group_id }) => {
-  console.log(name, surname, email, group_id);
-
-  const { data: userData } = await invitingUser({
-    input: {
-      name,
-      surname,
-      email,
-      group_id,
+const querySubjectById = (space_id, id) => {
+  return useQuery(
+    getSubjectById,
+    {
+      id,
     },
-  });
+    {
+      context: {
+        headers: {
+          space: space_id,
+        },
+      },
+    }
+  );
+};
 
-  console.log("data", userData);
+const getUserById = async (space_id, id) => {
+  const { refetch } = queryUser(space_id, id);
+
+  const { data: userData } = await refetch();
+
+  return userData.user;
+};
+
+const getPaginateSubject = async (space_id, where) => {
+  const { refetch } = queryPaginateSubject(space_id, where);
+
+  const { data: subjectData } = await refetch();
+
+  return subjectData.paginate_subject.data;
+};
+
+const subjectGetById = async (space_id, id) => {
+  const { refetch } = querySubjectById(space_id, id);
+
+  const { data: subjectData } = await refetch();
+
+  return subjectData.get_subject;
 };
 
 const registration = async ({ name, surname, email }) => {
@@ -146,9 +166,10 @@ const saveLocalUserData = (saveData) => {
 const saveUserData = async (userInfo, first_entry = false) => {
   tokenApi.save(userInfo.userSignIn.record);
 
-  const { data: userData } = await refetchUser({
-    id: userInfo.userSignIn.recordId,
-  });
+  const userData = await getUserById(
+    process.env.MAIN_SPACE_ID,
+    userInfo.userSignIn.recordId
+  );
 
   // if (first_entry) {
   //   const { data: spaceData } = await creatingSpace({
@@ -169,12 +190,16 @@ const saveUserData = async (userInfo, first_entry = false) => {
 
   console.log("userData", userData, userInfo);
 
-  const subject = await subjectGetByUserId(userInfo.userSignIn.recordId);
+  const subject = await getPaginateSubject(process.env.MAIN_SPACE_ID, {
+    column: "user_id",
+    operator: "EQ",
+    value: userInfo.userSignIn.recordId,
+  });
 
-  console.log("subjectData", subject);
+  console.log("subjectData", subject[0]);
 
   saveLocalUserData({
-    ...convertSubject(subject),
+    ...convertSubject(subject[0]),
     ...convertUserData(userData),
   });
 
@@ -232,7 +257,6 @@ const userApi = {
   userPasswordSendCode,
   userPasswordConfirmCode,
   login,
-  inviteGroup,
   subjectGetById,
   saveLocalUserData,
   update,

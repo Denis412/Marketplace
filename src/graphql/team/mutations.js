@@ -10,7 +10,9 @@ export const teamCreate = gql`
         type_id
         author_id
         telegram_chat_id
-        applications
+        applications {
+          id
+        }
         level
         position
         created_at
@@ -33,7 +35,9 @@ export const teamUpdate = gql`
         type_id
         author_id
         telegram_chat_id
-        applications
+        applications {
+          id
+        }
         level
         position
         created_at
