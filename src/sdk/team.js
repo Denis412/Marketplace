@@ -4,7 +4,6 @@ import {
   useQuery,
 } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
-import { createSpace } from "src/graphql/space/mutations";
 import { teamCreate, teamDelete, teamUpdate } from "src/graphql/team/mutations";
 import { getTeamsWithWhere } from "src/graphql/team/queries";
 import groupApi from "./group";
@@ -68,42 +67,6 @@ const queryMyTeams = (author_id) => {
   );
 };
 
-const refetchTeamByName = async (name) => {
-  const { data: teamData } = await refetchingTeams({
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: `${name}`,
-    },
-  });
-
-  return teamData.paginate_team.data[0];
-};
-
-const checkStatus = async (status) => {
-  const { data: teamData } = await refetchingTeams({
-    where: {
-      column: "ready_for_orders",
-      operator: "EQ",
-      value: status.value,
-    },
-  });
-
-  return teamData.paginate_team.data;
-};
-
-const checkChar = async (char) => {
-  const { data: teamData } = await refetchingTeams({
-    where: {
-      column: "name",
-      operator: "FTS",
-      value: `${char}`,
-    },
-  });
-
-  return teamData.paginate_team.data;
-};
-
 const queryAllTeams = () => {
   return useQuery(
     getTeamsWithWhere,
@@ -138,6 +101,18 @@ const queryTeamByName = (name) => {
   );
 };
 
+const refetchTeamByName = async (name) => {
+  const { data: teamData } = await refetchingTeams({
+    where: {
+      column: "name",
+      operator: "EQ",
+      value: `${name}`,
+    },
+  });
+
+  return teamData.paginate_team.data[0];
+};
+
 const refetchAllTeams = async () => {
   const { data: teamsData } = await refetchingTeams();
 
@@ -154,6 +129,42 @@ const refetchMyTeams = async (author_id) => {
   });
 
   return teamsData.paginate_team.data;
+};
+
+const checkStatus = async (status) => {
+  const { data: teamData } = await refetchingTeams({
+    where: {
+      column: "ready_for_orders",
+      operator: "EQ",
+      value: status.value,
+    },
+  });
+
+  return teamData.paginate_team.data;
+};
+
+const checkChar = async (char) => {
+  const { data: teamData } = await refetchingTeams({
+    where: {
+      column: "name",
+      operator: "FTS",
+      value: `${char}`,
+    },
+  });
+
+  return teamData.paginate_team.data;
+};
+
+const checkName = async ({ name }) => {
+  const { data: teamData } = await refetchingTeams({
+    where: {
+      column: "name",
+      operator: "EQ",
+      value: `${name}`,
+    },
+  });
+
+  return teamData.paginate_team.paginatorInfo.count == 0;
 };
 
 const createMainSpace = async ({ name, description }) => {
@@ -211,7 +222,7 @@ const update = async (id, data) => {
 };
 
 const deleteTeam = async (team) => {
-  console.log(team);
+  console.log("deletingTeam", team);
 
   const spaceData = await spaceApi.deleteById(team.space);
 
@@ -226,21 +237,32 @@ const deleteTeam = async (team) => {
   return teamData.delete_team;
 };
 
-const checkName = async ({ name }) => {
-  const { data: teamData } = await refetchingTeams({
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: `${name}`,
-    },
+const addToTeam = async (space_id, data, group_name) => {
+  const groupData = await groupApi.getGroupByName(space_id, group_name);
+
+  const inviteData = await groupApi.invite(space_id, {
+    name: data.name,
+    surname: data.surname,
+    email: data.email,
+    group_id: groupData.id,
   });
 
-  return teamData.paginate_team.paginatorInfo.count == 0;
+  console.log("inviteData", groupData, inviteData);
+
+  return groupData;
 };
+
+const inviteUser = async (space_id, data) =>
+  await addToTeam(space_id, data, "Приглашенные");
+
+const acceptUser = async (space_id, data) =>
+  await addToTeam(space_id, data, "Участники");
 
 const teamApi = {
   create,
   update,
+  inviteUser,
+  acceptUser,
   deleteTeam,
   checkName,
   refetchAllTeams,
