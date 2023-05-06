@@ -8,6 +8,7 @@ import { teamCreate, teamDelete, teamUpdate } from "src/graphql/team/mutations";
 import { getTeamsWithWhere } from "src/graphql/team/queries";
 import groupApi from "./group";
 import spaceApi from "./space";
+import applicationApi from "./application";
 
 provideApolloClient(apolloClient);
 
@@ -252,6 +253,12 @@ const addToTeam = async (space_id, data, group_name) => {
   return groupData;
 };
 
+const sendApplication = async (data) => {
+  const applicationData = await applicationApi.create(data);
+
+  return applicationData;
+};
+
 const inviteUser = async (space_id, data) =>
   await addToTeam(space_id, data, "Приглашенные");
 
@@ -265,6 +272,7 @@ const teamApi = {
   acceptUser,
   deleteTeam,
   checkName,
+  sendApplication,
   refetchAllTeams,
   queryMyTeams,
   queryAllTeams,
