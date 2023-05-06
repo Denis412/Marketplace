@@ -71,7 +71,12 @@
         </q-list>
 
         <div class="flex items-center c-mt-32 header-controls">
-          <!-- <c-button background label="Вступить в команду" class="text-body1" /> -->
+          <c-button
+            v-if="!isMember"
+            background
+            label="Вступить в команду"
+            class="text-body1"
+          />
 
           <q-checkbox
             dense
@@ -97,7 +102,7 @@
 </template>
 
 <script setup>
-import { computed, inject, ref } from "vue";
+import { inject, ref } from "vue";
 
 import CButton from "src/components/ClubButton.vue";
 import teamApi from "src/sdk/team";
@@ -109,6 +114,7 @@ const { team, currentUser } = defineProps({
 
 const isReady = ref(team.ready_for_orders ?? false);
 const isOwner = inject("isOwner");
+const isMember = inject("isMember");
 
 const updateTeamStatus = async () => {
   try {

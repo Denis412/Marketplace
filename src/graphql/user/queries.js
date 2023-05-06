@@ -15,6 +15,40 @@ export const getUser = gql`
 export const getSubjectById = gql`
   query getSubject($id: String!) {
     get_subject(id: $id) {
+      id
+      user_id
+      fullname {
+        first_name
+        middle_name
+        last_name
+      }
+      email {
+        email
+      }
+      gender
+      city
+      applications {
+        id
+      }
+      birthday {
+        date
+      }
+      group {
+        id
+        name
+        description
+        icon
+        system
+        created_at
+        updated_at
+      }
+    }
+  }
+`;
+
+export const getOtherSpaceSubjectPaginate = gql`
+  query getOtherSpaceSubjectPaginate($where: ObjectPaginatorWhere) {
+    paginate_subject(page: 1, perPage: 1, where: $where) {
       data {
         id
         user_id
@@ -25,14 +59,6 @@ export const getSubjectById = gql`
         }
         email {
           email
-        }
-        gender
-        city
-        applications {
-          id
-        }
-        birthday {
-          date
         }
         group {
           id

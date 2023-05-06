@@ -5,25 +5,30 @@
     </header>
 
     <main v-if="team">
-      <c-team-profile-header :team="team" :currentUser="currentUser" />
+      <section v-if="checkingMember" class="loader loader-lg"></section>
 
-      <c-team-profile-projects
-        class="c-pt-32"
-        :projects="projects"
-        :currentUser="currentUser"
-      />
-      <c-team-profile-members :team="team" :currentUser="currentUser" />
+      <section v-else>
+        <c-team-profile-header :team="team" :currentUser="currentUser" />
+
+        <c-team-profile-projects
+          class="c-pt-32"
+          :projects="projects"
+          :currentUser="currentUser"
+        />
+        <c-team-profile-members :team="team" :currentUser="currentUser" />
+      </section>
     </main>
   </section>
 </template>
 
 <script setup>
-import { computed, provide, ref } from "vue";
+import { computed, onMounted, provide, ref } from "vue";
 import { useUserStore } from "src/stores/user";
 
 import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
+import teamApi from "src/sdk/team";
 
 const { team } = defineProps({
   team: Object,
@@ -48,10 +53,19 @@ const userStore = useUserStore();
 
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
 const isOwner = computed(() => currentUser.value.subject_id === team.author_id);
-// const isMember = computed(() => currentUser.subject_id === team.members[0].id);
+const isMember = ref(false);
+const checkingMember = ref(true);
 
 provide("isOwner", isOwner);
-// provide("isMember", isMember);
+provide("isMember", isMember);
+
+onMounted(async () => {
+  checkingMember.value = true;
+
+  isMember.value = await teamApi.isMember(currentUser.value.user_id, team);
+
+  checkingMember.value = false;
+});
 </script>
 
 <style scoped lang="scss"></style>

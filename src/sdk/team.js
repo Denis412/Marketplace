@@ -9,6 +9,7 @@ import { getTeamsWithWhere } from "src/graphql/team/queries";
 import groupApi from "./group";
 import spaceApi from "./space";
 import applicationApi from "./application";
+import userApi from "./user";
 
 provideApolloClient(apolloClient);
 
@@ -238,6 +239,29 @@ const deleteTeam = async (team) => {
   return teamData.delete_team;
 };
 
+const isMember = async (user_id, team) => {
+  console.log(user_id, team);
+
+  const groupData = await groupApi.getGroupByName(team.space, "Участники");
+  const groupData1 = await groupApi.getGroupByName(team.space, "Команда");
+
+  const subjectData = await userApi.getPaginateSubject(team.space, {
+    column: "user_id",
+    operator: "EQ",
+    value: user_id,
+  });
+
+  console.log("hello", groupData, subjectData);
+
+  const isExist =
+    subjectData[0].group.find((group) => group.id === groupData.id) ||
+    subjectData[0].group.find((group) => group.id === groupData1.id);
+
+  console.log("isExist", isExist);
+
+  return isExist !== undefined && isExist !== null;
+};
+
 const addToTeam = async (space_id, data, group_name) => {
   const groupData = await groupApi.getGroupByName(space_id, group_name);
 
@@ -272,6 +296,7 @@ const teamApi = {
   acceptUser,
   deleteTeam,
   checkName,
+  isMember,
   sendApplication,
   refetchAllTeams,
   queryMyTeams,

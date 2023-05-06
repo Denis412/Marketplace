@@ -11,7 +11,12 @@ import {
   userResetPasswordConfirmCodeSetPassword,
   updateSubject,
 } from "src/graphql/user/mutations";
-import { getUser, getSubject, getSubjectById } from "src/graphql/user/queries";
+import {
+  getUser,
+  getSubject,
+  getSubjectById,
+  getOtherSpaceSubjectPaginate,
+} from "src/graphql/user/queries";
 import { convertSubject, convertUserData } from "src/utils/subject";
 
 import apolloClient from "src/apollo/apollo-client";
@@ -46,6 +51,22 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
 const queryPaginateSubject = (space_id, where) => {
   return useQuery(
     getSubject,
+    {
+      where,
+    },
+    {
+      context: {
+        headers: {
+          space: space_id,
+        },
+      },
+    }
+  );
+};
+
+const queryPaginateSubjectOtherSpace = (space_id, where) => {
+  return useQuery(
+    getOtherSpaceSubjectPaginate,
     {
       where,
     },
@@ -100,7 +121,7 @@ const getUserById = async (space_id, id) => {
 };
 
 const getPaginateSubject = async (space_id, where) => {
-  const { refetch } = queryPaginateSubject(space_id, where);
+  const { refetch } = queryPaginateSubjectOtherSpace(space_id, where);
 
   const { data: subjectData } = await refetch();
 
@@ -110,7 +131,11 @@ const getPaginateSubject = async (space_id, where) => {
 const subjectGetById = async (space_id, id) => {
   const { refetch } = querySubjectById(space_id, id);
 
+  console.log("user");
+
   const { data: subjectData } = await refetch();
+
+  console.log("user", subjectData);
 
   return subjectData.get_subject;
 };
@@ -201,6 +226,7 @@ const saveUserData = async (userInfo, first_entry = false) => {
   saveLocalUserData({
     ...convertSubject(subject[0]),
     ...convertUserData(userData),
+    user_id: userInfo.userSignIn.recordId,
   });
 
   return userData;
@@ -258,6 +284,7 @@ const userApi = {
   userPasswordConfirmCode,
   login,
   subjectGetById,
+  getPaginateSubject,
   saveLocalUserData,
   update,
   logout,
