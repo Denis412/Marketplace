@@ -43,3 +43,11 @@ export const teamUpdate = gql`
     }
   }
 `;
+
+export const teamDelete = gql`
+  mutation ($id: String!) {
+    delete_team(id: $id) {
+      recordId
+    }
+  }
+`;

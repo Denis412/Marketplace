@@ -23,6 +23,12 @@
       <p class="text-body2 q-mt-md">
         {{ team.description }}
       </p>
+
+      <c-button
+        color="negative"
+        label="Удалить"
+        @click.stop="teamApi.deleteTeam(team)"
+      />
     </q-card-section>
   </q-card>
 </template>
