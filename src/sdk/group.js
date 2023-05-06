@@ -8,6 +8,7 @@ import { createGroup, inviteUser } from "src/graphql/group/mutations";
 import { getGroupsWithWhere } from "src/graphql/group/queries";
 
 import apolloClient from "src/apollo/apollo-client";
+import { spaceHeader } from "src/utils/spaceHeader";
 
 provideApolloClient(apolloClient);
 
@@ -20,13 +21,7 @@ const queryGroups = (space_id, where) => {
     {
       where,
     },
-    {
-      context: {
-        headers: {
-          space: space_id,
-        },
-      },
-    }
+    spaceHeader(space_id)
   );
 };
 
@@ -51,13 +46,7 @@ const create = async (space_id, data) => {
     {
       input: data,
     },
-    {
-      context: {
-        headers: {
-          space: space_id,
-        },
-      },
-    }
+    spaceHeader(space_id)
   );
 
   return groupData.userGroupCreate;
@@ -68,13 +57,7 @@ const invite = async (space_id, data) => {
     {
       input: data,
     },
-    {
-      context: {
-        headers: {
-          space: space_id,
-        },
-      },
-    }
+    spaceHeader(space_id)
   );
 
   return inviteData.userGroupInviteUser;

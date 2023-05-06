@@ -10,43 +10,30 @@ import groupApi from "./group";
 import spaceApi from "./space";
 import applicationApi from "./application";
 import userApi from "./user";
+import { spaceHeader } from "src/utils/spaceHeader";
 
 provideApolloClient(apolloClient);
 
-const { mutate: creatingTeam } = useMutation(teamCreate, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
+const { mutate: creatingTeam } = useMutation(
+  teamCreate,
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 
-const { mutate: updatingTeam } = useMutation(teamUpdate, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
+const { mutate: updatingTeam } = useMutation(
+  teamUpdate,
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 
-const { mutate: deletingTeam } = useMutation(teamDelete, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
+const { mutate: deletingTeam } = useMutation(
+  teamDelete,
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 
 const { refetch: refetchingTeams } = useQuery(
   getTeamsWithWhere,
   {},
-  {
-    context: {
-      headers: {
-        space: process.env.MAIN_SPACE_ID,
-      },
-    },
-  }
+
+  spaceHeader(process.env.MAIN_SPACE_ID)
 );
 
 const queryMyTeams = (author_id) => {
@@ -59,13 +46,7 @@ const queryMyTeams = (author_id) => {
         value: `${author_id}`,
       },
     },
-    {
-      context: {
-        headers: {
-          space: process.env.MAIN_SPACE_ID,
-        },
-      },
-    }
+    spaceHeader(process.env.MAIN_SPACE_ID)
   );
 };
 
@@ -73,13 +54,7 @@ const queryAllTeams = () => {
   return useQuery(
     getTeamsWithWhere,
     {},
-    {
-      context: {
-        headers: {
-          space: process.env.MAIN_SPACE_ID,
-        },
-      },
-    }
+    spaceHeader(process.env.MAIN_SPACE_ID)
   );
 };
 
@@ -93,13 +68,7 @@ const queryTeamByName = (name) => {
         value: `${name}`,
       },
     },
-    {
-      context: {
-        headers: {
-          space: process.env.MAIN_SPACE_ID,
-        },
-      },
-    }
+    spaceHeader(process.env.MAIN_SPACE_ID)
   );
 };
 

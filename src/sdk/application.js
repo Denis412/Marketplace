@@ -9,29 +9,20 @@ import {
 
 provideApolloClient(apolloClient);
 
-const { mutate: creatingApplication } = useMutation(createApplication, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
+const { mutate: creatingApplication } = useMutation(
+  createApplication,
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 
-const { mutate: updatingApplication } = useMutation(updateApplication, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
+const { mutate: updatingApplication } = useMutation(
+  updateApplication,
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 
-const { mutate: deletingApplication } = useMutation(deleteApplication, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
+const { mutate: deletingApplication } = useMutation(
+  deleteApplication,
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 
 const create = async (data) => {
   const { data: applicationData } = await creatingApplication({
@@ -42,6 +33,7 @@ const create = async (data) => {
 
   return applicationData.create_application;
 };
+
 const update = async (data) => {
   const { data: applicationData } = await updatingApplication({
     input: data,

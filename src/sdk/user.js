@@ -20,27 +20,23 @@ import {
 import { convertSubject, convertUserData } from "src/utils/subject";
 
 import apolloClient from "src/apollo/apollo-client";
+
 import tokenApi from "./token";
 import filesApi from "./file";
+import { spaceHeader } from "src/utils/spaceHeader";
 
 provideApolloClient(apolloClient);
 
 const { mutate: signUp } = useMutation(userSignUp);
-const { mutate: signIn } = useMutation(userSignIn, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
+const { mutate: signIn } = useMutation(
+  userSignIn,
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
-const { mutate: updatingUser } = useMutation(updateSubject, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
+const { mutate: updatingUser } = useMutation(
+  updateSubject,
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 const { mutate: resetPasswordSendCode } = useMutation(
   userResetPasswordSendCode
 );
@@ -54,13 +50,7 @@ const queryPaginateSubject = (where) => {
     {
       where,
     },
-    {
-      context: {
-        headers: {
-          space: process.env.MAIN_SPACE_ID,
-        },
-      },
-    }
+    spaceHeader(space_id)
   );
 };
 
@@ -70,13 +60,7 @@ const queryPaginateSubjectOtherSpace = (space_id, where) => {
     {
       where,
     },
-    {
-      context: {
-        headers: {
-          space: space_id,
-        },
-      },
-    }
+    spaceHeader(space_id)
   );
 };
 
@@ -86,13 +70,7 @@ const queryUser = (space_id, id) => {
     {
       id,
     },
-    {
-      context: {
-        headers: {
-          space: space_id,
-        },
-      },
-    }
+    spaceHeader(space_id)
   );
 };
 
@@ -102,13 +80,7 @@ const querySubjectById = (id) => {
     {
       id,
     },
-    {
-      context: {
-        headers: {
-          space: process.env.MAIN_SPACE_ID,
-        },
-      },
-    }
+    spaceHeader(process.env.MAIN_SPACE_ID)
   );
 };
 
@@ -118,13 +90,7 @@ const querySubjectByIdOtherSpace = (space_id, id) => {
     {
       id,
     },
-    {
-      context: {
-        headers: {
-          space: space_id,
-        },
-      },
-    }
+    spaceHeader(space_id)
   );
 };
 
