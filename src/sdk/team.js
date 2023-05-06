@@ -245,19 +245,17 @@ const isMember = async (user_id, team) => {
   const groupData = await groupApi.getGroupByName(team.space, "Участники");
   const groupData1 = await groupApi.getGroupByName(team.space, "Команда");
 
-  const subjectData = await userApi.getPaginateSubject(team.space, {
+  const subjectData = await userApi.getPaginateSubjectOtherSpace(team.space, {
     column: "user_id",
     operator: "EQ",
     value: user_id,
   });
 
-  console.log("hello", groupData, subjectData);
-
   const isExist =
     subjectData[0].group.find((group) => group.id === groupData.id) ||
     subjectData[0].group.find((group) => group.id === groupData1.id);
 
-  console.log("isExist", isExist);
+  console.log("isMember", isExist);
 
   return isExist !== undefined && isExist !== null;
 };

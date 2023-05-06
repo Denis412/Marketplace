@@ -48,7 +48,7 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
   userResetPasswordConfirmCodeSetPassword
 );
 
-const queryPaginateSubject = (space_id, where) => {
+const queryPaginateSubject = (where) => {
   return useQuery(
     getSubject,
     {
@@ -57,7 +57,7 @@ const queryPaginateSubject = (space_id, where) => {
     {
       context: {
         headers: {
-          space: space_id,
+          space: process.env.MAIN_SPACE_ID,
         },
       },
     }
@@ -96,7 +96,23 @@ const queryUser = (space_id, id) => {
   );
 };
 
-const querySubjectById = (space_id, id) => {
+const querySubjectById = (id) => {
+  return useQuery(
+    getSubjectById,
+    {
+      id,
+    },
+    {
+      context: {
+        headers: {
+          space: process.env.MAIN_SPACE_ID,
+        },
+      },
+    }
+  );
+};
+
+const querySubjectByIdOtherSpace = (space_id, id) => {
   return useQuery(
     getSubjectById,
     {
@@ -120,7 +136,15 @@ const getUserById = async (space_id, id) => {
   return userData.user;
 };
 
-const getPaginateSubject = async (space_id, where) => {
+const getPaginateSubject = async (where) => {
+  const { refetch } = queryPaginateSubject(where);
+
+  const { data: subjectData } = await refetch();
+
+  return subjectData.paginate_subject.data;
+};
+
+const getPaginateSubjectOtherSpace = async (space_id, where) => {
   const { refetch } = queryPaginateSubjectOtherSpace(space_id, where);
 
   const { data: subjectData } = await refetch();
@@ -128,8 +152,20 @@ const getPaginateSubject = async (space_id, where) => {
   return subjectData.paginate_subject.data;
 };
 
-const subjectGetById = async (space_id, id) => {
-  const { refetch } = querySubjectById(space_id, id);
+const subjectGetById = async (id) => {
+  const { refetch } = querySubjectById(id);
+
+  console.log("user");
+
+  const { data: subjectData } = await refetch();
+
+  console.log("user", subjectData);
+
+  return subjectData.get_subject;
+};
+
+const subjectGetByIdOtherSpace = async (space_id, id) => {
+  const { refetch } = querySubjectByIdOtherSpace(space_id, id);
 
   console.log("user");
 
@@ -215,7 +251,7 @@ const saveUserData = async (userInfo, first_entry = false) => {
 
   console.log("userData", userData, userInfo);
 
-  const subject = await getPaginateSubject(process.env.MAIN_SPACE_ID, {
+  const subject = await getPaginateSubject({
     column: "user_id",
     operator: "EQ",
     value: userInfo.userSignIn.recordId,
@@ -284,7 +320,9 @@ const userApi = {
   userPasswordConfirmCode,
   login,
   subjectGetById,
+  subjectGetByIdOtherSpace,
   getPaginateSubject,
+  getPaginateSubjectOtherSpace,
   saveLocalUserData,
   update,
   logout,
