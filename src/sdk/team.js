@@ -211,22 +211,32 @@ const deleteTeam = async (team) => {
 const isMember = async (user_id, team) => {
   console.log(user_id, team);
 
-  const groupData = await groupApi.getGroupByName(team.space, "Участники");
-  const groupData1 = await groupApi.getGroupByName(team.space, "Команда");
+  // Сделать запрос на пространства пользователя и проверить,
+  //есть ли среди выведенных пространств - пространство с id,
+  //как team.space. Есди нет - isExist = false и выходим из функции
 
-  const subjectData = await userApi.getPaginateSubjectOtherSpace(team.space, {
-    column: "user_id",
-    operator: "EQ",
-    value: user_id,
-  });
+  let groupData, groupData1, subjectData, isExist;
 
-  const isExist =
-    subjectData[0].group.find((group) => group.id === groupData.id) ||
-    subjectData[0].group.find((group) => group.id === groupData1.id);
+  try {
+    groupData = await groupApi.getGroupByName(team.space, "Участники");
+    groupData1 = await groupApi.getGroupByName(team.space, "Команда");
+
+    subjectData = await userApi.getPaginateSubjectOtherSpace(team.space, {
+      column: "user_id",
+      operator: "EQ",
+      value: user_id,
+    });
+
+    isExist =
+      subjectData[0].group.find((group) => group.id === groupData.id) ||
+      subjectData[0].group.find((group) => group.id === groupData1.id);
+  } catch (error) {
+    isExist = false;
+  }
 
   console.log("isMember", isExist);
 
-  return isExist !== undefined && isExist !== null;
+  return isExist;
 };
 
 const addToTeam = async (space_id, data, group_name) => {

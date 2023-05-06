@@ -75,7 +75,7 @@
             v-if="!isMember"
             background
             label="Вступить в команду"
-            class="text-body1"
+            class="text-body2"
           />
 
           <q-checkbox
@@ -88,7 +88,11 @@
             class="c-mr-32 c-checkbox-violet-6 text-body2 c-checkbox-label-pr-md c-checkbox-rounded"
           />
 
-          <a href="#" class="text-violet-6 link text-body2">
+          <a
+            v-if="isMember || isOwner"
+            href="#"
+            class="text-violet-6 link text-body2"
+          >
             Чат команды
             <q-icon
               class="text-subtitle2"
