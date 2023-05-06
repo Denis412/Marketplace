@@ -14,17 +14,13 @@
 import { computed, watch, ref } from "vue";
 import { useFileStore } from "src/stores/file";
 
-import QTabsItem from './ClubQtabsItemComponent.vue';
+import QTabsItem from "./ClubQtabsItemComponent.vue";
 
 const storeFile = useFileStore();
 const FILES = computed(() => storeFile.GET_FILES);
 
 let showDialog = ref(false);
 const tab = ref("tab0");
-
-watch(FILES, () => {
-  console.log(FILES.value);
-});
 </script>
 
 <style scoped lang="scss">
