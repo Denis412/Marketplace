@@ -5,7 +5,7 @@
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
-        <q-file
+        <!-- <q-file
           v-model="files"
           label="Pick files"
           filled
@@ -18,7 +18,7 @@
           label="Загрузить"
           @click="upload"
           style="height: 50px"
-        />
+        /> -->
 
         <c-input
           class="c-input-400"

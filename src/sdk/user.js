@@ -105,13 +105,6 @@ const registration = async ({ name, surname, email }) => {
     },
   });
 
-  // const { data: spaceData } = await createSpace({
-  //   input: {
-  //     name,
-  //     description: surname,
-  //   },
-  // });
-
   return userInfo.userSignUp;
 };
 
@@ -150,12 +143,29 @@ const saveLocalUserData = (saveData) => {
   localStorage.setItem("user-data", JSON.stringify(saveData));
 };
 
-const saveUserData = async (userInfo) => {
+const saveUserData = async (userInfo, first_entry = false) => {
   tokenApi.save(userInfo.userSignIn.record);
 
   const { data: userData } = await refetchUser({
     id: userInfo.userSignIn.recordId,
   });
+
+  // if (first_entry) {
+  //   const { data: spaceData } = await creatingSpace({
+  //     input: {
+  //       name: userData.user.name,
+  //       description: userData.user.surname,
+  //     },
+  //   });
+
+  //   const { data: updateSubjectData } = await updatingUser({
+  //     input: {
+  //       personal_space_id: spaceData.spaceCreate.recordId,
+  //     },
+  //   });
+
+  //   console.log("data", spaceData, updateSubjectData);
+  // }
 
   console.log("userData", userData, userInfo);
 
@@ -171,7 +181,11 @@ const saveUserData = async (userInfo) => {
   return userData;
 };
 
-const login = async ({ login, password }, recovery = false) => {
+const login = async (
+  { login, password },
+  first_entry = false,
+  recovery = false
+) => {
   const { data: userInfo } = await signIn({
     input: {
       login,
@@ -179,7 +193,9 @@ const login = async ({ login, password }, recovery = false) => {
     },
   });
 
-  const userData = recovery ? null : await saveUserData(userInfo);
+  // console.log(login, password, "hello");
+
+  const userData = recovery ? null : await saveUserData(userInfo, first_entry);
 
   return userData?.user;
 };

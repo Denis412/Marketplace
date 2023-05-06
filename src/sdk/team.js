@@ -7,20 +7,14 @@ import apolloClient from "src/apollo/apollo-client";
 import { createSpace } from "src/graphql/space/mutations";
 import { teamCreate, teamUpdate } from "src/graphql/team/mutations";
 import { getTeamsWithWhere } from "src/graphql/team/queries";
+import groupApi from "./group";
+import spaceApi from "./space";
 
 provideApolloClient(apolloClient);
 
 const { mutate: creatingTeam } = useMutation(teamCreate, {
   context: {
     headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-  },
-});
-
-const { mutate: creatingSpace } = useMutation(createSpace, {
-  context: {
-    headres: {
       space: process.env.MAIN_SPACE_ID,
     },
   },
@@ -64,19 +58,43 @@ const refetchMyTeams = async (author_id) => {
   return teamsData.paginate_team.data;
 };
 
-const create = async ({ name, description }) => {
-  const { data: spaceData } = await creatingSpace({
-    input: {
-      name,
-      description,
-    },
+const createMainSpace = async ({ name, description }) => {
+  const spaceData = await spaceApi.create({
+    name,
+    description,
   });
+
+  const teamGroup = await groupApi.getGroupByName(
+    spaceData.recordId,
+    "Команда"
+  );
+
+  const createdGroupMembers = await groupApi.create(spaceData.recordId, {
+    name: "Участники",
+    description: "Группа участников",
+    parent_group_id: teamGroup.id,
+  });
+
+  const createdGroupInvited = await groupApi.create(spaceData.recordId, {
+    name: "Приглашенные",
+    description: "Группа приглашенных",
+    parent_group_id: teamGroup.id,
+  });
+
+  console.log("space", spaceData);
+  console.log("groups", teamGroup, createdGroupMembers, createdGroupInvited);
+
+  return spaceData;
+};
+
+const create = async ({ name, description }) => {
+  const spaceData = createMainSpace({ name, description });
 
   const { data: teamData } = await creatingTeam({
     input: {
       name,
       description,
-      space: `${spaceData.spaceCreate.recordId}`,
+      space: `${spaceData.recordId}`,
     },
   });
 

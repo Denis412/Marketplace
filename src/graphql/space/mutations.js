@@ -33,3 +33,12 @@ export const updateSpace = gql`
     }
   }
 `;
+
+export const deleteSpace = gql`
+  mutation SpaceForceDelete($id: String!) {
+    spaceForceDelete(id: $id) {
+      recordId
+      status
+    }
+  }
+`;
