@@ -4,13 +4,13 @@
     <q-route-tab>
       <div class="item_doc">
         <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" class="q-pr-md" />
-        <router-link class="item_doc link" :to="{
+        <router-link class="name_doc link" :to="{
             name: 'Document',
             params: { id: `${index}` },
           }">
           {{
-            doc.name.replace(".html", "").length > 10
-            ? doc.name.replace(".html", "").slice(0, 10) + "..."
+            doc.name.replace(".html", "")
+            ? doc.name.replace(".html", "")
             : doc.name.replace(".html", "")
           }}
         </router-link>
@@ -46,10 +46,17 @@ watch(FILES, () => {
 }
 
 .item_doc {
-  width: 190px;
+  width: 180px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.name_doc {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
 .link {
