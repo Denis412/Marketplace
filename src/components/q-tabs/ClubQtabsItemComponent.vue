@@ -7,14 +7,10 @@
         class="q-pr-md"
       />
       <router-link
-        class="item_doc link"
+        class="name_doc link"
         :to="{ name: 'Document', params: { id: `${index}` } }"
       >
-        {{
-          doc.name.replace(".html", "").length > 10
-            ? doc.name.replace(".html", "").slice(0, 10) + "..."
-            : doc.name.replace(".html", "")
-        }}
+        {{ doc.name.replace(".html", "") }}
       </router-link>
       <div class="menu-wrapper" clickable>
         <q-btn-dropdown
@@ -51,7 +47,12 @@ defineProps({
 .menu-wrapper {
   width: 40px;
 }
-
+.name_doc {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
 .item_doc {
   width: 190px;
   display: flex;
