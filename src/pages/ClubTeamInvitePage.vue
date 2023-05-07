@@ -32,19 +32,18 @@
       <section class="row c-mt-24">
         <section class="col">
           <div class="subjects-wrapper">
-            <section class="q-gutter-y-md">
+            <q-list class="q-gutter-y-md">
               <c-invite-subject-item
                 v-for="subject in allSubjects?.paginate_subject.data"
                 :key="subject.id"
                 class="rounded-borders-10 flex justify-between"
                 :subject="subject"
               />
-            </section>
+            </q-list>
           </div>
 
           <div class="q-mt-md q-gutter-x-md text-body1">
             <c-button background label="Пригласить" @click="inviteSubjects" />
-
             <c-button outline label="Отменить" />
           </div>
         </section>
@@ -87,8 +86,10 @@ import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";
 import teamApi from "src/sdk/team";
 import { useRoute } from "vue-router";
+import { useQuasar } from "quasar";
 
 const route = useRoute();
+const $q = useQuasar();
 
 const { result: team, loading: loadingTeam } = teamApi.queryTeamByName(
   route.params.name
@@ -103,16 +104,27 @@ const filter = ref([]);
 provide("selectedSubjects", selectedSubjects);
 
 const inviteSubjects = () => {
-  selectedSubjects.value.forEach(async (subject) => {
-    await teamApi.inviteUser(team.value.paginate_team.data[0].space, {
-      name: subject.fullname.first_name,
-      surname: subject.fullname.last_name,
-      email: subject.email.email,
-      subject_id: subject.id,
-      team_id: team.value.paginate_team.data[0].id,
-      sender: "team",
+  if (!selectedSubjects.value.length) return;
+
+  try {
+    selectedSubjects.value.forEach(async (subject) => {
+      await teamApi.inviteUser(team.value.paginate_team.data[0].space, {
+        name: subject.fullname.first_name,
+        surname: subject.fullname.last_name,
+        email: subject.email.email,
+        subject_id: subject.id,
+        team_id: team.value.paginate_team.data[0].id,
+        sender: "team",
+      });
     });
-  });
+
+    $q.notify({
+      type: "positive",
+      message: "Приглашения отправлены!",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 const filteredSubjects = () => {};
 const resetSubjects = () => (selectedSubjects.value = []);
