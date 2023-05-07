@@ -1,18 +1,31 @@
 <template>
-  <q-select
+  <q-btn-dropdown
     no-caps
-    borderless
-    class="club-dropdown"
-    dropdown-icon="img:/src/assets/icons/arrow/arrow-down-grey.svg"
+    flat
+    dropdown-icon="img:/src/assets/icons/arrow/arrow-down-black.svg"
+    class="c-dropdown-button text-caption1 bg-white"
+    content-class="c-dropdown-content"
   >
-    <template v-slot:no-option>
-      <q-item>
-        <q-item-section class="text-grey"> Ничего не найдено </q-item-section>
+    <q-list separator style="margin-top: 1px">
+      <q-item
+        clickable
+        v-close-popup
+        class="bg-white text-caption1"
+        v-for="item in list"
+        :key="item.id"
+      >
+        <q-item-section>
+          <q-item-label>{{ item.name ?? items.label }}</q-item-label>
+        </q-item-section>
       </q-item>
-    </template>
-  </q-select>
+    </q-list>
+  </q-btn-dropdown>
 </template>
 
-<script setup></script>
+<script setup>
+const { list } = defineProps({
+  list: Array,
+});
+</script>
 
 <style scoped lang="scss"></style>

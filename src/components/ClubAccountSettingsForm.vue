@@ -70,7 +70,7 @@
     <section class="flex no-wrap">
       <c-label-control label="Город">
         <template #control>
-          <c-dropdown
+          <c-select
             v-model="form.city"
             use-input
             @update:model-value="changeUSerData('city', $event)"
@@ -82,7 +82,7 @@
 
       <c-label-control label="Пол" class="c-ml-32">
         <template #control>
-          <c-dropdown
+          <c-select
             v-model="form.gender"
             @update:model-value="changeUSerData('gender', $event)"
             :options="['Мужской', 'Женский']"
@@ -110,7 +110,7 @@ import { ref, computed, onMounted } from "vue";
 import { useUserStore } from "src/stores/user";
 
 import CInput from "./ClubInput.vue";
-import CDropdown from "./ClubDropdown.vue";
+import CSelect from "./ClubSelect.vue";
 import CLabelControl from "./ClubLabelControl.vue";
 import userApi from "src/sdk/user";
 

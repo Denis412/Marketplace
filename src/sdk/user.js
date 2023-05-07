@@ -16,6 +16,7 @@ import {
   getSubject,
   getSubjectById,
   getOtherSpaceSubjectPaginate,
+  paginateSubjectForInvite,
 } from "src/graphql/user/queries";
 import { convertSubject, convertUserData } from "src/utils/subject";
 
@@ -44,23 +45,34 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
   userResetPasswordConfirmCodeSetPassword
 );
 
-const queryPaginateSubject = (where) => {
+const queryPaginateSubject = (space_id = 0, where = null) => {
+  if (space_id) {
+    return useQuery(
+      getOtherSpaceSubjectPaginate,
+      {
+        where,
+      },
+      spaceHeader(space_id)
+    );
+  }
+
   return useQuery(
     getSubject,
     {
       where,
     },
-    spaceHeader(space_id)
+    spaceHeader(process.env.MAIN_SPACE_ID)
   );
 };
 
-const queryPaginateSubjectOtherSpace = (space_id, where) => {
+const queryPaginateSubjectsForInvite = () => {
   return useQuery(
-    getOtherSpaceSubjectPaginate,
+    paginateSubjectForInvite,
     {
-      where,
+      page: 1,
+      perPage: 100,
     },
-    spaceHeader(space_id)
+    spaceHeader(process.env.MAIN_SPACE_ID)
   );
 };
 
@@ -74,23 +86,23 @@ const queryUser = (space_id, id) => {
   );
 };
 
-const querySubjectById = (id) => {
+const querySubjectById = (id, space_id = 0) => {
+  if (space_id) {
+    return useQuery(
+      getSubjectById,
+      {
+        id,
+      },
+      spaceHeader(space_id)
+    );
+  }
+
   return useQuery(
     getSubjectById,
     {
       id,
     },
     spaceHeader(process.env.MAIN_SPACE_ID)
-  );
-};
-
-const querySubjectByIdOtherSpace = (space_id, id) => {
-  return useQuery(
-    getSubjectById,
-    {
-      id,
-    },
-    spaceHeader(space_id)
   );
 };
 
@@ -111,7 +123,7 @@ const getPaginateSubject = async (where) => {
 };
 
 const getPaginateSubjectOtherSpace = async (space_id, where) => {
-  const { refetch } = queryPaginateSubjectOtherSpace(space_id, where);
+  const { refetch } = queryPaginateSubject(space_id, where);
 
   const { data: subjectData } = await refetch();
 
@@ -131,7 +143,7 @@ const subjectGetById = async (id) => {
 };
 
 const subjectGetByIdOtherSpace = async (space_id, id) => {
-  const { refetch } = querySubjectByIdOtherSpace(space_id, id);
+  const { refetch } = querySubjectById(id, space_id);
 
   console.log("user");
 
@@ -285,8 +297,10 @@ const userApi = {
   userPasswordSendCode,
   userPasswordConfirmCode,
   login,
+  queryPaginateSubject,
   subjectGetById,
   subjectGetByIdOtherSpace,
+  queryPaginateSubjectsForInvite,
   getPaginateSubject,
   getPaginateSubjectOtherSpace,
   saveLocalUserData,

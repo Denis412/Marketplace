@@ -76,7 +76,7 @@ export const getOtherSpaceSubjectPaginate = gql`
 
 export const getSubject = gql`
   query getSubject($where: ObjectPaginatorWhere) {
-    paginate_subject(page: 1, perPage: 1, where: $where) {
+    paginate_subject(page: 1, perPage: 100, where: $where) {
       data {
         id
         user_id
@@ -104,6 +104,22 @@ export const getSubject = gql`
           system
           created_at
           updated_at
+        }
+      }
+    }
+  }
+`;
+
+export const paginateSubjectForInvite = gql`
+  query getSubject($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
+    paginate_subject(page: $page, perPage: $perPage, where: $where) {
+      data {
+        id
+        user_id
+        fullname {
+          first_name
+          middle_name
+          last_name
         }
       }
     }

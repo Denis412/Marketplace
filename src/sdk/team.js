@@ -221,7 +221,7 @@ const isMember = async (user_id, team) => {
     groupData = await groupApi.getGroupByName(team.space, "Участники");
     groupData1 = await groupApi.getGroupByName(team.space, "Команда");
 
-    subjectData = await userApi.getPaginateSubjectOtherSpace(team.space, {
+    subjectData = await userApi.getPaginateSubject(team.space, {
       column: "user_id",
       operator: "EQ",
       value: user_id,
