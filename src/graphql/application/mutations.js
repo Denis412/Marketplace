@@ -8,8 +8,12 @@ export const createApplication = gql`
       record {
         id
         name
-        subject
-        team
+        subject {
+          id
+        }
+        team {
+          id
+        }
         sender
         status
       }
@@ -25,8 +29,12 @@ export const updateApplication = gql`
       record {
         id
         name
-        subject
-        team
+        subject {
+          id
+        }
+        team {
+          id
+        }
         sender
         status
       }

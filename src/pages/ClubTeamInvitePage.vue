@@ -43,9 +43,9 @@
           </div>
 
           <div class="q-mt-md q-gutter-x-md text-body1">
-            <c-button background label="Пригласить" @click="resetSubjects" />
+            <c-button background label="Пригласить" @click="inviteSubjects" />
 
-            <c-button outline label="Отменить" @click="resetSubjects" />
+            <c-button outline label="Отменить" />
           </div>
         </section>
 
@@ -85,11 +85,14 @@ import { provide, ref } from "vue";
 
 import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";
+import teamApi from "src/sdk/team";
+import { useRoute } from "vue-router";
 
-const { team } = defineProps({
-  team: Object,
-});
+const route = useRoute();
 
+const { result: team, loading: loadingTeam } = teamApi.queryTeamByName(
+  route.params.name
+);
 const { result: allSpecialities, loading } = specilalityApi.querySpecialities();
 const { result: allSubjects, loading: loadingSubjects } =
   userApi.queryPaginateSubjectsForInvite();
@@ -99,6 +102,18 @@ const filter = ref([]);
 
 provide("selectedSubjects", selectedSubjects);
 
+const inviteSubjects = () => {
+  selectedSubjects.value.forEach(async (subject) => {
+    await teamApi.inviteUser(team.value.paginate_team.data[0].space, {
+      name: subject.fullname.first_name,
+      surname: subject.fullname.last_name,
+      email: subject.email.email,
+      subject_id: subject.id,
+      team_id: team.value.paginate_team.data[0].id,
+      sender: "team",
+    });
+  });
+};
 const filteredSubjects = () => {};
 const resetSubjects = () => (selectedSubjects.value = []);
 </script>

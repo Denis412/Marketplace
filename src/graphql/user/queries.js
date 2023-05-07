@@ -121,6 +121,9 @@ export const paginateSubjectForInvite = gql`
           middle_name
           last_name
         }
+        email {
+          email
+        }
       }
     }
   }

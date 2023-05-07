@@ -239,8 +239,25 @@ const isMember = async (user_id, team) => {
   return isExist;
 };
 
+const sendApplication = async (data) => {
+  const applicationData = await applicationApi.create(data);
+
+  return applicationData;
+};
+
 const addToTeam = async (space_id, data, group_name) => {
   const groupData = await groupApi.getGroupByName(space_id, group_name);
+
+  await sendApplication({
+    name: data.name,
+    subject: {
+      [process.env.SUBJECT_TYPE_ID]: data.subject_id,
+    },
+    team: {
+      [process.env.TEAM_TYPE_ID]: data.team_id,
+    },
+    sender: data.sender,
+  });
 
   const inviteData = await groupApi.invite(space_id, {
     name: data.name,
@@ -252,12 +269,6 @@ const addToTeam = async (space_id, data, group_name) => {
   console.log("inviteData", groupData, inviteData);
 
   return groupData;
-};
-
-const sendApplication = async (data) => {
-  const applicationData = await applicationApi.create(data);
-
-  return applicationData;
 };
 
 const inviteUser = async (space_id, data) =>
