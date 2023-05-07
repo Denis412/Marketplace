@@ -14,6 +14,15 @@ export const getTeamsWithWhere = gql`
         telegram_chat_id
         applications {
           id
+          name
+          subject {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+          }
+          sender
         }
         space
         level

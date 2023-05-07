@@ -4,14 +4,14 @@
 
     <div class="row justify-between items-center club-mt-24">
       <q-toolbar class="q-pb-md q-pa-none">
-        <q-btn-toggle
+        <q-tabs
           v-model="selectMembersList"
-          flat
-          stretch
-          class="text-body1"
-          toggle-color="purple-7"
-          :options="membersTeamList"
-        />
+          indicator-color="black"
+          class="bg-transparent"
+        >
+          <q-tab name="members" class="text-body1" label="Участники" />
+          <q-tab name="applications" class="text-body1" label="Заявки" />
+        </q-tabs>
 
         <q-space />
 
@@ -24,19 +24,53 @@
       </q-toolbar>
     </div>
 
-    <div v-for="specialties in specialtiesList" :key="specialties.index">
-      <div class="text-body2 text-violet-6">{{ specialties.label }}</div>
+    <!-- <pre>{{ team }}</pre> -->
+    <!-- <pre>{{ selectMembersList }}</pre> -->
+    <!-- <pre>{{ filteredApplications }}</pre> -->
 
-      <c-specialists-list
-        class="flex q-mt-md q-gutter-x-md"
-        :specialists="team[specialties.value]"
-      />
-    </div>
+    <section v-if="selectMembersList === 'members'">
+      <div v-for="specialties in specialtiesList" :key="specialties.index">
+        <div class="text-body2 text-violet-6">{{ specialties.label }}</div>
+
+        <c-specialists-list
+          class="flex q-mt-md q-gutter-x-md"
+          :specialists="team[specialties.value]"
+        />
+      </div>
+    </section>
+
+    <section v-else>
+      <section>
+        <div class="text-body1 text-liner-button w-min-content">Исходящие</div>
+
+        <q-list>
+          <q-item
+            v-for="application in filteredApplications.outgoing"
+            :key="application.id"
+          >
+            {{ application.name }}
+          </q-item>
+        </q-list>
+      </section>
+
+      <section>
+        <div class="text-body1 text-liner-button w-min-content">Входящие</div>
+
+        <q-list>
+          <q-item
+            v-for="application in filteredApplications.incoming"
+            :key="application.id"
+          >
+            {{ application.name }}
+          </q-item>
+        </q-list>
+      </section>
+    </section>
   </section>
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, computed, ref } from "vue";
 import CSpecialistsList from "./ClubSpecialistsList.vue";
 import CButton from "./ClubButton.vue";
 import { useRouter } from "vue-router";
@@ -49,10 +83,6 @@ const { team } = defineProps({
 
 const isOwner = inject("isOwner");
 
-const membersTeamList = ref([
-  { label: "Участники", value: "members" },
-  { label: "Заявки", value: "applications" },
-]);
 const specialtiesList = ref([
   { label: "Заказчики", value: "customers" },
   { label: "Разработчики", value: "developers" },
@@ -62,7 +92,7 @@ const specialtiesList = ref([
   { label: "Аналитики", value: "analitics" },
 ]);
 
-const selectMembersList = ref("");
+const selectMembersList = ref("members");
 const selectSpecialistsList = ref("");
 
 const inviteUser = () => {
@@ -71,6 +101,19 @@ const inviteUser = () => {
     params: { name: team.name },
   });
 };
+
+const filteredApplications = computed(() => {
+  let incoming = [],
+    outgoing = [];
+
+  team.applications.forEach((application) => {
+    application.sender === "subject"
+      ? incoming.push(application)
+      : outgoing.push(application);
+  });
+
+  return { incoming, outgoing };
+});
 </script>
 
 <style scoped lang="scss"></style>
