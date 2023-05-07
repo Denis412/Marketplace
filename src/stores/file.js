@@ -21,13 +21,11 @@ export const useFileStore = defineStore('file', {
       onResult((queryResult) => {
         this.files = queryResult.data['paginate_file'].data
         this.refetchFiles = refetch
-        console.log(queryResult.data['paginate_file'].data)
       })
     },
 
     SET_CURRENT_TITLE_DOC(value) {
       this.currentTitleDoc = value
-      console.log(this.currentTitleDoc)
     },
 
     SET_CURRENT_EDITOR_VALUE(value) {

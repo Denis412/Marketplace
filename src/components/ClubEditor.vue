@@ -8,7 +8,6 @@
 <script setup>
 import CEditorHeader from "./ClubEditorHeader.vue";
 import CEditorBody from "./ClubEditorBody.vue";
-import { ref } from "vue";
 </script>
 
 <style lang="scss" scoped></style>

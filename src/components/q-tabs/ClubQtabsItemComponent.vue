@@ -37,8 +37,7 @@
 
 <script setup>
 import CQmenuDocument from "./ClubQmenuDocument.vue";
-import { computed, watch, ref } from "vue";
-import { useFileStore } from "src/stores/file";
+import { ref } from "vue";
 
 const showMenu = ref(false);
 

@@ -25,14 +25,14 @@
             {{ item.title }}
             <q-icon
               @click="addDocument"
-              v-if="item.title == 'Лендинг'"
+              v-if="item.title == 'Документы'"
               name="add"
               class="addDoc"
             />
           </div>
         </router-link>
 
-        <c-qtabs-document v-if="item.title == 'Лендинг'" />
+        <c-qtabs-document v-if="item.title == 'Документы'" />
       </q-item>
     </q-list>
 
@@ -90,7 +90,7 @@ const mainTreeItems = ref([
     path: "space",
   },
   {
-    title: "Лендинг",
+    title: "Документы",
     img: "HomeIconDemo.svg",
     path: "addDocument",
     content: "+",

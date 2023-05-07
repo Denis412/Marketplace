@@ -77,7 +77,6 @@ const setTimeoutFunc = ({ minutes, func }) => {
 }
 
 const updateFile = (name, doc) => {
-  console.log(name)
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {

@@ -7,6 +7,7 @@
     min-height="15rem"
     :content-class="'q-px-xl'"
     :toolbar="data.toolbar"
+    :definitions="data.definitions"
   >
     <template v-slot:token>
       <q-btn-dropdown
@@ -17,7 +18,8 @@
         unelevated
         label=""
         size="sm"
-        dropdown-icon="palette"
+        no-icon-animation
+        dropdown-icon="text_format"
       >
         <q-list dense>
           <q-item tag="label" clickable @click="color('backColor', highlight)">
@@ -62,14 +64,13 @@
 <script setup>
 import { computed, ref, watch, onMounted, onBeforeMount } from "vue";
 import { useFileStore } from "src/stores/file";
-import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { filesApi } from "src/sdk/files/file";
 import { data } from "src/utils/documentData";
 
 const route = useRoute();
 const router = useRouter();
 const storeFile = useFileStore();
-const id_route = ref(route.params.id);
 const edit = ref(null);
 const editor = ref("");
 const token = ref(null);

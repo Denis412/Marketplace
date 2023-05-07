@@ -80,12 +80,33 @@ const monthNames = [
   'Ноября',
   'Декабря',
 ]
+const definitions = {
+  undo: {
+    icon: 'img:..\\icons\\back.svg',
+  },
+  redo: {
+    icon: 'img:..\\icons\\forward.svg',
+  },
+  underline: {
+    icon: 'img:..\\icons\\underline.svg',
+  },
+  strike: {
+    icon: 'img:..\\icons\\strike.svg',
+  },
+  bold: {
+    icon: 'img:..\\icons\\bold.svg',
+  },
+  italic: {
+    icon: 'img:..\\icons\\italic.svg',
+  },
+}
 
 const data = {
   lightPalette,
   textPalette,
   toolbar,
   monthNames,
+  definitions
 }
 
 export { data }
