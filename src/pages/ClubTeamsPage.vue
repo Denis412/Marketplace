@@ -20,19 +20,40 @@ import CTeamCardList from "src/components/ClubTeamCardList.vue";
 import { ref, watch } from "vue";
 import teamApi from "src/sdk/team";
 
-const { result: teams, loading } = teamApi.queryAllTeams();
+const { result: teams, loading } = teamApi.paginateTeams({
+  page: 1,
+  perPage: 100,
+});
 const filteredTeams = ref(null);
 
 const teamListByStatus = async (new_status) => {
-  filteredTeams.value = await teamApi.checkStatus(new_status);
+  console.log(new_status.value);
+
+  filteredTeams.value = await teamApi.refetchPaginateTeams({
+    page: 1,
+    perPage: 100,
+    where: {
+      column: "ready_for_orders",
+      operator: "EQ",
+      value: new_status.value,
+    },
+  });
 };
 
 const teamListByChar = async (char) => {
   try {
     filteredTeams.value =
       char !== ""
-        ? await teamApi.checkChar(char)
-        : await teamApi.refetchAllTeams();
+        ? await teamApi.refetchPaginateTeams({
+            page: 1,
+            perPage: 100,
+            where: {
+              column: "name",
+              operator: "FTS",
+              value: char,
+            },
+          })
+        : await teamApi.refetchPaginateTeams({ page: 1, perPage: 100 });
   } catch (error) {
     console.log(error);
   }

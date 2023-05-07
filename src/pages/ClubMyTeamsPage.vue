@@ -35,9 +35,15 @@ import { useUserStore } from "src/stores/user";
 
 const userStore = useUserStore();
 
-const { result: myTeams, loading } = teamApi.queryMyTeams(
-  userStore.GET_CURRENT_USER.subject_id
-);
+const { result: myTeams, loading } = teamApi.paginateTeams({
+  page: 1,
+  perPage: 100,
+  where: {
+    column: "author_id",
+    operator: "EQ",
+    value: userStore.GET_CURRENT_USER.subject_id,
+  },
+});
 
 const requestsIn = ref([]);
 const requestsOut = ref([]);

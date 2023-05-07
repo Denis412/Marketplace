@@ -15,8 +15,8 @@ export const getSpaceById = gql`
 `;
 
 export const paginateSpaces = gql`
-  query paginateSpaces($where: PaginatorWhere) {
-    spaces(page: 1, perPage: 100000, where: $where) {
+  query paginateSpaces($page: Int!, $perPage: Int!, $where: PaginatorWhere) {
+    spaces(page: $page, perPage: $perPage, where: $where) {
       data {
         id
         author_id

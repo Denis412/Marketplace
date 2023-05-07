@@ -93,38 +93,48 @@ const uploadFile = ref(null);
 //   id:"",
 //   avatar:""
 // })
-const id = ref("");
+const teamData = ref("");
 const avatar = ref("");
 
 const createTeam = async () => {
-  if (await teamApi.checkName(form.value)) {
-    try {
-      id.value = await teamApi.create(form.value);
+  // if (await teamApi.checkName(form.value)) {
+  try {
+    teamData.value = await teamApi.create(form.value);
 
-      router.push({
-        name: "my-teams",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    try {
-      avatar.value = await filesApi.uploadFiles(upload_img.value);
+    await teamApi.refetchPaginateTeams({
+      page: 1,
+      perPage: 100,
+      where: {
+        column: "author_id",
+        operator: "EQ",
+        value: teamData.value.author_id,
+      },
+    });
 
-      console.log(avatar.value);
-    } catch (error) {
-      console.log(error);
-    }
-    try {
-      await teamApi.update(id.value, {
-        avatar: avatar.value,
-        name: form.value.name,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    $q.notify("Такое название уже есть, придумайте новое.");
+    router.push({
+      name: "my-teams",
+    });
+  } catch (error) {
+    console.log(error);
   }
+  try {
+    avatar.value = await filesApi.uploadFiles(upload_img.value);
+
+    console.log(avatar.value);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    await teamApi.update(teamData.value.id, {
+      avatar: avatar.value,
+      name: form.value.name,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  // } else {
+  //   $q.notify("Такое название уже есть, придумайте новое.");
+  // }
 };
 
 const updateFile = () => {

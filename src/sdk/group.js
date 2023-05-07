@@ -15,28 +15,22 @@ provideApolloClient(apolloClient);
 const { mutate: creatingGroup } = useMutation(createGroup);
 const { mutate: invitingUser } = useMutation(inviteUser);
 
-const queryGroups = (space_id, where) => {
+const paginateGroups = ({ page, perPage, where, space_id }) => {
   return useQuery(
     getGroupsWithWhere,
-    {
-      where,
-    },
-    spaceHeader(space_id)
+    { page, perPage, where },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 };
 
-const getGroupByName = async (space_id, name) => {
-  const { refetch } = queryGroups(space_id, {
-    column: "name",
-    operator: "EQ",
-    value: `${name}`,
-  });
+const refetchPaginateGroups = async ({ page, perPage, where, space_id }) => {
+  const { refetch } = paginateGroups({ page, perPage, where, space_id });
 
   const { data: groupData } = await refetch();
 
   console.log("group", groupData);
 
-  return groupData.paginate_group.data[0];
+  return groupData.paginate_group.data;
 };
 
 const create = async (space_id, data) => {
@@ -65,6 +59,12 @@ const invite = async (space_id, data) => {
 
 const deleteGroupBy = () => {};
 
-const groupApi = { create, invite, deleteGroupBy, getGroupByName };
+const groupApi = {
+  create,
+  invite,
+  deleteGroupBy,
+  paginateGroups,
+  refetchPaginateGroups,
+};
 
 export default groupApi;

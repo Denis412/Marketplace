@@ -29,113 +29,20 @@ const { mutate: deletingTeam } = useMutation(
   spaceHeader(process.env.MAIN_SPACE_ID)
 );
 
-const { refetch: refetchingTeams } = useQuery(
-  getTeamsWithWhere,
-  {},
-
-  spaceHeader(process.env.MAIN_SPACE_ID)
-);
-
-const queryMyTeams = (author_id) => {
+const paginateTeams = ({ page, perPage, where }) => {
   return useQuery(
     getTeamsWithWhere,
-    {
-      where: {
-        column: "author_id",
-        operator: "EQ",
-        value: `${author_id}`,
-      },
-    },
+    { page, perPage, where },
     spaceHeader(process.env.MAIN_SPACE_ID)
   );
 };
 
-const queryAllTeams = () => {
-  return useQuery(
-    getTeamsWithWhere,
-    {},
-    spaceHeader(process.env.MAIN_SPACE_ID)
-  );
-};
+const refetchPaginateTeams = async ({ page, perPage, where }) => {
+  const { refetch } = paginateTeams({ page, perPage, where });
 
-const queryTeamByName = (name) => {
-  return useQuery(
-    getTeamsWithWhere,
-    {
-      where: {
-        column: "name",
-        operator: "EQ",
-        value: `${name}`,
-      },
-    },
-    spaceHeader(process.env.MAIN_SPACE_ID)
-  );
-};
-
-const refetchTeamByName = async (name) => {
-  const { data: teamData } = await refetchingTeams({
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: `${name}`,
-    },
-  });
-
-  return teamData.paginate_team.data[0];
-};
-
-const refetchAllTeams = async () => {
-  const { data: teamsData } = await refetchingTeams();
+  const { data: teamsData } = await refetch();
 
   return teamsData.paginate_team.data;
-};
-
-const refetchMyTeams = async (author_id) => {
-  const { data: teamsData } = await refetchingTeams({
-    where: {
-      column: "author_id",
-      operator: "EQ",
-      value: `${author_id}`,
-    },
-  });
-
-  return teamsData.paginate_team.data;
-};
-
-const checkStatus = async (status) => {
-  const { data: teamData } = await refetchingTeams({
-    where: {
-      column: "ready_for_orders",
-      operator: "EQ",
-      value: status.value,
-    },
-  });
-
-  return teamData.paginate_team.data;
-};
-
-const checkChar = async (char) => {
-  const { data: teamData } = await refetchingTeams({
-    where: {
-      column: "name",
-      operator: "FTS",
-      value: `${char}`,
-    },
-  });
-
-  return teamData.paginate_team.data;
-};
-
-const checkName = async ({ name }) => {
-  const { data: teamData } = await refetchingTeams({
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: `${name}`,
-    },
-  });
-
-  return teamData.paginate_team.paginatorInfo.count == 0;
 };
 
 const createMainSpace = async ({ name, description }) => {
@@ -144,25 +51,31 @@ const createMainSpace = async ({ name, description }) => {
     description,
   });
 
-  const teamGroup = await groupApi.getGroupByName(
-    spaceData.recordId,
-    "Команда"
-  );
+  const teamGroup = await groupApi.refetchPaginateGroups({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "name",
+      operator: "EQ",
+      value: "Команда",
+    },
+    space_id: spaceData.recordId,
+  });
 
   const createdGroupMembers = await groupApi.create(spaceData.recordId, {
     name: "Участники",
     description: "Группа участников",
-    parent_group_id: teamGroup.id,
+    parent_group_id: teamGroup[0].id,
   });
 
   const createdGroupInvited = await groupApi.create(spaceData.recordId, {
     name: "Приглашенные",
     description: "Группа приглашенных",
-    parent_group_id: teamGroup.id,
+    parent_group_id: teamGroup[0].id,
   });
 
   console.log("space", spaceData);
-  console.log("groups", teamGroup, createdGroupMembers, createdGroupInvited);
+  console.log("groups", teamGroup[0], createdGroupMembers, createdGroupInvited);
 
   return spaceData;
 };
@@ -178,9 +91,7 @@ const create = async ({ name, description }) => {
     },
   });
 
-  refetchMyTeams(teamData.create_team.record.author_id);
-
-  return teamData.create_team.record.id;
+  return teamData.create_team.record;
 };
 
 const update = async (id, data) => {
@@ -188,6 +99,8 @@ const update = async (id, data) => {
     id,
     input: data,
   });
+
+  console.log("update", teamData);
 
   return teamData.update_team.status;
 };
@@ -201,7 +114,7 @@ const deleteTeam = async (team) => {
     id: team.id,
   });
 
-  await refetchAllTeams();
+  await refetchPaginateTeams({ page: 1, perPage: 100 });
 
   console.log("deletedSpace", spaceData, teamData);
 
@@ -217,19 +130,42 @@ const isMember = async (user_id, team) => {
 
   let groupData, groupData1, subjectData, isExist;
 
-  try {
-    groupData = await groupApi.getGroupByName(team.space, "Участники");
-    groupData1 = await groupApi.getGroupByName(team.space, "Команда");
+  const groupRefetch = async (name) => {
+    return await groupApi.refetchPaginateGroups({
+      page: 1,
+      perPage: 1,
+      where: {
+        column: "name",
+        operator: "EQ",
+        value: name,
+      },
+      space_id: team.space,
+    });
+  };
 
-    subjectData = await userApi.getPaginateSubject(team.space, {
-      column: "user_id",
-      operator: "EQ",
-      value: user_id,
+  try {
+    groupData = await groupRefetch("Участники");
+    groupData1 = await groupRefetch("Команда");
+
+    console.log("groudDatas", groupData, groupData1);
+
+    subjectData = await userApi.refetchPaginateSubjects({
+      page: 1,
+      perPage: 1,
+      where: {
+        column: "user_id",
+        operator: "EQ",
+        value: user_id,
+      },
+      space_id: team.space,
+      is_team: true,
     });
 
+    console.log("subject", subjectData[0]);
+
     isExist =
-      subjectData[0].group.find((group) => group.id === groupData.id) ||
-      subjectData[0].group.find((group) => group.id === groupData1.id);
+      subjectData[0].group.find((group) => group.id === groupData[0].id) ||
+      subjectData[0].group.find((group) => group.id === groupData1[0].id);
   } catch (error) {
     isExist = false;
   }
@@ -246,7 +182,23 @@ const sendApplication = async (data) => {
 };
 
 const addToTeam = async (space_id, data, group_name) => {
-  const groupData = await groupApi.getGroupByName(space_id, group_name);
+  const groupData = await groupApi.refetchPaginateGroups({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "name",
+      operator: "EQ",
+      value: group_name,
+    },
+    space_id,
+  });
+
+  const inviteData = await groupApi.invite(space_id, {
+    name: data.name,
+    surname: data.surname,
+    email: data.email,
+    group_id: groupData[0].id,
+  });
 
   await sendApplication({
     name: data.name,
@@ -259,16 +211,9 @@ const addToTeam = async (space_id, data, group_name) => {
     sender: data.sender,
   });
 
-  const inviteData = await groupApi.invite(space_id, {
-    name: data.name,
-    surname: data.surname,
-    email: data.email,
-    group_id: groupData.id,
-  });
+  console.log("inviteData", groupData[0], inviteData);
 
-  console.log("inviteData", groupData, inviteData);
-
-  return groupData;
+  return groupData[0];
 };
 
 const inviteUser = async (space_id, data) =>
@@ -283,18 +228,10 @@ const teamApi = {
   inviteUser,
   acceptUser,
   deleteTeam,
-  checkName,
+  paginateTeams,
+  refetchPaginateTeams,
   isMember,
   sendApplication,
-  refetchAllTeams,
-  queryMyTeams,
-  queryAllTeams,
-  checkStatus,
-  queryTeamByName,
-  refetchMyTeams,
-  refetchAllTeams,
-  refetchTeamByName,
-  checkChar,
 };
 
 export default teamApi;

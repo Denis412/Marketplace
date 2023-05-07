@@ -126,7 +126,15 @@ const updateTeamStatus = async () => {
       ready_for_orders: isReady.value,
     });
 
-    await teamApi.refetchTeamByName(team.name);
+    await teamApi.refetchPaginateTeams({
+      page: 1,
+      perPage: 1,
+      where: {
+        column: "name",
+        operator: "EQ",
+        value: team.name,
+      },
+    });
   } catch (error) {
     console.log(error);
   }

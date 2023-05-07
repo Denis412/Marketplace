@@ -91,12 +91,21 @@ import { useQuasar } from "quasar";
 const route = useRoute();
 const $q = useQuasar();
 
-const { result: team, loading: loadingTeam } = teamApi.queryTeamByName(
-  route.params.name
-);
-const { result: allSpecialities, loading } = specilalityApi.querySpecialities();
+const { result: team, loading: loadingTeam } = teamApi.paginateTeams({
+  page: 1,
+  perPage: 1,
+  where: {
+    column: "name",
+    operator: "EQ",
+    value: route.params.name,
+  },
+});
+const { result: allSpecialities, loading } = specilalityApi.paginateSpeciality({
+  page: 1,
+  perPage: 100,
+});
 const { result: allSubjects, loading: loadingSubjects } =
-  userApi.queryPaginateSubjectsForInvite();
+  userApi.paginateSubjects({ page: 1, perPage: 100, is_invite: true });
 
 const selectedSubjects = ref([]);
 const filter = ref([]);
@@ -140,7 +149,7 @@ const resetSubjects = () => (selectedSubjects.value = []);
   overflow-y: auto;
 
   padding: 24px;
-  background: $grey-2;
+  background: $grey-4;
   border-radius: 10px;
 }
 
@@ -148,6 +157,6 @@ const resetSubjects = () => (selectedSubjects.value = []);
   height: max-content;
 
   border-radius: 10px;
-  background: $grey-2;
+  background: $grey-4;
 }
 </style>

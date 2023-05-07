@@ -13,10 +13,10 @@ import {
 } from "src/graphql/user/mutations";
 import {
   getUser,
-  getSubject,
   getSubjectById,
-  getOtherSpaceSubjectPaginate,
-  paginateSubjectForInvite,
+  paginateSubjectsForInvite,
+  paginateSubjectInAnotherSpace,
+  paginateSubjectsInMainSpace,
 } from "src/graphql/user/queries";
 import { convertSubject, convertUserData } from "src/utils/subject";
 
@@ -45,111 +45,73 @@ const { mutate: resetPasswordConfirmCode } = useMutation(
   userResetPasswordConfirmCodeSetPassword
 );
 
-const queryPaginateSubject = (space_id = 0, where = null) => {
-  if (space_id) {
-    return useQuery(
-      getOtherSpaceSubjectPaginate,
-      {
-        where,
-      },
-      spaceHeader(space_id)
-    );
-  }
+const paginateSubjects = ({
+  where,
+  page,
+  perPage,
+  space_id,
+  is_invite,
+  is_team,
+}) => {
+  const query = is_invite
+    ? paginateSubjectsForInvite
+    : is_team
+    ? paginateSubjectInAnotherSpace
+    : paginateSubjectsInMainSpace;
 
   return useQuery(
-    getSubject,
-    {
-      where,
-    },
-    spaceHeader(process.env.MAIN_SPACE_ID)
+    query,
+    { page, perPage, where },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 };
 
-const queryPaginateSubjectsForInvite = () => {
-  return useQuery(
-    paginateSubjectForInvite,
-    {
-      page: 1,
-      perPage: 100,
-    },
-    spaceHeader(process.env.MAIN_SPACE_ID)
-  );
-};
-
-const queryUser = (space_id, id) => {
-  return useQuery(
-    getUser,
-    {
-      id,
-    },
-    spaceHeader(space_id)
-  );
-};
-
-const querySubjectById = (id, space_id = 0) => {
-  if (space_id) {
-    return useQuery(
-      getSubjectById,
-      {
-        id,
-      },
-      spaceHeader(space_id)
-    );
-  }
-
+const queryGetSubjectById = (id, space_id = 0) => {
   return useQuery(
     getSubjectById,
-    {
-      id,
-    },
-    spaceHeader(process.env.MAIN_SPACE_ID)
+    { id },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 };
 
-const getUserById = async (space_id, id) => {
-  const { refetch } = queryUser(space_id, id);
+const queryGetUserById = (id) => {
+  return useQuery(getUser, { id });
+};
+
+const refetchUserById = async (id) => {
+  const { refetch } = queryGetUserById(id);
 
   const { data: userData } = await refetch();
 
   return userData.user;
 };
 
-const getPaginateSubject = async (where) => {
-  const { refetch } = queryPaginateSubject(where);
+const refetchPaginateSubjects = async ({
+  where,
+  page,
+  perPage,
+  space_id,
+  is_invite,
+  is_team,
+}) => {
+  const { refetch } = paginateSubjects({
+    where,
+    page,
+    perPage,
+    space_id,
+    is_invite,
+    is_team,
+  });
 
-  const { data: subjectData } = await refetch();
+  const { data: subjectsData } = await refetch();
 
-  return subjectData.paginate_subject.data;
+  return subjectsData.paginate_subject.data;
 };
 
-const getPaginateSubjectOtherSpace = async (space_id, where) => {
-  const { refetch } = queryPaginateSubject(space_id, where);
+const refetchSubjectById = async (id, space_id = 0) => {
+  const { refetch } = queryGetSubjectById(id, space_id);
 
   const { data: subjectData } = await refetch();
-
-  return subjectData.paginate_subject.data;
-};
-
-const subjectGetById = async (id) => {
-  const { refetch } = querySubjectById(id);
-
-  console.log("user");
-
-  const { data: subjectData } = await refetch();
-
-  console.log("user", subjectData);
-
-  return subjectData.get_subject;
-};
-
-const subjectGetByIdOtherSpace = async (space_id, id) => {
-  const { refetch } = querySubjectById(id, space_id);
-
-  console.log("user");
-
-  const { data: subjectData } = await refetch();
-
-  console.log("user", subjectData);
 
   return subjectData.get_subject;
 };
@@ -205,10 +167,7 @@ const saveLocalUserData = (saveData) => {
 const saveUserData = async (userInfo, first_entry = false) => {
   tokenApi.save(userInfo.userSignIn.record);
 
-  const userData = await getUserById(
-    process.env.MAIN_SPACE_ID,
-    userInfo.userSignIn.recordId
-  );
+  const userData = await refetchUserById(userInfo.userSignIn.recordId);
 
   // if (first_entry) {
   //   const { data: spaceData } = await creatingSpace({
@@ -229,10 +188,14 @@ const saveUserData = async (userInfo, first_entry = false) => {
 
   console.log("userData", userData, userInfo);
 
-  const subject = await getPaginateSubject({
-    column: "user_id",
-    operator: "EQ",
-    value: userInfo.userSignIn.recordId,
+  const subject = await refetchPaginateSubjects({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "user_id",
+      operator: "EQ",
+      value: userInfo.userSignIn.recordId,
+    },
   });
 
   console.log("subjectData", subject[0]);
@@ -292,17 +255,17 @@ const uploadAvatar = async (file) => {
 };
 
 const userApi = {
+  paginateSubjects,
+  queryGetSubjectById,
+  queryGetUserById,
+  refetchUserById,
+  refetchPaginateSubjects,
+  refetchSubjectById,
   registration,
   setPassword,
   userPasswordSendCode,
   userPasswordConfirmCode,
   login,
-  queryPaginateSubject,
-  subjectGetById,
-  subjectGetByIdOtherSpace,
-  queryPaginateSubjectsForInvite,
-  getPaginateSubject,
-  getPaginateSubjectOtherSpace,
   saveLocalUserData,
   update,
   logout,

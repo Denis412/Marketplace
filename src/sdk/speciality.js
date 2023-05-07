@@ -6,22 +6,22 @@ import apolloClient from "src/apollo/apollo-client";
 
 provideApolloClient(apolloClient);
 
-const querySpecialities = (where = null) => {
+const paginateSpeciality = ({ page, perPage, where }) => {
   return useQuery(
     paginateSpecialities,
-    {},
+    { page, perPage, where },
     spaceHeader(process.env.MAIN_SPACE_ID)
   );
 };
 
-const getAllSpecialities = async () => {
-  const { refetch } = querySpecialities();
+const refetchPaginateSpecialities = async ({ page: perPage, where }) => {
+  const { refetch } = querySpecialities({ page, perPage, where });
 
   const { data: specialitiesData } = await refetch();
 
   return specialitiesData.paginate_speciality.data;
 };
 
-const specilalityApi = { querySpecialities, getAllSpecialities };
+const specilalityApi = { paginateSpeciality, refetchPaginateSpecialities };
 
 export default specilalityApi;

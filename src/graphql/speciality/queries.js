@@ -1,8 +1,12 @@
 import gql from "graphql-tag";
 
 export const paginateSpecialities = gql`
-  query paginateSpecialities($where: ObjectPaginatorWhere) {
-    paginate_speciality(page: 1, perPage: 100, where: $where) {
+  query paginateSpecialities(
+    $page: Int!
+    $perPage: Int!
+    $where: ObjectPaginatorWhere
+  ) {
+    paginate_speciality(page: $page, perPage: $perPage, where: $where) {
       data {
         id
         name

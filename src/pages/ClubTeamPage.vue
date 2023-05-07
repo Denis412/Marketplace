@@ -13,9 +13,15 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const { result: currentTeam, loading } = teamApi.queryTeamByName(
-  route.params.name
-);
+const { result: currentTeam, loading } = teamApi.paginateTeams({
+  page: 1,
+  perPage: 1,
+  where: {
+    column: "name",
+    operator: "EQ",
+    value: route.params.name,
+  },
+});
 </script>
 
 <style scoped lang="scss"></style>
