@@ -22,6 +22,9 @@ export function useValidators() {
       (val && val.length > 0) ||
       "Заполните хотя бы одно из полей",
 
+    requiredOneOfNumber: (val1) => (val) =>
+      val1 > 0 || val > 0 || "Заполните хотя бы одно из полей",
+
     positive: (val) => val >= 0 || "Введите неотрицательное значение",
 
     biggerThan: (val1) => (val) =>
