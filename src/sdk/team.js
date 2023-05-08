@@ -208,6 +208,7 @@ const addToTeam = async (space_id, data, group_name) => {
     team: {
       [process.env.TEAM_TYPE_ID]: data.team_id,
     },
+    status: process.env.APPLICATION_STATUS_PENDING,
     sender: data.sender,
   });
 

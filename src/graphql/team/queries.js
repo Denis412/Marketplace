@@ -22,6 +22,7 @@ export const getTeamsWithWhere = gql`
               last_name
             }
           }
+          status
           sender
         }
         space

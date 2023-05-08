@@ -40,30 +40,31 @@
     </section>
 
     <section v-else>
-      <section>
-        <div class="text-body1 text-liner-button w-min-content">Исходящие</div>
-
-        <q-list>
-          <q-item
-            v-for="application in filteredApplications.outgoing"
-            :key="application.id"
-          >
-            {{ application.name }}
-          </q-item>
-        </q-list>
+      <section v-if="!team.applications.length">
+        <h3 class="text-h3 text-center text-liner-button">
+          На данный момент нет заявок!
+        </h3>
       </section>
 
-      <section>
-        <div class="text-body1 text-liner-button w-min-content">Входящие</div>
+      <section v-if="filteredApplications.outgoing.length">
+        <div class="text-body1 text-liner-button w-min-content q-mb-md">
+          Исходящие
+        </div>
 
-        <q-list>
-          <q-item
-            v-for="application in filteredApplications.incoming"
-            :key="application.id"
-          >
-            {{ application.name }}
-          </q-item>
-        </q-list>
+        <c-team-applications-list
+          :applications="filteredApplications.outgoing"
+        />
+      </section>
+
+      <section v-if="filteredApplications.incoming.length" class="q-mt-md">
+        <div class="text-body1 text-liner-button w-min-content q-mb-md">
+          Входящие
+        </div>
+
+        <c-team-applications-list
+          :applications="filteredApplications.incoming"
+          incoming
+        />
       </section>
     </section>
   </section>
@@ -72,6 +73,7 @@
 <script setup>
 import { inject, computed, ref } from "vue";
 import CSpecialistsList from "./ClubSpecialistsList.vue";
+import CTeamApplicationsList from "./ClubTeamApplicationsList.vue";
 import CButton from "./ClubButton.vue";
 import { useRouter } from "vue-router";
 
@@ -103,16 +105,19 @@ const inviteUser = () => {
 };
 
 const filteredApplications = computed(() => {
-  let incoming = [],
-    outgoing = [];
+  return team.applications.reduce(
+    (acc, application) => {
+      acc[application.sender == "subject" ? "incoming" : "outgoing"].push(
+        application
+      );
 
-  team.applications.forEach((application) => {
-    application.sender === "subject"
-      ? incoming.push(application)
-      : outgoing.push(application);
-  });
-
-  return { incoming, outgoing };
+      return acc;
+    },
+    {
+      incoming: [],
+      outgoing: [],
+    }
+  );
 });
 </script>
 
