@@ -228,9 +228,22 @@ const addToTeam = async ({ team_id, space_id, data, group_name }) => {
 
     console.log("invite", inviteData);
 
+    const teamData = await refetchPaginateTeams({
+      page: 1,
+      perPage: 1,
+      where: {
+        column: "id",
+        operator: "EQ",
+        value: team_id,
+      },
+    });
+
     await update(team_id, {
       members: {
-        [process.env.SUBJECT_TYPE_ID]: [data.id],
+        [process.env.SUBJECT_TYPE_ID]: [
+          ...teamData[0].members.map((member) => member.id),
+          data.id,
+        ],
       },
     });
 
