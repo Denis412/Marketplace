@@ -100,6 +100,17 @@ export const paginateSubjectsInMainSpace = gql`
         birthday {
           date
         }
+        speciality {
+          id
+          name
+        }
+        teams {
+          id
+          avatar
+          space
+          description
+          name
+        }
         group {
           id
           name
@@ -132,6 +143,27 @@ export const paginateSubjectsForInvite = gql`
         email {
           email
         }
+      }
+    }
+  }
+`;
+
+export const paginateSubjectsForMyTeams = gql`
+  query getMyTeams($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
+    paginate_subject(page: $page, perPage: $perPage, where: $where) {
+      data {
+        id
+        fullname {
+          first_name
+        }
+        teams {
+          id
+          name
+          description
+          avatar
+        }
+        created_at
+        updated_at
       }
     }
   }

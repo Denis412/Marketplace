@@ -56,6 +56,7 @@ const isOwner = computed(() => currentUser.value.subject_id === team.author_id);
 const isMember = ref(false);
 const checkingMember = ref(true);
 
+provide("team", team);
 provide("isOwner", isOwner);
 provide("isMember", isMember);
 

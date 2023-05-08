@@ -10,6 +10,7 @@
           class="bg-transparent"
         >
           <q-tab name="members" class="text-body1" label="Участники" />
+
           <q-tab
             v-if="isOwner"
             name="applications"
@@ -28,6 +29,8 @@
         />
       </q-toolbar>
     </div>
+
+    <!-- <pre>{{ team.applications }}</pre> -->
 
     <section v-if="selectMembersList === 'members'">
       <div v-for="specialties in specialtiesList" :key="specialties.index">
@@ -72,13 +75,13 @@
 </template>
 
 <script setup>
-import { inject, computed, ref } from "vue";
+import { inject, ref } from "vue";
 import CSpecialistsList from "./ClubSpecialistsList.vue";
 import CTeamApplicationsList from "./ClubTeamApplicationsList.vue";
 import CButton from "./ClubButton.vue";
 import { useRouter } from "vue-router";
-import applicationApi from "src/sdk/application";
-import { useApplication } from "src/use/application";
+import { useApplications } from "src/use/applications";
+import teamApi from "src/sdk/team";
 
 const isOwner = inject("isOwner");
 
@@ -87,7 +90,7 @@ const { team } = defineProps({
 });
 
 const router = useRouter();
-const { applications, filteredApplications } = useApplication({
+const { applications, filteredApplications } = useApplications({
   team,
   is_owner: isOwner.value,
 });
@@ -104,7 +107,7 @@ const specialtiesList = ref([
 const selectMembersList = ref("members");
 const selectSpecialistsList = ref("");
 
-const inviteUser = () => {
+const inviteUser = async () => {
   router.push({
     name: "teamInvite",
     params: { name: team.name },

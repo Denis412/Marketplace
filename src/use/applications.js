@@ -1,7 +1,7 @@
 import applicationApi from "src/sdk/application";
 import { computed } from "vue";
 
-export const useApplication = ({ team, is_owner }) => {
+export const useApplications = ({ team, is_owner }) => {
   if (!is_owner) return {};
 
   const { result: applications } = applicationApi.paginateApplication({

@@ -80,6 +80,17 @@ const createMainSpace = async ({ name, description }) => {
   return spaceData;
 };
 
+const update = async (id, data) => {
+  const { data: teamData } = await updatingTeam({
+    id,
+    input: data,
+  });
+
+  console.log("update", teamData);
+
+  return teamData.update_team.status;
+};
+
 const create = async ({ name, description }) => {
   const spaceData = await createMainSpace({ name, description });
 
@@ -91,18 +102,24 @@ const create = async ({ name, description }) => {
     },
   });
 
-  return teamData.create_team.record;
-};
-
-const update = async (id, data) => {
-  const { data: teamData } = await updatingTeam({
-    id,
-    input: data,
+  await update(teamData.create_team.recordId, {
+    members: {
+      [process.env.SUBJECT_TYPE_ID]: [teamData.create_team.record.author_id],
+    },
   });
 
-  console.log("update", teamData);
+  await userApi.refetchPaginateSubjects({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "id",
+      operator: "EQ",
+      value: teamData.create_team.record.author_id,
+    },
+    is_my_teams: true,
+  });
 
-  return teamData.update_team.status;
+  return teamData.create_team.record;
 };
 
 const deleteTeam = async (team) => {
@@ -187,7 +204,7 @@ const sendApplication = async (data) => {
   return applicationData;
 };
 
-const addToTeam = async (space_id, data, group_name) => {
+const addToTeam = async ({ team_id, space_id, data, group_name }) => {
   const groupData = await groupApi.refetchPaginateGroups({
     page: 1,
     perPage: 1,
@@ -199,12 +216,30 @@ const addToTeam = async (space_id, data, group_name) => {
     space_id,
   });
 
-  const inviteData = await groupApi.invite(space_id, {
-    name: data.name,
-    surname: data.surname,
-    email: data.email,
-    group_id: groupData[0].id,
-  });
+  let inviteData;
+
+  if (group_name === "Участники") {
+    inviteData = await groupApi.invite(space_id, {
+      name: data.name,
+      surname: data.surname,
+      email: data.email,
+      group_id: groupData[0].id,
+    });
+
+    console.log("invite", inviteData);
+
+    await update(team_id, {
+      members: {
+        [process.env.SUBJECT_TYPE_ID]: [data.id],
+      },
+    });
+
+    await applicationApi.update(data.application_id, {
+      status: process.env.APPLICATION_STATUS_APPROVED,
+    });
+
+    return;
+  }
 
   await sendApplication({
     name: data.name,
@@ -223,11 +258,11 @@ const addToTeam = async (space_id, data, group_name) => {
   return groupData[0];
 };
 
-const inviteUser = async (space_id, data) =>
-  await addToTeam(space_id, data, "Приглашенные");
+const inviteUser = async ({ team_id, space_id, data }) =>
+  await addToTeam({ team_id, space_id, data, group_name: "Приглашенные" });
 
-const acceptUser = async (space_id, data) =>
-  await addToTeam(space_id, data, "Участники");
+const acceptUser = async ({ team_id, space_id, data }) =>
+  await addToTeam({ team_id, space_id, data, group_name: "Участники" });
 
 const teamApi = {
   create,

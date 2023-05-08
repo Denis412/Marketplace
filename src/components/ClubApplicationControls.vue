@@ -3,15 +3,24 @@
     <section class="text-body2">{{ statusObject.updated_at }}</section>
 
     <section class="flex items-center q-gutter-x-md text-body1">
-      <div v-if="!incoming" :style="{ color: statusObject.property?.color }">
+      <div :style="{ color: statusObject.property?.color }">
         {{ statusObject.property?.label }}
       </div>
 
       <c-button v-if="!incoming" background :label="labelButton" />
 
       <div v-else class="flex q-gutter-x-md">
-        <c-button background label="Принять" />
-        <c-button outline label="Отклонить" />
+        <c-button
+          background
+          label="Принять"
+          @click="$emit('accept', application)"
+        />
+
+        <c-button
+          outline
+          label="Отклонить"
+          @click="$emit('cancel', application)"
+        />
       </div>
     </section>
   </footer>
@@ -23,9 +32,8 @@ import { computed } from "vue";
 import CButton from "./ClubButton.vue";
 import propertyApi from "/src/sdk/property";
 
-const { sender, status, incoming } = defineProps({
-  sender: String,
-  status: String,
+const { application, incoming } = defineProps({
+  application: Object,
   incoming: Boolean,
 });
 
@@ -35,7 +43,7 @@ const { result: statusProperty, loading } = propertyApi.queryPropertyById({
 
 const statusObject = computed(() => {
   let property = statusProperty.value?.property.meta.options.find(
-    (option) => option.id === status
+    (option) => option.id === application.status
   );
 
   const lastTimeUpdated = new Date(statusProperty.value?.property.updated_at);

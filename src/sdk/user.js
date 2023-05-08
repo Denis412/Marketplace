@@ -17,6 +17,7 @@ import {
   paginateSubjectsForInvite,
   paginateSubjectInAnotherSpace,
   paginateSubjectsInMainSpace,
+  paginateSubjectsForMyTeams,
 } from "src/graphql/user/queries";
 import { convertSubject, convertUserData } from "src/utils/subject";
 
@@ -52,12 +53,14 @@ const paginateSubjects = ({
   space_id,
   is_invite,
   is_team,
+  is_my_teams,
 }) => {
-  const query = is_invite
-    ? paginateSubjectsForInvite
-    : is_team
-    ? paginateSubjectInAnotherSpace
-    : paginateSubjectsInMainSpace;
+  let query;
+
+  if (is_invite) query = paginateSubjectsForInvite;
+  else if (is_team) query = paginateSubjectInAnotherSpace;
+  else if (is_my_teams) query = paginateSubjectsForMyTeams;
+  else query = paginateSubjectsInMainSpace;
 
   return useQuery(
     query,

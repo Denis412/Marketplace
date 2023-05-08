@@ -125,13 +125,18 @@ const inviteSubjects = () => {
 
   try {
     selectedSubjects.value.forEach(async (subject) => {
-      await teamApi.inviteUser(team.value.paginate_team.data[0].space, {
-        name: subject.fullname.first_name,
-        surname: subject.fullname.last_name,
-        email: subject.email.email,
-        subject_id: subject.id,
+      await teamApi.inviteUser({
+        space_id: team.value.paginate_team.data[0].space,
         team_id: team.value.paginate_team.data[0].id,
-        sender: "team",
+        data: {
+          id: subject.id,
+          name: subject.fullname.first_name,
+          surname: subject.fullname.last_name,
+          email: subject.email.email,
+          subject_id: subject.id,
+          team_id: team.value.paginate_team.data[0].id,
+          sender: "team",
+        },
       });
 
       await applicationApi.refetchPaginateApplications({

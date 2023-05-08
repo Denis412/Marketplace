@@ -62,8 +62,9 @@ const create = async (data) => {
   return applicationData.create_application;
 };
 
-const update = async (data) => {
+const update = async (id, data) => {
   const { data: applicationData } = await updatingApplication({
+    id,
     input: data,
   });
 
