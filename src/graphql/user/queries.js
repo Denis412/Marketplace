@@ -28,12 +28,14 @@ export const getSubjectById = gql`
       gender
       city
       applications {
+        sender
         id
         status
         subject{
           id
         }
         team{
+          author_id
           name
           description
           avatar

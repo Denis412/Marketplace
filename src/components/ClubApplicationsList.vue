@@ -1,8 +1,15 @@
 <template>
-  <q-list v-if="applications" class="row c-mb-32 q-col-gutter-lg">
+<p class="text-h4 c-mb-32">Входящие заявки</p>
+  <q-list class="row c-mb-32 q-col-gutter-lg">
     <section class="col-6" v-for="application in applications" :key="application.id">
-      <c-applications-card-inbox v-if="type===false" :application="application" :team="team" :currentUser="currentUser"/>
-      <c-applications-card-outbox v-if="type===true" :application="application" :team="team" />
+      <c-applications-card-inbox :application="application" :currentUser="currentUser"/>
+    </section>
+  </q-list>
+
+<p class="text-h4 c-mb-32">Исходящие заявки</p>
+  <q-list class="row c-mb-32 q-col-gutter-lg">
+    <section class="col-6" v-for="application in applications" :key="application.id">
+      <c-applications-card-outbox :application="application" :currentUser="currentUser"/>
     </section>
   </q-list>
 </template>
@@ -12,12 +19,12 @@ import CApplicationsCardInbox from "./ClubApplicationsCardInbox.vue";
 import CApplicationsCardOutbox from "./ClubApplicationsCardOutbox.vue";
 import { ref } from "vue"
 
-const { team, applications, type, currentUser } = defineProps({
-  team: Object,
+const { applications, currentUser } = defineProps({
   applications: Array,
-  type: Boolean,
   currentUser: Object
 });
+
+console.log("3)all app-list: ", applications)
 
 </script>
 

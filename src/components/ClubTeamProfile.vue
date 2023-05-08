@@ -17,9 +17,9 @@
         />
         <c-team-profile-members :team="team" :currentUser="currentUser" />
       </section>
-      <section>
+      <!-- <section>
           <c-team-profile-applications :team="team" :currentUser="currentUser"/>
-      </section>
+      </section> -->
     </main>
   </section>
 </template>

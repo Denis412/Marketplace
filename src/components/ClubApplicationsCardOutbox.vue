@@ -1,6 +1,7 @@
 <template>
+ 
   <q-card
-    v-if="team.author_id==application.subject.id"
+    v-if="application.sender!=='team'"
     class="team rounded-borders-10 c-pa-24 all-pointer-events cursor-pointer justify-between"
     >
     <div class="flex no-wrap card-section q-p-sm">
@@ -57,13 +58,14 @@
 import CButton from "src/components/ClubButton.vue";
 import applicationApi from "src/sdk/application";
 
-  const { application, team } = defineProps({
+  const { application, currentUser } = defineProps({
     application: Object,
-    team: Object,
+    currentUser: Object
   });
 
+  // console.log("out", application.team.author_id, currentUser.subject_id)
+
   const deleteApplication = async (app_id) => {
-    console.log("Mayaha", app_id)
     await applicationApi.deleteById(app_id)
   }
 

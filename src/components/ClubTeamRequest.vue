@@ -1,37 +1,34 @@
 <template>
   <div class="club-mb-32">
     <h4 class="text-h4 club-mb-16">{{ title }}</h4>
-
-    <div v-if="requests.length">
-      <c-team-card
-        v-for="request in requests"
-        :key="request.id"
-        :team="request"
-      />
-    </div>
-
-    <div class="c-team-requests flex justify-center" v-else>
-      <div class="flex flex-center club-my-64">
-        <q-img
-          class="c-team-emptyImg"
-          src="/src/assets/teams/emptyRequest.png"
-        />
-
-        <div class="c-team-ml-78 flex items-center">
-          <h6 class="text-body2">Здесь пока пусто</h6>
-        </div>
-      </div>
-    </div>
+      <c-team-profile-applications :applications="userApplications" :currentUser="currentUser"/>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import CTeamCard from "src/components/ClubTeamCard.vue";
+import CTeamProfileApplications from "./ClubTeamProfileApplications.vue"
+import applicationApi from "src/sdk/application"
+import userApi from "src/sdk/user";
 
-const { title, requests } = defineProps({
-  title: String,
-  requests: Object,
-});
+const { title, currentUser } = defineProps({
+        title: String,
+        currentUser: Object
+    });
+
+    const userData = ref()
+    const userApplications = ref([])
+
+console.log("user_id", currentUser.subject_id)
+
+    const getUserData = async () =>{
+        userData.value = await userApi.subjectGetById(currentUser.subject_id)
+        userApplications.value = userData.value.applications
+        console.log("1) all appl:  ", userApplications.value)
+    }
+   
+   getUserData()
 </script>
 
 <style lang="scss" scoped>

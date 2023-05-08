@@ -1,32 +1,47 @@
 <template>
-    <p class="text-h4 c-mb-32">Исходящие заявки</p>
-    <c-applications-list  :team="team" :applications="userApplications" :type="true"/>
+    <c-applications-list
+        :applications="applications" 
+        :currentUser="currentUser"
+      />
     
-    <p class="text-h4 c-mb-32">Входящие заявки</p>
-    <c-applications-list  :team="team" :applications="teamApplications" :type="false" :currentUser="currentUser"/>
+    <div class="c-team-requests flex justify-center">
+      <div class="flex flex-center club-my-64">
+        <q-img
+          class="c-team-emptyImg"
+          src="/src/assets/teams/emptyRequest.png"
+        />
+
+        <div class="c-team-ml-78 flex items-center">
+          <h6 class="text-body2">Здесь пока пусто</h6>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script setup>
-    import { computed, ref } from "vue"
     import CApplicationsList from "./ClubApplicationsList.vue";
-    import applicationApi from "src/sdk/application"
-    import userApi from "src/sdk/user"
 
-    const { team, currentUser } = defineProps({
-        team: Object,
+    const { applications, currentUser } = defineProps({
+        applications: Array,
         currentUser: Object,
     });
 
-    const teamApplications = ref()
-    const userData = ref()
-    const userApplications = ref()
+    console.log("2) all appl-2: ", applications)
 
-    teamApplications.value = team.applications
-
-    const getUserData = async () =>{
-        userData.value = await userApi.subjectGetById(currentUser.subject_id)
-        userApplications.value = userData.value.applications
-    }
-   
-   getUserData()
 </script>
+
+<style lang="scss" scoped>
+.c-team {
+  &-emptyImg {
+    width: 205px;
+  }
+  &-requests {
+    width: 100%;
+    border: 1px dashed #5c309f;
+    border-radius: 5px;
+  }
+  &-ml-78 {
+    margin-left: 78px;
+  }
+}
+</style>
