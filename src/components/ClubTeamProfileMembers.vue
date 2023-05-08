@@ -23,6 +23,7 @@
         />
       </q-toolbar>
     </div>
+    <!-- <pre>{{ applications }}</pre> -->
 
     <section v-if="selectMembersList === 'members'">
       <div v-for="specialties in specialtiesList" :key="specialties.index">
@@ -36,7 +37,7 @@
     </section>
 
     <section v-else>
-      <section v-if="!team.applications.length">
+      <section v-if="!applications.paginate_application.data.length">
         <h3 class="text-h3 text-center text-liner-button">
           На данный момент нет заявок!
         </h3>
@@ -101,8 +102,18 @@ const inviteUser = () => {
   });
 };
 
+const { result: applications } = applicationApi.paginateApplication({
+  page: 1,
+  perPage: 100,
+  where: {
+    column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
+    operator: "EQ",
+    value: team.id,
+  },
+});
+
 const filteredApplications = computed(() => {
-  return team.applications.reduce(
+  return applications.value?.paginate_application.data.reduce(
     (acc, application) => {
       acc[application.sender == "subject" ? "incoming" : "outgoing"].push(
         application

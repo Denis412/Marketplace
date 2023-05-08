@@ -9,13 +9,16 @@ export const paginateApplications = gql`
     paginate_application(page: $page, perPage: $perPage, where: $where) {
       data {
         id
-        sender
-        status
+        name
         subject {
+          id
           fullname {
             first_name
+            last_name
           }
         }
+        status
+        sender
         team {
           id
           name

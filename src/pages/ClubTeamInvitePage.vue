@@ -134,17 +134,15 @@ const inviteSubjects = () => {
         sender: "team",
       });
 
-      const gg = await teamApi.refetchPaginateTeams({
+      await applicationApi.refetchPaginateApplications({
         page: 1,
-        perPage: 1,
+        perPage: 100,
         where: {
-          column: "name",
+          column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
           operator: "EQ",
-          value: route.params.name,
+          value: team.value.paginate_team.data[0].id,
         },
       });
-
-      console.log("teams", gg);
     });
 
     $q.notify({
@@ -154,7 +152,7 @@ const inviteSubjects = () => {
 
     router.push({
       name: "team",
-      params: { name: team.value.paginate_team.data[0].name },
+      params: { name: route.params.name },
     });
   } catch (error) {
     console.log(error);
