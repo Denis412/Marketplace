@@ -10,7 +10,12 @@
           class="bg-transparent"
         >
           <q-tab name="members" class="text-body1" label="Участники" />
-          <q-tab name="applications" class="text-body1" label="Заявки" />
+          <q-tab
+            v-if="isOwner"
+            name="applications"
+            class="text-body1"
+            label="Заявки"
+          />
         </q-tabs>
 
         <q-space />
@@ -23,7 +28,6 @@
         />
       </q-toolbar>
     </div>
-    <!-- <pre>{{ applications }}</pre> -->
 
     <section v-if="selectMembersList === 'members'">
       <div v-for="specialties in specialtiesList" :key="specialties.index">
@@ -74,14 +78,19 @@ import CTeamApplicationsList from "./ClubTeamApplicationsList.vue";
 import CButton from "./ClubButton.vue";
 import { useRouter } from "vue-router";
 import applicationApi from "src/sdk/application";
+import { useApplication } from "src/use/application";
 
-const router = useRouter();
+const isOwner = inject("isOwner");
 
 const { team } = defineProps({
   team: Object,
 });
 
-const isOwner = inject("isOwner");
+const router = useRouter();
+const { applications, filteredApplications } = useApplication({
+  team,
+  is_owner: isOwner.value,
+});
 
 const specialtiesList = ref([
   { label: "Заказчики", value: "customers" },
@@ -101,32 +110,6 @@ const inviteUser = () => {
     params: { name: team.name },
   });
 };
-
-const { result: applications } = applicationApi.paginateApplication({
-  page: 1,
-  perPage: 100,
-  where: {
-    column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
-    operator: "EQ",
-    value: team.id,
-  },
-});
-
-const filteredApplications = computed(() => {
-  return applications.value?.paginate_application.data.reduce(
-    (acc, application) => {
-      acc[application.sender == "subject" ? "incoming" : "outgoing"].push(
-        application
-      );
-
-      return acc;
-    },
-    {
-      incoming: [],
-      outgoing: [],
-    }
-  );
-});
 </script>
 
 <style scoped lang="scss"></style>

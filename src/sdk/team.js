@@ -120,7 +120,7 @@ const deleteTeam = async (team) => {
     id: team.id,
   });
 
-  await refetchPaginateTeams({ page: 1, perPage: 100 });
+  // await refetchPaginateTeams({ page: 1, perPage: 100 });
 
   console.log("deletedSpace", spaceData, teamData);
 
