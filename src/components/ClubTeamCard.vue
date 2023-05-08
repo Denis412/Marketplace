@@ -24,11 +24,7 @@
         {{ team.description }}
       </p>
 
-      <c-button
-        color="negative"
-        label="Удалить"
-        @click.stop="teamApi.deleteTeam(team)"
-      />
+      <c-button color="negative" label="Удалить" @click.stop="deleteTeam" />
     </q-card-section>
   </q-card>
 </template>
@@ -37,6 +33,7 @@
 import CButton from "src/components/ClubButton.vue";
 import teamApi from "src/sdk/team";
 import router from "../router";
+import { ref } from "vue";
 
 const { team } = defineProps({
   team: Object,
@@ -48,6 +45,8 @@ const to = async () => {
     params: { name: team.name },
   });
 };
+
+const deleteTeam = async () => await teamApi.deleteTeam(team);
 </script>
 
 <style lang="scss" scoped>

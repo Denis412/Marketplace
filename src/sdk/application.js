@@ -82,12 +82,28 @@ const deleteById = async (id) => {
   return applicationData.delete_application;
 };
 
+const clearTeamApplications = async ({ page, perPage, team_id, space_id }) => {
+  const applications = await refetchPaginateApplications({
+    page,
+    perPage,
+    where: {
+      column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
+      operator: "EQ",
+      value: team_id,
+    },
+    space_id,
+  });
+
+  for (let application of applications) await deleteById(application.id);
+};
+
 const applicationApi = {
   paginateApplication,
   refetchPaginateApplications,
   create,
   update,
   deleteById,
+  clearTeamApplications,
 };
 
 export default applicationApi;

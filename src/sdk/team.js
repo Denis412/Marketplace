@@ -108,6 +108,12 @@ const update = async (id, data) => {
 const deleteTeam = async (team) => {
   console.log("deletingTeam", team);
 
+  await applicationApi.clearTeamApplications({
+    page: 1,
+    perPage: 1000,
+    team_id: team.id,
+  });
+
   const spaceData = await spaceApi.deleteById(team.space);
 
   const { data: teamData } = await deletingTeam({
