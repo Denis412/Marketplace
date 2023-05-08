@@ -1,18 +1,20 @@
 <template>
-  <q-list class="row q-gutter-lg">
-    <q-card
-      flat
+  <q-list class="row">
+    <section
       v-for="application in applications"
       :key="application.id"
-      class="bg-gray4 col-4 q-pa-md applications-item"
+      class="col-4 q-pa-sm"
     >
-      <c-specialist-item :specialist="application.subject" />
-      <c-application-controls
-        :sender="application.sender"
-        :status="application.status"
-        :incoming="incoming"
-      />
-    </q-card>
+      <q-card flat class="bg-gray4 q-pa-md applications-item">
+        <c-specialist-item :specialist="application.subject" />
+
+        <c-application-controls
+          :sender="application.sender"
+          :status="application.status"
+          :incoming="incoming"
+        />
+      </q-card>
+    </section>
   </q-list>
 </template>
 

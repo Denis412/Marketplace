@@ -24,10 +24,6 @@
       </q-toolbar>
     </div>
 
-    <!-- <pre>{{ team }}</pre> -->
-    <!-- <pre>{{ selectMembersList }}</pre> -->
-    <!-- <pre>{{ filteredApplications }}</pre> -->
-
     <section v-if="selectMembersList === 'members'">
       <div v-for="specialties in specialtiesList" :key="specialties.index">
         <div class="text-body2 text-violet-6">{{ specialties.label }}</div>
@@ -76,6 +72,7 @@ import CSpecialistsList from "./ClubSpecialistsList.vue";
 import CTeamApplicationsList from "./ClubTeamApplicationsList.vue";
 import CButton from "./ClubButton.vue";
 import { useRouter } from "vue-router";
+import applicationApi from "src/sdk/application";
 
 const router = useRouter();
 

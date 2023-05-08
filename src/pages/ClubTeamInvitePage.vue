@@ -43,7 +43,13 @@
           </div>
 
           <div class="q-mt-md q-gutter-x-md text-body1">
-            <c-button background label="Пригласить" @click="inviteSubjects" />
+            <c-button
+              :disable="!selectedSubjects.length"
+              background
+              label="Пригласить"
+              @click="inviteSubjects"
+            />
+
             <c-button outline label="Отменить" />
           </div>
         </section>
@@ -85,9 +91,11 @@ import { provide, ref } from "vue";
 import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";
 import teamApi from "src/sdk/team";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import applicationApi from "src/sdk/application";
 
+const router = useRouter();
 const route = useRoute();
 const $q = useQuasar();
 
@@ -125,11 +133,28 @@ const inviteSubjects = () => {
         team_id: team.value.paginate_team.data[0].id,
         sender: "team",
       });
+
+      const gg = await teamApi.refetchPaginateTeams({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: route.params.name,
+        },
+      });
+
+      console.log("teams", gg);
     });
 
     $q.notify({
       type: "positive",
       message: "Приглашения отправлены!",
+    });
+
+    router.push({
+      name: "team",
+      params: { name: team.value.paginate_team.data[0].name },
     });
   } catch (error) {
     console.log(error);
