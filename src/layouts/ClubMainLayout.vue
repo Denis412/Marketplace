@@ -16,12 +16,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref, provide } from "vue";
 import CMainHeader from "src/components/ClubMainHeader.vue";
 import CMainDrawer from "src/components/ClubMainDrawer.vue";
 import CMainFooter from "src/components/Landing/ClubMainFooter.vue";
+import { useUserStore } from "src/stores/user";
 
 const exclude = ref(["ClubTeamPage"]);
+
+const currentUser = computed(() => useUserStore().GET_CURRENT_USER);
+
+provide("currentUser", currentUser);
 </script>
 
 <style lang="scss"></style>

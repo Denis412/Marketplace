@@ -139,20 +139,30 @@ const inviteSubjects = () => {
         },
       });
 
-      await applicationApi.refetchPaginateApplications({
+      await teamApi.refetchPaginateTeams({
         page: 1,
-        perPage: 100,
+        perPage: 1,
         where: {
-          column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
+          column: "name",
           operator: "EQ",
-          value: team.value.paginate_team.data[0].id,
+          value: route.params.name,
         },
       });
-    });
 
-    $q.notify({
-      type: "positive",
-      message: "Приглашения отправлены!",
+      // await applicationApi.refetchPaginateApplications({
+      //   page: 1,
+      //   perPage: 100,
+      //   where: {
+      //     column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
+      //     operator: "EQ",
+      //     value: team.value.paginate_team.data[0].id,
+      //   },
+      // });
+
+      $q.notify({
+        type: "positive",
+        message: "Приглашения отправлены!",
+      });
     });
 
     router.push({

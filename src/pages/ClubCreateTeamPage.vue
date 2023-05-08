@@ -5,9 +5,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import CCreateTeamForm from "src/components/ClubCreateTeamForm.vue";
-import CTeamProfile from "src/components/ClubTeamProfile.vue";
 </script>
 
 <style scoped lang="scss"></style>

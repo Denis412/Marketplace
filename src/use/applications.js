@@ -1,25 +1,19 @@
-import applicationApi from "src/sdk/application";
 import { computed } from "vue";
 
-export const useApplications = ({ team, is_owner }) => {
-  if (!is_owner) return {};
-
-  const { result: applications } = applicationApi.paginateApplication({
-    page: 1,
-    perPage: 100,
-    where: {
-      column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
-      operator: "EQ",
-      value: team.id,
-    },
-  });
+export const useApplications = (object, is_team = false) => {
+  console.log("object", object);
 
   const filteredApplications = computed(() => {
-    return applications.value?.paginate_application.data.reduce(
+    return object.value?.applications.reduce(
       (acc, application) => {
-        acc[application.sender == "subject" ? "incoming" : "outgoing"].push(
-          application
-        );
+        if (is_team)
+          acc[application.sender == "subject" ? "incoming" : "outgoing"].push(
+            application
+          );
+        else
+          acc[application.sender == "team" ? "incoming" : "outgoing"].push(
+            application
+          );
 
         return acc;
       },
@@ -31,7 +25,6 @@ export const useApplications = ({ team, is_owner }) => {
   });
 
   return {
-    applications,
     filteredApplications,
   };
 };

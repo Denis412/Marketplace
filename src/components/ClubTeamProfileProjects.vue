@@ -65,9 +65,8 @@ import { inject, ref } from "vue";
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";
 
-const { projects, currentUser } = defineProps({
+const { projects } = defineProps({
   projects: Array,
-  currentUser: Object,
 });
 
 const typesProjectsList = ref([

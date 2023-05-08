@@ -44,7 +44,7 @@
     </section>
 
     <section v-else>
-      <section v-if="!applications.paginate_application.data.length">
+      <section v-if="!currentTeam.applications.length">
         <h3 class="text-h3 text-center text-liner-button">
           На данный момент нет заявок!
         </h3>
@@ -55,8 +55,9 @@
           Исходящие
         </div>
 
-        <c-team-applications-list
+        <c-applications-list
           :applications="filteredApplications.outgoing"
+          subjects
         />
       </section>
 
@@ -65,9 +66,10 @@
           Входящие
         </div>
 
-        <c-team-applications-list
+        <c-applications-list
           :applications="filteredApplications.incoming"
           incoming
+          subjects
         />
       </section>
     </section>
@@ -77,23 +79,17 @@
 <script setup>
 import { computed, inject, ref } from "vue";
 import CSpecialistsList from "./ClubSpecialistsList.vue";
-import CTeamApplicationsList from "./ClubTeamApplicationsList.vue";
+import CApplicationsList from "./ClubApplicationsList.vue";
 import CButton from "./ClubButton.vue";
 import { useRouter } from "vue-router";
-import { useApplications } from "src/use/applications";
 import _ from "lodash";
+import { useApplications } from "src/use/applications";
 
 const isOwner = inject("isOwner");
-
-const { team } = defineProps({
-  team: Object,
-});
+const currentTeam = inject("currentTeam");
 
 const router = useRouter();
-const { applications, filteredApplications } = useApplications({
-  team,
-  is_owner: isOwner.value,
-});
+const { filteredApplications } = useApplications(currentTeam, true);
 
 const specialtiesList = ref([
   { filterName: "Заказчик", displayName: "Заказчики", value: "customers" },
@@ -110,13 +106,13 @@ const specialtiesList = ref([
 
 const selectMembersList = ref("members");
 const groupByMembers = computed(() =>
-  _.groupBy(team.members, "speciality.name")
+  _.groupBy(currentTeam.value.members, "speciality.name")
 );
 
 const inviteUser = async () => {
   router.push({
     name: "teamInvite",
-    params: { name: team.name },
+    params: { name: currentTeam.value.name },
   });
 };
 </script>

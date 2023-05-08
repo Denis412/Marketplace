@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-import CButton from "src/components/ClubButton.vue";
 import router from "../router";
 
 const { team } = defineProps({

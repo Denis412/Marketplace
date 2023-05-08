@@ -24,16 +24,14 @@
 </template>
 
 <script setup>
-import { computed, provide, ref } from "vue";
+import { inject, ref } from "vue";
 import CTeamCardList from "src/components/ClubTeamCardList.vue";
 import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
 import CTeamRequest from "src/components/ClubTeamRequest.vue";
 import CAddButtons from "src/components/ClubTeamAddButtons.vue";
-import teamApi from "src/sdk/team";
-import { useUserStore } from "src/stores/user";
 import userApi from "src/sdk/user";
 
-const userStore = useUserStore();
+const currentUser = inject("currentUser");
 
 const { result: myTeams, loading } = userApi.paginateSubjects({
   page: 1,
@@ -41,15 +39,10 @@ const { result: myTeams, loading } = userApi.paginateSubjects({
   where: {
     column: "id",
     operator: "EQ",
-    value: userStore.GET_CURRENT_USER.subject_id,
+    value: currentUser.value.subject_id,
   },
   is_my_teams: true,
 });
-
-provide("currentUser", userStore.GET_CURRENT_USER);
-
-const requestsIn = ref([]);
-const requestsOut = ref([]);
 </script>
 
 <style lang="scss" scoped>

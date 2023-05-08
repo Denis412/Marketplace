@@ -24,13 +24,11 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import { useUserStore } from "src/stores/user";
+import { ref, inject } from "vue";
 
 import CRightPersonMenu from "./ClubRightPersonMenu.vue";
 
-const userStore = useUserStore();
-const currentUser = computed(() => userStore.GET_CURRENT_USER);
+const currentUser = inject("currentUser");
 
 const showIconMenu = ref(false);
 

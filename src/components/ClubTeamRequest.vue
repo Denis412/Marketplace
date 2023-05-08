@@ -16,17 +16,20 @@
 </template>
 
 <script setup>
-import { inject, provide } from "vue";
+import { computed, inject } from "vue";
 import CApplicationsList from "./ClubApplicationsList.vue";
-import { useSubjectApplications } from "src/use/subjectApplications";
+import { useApplications } from "src/use/applications";
+import userApi from "src/sdk/user";
 
 const currentUser = inject("currentUser");
 
-const { applications, filteredApplications } = useSubjectApplications({
-  subject_id: currentUser.subject_id,
-});
+const { result: subjectData } = userApi.queryGetSubjectById(
+  currentUser.value.subject_id
+);
 
-provide("applications");
+const currentSubject = computed(() => subjectData.value?.get_subject);
+
+const { filteredApplications } = useApplications(currentSubject);
 </script>
 
 <style lang="scss" scoped>
