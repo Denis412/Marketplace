@@ -10,6 +10,14 @@ export const getTeams = gql`
         telegram_chat_id
         applications {
           id
+          status
+          sender
+          subject{
+            fullname{
+              first_name
+              last_name
+            }
+          }
         }
         space
         level
@@ -43,6 +51,18 @@ export const getTeamsWithWhere = gql`
         telegram_chat_id
         applications {
           id
+          name
+          status
+          sender
+          subject{
+            fullname{
+              first_name
+              last_name
+            }
+            group{
+              name
+            }
+          }
         }
         space
         level

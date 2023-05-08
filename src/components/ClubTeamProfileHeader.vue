@@ -76,6 +76,7 @@
             background
             label="Вступить в команду"
             class="text-body2"
+            @click="sendApplication"
           />
 
           <q-checkbox
@@ -107,9 +108,9 @@
 
 <script setup>
 import { inject, ref } from "vue";
-
 import CButton from "src/components/ClubButton.vue";
 import teamApi from "src/sdk/team";
+
 
 const { team, currentUser } = defineProps({
   team: Object,
@@ -119,6 +120,8 @@ const { team, currentUser } = defineProps({
 const isReady = ref(team.ready_for_orders ?? false);
 const isOwner = inject("isOwner");
 const isMember = inject("isMember");
+const fullDes = ref(true);
+const applicationName = ref("от"+currentUser.first_name+'В'+team.name)
 
 const updateTeamStatus = async () => {
   try {
@@ -132,7 +135,14 @@ const updateTeamStatus = async () => {
   }
 };
 
-const fullDes = ref(true);
+const sendApplication = async () => {
+  try {
+    await teamApi.sendApplication(applicationName.value, currentUser.subject_id, team.id)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 </script>
 
 <style scoped lang="scss">

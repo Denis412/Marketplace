@@ -29,6 +29,15 @@ export const getSubjectById = gql`
       city
       applications {
         id
+        status
+        subject{
+          id
+        }
+        team{
+          name
+          description
+          avatar
+        }
       }
       birthday {
         date

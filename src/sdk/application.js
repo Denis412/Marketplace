@@ -1,4 +1,4 @@
-import { provideApolloClient, useMutation } from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery} from "@vue/apollo-composable";
 
 import apolloClient from "src/apollo/apollo-client";
 import {
@@ -38,7 +38,8 @@ const create = async (data) => {
 
 const update = async (data) => {
   const { data: applicationData } = await updatingApplication({
-    input: data,
+    id: data.id,
+    input: data.input,
   });
 
   console.log("updateApplication", applicationData);
@@ -47,8 +48,9 @@ const update = async (data) => {
 };
 
 const deleteById = async (id) => {
+  console.log("Mayahi", id)
   const { data: applicationData } = await deletingApplication({
-    id,
+    id:id,
   });
 
   console.log("deleteApplication", applicationData);

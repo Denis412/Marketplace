@@ -254,9 +254,30 @@ const addToTeam = async (space_id, data, group_name) => {
   return groupData;
 };
 
-const sendApplication = async (data) => {
-  const applicationData = await applicationApi.create(data);
+const sendApplication = async (app_name, subject_id, team_id) => {
+  const applicationData = await applicationApi.create({
+    name: app_name,
+   	subject:{
+      "6410837257365292951": subject_id
+  	},
+  	team:{
+    	"5546930648465563539": team_id
+  	},
+    sender:"subject",
+    status:"1672342866228253681"
+  });
 
+  return applicationData;
+};
+
+const updateApplication = async (app_id, app_name, app_new_status) => {
+  const applicationData = await applicationApi.update({
+    id: app_id,
+    input:{
+      name: app_name,
+      status: app_new_status
+    }
+  });
   return applicationData;
 };
 
@@ -284,6 +305,7 @@ const teamApi = {
   refetchAllTeams,
   refetchTeamByName,
   checkChar,
+  updateApplication,
 };
 
 export default teamApi;
