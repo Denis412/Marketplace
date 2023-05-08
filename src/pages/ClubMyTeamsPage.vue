@@ -45,7 +45,14 @@ const { result: myTeams, loading } = teamApi.paginateTeams({
   },
 });
 
-const requestsIn = ref([]);
+const requestsIn = ref([
+  {
+    name: "Team",
+  },
+  {
+    name: "Team",
+  },
+]);
 const requestsOut = ref([]);
 </script>
 

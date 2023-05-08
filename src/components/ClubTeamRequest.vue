@@ -1,32 +1,14 @@
 <template>
   <div class="club-mb-32">
-    <h4 class="text-h4 club-mb-16">{{ title }}</h4>
-
     <div v-if="requests.length">
-      <c-team-card
-        v-for="request in requests"
-        :key="request.id"
-        :team="request"
-      />
-    </div>
-
-    <div class="c-team-requests flex justify-center" v-else>
-      <div class="flex flex-center club-my-64">
-        <q-img
-          class="c-team-emptyImg"
-          src="/src/assets/teams/emptyRequest.png"
-        />
-
-        <div class="c-team-ml-78 flex items-center">
-          <h6 class="text-body2">Здесь пока пусто</h6>
-        </div>
-      </div>
+      <h4 class="text-h4 club-mb-16">{{ title }}</h4>
+      <c-team-card-list :teams="requests" />
     </div>
   </div>
 </template>
 
 <script setup>
-import CTeamCard from "src/components/ClubTeamCard.vue";
+import CTeamCardList from "src/components/ClubTeamCardList.vue";
 
 const { title, requests } = defineProps({
   title: String,
