@@ -29,6 +29,8 @@ export const paginateApplications = gql`
         team {
           id
           name
+          description
+          avatar
         }
       }
     }

@@ -74,8 +74,9 @@ const update = async (id, data) => {
 };
 
 const deleteById = async (id) => {
+  console.log("Mayahi", id);
   const { data: applicationData } = await deletingApplication({
-    id,
+    id: id,
   });
 
   console.log("deleteApplication", applicationData);

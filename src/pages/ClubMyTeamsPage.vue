@@ -18,14 +18,13 @@
         <c-not-found-teams v-else />
       </div>
 
-      <c-team-request :title="'Входящие заявки'" :requests="requestsIn" />
-      <c-team-request :title="'Исходящие заявки'" :requests="requestsOut" />
+      <c-team-request />
     </section>
   </q-page>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, provide, ref } from "vue";
 import CTeamCardList from "src/components/ClubTeamCardList.vue";
 import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
 import CTeamRequest from "src/components/ClubTeamRequest.vue";
@@ -46,6 +45,8 @@ const { result: myTeams, loading } = userApi.paginateSubjects({
   },
   is_my_teams: true,
 });
+
+provide("currentUser", userStore.GET_CURRENT_USER);
 
 const requestsIn = ref([]);
 const requestsOut = ref([]);

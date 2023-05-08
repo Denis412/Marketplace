@@ -1,37 +1,32 @@
 <template>
-  <div class="club-mb-32">
-    <h4 class="text-h4 club-mb-16">{{ title }}</h4>
+  <section class="c-mb-32">
+    <h4 class="text-h4 c-mb-16">Входящие заявки</h4>
 
-    <div v-if="requests.length">
-      <c-team-card
-        v-for="request in requests"
-        :key="request.id"
-        :team="request"
-      />
-    </div>
+    <c-applications-list
+      :applications="filteredApplications?.incoming"
+      incoming
+    />
+  </section>
 
-    <div class="c-team-requests flex justify-center" v-else>
-      <div class="flex flex-center club-my-64">
-        <q-img
-          class="c-team-emptyImg"
-          src="/src/assets/teams/emptyRequest.png"
-        />
+  <section class="c-mb-32">
+    <h4 class="text-h4 c-mb-16">Исходящие заявки</h4>
 
-        <div class="c-team-ml-78 flex items-center">
-          <h6 class="text-body2">Здесь пока пусто</h6>
-        </div>
-      </div>
-    </div>
-  </div>
+    <c-applications-list :applications="filteredApplications?.outgoing" />
+  </section>
 </template>
 
 <script setup>
-import CTeamCard from "src/components/ClubTeamCard.vue";
+import { inject, provide } from "vue";
+import CApplicationsList from "./ClubApplicationsList.vue";
+import { useSubjectApplications } from "src/use/subjectApplications";
 
-const { title, requests } = defineProps({
-  title: String,
-  requests: Object,
+const currentUser = inject("currentUser");
+
+const { applications, filteredApplications } = useSubjectApplications({
+  subject_id: currentUser.subject_id,
 });
+
+provide("applications");
 </script>
 
 <style lang="scss" scoped>

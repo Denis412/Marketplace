@@ -17,6 +17,9 @@
         />
         <c-team-profile-members :team="team" :currentUser="currentUser" />
       </section>
+      <!-- <section>
+          <c-team-profile-applications :team="team" :currentUser="currentUser"/>
+      </section> -->
     </main>
   </section>
 </template>
@@ -28,9 +31,10 @@ import { useUserStore } from "src/stores/user";
 import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
+import CTeamProfileApplications from "./ClubTeamProfileApplications.vue"
 import teamApi from "src/sdk/team";
 
-const { team } = defineProps({
+const { team} = defineProps({
   team: Object,
 });
 
