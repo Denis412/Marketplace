@@ -3,7 +3,7 @@
     <c-main-header />
     <c-main-drawer side="left" />
 
-    <q-page-container>
+    <q-page-container v-if="currentUser">
       <router-view v-slot="{ Component }">
         <keep-alive :exclude="exclude">
           <component :is="Component" />

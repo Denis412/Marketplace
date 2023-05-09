@@ -12,6 +12,7 @@
               v-if="isOwner"
               clickable
               class="flex no-wrap items-center text-caption1 text-black"
+              @click="editProfile"
               >Редактировать
             </q-item>
 
@@ -111,7 +112,9 @@ import { inject, ref } from "vue";
 import CButton from "src/components/ClubButton.vue";
 import teamApi from "src/sdk/team";
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const $q = useQuasar();
 
 const currentUser = inject("currentUser");
@@ -124,6 +127,13 @@ const fullDes = ref(true);
 const applicationName = ref(
   "от" + currentUser.value.first_name + "В" + currentTeam.value.name
 );
+
+const editProfile = async () => {
+  router.push({
+    name: "teamEdit",
+    params: { name: currentTeam.value.name },
+  });
+};
 
 const updateTeamStatus = async () => {
   try {
