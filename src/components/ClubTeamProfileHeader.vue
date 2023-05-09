@@ -158,6 +158,11 @@ const sendApplication = async () => {
       status: process.env.APPLICATION_STATUS_PENDING,
       sender: "subject",
     });
+
+    $q.notify({
+      type: "positive",
+      message: "Заявка отправлена!",
+    });
   } catch (error) {
     $q.notify({
       type: "negative",
