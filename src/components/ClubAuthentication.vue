@@ -128,7 +128,7 @@ const authorization = async () => {
   try {
     await userApi.login(form.value);
 
-    userStore.SET_CURRENT_USER();
+    await userStore.FETCH_CURRENT_USER();
 
     console.log("store", userStore.GET_CURRENT_USER);
 

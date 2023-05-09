@@ -19,9 +19,8 @@ const store = useUserStore();
 
 // const queue = stompApi.queueCreate();
 
-onMounted(() => {
-  userApi.isAuth() ? store.SET_CURRENT_USER() : null;
-
+onMounted(async () => {
+  userApi.isAuth() ? await store.FETCH_CURRENT_USER() : null;
   // stompApi.connectQueue(Cookies.get("queue"));
 });
 </script>

@@ -6,7 +6,7 @@
           <c-input
             v-model.capitalize="form.last_name"
             @update:model-value="changeUSerData('last_name', $event)"
-            :placeholder="currentUser.last_name"
+            :placeholder="currentUser?.last_name"
           />
         </template>
       </c-label-control>
@@ -16,7 +16,7 @@
           <c-input
             v-model.capitalize="form.first_name"
             @update:model-value="changeUSerData('first_name', $event)"
-            :placeholder="currentUser.first_name"
+            :placeholder="currentUser?.first_name"
           />
         </template>
       </c-label-control>
@@ -28,7 +28,7 @@
           <c-input
             v-model.capitalize="form.middle_name"
             @update:model-value="changeUSerData('middle_name', $event)"
-            :placeholder="currentUser.middle_name"
+            :placeholder="currentUser?.middle_name"
           />
         </template>
       </c-label-control>
@@ -37,7 +37,7 @@
         <template #control>
           <q-input
             v-model="form.birthday"
-            :placeholder="currentUser.birthday || 'ДД.ММ.ГГГГ'"
+            :placeholder="currentUser?.birthday || 'ДД.ММ.ГГГГ'"
             class="date-input c-input-outline"
             outlined
           >
@@ -95,7 +95,7 @@
       <template #control>
         <q-input
           v-model="form.email"
-          :placeholder="currentUser.email"
+          :placeholder="currentUser?.email"
           class="c-input-outline"
           outlined
           readonly
@@ -121,13 +121,13 @@ const userStore = useUserStore();
 const currentUser = inject("currentUser");
 
 const form = ref({
-  last_name: currentUser.value.last_name,
-  first_name: currentUser.value.first_name,
-  middle_name: currentUser.value.middle_name,
-  birthday: currentUser.value.birthday,
-  gender: currentUser.value.gender,
-  city: currentUser.value.city,
-  email: currentUser.value.email,
+  last_name: currentUser.value?.last_name,
+  first_name: currentUser.value?.first_name,
+  middle_name: currentUser.value?.middle_name,
+  birthday: currentUser.value?.birthday,
+  gender: currentUser.value?.gender,
+  city: currentUser.value?.city,
+  email: currentUser.value?.email,
 });
 const cities = ["Москва", "Санкт-Петербург", "Воронеж"];
 const filteredCities = ref(cities);

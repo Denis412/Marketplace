@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+import userApi from "src/sdk/user";
+import { convertSubject } from "src/utils/convertSubject";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -12,16 +14,30 @@ export const useUserStore = defineStore("user", {
   },
 
   actions: {
-    SET_CURRENT_USER() {
-      this.currentUser = JSON.parse(localStorage.getItem("user-data"));
+    async FETCH_CURRENT_USER() {
+      const subjectsData = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "user_id",
+          operator: "EQ",
+          value: JSON.parse(localStorage.getItem("user-data")).user_id,
+        },
+      });
+
+      const userData = await userApi.refetchUserById(
+        JSON.parse(localStorage.getItem("user-data")).user_id
+      );
+
+      this.currentUser = convertSubject({
+        ...userData,
+        ...subjectsData[0],
+      });
+
+      console.log("user", this.currentUser);
     },
 
     SET_PROP(prop, value) {
-      const userData = JSON.parse(localStorage.getItem("user-data"));
-      userData[prop] = value;
-
-      localStorage.setItem("user-data", JSON.stringify(userData));
-
       this.currentUser[prop] = value;
     },
 

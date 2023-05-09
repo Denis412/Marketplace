@@ -37,9 +37,9 @@ const { result: myTeams, loading } = userApi.paginateSubjects({
   page: 1,
   perPage: 1,
   where: {
-    column: "id",
+    column: "user_id",
     operator: "EQ",
-    value: currentUser.value.subject_id,
+    value: JSON.parse(localStorage.getItem("user-data")).user_id,
   },
   is_my_teams: true,
 });

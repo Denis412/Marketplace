@@ -110,6 +110,9 @@
 import { inject, ref } from "vue";
 import CButton from "src/components/ClubButton.vue";
 import teamApi from "src/sdk/team";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
@@ -156,7 +159,10 @@ const sendApplication = async () => {
       sender: "subject",
     });
   } catch (error) {
-    console.log(error);
+    $q.notify({
+      type: "negative",
+      message: "Вы уже подавали заявку в эту команду!",
+    });
   }
 };
 </script>

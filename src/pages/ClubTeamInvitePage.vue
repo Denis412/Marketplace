@@ -120,11 +120,15 @@ const filter = ref([]);
 
 provide("selectedSubjects", selectedSubjects);
 
-const inviteSubjects = () => {
+const inviteSubjects = async () => {
   if (!selectedSubjects.value.length) return;
 
   try {
-    selectedSubjects.value.forEach(async (subject) => {
+    // Исправить поведение заявок, если в перечне выбранных пользователей есть те,
+    // которые уже были приглашены или состоят в команде. Сейчас при такой ситуции
+    // приглашения отправляются всем, кто ранее не приглашался и выводится ошибка
+
+    for (let subject of selectedSubjects.value) {
       await teamApi.inviteUser({
         space_id: team.value.paginate_team.data[0].space,
         team_id: team.value.paginate_team.data[0].id,
@@ -138,39 +142,37 @@ const inviteSubjects = () => {
           sender: "team",
         },
       });
+    }
 
-      await teamApi.refetchPaginateTeams({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "name",
-          operator: "EQ",
-          value: route.params.name,
-        },
-      });
-
-      // await applicationApi.refetchPaginateApplications({
-      //   page: 1,
-      //   perPage: 100,
-      //   where: {
-      //     column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
-      //     operator: "EQ",
-      //     value: team.value.paginate_team.data[0].id,
-      //   },
-      // });
-
-      $q.notify({
-        type: "positive",
-        message: "Приглашения отправлены!",
-      });
+    await teamApi.refetchPaginateTeams({
+      page: 1,
+      perPage: 1,
+      where: {
+        column: "name",
+        operator: "EQ",
+        value: route.params.name,
+      },
     });
 
-    router.push({
-      name: "team",
-      params: { name: route.params.name },
+    $q.notify({
+      type: "positive",
+      message: "Приглашения отправлены!",
     });
+
+    selectedSubjects.value = [];
+
+    // router.push({
+    //   name: "team",
+    //   params: { name: route.params.name },
+    // });
   } catch (error) {
     console.log(error);
+
+    $q.notify({
+      type: "negative",
+      message:
+        "Какие-то из пользователей уже были приглашены или состоят в команде!",
+    });
   }
 };
 const filteredSubjects = () => {};
