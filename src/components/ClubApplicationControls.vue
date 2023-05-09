@@ -12,21 +12,15 @@
           v-if="statusObject.property?.label === 'Одобрена'"
           background
           label="Принять"
-          @click.stop="acceptApplication"
+          @click.stop="accept"
         />
 
-        <c-button
-          v-else
-          outline
-          label="Отклонить"
-          @click.stop="cancelApplication"
-        />
+        <c-button v-else outline label="Отклонить" @click.stop="cancel" />
       </div>
 
       <div v-else class="flex q-gutter-x-md">
-        <c-button background label="Принять" @click.stop="acceptApplication" />
-
-        <c-button outline label="Отклонить" @click.stop="cancelApplication" />
+        <c-button background label="Принять" @click.stop="accept" />
+        <c-button outline label="Отклонить" @click.stop="cancel" />
       </div>
     </section>
   </footer>
@@ -34,13 +28,12 @@
 
 <script setup>
 import { computed } from "vue";
+import { useQuasar } from "quasar";
+import applicationsEvents from "src/utils/applicationsEvents";
 
 import CButton from "./ClubButton.vue";
+
 import propertyApi from "src/sdk/property";
-import applicationApi from "src/sdk/application";
-import teamApi from "src/sdk/team";
-import userApi from "src/sdk/user";
-import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
@@ -50,7 +43,7 @@ const { application, incoming, is_team } = defineProps({
   is_team: Boolean,
 });
 
-const { result: statusProperty, loading } = propertyApi.queryPropertyById({
+const { result: statusProperty } = propertyApi.queryPropertyById({
   id: process.env.APPLICATION_STATUS_PROPERTY,
 });
 
@@ -64,39 +57,11 @@ const statusObject = computed(() => {
   return { property, updated_at: lastTimeUpdated.toLocaleDateString() };
 });
 
-const acceptApplication = async () => {
+const accept = async () => {
   console.log(application, incoming);
 
   try {
-    console.log(is_team);
-    if (is_team) {
-      await teamApi.acceptUser({
-        team_id: application.team.id,
-        space_id: application.team.space,
-        data: {
-          name: application.subject.fullname.first_name,
-          surname: application.subject.fullname.last_name,
-          email: application.subject.email.email,
-          id: application.subject.id,
-          application_id: application.id,
-        },
-      });
-
-      await applicationApi.deleteById(application.id);
-    } else
-      await applicationApi.update(application.id, {
-        status: process.env.APPLICATION_STATUS_APPROVED,
-      });
-
-    await teamApi.refetchPaginateTeams({
-      page: 1,
-      perPage: 1,
-      where: {
-        column: "name",
-        operator: "EQ",
-        value: application.team.name,
-      },
-    });
+    await applicationsEvents.accept({ application, is_team });
   } catch (error) {
     if (!incoming) {
       console.log(error);
@@ -109,30 +74,8 @@ const acceptApplication = async () => {
   }
 };
 
-const cancelApplication = async () => {
-  await applicationApi.deleteById(application.id);
-
-  await userApi.refetchPaginateSubjects({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "user_id",
-      operator: "EQ",
-      value: JSON.parse(localStorage.getItem("user-data")).user_id,
-    },
-    is_my_teams: true,
-  });
-
-  await teamApi.refetchPaginateTeams({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: application.team.name,
-    },
-  });
-};
+const cancel = async () =>
+  await applicationsEvents.cancel({ application, is_team });
 </script>
 
 <style scoped lang="scss"></style>
