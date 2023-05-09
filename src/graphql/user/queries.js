@@ -170,6 +170,7 @@ export const paginateSubjectsForMyTeams = gql`
         teams {
           id
           name
+          space
           description
           avatar
         }

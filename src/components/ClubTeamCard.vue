@@ -40,6 +40,9 @@ import CApplicationControls from "./ClubApplicationControls.vue";
 import CButton from "src/components/ClubButton.vue";
 import teamApi from "src/sdk/team";
 import router from "../router";
+import { inject } from "vue";
+
+const currentUser = inject("currentUser");
 
 const { team, application, incoming } = defineProps({
   team: Object,
@@ -54,7 +57,8 @@ const to = async () => {
   });
 };
 
-const deleteTeam = async () => await teamApi.deleteTeam(team);
+const deleteTeam = async () =>
+  await teamApi.deleteTeam(team, currentUser.value.subject_id);
 </script>
 
 <style lang="scss" scoped>

@@ -102,6 +102,8 @@ const create = async ({ name, description }) => {
     },
   });
 
+  console.log("teamData", teamData);
+
   await update(teamData.create_team.recordId, {
     members: {
       [process.env.SUBJECT_TYPE_ID]: [teamData.create_team.record.author_id],
@@ -122,7 +124,7 @@ const create = async ({ name, description }) => {
   return teamData.create_team.record;
 };
 
-const deleteTeam = async (team) => {
+const deleteTeam = async (team, subject_id) => {
   console.log("deletingTeam", team);
 
   await applicationApi.clearTeamApplications({
@@ -137,7 +139,18 @@ const deleteTeam = async (team) => {
     id: team.id,
   });
 
-  // await refetchPaginateTeams({ page: 1, perPage: 100 });
+  await refetchPaginateTeams({ page: 1, perPage: 100 });
+
+  await userApi.refetchPaginateSubjects({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "id",
+      operator: "EQ",
+      value: subject_id,
+    },
+    is_my_teams: true,
+  });
 
   console.log("deletedSpace", spaceData, teamData);
 

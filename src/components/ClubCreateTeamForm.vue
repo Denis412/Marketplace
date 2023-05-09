@@ -67,15 +67,19 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-import CInput from "./ClubInput.vue";
-import CButton from "./ClubButton.vue";
-import teamApi from "src/sdk/team";
-import filesApi from "src/sdk/file";
+import { inject, ref } from "vue";
 import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+
+import CInput from "./ClubInput.vue";
+import CButton from "./ClubButton.vue";
+
+import teamApi from "src/sdk/team";
+import filesApi from "src/sdk/file";
+import userApi from "src/sdk/user";
+
+const currentUser = inject("currentUser");
 
 const { required, maxLength } = useValidators();
 const $q = useQuasar();
@@ -89,52 +93,37 @@ const form = ref({
 const upload_img = ref(null);
 const avatar_URL = ref("/src/assets/previews/avatar-140.png");
 const uploadFile = ref(null);
-// const obj=ref({
-//   id:"",
-//   avatar:""
-// })
 const teamData = ref("");
-const avatar = ref("");
+// const avatar = ref("");
 
 const createTeam = async () => {
-  // if (await teamApi.checkName(form.value)) {
   try {
     teamData.value = await teamApi.create(form.value);
 
-    await teamApi.refetchPaginateTeams({
+    await userApi.refetchPaginateSubjects({
       page: 1,
-      perPage: 100,
+      perPage: 1,
       where: {
-        column: "author_id",
+        column: "id",
         operator: "EQ",
-        value: teamData.value.author_id,
+        value: currentUser.value.subject_id,
       },
+      is_my_teams: true,
     });
 
     router.push({
       name: "my-teams",
     });
-  } catch (error) {
-    console.log(error);
-  }
-  try {
-    avatar.value = await filesApi.uploadFiles(upload_img.value);
 
-    console.log(avatar.value);
+    // avatar.value = await filesApi.uploadFiles(upload_img.value);
+
+    // await teamApi.update(teamData.value.id, {
+    //   avatar: avatar.value,
+    //   name: form.value.name,
+    // });
   } catch (error) {
     console.log(error);
   }
-  try {
-    await teamApi.update(teamData.value.id, {
-      avatar: avatar.value,
-      name: form.value.name,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-  // } else {
-  //   $q.notify("Такое название уже есть, придумайте новое.");
-  // }
 };
 
 const updateFile = () => {
