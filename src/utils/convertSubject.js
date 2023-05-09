@@ -1,4 +1,6 @@
 export const convertSubject = (subjectData) => {
+  const birthday = subjectData.birthday?.date || "";
+
   const {
     fullname: {
       first_name: first_name,
@@ -6,13 +8,13 @@ export const convertSubject = (subjectData) => {
       last_name: last_name,
     },
     email: { email: email },
-    birthday: { date: birthday },
     speciality: { name: specilaity },
     id: subject_id,
     ...rest
   } = subjectData;
 
   return {
+    ...rest,
     first_name,
     middle_name,
     last_name,
@@ -20,6 +22,5 @@ export const convertSubject = (subjectData) => {
     birthday,
     specilaity,
     subject_id,
-    ...rest,
   };
 };
