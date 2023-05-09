@@ -5,22 +5,28 @@
         <q-card-section class="oNum">
           {{ item.number }}
         </q-card-section>
+
         <q-card-section class="oName">
           {{ item.name }}
         </q-card-section>
+
         <q-card-section class="oState">
           <div class="oStateIndicator" :style="{ backgroundColor: item.color }"></div>
           {{ item.state }}
         </q-card-section>
+
         <q-card-section class="oDateUpdate">
           {{ item.date }}
         </q-card-section>
+
         <q-card-section class="oResponse">
           <img src="../assets/icons/orderIcons/deal.png" alt="img">
         </q-card-section>
+
         <q-card-section class="oDeal">
           <img src="../assets/icons/orderIcons/wait.png" alt="img">
         </q-card-section>
+
         <q-card-section class="oEdit">
           <a href="#"><img src="../assets/icons/orderIcons/tripleDot.png" alt="img"></a>
         </q-card-section>
@@ -42,7 +48,7 @@ const { item } = defineProps({
 
 <style scoped>
 .item{
-  padding: 10px;
+  padding: 0 20px 20px 20px;
 }
 .qPage{
   min-height: 70px !important;
