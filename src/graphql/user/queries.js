@@ -35,6 +35,7 @@ export const getSubjectById = gql`
           id
         }
         team {
+          id
           author_id
           name
           description

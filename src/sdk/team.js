@@ -212,6 +212,18 @@ const isMember = async (team) => {
 };
 
 const sendApplication = async (data) => {
+  const subjectApplications = await userApi.refetchSubjectById(
+    data.subject[process.env.SUBJECT_TYPE_ID]
+  );
+
+  if (
+    subjectApplications.applications.find(
+      (application) =>
+        application.team.id === data.team[process.env.TEAM_TYPE_ID]
+    )
+  )
+    throw new Error("Уже есть заявка!");
+
   const applicationData = await applicationApi.create(data);
 
   return applicationData;
@@ -231,14 +243,14 @@ const addToTeam = async ({ team_id, space_id, data, group_name }) => {
 
   let inviteData;
 
-  if (group_name === "Участники") {
-    inviteData = await groupApi.invite(space_id, {
-      name: data.name,
-      surname: data.surname,
-      email: data.email,
-      group_id: groupData[0].id,
-    });
+  inviteData = await groupApi.invite(space_id, {
+    name: data.name,
+    surname: data.surname,
+    email: data.email,
+    group_id: groupData[0].id,
+  });
 
+  if (group_name === "Участники") {
     console.log("invite", inviteData);
 
     const teamData = await refetchPaginateTeams({
@@ -267,7 +279,7 @@ const addToTeam = async ({ team_id, space_id, data, group_name }) => {
     return;
   }
 
-  await sendApplication({
+  await applicationApi.create({
     name: data.name,
     subject: {
       [process.env.SUBJECT_TYPE_ID]: data.subject_id,
