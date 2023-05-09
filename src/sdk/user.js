@@ -195,18 +195,6 @@ const saveUserData = async (userInfo, first_entry = false) => {
 
   console.log("userData", userData);
 
-  const subject = await refetchPaginateSubjects({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "user_id",
-      operator: "EQ",
-      value: userInfo.userSignIn.recordId,
-    },
-  });
-
-  console.log("subjectData", subject[0]);
-
   saveLocalUserData({
     user_id: userInfo.userSignIn.recordId,
   });

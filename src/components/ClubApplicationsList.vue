@@ -63,6 +63,7 @@ const acceptApplication = async (application) => {
           surname: application.subject.fullname.last_name,
           email: application.subject.email.email,
           id: application.subject.id,
+          application_id: application.id,
         },
       });
   } catch (error) {

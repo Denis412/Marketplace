@@ -277,19 +277,18 @@ const addToTeam = async ({ team_id, space_id, data, group_name }) => {
     });
 
     return;
-  }
-
-  await applicationApi.create({
-    name: data.name,
-    subject: {
-      [process.env.SUBJECT_TYPE_ID]: data.subject_id,
-    },
-    team: {
-      [process.env.TEAM_TYPE_ID]: data.team_id,
-    },
-    status: process.env.APPLICATION_STATUS_PENDING,
-    sender: data.sender,
-  });
+  } else
+    await applicationApi.create({
+      name: data.name,
+      subject: {
+        [process.env.SUBJECT_TYPE_ID]: data.subject_id,
+      },
+      team: {
+        [process.env.TEAM_TYPE_ID]: data.team_id,
+      },
+      status: process.env.APPLICATION_STATUS_PENDING,
+      sender: data.sender,
+    });
 
   console.log("inviteData", groupData[0], inviteData);
 
