@@ -9,22 +9,22 @@ import { getFile } from "src/graphql/files/queries";
 
 provideApolloClient(apolloClient);
 
-const { mutate } = useMutation(filesUpload, {
-  context: {
-    headers: {
-      space: process.env.MAIN_SPACE_ID,
-    },
-    hasUpload: true,
-  },
-});
+const { mutate } = useMutation(filesUpload);
 const { refetch } = useQuery(getFile);
 
 const uploadFiles = async (files) => {
-  console.log(files);
+  console.log("file", files);
 
-  const { data: uploadedData } = await mutate({
-    files,
-  });
+  const { data: uploadedData } = await mutate(
+    {
+      files,
+    },
+    {
+      context: {
+        hasUpload: true,
+      },
+    }
+  );
 
   console.log("file", uploadedData);
 

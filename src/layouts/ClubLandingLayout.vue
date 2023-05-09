@@ -19,12 +19,6 @@
 import CLandingMainHeader from "components/Landing/ClubLandingMainHeader.vue";
 import CMainHeader from "src/components/ClubMainHeader.vue";
 import CMainFooter from "components/Landing/ClubMainFooter.vue";
-import { useUserStore } from "src/stores/user";
-import { computed } from "vue";
-
-const userStore = useUserStore();
-
-const currentUser = computed(() => userStore.GET_CURRENT_USER);
 </script>
 
 <style lang="scss"></style>

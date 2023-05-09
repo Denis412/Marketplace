@@ -94,7 +94,7 @@ const upload_img = ref(null);
 const avatar_URL = ref("/src/assets/previews/avatar-140.png");
 const uploadFile = ref(null);
 const teamData = ref("");
-// const avatar = ref("");
+const avatar = ref("");
 
 const createTeam = async () => {
   try {
@@ -104,7 +104,7 @@ const createTeam = async () => {
       name: "my-teams",
     });
 
-    // avatar.value = await filesApi.uploadFiles(upload_img.value);
+    avatar.value = await filesApi.uploadFiles(upload_img.value);
 
     // await teamApi.update(teamData.value.id, {
     //   avatar: avatar.value,

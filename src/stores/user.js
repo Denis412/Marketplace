@@ -24,16 +24,13 @@ export const useUserStore = defineStore("user", {
           value: JSON.parse(localStorage.getItem("user-data")).user_id,
         },
       });
-
       const userData = await userApi.refetchUserById(
         JSON.parse(localStorage.getItem("user-data")).user_id
       );
-
       this.currentUser = convertSubject({
         ...userData,
         ...subjectsData[0],
       });
-
       console.log("user", this.currentUser);
     },
 

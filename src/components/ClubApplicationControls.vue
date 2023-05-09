@@ -7,20 +7,17 @@
         {{ statusObject.property?.label }}
       </div>
 
-      <c-button v-if="!incoming" background :label="labelButton" />
+      <c-button
+        v-if="!incoming || statusObject.property?.label === 'Одобрена'"
+        background
+        :label="labelButton"
+        @click.stop="cancelApplication"
+      />
 
       <div v-else class="flex q-gutter-x-md">
-        <c-button
-          background
-          label="Принять"
-          @click="$emit('accept', application)"
-        />
+        <c-button background label="Принять" @click.stop="acceptApplication" />
 
-        <c-button
-          outline
-          label="Отклонить"
-          @click="$emit('cancel', application)"
-        />
+        <c-button outline label="Отклонить" @click.stop="cancelApplication" />
       </div>
     </section>
   </footer>
@@ -30,7 +27,10 @@
 import { computed } from "vue";
 
 import CButton from "./ClubButton.vue";
-import propertyApi from "/src/sdk/property";
+import propertyApi from "src/sdk/property";
+import applicationApi from "src/sdk/application";
+import teamApi from "src/sdk/team";
+import userApi from "src/sdk/user";
 
 const { application, incoming } = defineProps({
   application: Object,
@@ -53,6 +53,63 @@ const statusObject = computed(() => {
 const labelButton = computed(() =>
   statusObject.value.property?.label === "В ожидании" ? "Отменить" : "Скрыть"
 );
+
+const acceptApplication = async () => {
+  console.log(application);
+
+  try {
+    if (!incoming)
+      await applicationApi.update(application.id, {
+        status: process.env.APPLICATION_STATUS_APPROVED,
+      });
+    else
+      await teamApi.acceptUser({
+        team_id: application.team.id,
+        space_id: application.team.space,
+        data: {
+          name: application.subject.fullname.first_name,
+          surname: application.subject.fullname.last_name,
+          email: application.subject.email.email,
+          id: application.subject.id,
+          application_id: application.id,
+        },
+      });
+  } catch (error) {
+    if (!incoming) {
+      console.log(error);
+    } else {
+      $q.notify({
+        type: "negative",
+        message: "Пользователь уже состоит в команде!",
+      });
+    }
+  }
+};
+
+const cancelApplication = async () => {
+  await applicationApi.deleteById(application.id);
+
+  await userApi.refetchPaginateSubjects({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "user_id",
+      operator: "EQ",
+      value: JSON.parse(localStorage.getItem("user-data")).user_id,
+    },
+    is_my_teams: true,
+  });
+
+  await teamApi.refetchPaginateTeams({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "name",
+      operator: "EQ",
+      value: application.team.name,
+    },
+  });
+};
 </script>
 
 <style scoped lang="scss"></style>

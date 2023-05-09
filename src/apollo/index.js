@@ -12,7 +12,7 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
   });
 
   const uploadLink = createUploadLink({
-    uri: process.env.GRAPHQL_URI || "https://app.stud.druid.1t.ru/graphql",
+    uri: "https://app.stud.druid.1t.ru/graphql",
     // credentials: "include",
   });
 

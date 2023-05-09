@@ -31,6 +31,7 @@ export const getTeamsWithWhere = gql`
           team {
             id
             space
+            name
           }
           status
           sender

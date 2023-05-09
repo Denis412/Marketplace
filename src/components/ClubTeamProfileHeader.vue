@@ -121,9 +121,6 @@ const isReady = ref(currentTeam.value.ready_for_orders ?? false);
 const isOwner = inject("isOwner");
 const isMember = inject("isMember");
 const fullDes = ref(true);
-const applicationName = ref(
-  "от" + currentUser.value.first_name + "В" + currentTeam.value.name
-);
 
 const updateTeamStatus = async () => {
   try {
@@ -148,7 +145,7 @@ const updateTeamStatus = async () => {
 const sendApplication = async () => {
   try {
     await teamApi.sendApplication({
-      name: applicationName.value,
+      name: currentUser.value.first_name,
       subject: {
         [process.env.SUBJECT_TYPE_ID]: currentUser.value.subject_id,
       },

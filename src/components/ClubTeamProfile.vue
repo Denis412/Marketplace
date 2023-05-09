@@ -43,7 +43,7 @@ const projects = ref([
 ]);
 
 const isOwner = computed(
-  () => currentUser.value.subject_id === currentTeam.value.author_id
+  () => currentUser?.value.subject_id === currentTeam?.value.author_id
 );
 const isMember = ref(false);
 const checkingMember = ref(true);
@@ -54,7 +54,7 @@ provide("isMember", isMember);
 onMounted(async () => {
   checkingMember.value = true;
 
-  isMember.value = await teamApi.isMember(currentTeam.value);
+  isMember.value = await teamApi.isMember(currentTeam?.value);
 
   checkingMember.value = false;
 });
