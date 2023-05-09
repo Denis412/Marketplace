@@ -21,6 +21,9 @@ export const getTeamsWithWhere = gql`
               first_name
               last_name
             }
+            speciality {
+              name
+            }
           }
           status
           sender

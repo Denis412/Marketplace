@@ -14,7 +14,7 @@
               <q-avatar class="avatar">
                 <q-img
                   :src="
-                    currentUser.avatar ||
+                    currentUser?.avatar ||
                     '/src/assets/images/default-avatar.svg'
                   "
                 />
@@ -101,7 +101,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, inject } from "vue";
+import { ref, watch, inject } from "vue";
 
 import CButton from "src/components/ClubButton.vue";
 import CAccountSettingsForm from "./ClubAccountSettingsForm.vue";
@@ -127,7 +127,7 @@ const toggleIsDeletePhoto = () => {
 const deletePhoto = () => {};
 
 const changePassword = () => {
-  authInfo.value.email = currentUser.value.email;
+  authInfo.value.email = currentUser.value?.email;
 
   isChanging.value = true;
 };

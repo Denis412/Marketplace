@@ -97,6 +97,8 @@ const refetchPaginateSubjects = async ({
   is_invite,
   is_team,
 }) => {
+  console.log(where);
+
   const { refetch } = paginateSubjects({
     where,
     page,
@@ -107,6 +109,8 @@ const refetchPaginateSubjects = async ({
   });
 
   const { data: subjectsData } = await refetch();
+
+  console.log("subject", subjectsData);
 
   return subjectsData.paginate_subject.data;
 };
@@ -189,7 +193,7 @@ const saveUserData = async (userInfo, first_entry = false) => {
   //   console.log("data", spaceData, updateSubjectData);
   // }
 
-  console.log("userData", userData, userInfo);
+  console.log("userData", userData);
 
   const subject = await refetchPaginateSubjects({
     page: 1,
@@ -204,8 +208,6 @@ const saveUserData = async (userInfo, first_entry = false) => {
   console.log("subjectData", subject[0]);
 
   saveLocalUserData({
-    ...convertSubject(subject[0]),
-    ...convertUserData(userData),
     user_id: userInfo.userSignIn.recordId,
   });
 
@@ -223,8 +225,6 @@ const login = async (
       password,
     },
   });
-
-  // console.log(login, password, "hello");
 
   const userData = recovery ? null : await saveUserData(userInfo, first_entry);
 

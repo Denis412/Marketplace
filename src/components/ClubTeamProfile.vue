@@ -54,10 +54,7 @@ provide("isMember", isMember);
 onMounted(async () => {
   checkingMember.value = true;
 
-  isMember.value = await teamApi.isMember(
-    currentUser.value.user_id,
-    currentTeam.value
-  );
+  isMember.value = await teamApi.isMember(currentTeam.value);
 
   checkingMember.value = false;
 });

@@ -157,8 +157,8 @@ const deleteTeam = async (team, subject_id) => {
   return teamData.delete_team;
 };
 
-const isMember = async (user_id, team) => {
-  console.log(user_id, team);
+const isMember = async (team) => {
+  console.log(team);
 
   // Сделать запрос на пространства пользователя и проверить,
   //есть ли среди выведенных пространств - пространство с id,
@@ -191,7 +191,7 @@ const isMember = async (user_id, team) => {
       where: {
         column: "user_id",
         operator: "EQ",
-        value: user_id,
+        value: JSON.parse(localStorage.getItem("user-data")).user_id,
       },
       space_id: team.space,
       is_team: true,

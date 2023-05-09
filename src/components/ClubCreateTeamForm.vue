@@ -100,17 +100,6 @@ const createTeam = async () => {
   try {
     teamData.value = await teamApi.create(form.value);
 
-    await userApi.refetchPaginateSubjects({
-      page: 1,
-      perPage: 1,
-      where: {
-        column: "id",
-        operator: "EQ",
-        value: currentUser.value.subject_id,
-      },
-      is_my_teams: true,
-    });
-
     router.push({
       name: "my-teams",
     });
