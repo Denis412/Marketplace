@@ -6,11 +6,11 @@
       </q-avatar>
 
       <div class="text-body2 text-violet-6 q-mt-md">
-        {{ currentUser?.first_name }} {{ currentUser?.last_name }}
+        {{ currentUser.first_name }} {{ currentUser.last_name }}
       </div>
 
       <div class="text-caption1 text-violet-6 q-mt-sm c-mb-20">
-        {{ currentUser?.email }}
+        {{ currentUser.email }}
       </div>
     </q-card-section>
 
@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import { useUserStore } from "src/stores/user";
 import { useRouter } from "vue-router";
 
@@ -69,9 +69,8 @@ import stompApi from "src/sdk/stomp";
 
 const router = useRouter();
 const userStore = useUserStore();
-const { currentUser } = defineProps({
-  currentUser: Object,
-});
+
+const currentUser = inject("currentUser");
 
 const isExit = ref(false);
 

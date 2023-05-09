@@ -106,19 +106,19 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { useUserStore } from "src/stores/user";
+import { ref, inject } from "vue";
 
 import CInput from "./ClubInput.vue";
 import CSelect from "./ClubSelect.vue";
 import CLabelControl from "./ClubLabelControl.vue";
 import userApi from "src/sdk/user";
+import { useUserStore } from "src/stores/user";
 
 const emit = defineEmits(["form-submit"]);
 
 const userStore = useUserStore();
 
-const currentUser = computed(() => userStore.GET_CURRENT_USER);
+const currentUser = inject("currentUser");
 
 const form = ref({
   last_name: currentUser.value.last_name,

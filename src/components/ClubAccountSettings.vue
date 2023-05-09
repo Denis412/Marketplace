@@ -12,7 +12,12 @@
           <div class="row">
             <div class="flex items-center col">
               <q-avatar class="avatar">
-                <q-img :src="avatarUrl" />
+                <q-img
+                  :src="
+                    currentUser.avatar ||
+                    '/src/assets/images/default-avatar.svg'
+                  "
+                />
               </q-avatar>
 
               <div class="flex column flex-center c-ml-32">
@@ -96,22 +101,17 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
-import { useUserStore } from "src/stores/user";
+import { ref, computed, watch, inject } from "vue";
 
 import CButton from "src/components/ClubButton.vue";
 import CAccountSettingsForm from "./ClubAccountSettingsForm.vue";
 import CEditPasswordDialog from "./ClubEditPasswordDialog.vue";
 import CConfirmDialog from "./ClubConfirmDialog.vue";
+
 import userApi from "src/sdk/user";
 import filesApi from "src/sdk/file";
 
-const userStore = useUserStore();
-
-const currentUser = computed(() => userStore.GET_CURRENT_USER);
-const avatarUrl = computed(
-  () => currentUser.value.avatar || "/src/assets/images/default-avatar.svg"
-);
+const currentUser = inject("currentUser");
 
 const isDeletePhoto = ref(false);
 const isChanging = ref(false);

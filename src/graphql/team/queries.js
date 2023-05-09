@@ -25,6 +25,16 @@ export const getTeamsWithWhere = gql`
           status
           sender
         }
+        members {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+          speciality {
+            name
+          }
+        }
         space
         level
         position

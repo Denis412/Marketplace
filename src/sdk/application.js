@@ -62,8 +62,9 @@ const create = async (data) => {
   return applicationData.create_application;
 };
 
-const update = async (data) => {
+const update = async (id, data) => {
   const { data: applicationData } = await updatingApplication({
+    id,
     input: data,
   });
 
@@ -73,8 +74,9 @@ const update = async (data) => {
 };
 
 const deleteById = async (id) => {
+  console.log("Mayahi", id);
   const { data: applicationData } = await deletingApplication({
-    id,
+    id: id,
   });
 
   console.log("deleteApplication", applicationData);

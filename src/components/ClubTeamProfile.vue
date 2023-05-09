@@ -4,35 +4,28 @@
       <h3 class="text-h3">Профиль команды</h3>
     </header>
 
-    <main v-if="team">
+    <main v-if="currentTeam">
       <section v-if="checkingMember" class="loader loader-lg"></section>
 
       <section v-else>
-        <c-team-profile-header :team="team" :currentUser="currentUser" />
-
-        <c-team-profile-projects
-          class="c-pt-32"
-          :projects="projects"
-          :currentUser="currentUser"
-        />
-        <c-team-profile-members :team="team" :currentUser="currentUser" />
+        <c-team-profile-header />
+        <c-team-profile-projects class="c-pt-32" :projects="projects" />
+        <c-team-profile-members />
       </section>
     </main>
   </section>
 </template>
 
 <script setup>
-import { computed, onMounted, provide, ref } from "vue";
-import { useUserStore } from "src/stores/user";
+import { computed, inject, onMounted, provide, ref } from "vue";
 
 import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
 import teamApi from "src/sdk/team";
 
-const { team } = defineProps({
-  team: Object,
-});
+const currentUser = inject("currentUser");
+const currentTeam = inject("currentTeam");
 
 const projects = ref([
   {
@@ -49,10 +42,9 @@ const projects = ref([
   },
 ]);
 
-const userStore = useUserStore();
-
-const currentUser = computed(() => userStore.GET_CURRENT_USER);
-const isOwner = computed(() => currentUser.value.subject_id === team.author_id);
+const isOwner = computed(
+  () => currentUser.value.subject_id === currentTeam.value.author_id
+);
 const isMember = ref(false);
 const checkingMember = ref(true);
 
@@ -62,7 +54,10 @@ provide("isMember", isMember);
 onMounted(async () => {
   checkingMember.value = true;
 
-  isMember.value = await teamApi.isMember(currentUser.value.user_id, team);
+  isMember.value = await teamApi.isMember(
+    currentUser.value.user_id,
+    currentTeam.value
+  );
 
   checkingMember.value = false;
 });

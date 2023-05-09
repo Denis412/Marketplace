@@ -1,19 +1,35 @@
 <template>
-  <div class="club-mb-32">
-    <div v-if="requests.length">
-      <h4 class="text-h4 club-mb-16">{{ title }}</h4>
-      <c-team-card-list :teams="requests" />
-    </div>
-  </div>
+  <section class="c-mb-32">
+    <h4 class="text-h4 c-mb-16">Входящие заявки</h4>
+
+    <c-applications-list
+      :applications="filteredApplications?.incoming"
+      incoming
+    />
+  </section>
+
+  <section class="c-mb-32">
+    <h4 class="text-h4 c-mb-16">Исходящие заявки</h4>
+
+    <c-applications-list :applications="filteredApplications?.outgoing" />
+  </section>
 </template>
 
 <script setup>
-import CTeamCardList from "src/components/ClubTeamCardList.vue";
+import { computed, inject } from "vue";
+import CApplicationsList from "./ClubApplicationsList.vue";
+import { useApplications } from "src/use/applications";
+import userApi from "src/sdk/user";
 
-const { title, requests } = defineProps({
-  title: String,
-  requests: Object,
-});
+const currentUser = inject("currentUser");
+
+const { result: subjectData } = userApi.queryGetSubjectById(
+  currentUser.value.subject_id
+);
+
+const currentSubject = computed(() => subjectData.value?.get_subject);
+
+const { filteredApplications } = useApplications(currentSubject);
 </script>
 
 <style lang="scss" scoped>

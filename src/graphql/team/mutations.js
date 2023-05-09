@@ -38,6 +38,13 @@ export const teamUpdate = gql`
         applications {
           id
         }
+        members {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+        }
         level
         position
         created_at

@@ -125,29 +125,44 @@ const inviteSubjects = () => {
 
   try {
     selectedSubjects.value.forEach(async (subject) => {
-      await teamApi.inviteUser(team.value.paginate_team.data[0].space, {
-        name: subject.fullname.first_name,
-        surname: subject.fullname.last_name,
-        email: subject.email.email,
-        subject_id: subject.id,
+      await teamApi.inviteUser({
+        space_id: team.value.paginate_team.data[0].space,
         team_id: team.value.paginate_team.data[0].id,
-        sender: "team",
-      });
-
-      await applicationApi.refetchPaginateApplications({
-        page: 1,
-        perPage: 100,
-        where: {
-          column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
-          operator: "EQ",
-          value: team.value.paginate_team.data[0].id,
+        data: {
+          id: subject.id,
+          name: subject.fullname.first_name,
+          surname: subject.fullname.last_name,
+          email: subject.email.email,
+          subject_id: subject.id,
+          team_id: team.value.paginate_team.data[0].id,
+          sender: "team",
         },
       });
-    });
 
-    $q.notify({
-      type: "positive",
-      message: "Приглашения отправлены!",
+      await teamApi.refetchPaginateTeams({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: route.params.name,
+        },
+      });
+
+      // await applicationApi.refetchPaginateApplications({
+      //   page: 1,
+      //   perPage: 100,
+      //   where: {
+      //     column: `${process.env.APPLICATION_TEAM_PROPERTY}->${process.env.TEAM_TYPE_ID}`,
+      //     operator: "EQ",
+      //     value: team.value.paginate_team.data[0].id,
+      //   },
+      // });
+
+      $q.notify({
+        type: "positive",
+        message: "Приглашения отправлены!",
+      });
     });
 
     router.push({

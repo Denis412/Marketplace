@@ -102,7 +102,7 @@ import filesApi from "src/sdk/file";
 
 const $q = useQuasar();
 const router = useRouter();
-const store = useUserStore();
+const userStore = useUserStore();
 
 const forgotPassword = ref(false);
 const authInfo = ref({});
@@ -128,9 +128,9 @@ const authorization = async () => {
   try {
     await userApi.login(form.value);
 
-    store.SET_CURRENT_USER();
+    userStore.SET_CURRENT_USER();
 
-    console.log("store", store.GET_CURRENT_USER);
+    console.log("store", userStore.GET_CURRENT_USER);
 
     await router.push({
       path: "/club",
