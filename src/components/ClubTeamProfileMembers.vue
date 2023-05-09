@@ -58,6 +58,7 @@
         <c-applications-list
           :applications="filteredApplications.outgoing"
           subjects
+          is_team
         />
       </section>
 
@@ -70,6 +71,7 @@
           :applications="filteredApplications.incoming"
           incoming
           subjects
+          is_team
         />
       </section>
     </section>

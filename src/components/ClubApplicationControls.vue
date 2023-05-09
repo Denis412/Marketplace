@@ -7,12 +7,21 @@
         {{ statusObject.property?.label }}
       </div>
 
-      <c-button
-        v-if="!incoming || statusObject.property?.label === 'Одобрена'"
-        background
-        :label="labelButton"
-        @click.stop="cancelApplication"
-      />
+      <div v-if="!incoming" class="flex q-gutter-x-md">
+        <c-button
+          v-if="statusObject.property?.label === 'Одобрена'"
+          background
+          label="Принять"
+          @click.stop="acceptApplication"
+        />
+
+        <c-button
+          v-else
+          outline
+          label="Отклонить"
+          @click.stop="cancelApplication"
+        />
+      </div>
 
       <div v-else class="flex q-gutter-x-md">
         <c-button background label="Принять" @click.stop="acceptApplication" />
@@ -31,10 +40,14 @@ import propertyApi from "src/sdk/property";
 import applicationApi from "src/sdk/application";
 import teamApi from "src/sdk/team";
 import userApi from "src/sdk/user";
+import { useQuasar } from "quasar";
 
-const { application, incoming } = defineProps({
+const $q = useQuasar();
+
+const { application, incoming, is_team } = defineProps({
   application: Object,
   incoming: Boolean,
+  is_team: Boolean,
 });
 
 const { result: statusProperty, loading } = propertyApi.queryPropertyById({
@@ -50,19 +63,13 @@ const statusObject = computed(() => {
 
   return { property, updated_at: lastTimeUpdated.toLocaleDateString() };
 });
-const labelButton = computed(() =>
-  statusObject.value.property?.label === "В ожидании" ? "Отменить" : "Скрыть"
-);
 
 const acceptApplication = async () => {
-  console.log(application);
+  console.log(application, incoming);
 
   try {
-    if (!incoming)
-      await applicationApi.update(application.id, {
-        status: process.env.APPLICATION_STATUS_APPROVED,
-      });
-    else
+    console.log(is_team);
+    if (is_team) {
       await teamApi.acceptUser({
         team_id: application.team.id,
         space_id: application.team.space,
@@ -74,6 +81,22 @@ const acceptApplication = async () => {
           application_id: application.id,
         },
       });
+
+      await applicationApi.deleteById(application.id);
+    } else
+      await applicationApi.update(application.id, {
+        status: process.env.APPLICATION_STATUS_APPROVED,
+      });
+
+    await teamApi.refetchPaginateTeams({
+      page: 1,
+      perPage: 1,
+      where: {
+        column: "name",
+        operator: "EQ",
+        value: application.team.name,
+      },
+    });
   } catch (error) {
     if (!incoming) {
       console.log(error);

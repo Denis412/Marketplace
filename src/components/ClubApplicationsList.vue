@@ -15,6 +15,7 @@
         <c-application-controls
           :application="application"
           :incoming="incoming"
+          :is_team="is_team"
         />
       </q-card>
 
@@ -36,10 +37,11 @@ import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
-const { applications, incoming, subjects } = defineProps({
+const { applications, incoming, subjects, is_team } = defineProps({
   applications: Array,
   incoming: Boolean,
   subjects: Boolean,
+  is_team: Boolean,
 });
 </script>
 
