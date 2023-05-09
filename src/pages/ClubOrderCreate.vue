@@ -9,7 +9,7 @@
       </p>
     </section>
     <section>
-      <q-form @submit="onSubmit">
+      <q-form>
         <c-input
         :title="'Название заказа'"
         :name="'name-order'"
@@ -37,10 +37,10 @@
           :key="form.todos + index"
           class="text-body1 btn"
           :label="button.label"
-          :outline="button.id != form.todos"
-          :background="button.id == form.todos"
+          :outline="!form.todos.includes(button.id)"
+          :background="form.todos.includes(button.id)"
           :iconLeft="`img:/src/assets/icons/${button.icon}`"
-          @click="form.todos = button.id"
+          @click="addTodo(button.id)"
           />
         </div>
 
@@ -147,14 +147,15 @@
             class="text-body1 btn col-2"
             :label="'Разместить заказ'"
             :background="true"
-            :type="'submit'"
+            @click="createOrder"
+
           />
 
           <c-button
             class="text-body1 btn col-3 offset-1"
             :label="'Сохранить как черновик'"
             :outline="true"
-            :type="'submit'"
+            @click="createDraft"
           />
         </div>
 
@@ -245,14 +246,15 @@ const checkboxes = ref([
 const form = ref({
   name: "",
   customer: "",
-  todos: "2322215395332615839",
-  functions: "7925538065036122162",
+  todos: ["2322215395332615839"],
+  functions: [],
   description: "",
   consultation: false,
   // files: null,
   price_start: "",
   price_end: "",
-  date_complete: ""
+  date_complete: "",
+  draft: true
 })
 
 const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } = useValidators();
@@ -261,7 +263,18 @@ const optionsFn = (date) => {
   return new Date(date).getTime() > Date.now() - 86_400_000;
 }
 
-const onSubmit = () => {
+const addTodo = (id) => {
+  form.value.todos.includes(id) ?
+    form.value.todos.splice(form.value.todos.indexOf(id), 1) :
+    form.value.todos.push(id);
+}
+
+const createDraft = () => {
+  orderApi.orderCreate(form.value);
+}
+
+const createOrder = () => {
+  form.value.draft = false;
   orderApi.orderCreate(form.value);
 }
 </script>
