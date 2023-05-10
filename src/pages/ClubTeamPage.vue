@@ -1,6 +1,6 @@
 <template>
   <q-page class="c-pa-32">
-    <div v-if="loading" class="loader loader-lg"></div>
+    <div v-if="!team" class="loader loader-lg"></div>
 
     <c-team-profile v-else />
   </q-page>
@@ -14,7 +14,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const { result: currentTeam, loading } = teamApi.paginateTeams({
+const { result: currentTeam } = teamApi.paginateTeams({
   page: 1,
   perPage: 1,
   where: {
@@ -24,7 +24,7 @@ const { result: currentTeam, loading } = teamApi.paginateTeams({
   },
 });
 
-const team = computed(() => currentTeam.value.paginate_team?.data[0]);
+const team = computed(() => currentTeam.value?.paginate_team.data[0]);
 
 provide("currentTeam", team);
 </script>

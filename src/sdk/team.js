@@ -11,6 +11,7 @@ import spaceApi from "./space";
 import applicationApi from "./application";
 import userApi from "./user";
 import { spaceHeader } from "src/utils/spaceHeader";
+import typeApi from "./type";
 
 provideApolloClient(apolloClient);
 
@@ -74,8 +75,17 @@ const createMainSpace = async ({ name, description }) => {
     parent_group_id: teamGroup[0].id,
   });
 
+  const createdProjectType = await typeApi.create({
+    input: {
+      name: "project",
+      label: "Проект",
+    },
+    space_id: spaceData.recordId,
+  });
+
   console.log("space", spaceData);
   console.log("groups", teamGroup[0], createdGroupMembers, createdGroupInvited);
+  console.log("typeProject", createdProjectType);
 
   return spaceData;
 };
