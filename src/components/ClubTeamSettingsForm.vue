@@ -1,6 +1,6 @@
 <!-- Компонент формы редактирования команды -->
 <template>
-  <section class="teamSettingForm c-mb-32">
+  <q-form class="teamSettingForm c-mb-32">
     <div class="flex no-wrap teamSettingForm-section c-pb-32">
       <section class="large-avatar relative-position c-mr-32">
         <q-avatar class="large-avatar">
@@ -14,7 +14,39 @@
             src="/src/assets/icons/edit.svg"
             class="create-form-icon"
             @click="triggerInput"
-          />
+          >
+            <q-menu class="w-max-content">
+              <q-list separator>
+                <q-item
+                  clickable
+                  class="flex no-wrap items-center text-caption1 text-black"
+                >
+                  <q-item-section avatar class="teamSettingForm-icon-section">
+                    <q-icon
+                      name="img:/src/assets/icons/Plus.svg"
+                      class="teamSettingForm-icon"
+                    />
+                  </q-item-section>
+
+                  <q-item-section>Добавить изображение</q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  class="flex no-wrap items-center text-caption1 text-black"
+                >
+                  <q-item-section avatar class="teamSettingForm-icon-section">
+                    <q-icon
+                      name="img:/src/assets/icons/delete.svg"
+                      class="teamSettingForm-icon"
+                    />
+                  </q-item-section>
+
+                  <q-item-section>Удалить изображение</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-img>
         </div>
       </section>
 
@@ -107,7 +139,7 @@
     </div>
 
     <c-team-settings-buttons />
-  </section>
+  </q-form>
 </template>
 
 <script setup>
@@ -116,9 +148,11 @@ import CLabelControl from "./ClubLabelControl.vue";
 import CButton from "src/components/ClubButton.vue";
 import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
 
-import { ref } from "vue";
+import { ref, inject, provide } from "vue";
+import { useRouter } from "vue-router";
 
-const text = ref("");
+const router = useRouter();
+
 </script>
 
 <style lang="scss" scoped>
@@ -138,6 +172,13 @@ const text = ref("");
   &-input-small {
     max-width: 468px;
     width: 468px;
+  }
+
+  &-icon {
+    width: 14px;
+  }
+  &-icon-section {
+    min-width: 14px;
   }
 }
 

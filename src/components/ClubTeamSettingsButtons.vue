@@ -1,16 +1,12 @@
 <template>
   <div class="flex">
-    <c-button
-      background
-      size="lg"
-      label="Сохранить"
-      class="c-mr-32"
-    />
+    <c-button background size="lg" label="Сохранить" class="c-mr-32" />
 
     <c-button
       outline
       size="lg"
       label="Отменить"
+      @click="router.go(-1)"
       class="page-background"
     />
   </div>
@@ -21,10 +17,4 @@ import CButton from "src/components/ClubButton.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
-const to = () => {
-  router.push({
-    name: "teams",
-  });
-};
 </script>

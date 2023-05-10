@@ -26,6 +26,7 @@ const { result: currentTeam, loading } = teamApi.paginateTeams({
 
 const team = computed(() => currentTeam.value.paginate_team?.data[0]);
 
+console.log("ClubTeamPage",team);
 provide("currentTeam", team);
 </script>
 
