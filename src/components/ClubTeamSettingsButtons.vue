@@ -5,6 +5,7 @@
       size="lg"
       label="Сохранить"
       class="c-mr-32"
+      @click="emit('updateTeamData')"
     />
 
     <c-button
@@ -12,6 +13,7 @@
       size="lg"
       label="Отменить"
       class="page-background"
+      @click="to"
     />
   </div>
 </template>
@@ -21,6 +23,7 @@ import CButton from "src/components/ClubButton.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const emit = defineEmits(["updateTeamData"])
 
 const to = () => {
   router.push({

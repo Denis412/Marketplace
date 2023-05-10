@@ -4,7 +4,7 @@
     <div class="flex no-wrap teamSettingForm-section c-pb-32">
       <section class="large-avatar relative-position c-mr-32">
         <q-avatar class="large-avatar">
-          <q-img src="/src/assets/previews/avatar-140.png" />
+          <q-img :src="form.avatar" />
         </q-avatar>
 
         <div
@@ -13,19 +13,50 @@
           <q-img
             src="/src/assets/icons/edit.svg"
             class="create-form-icon"
-            @click="triggerInput"
-          />
+        
+          >
+            <q-menu class="w-max-content">
+              <q-list separator>
+                <q-item
+                  clickable
+                  class="flex no-wrap items-center text-caption1 text-black"
+                  @click="addAvatar"
+                  >Добавить фото
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-ripple
+                  class="flex no-wrap items-center text-caption1 text-black"
+                  @click="deleteAvatar"
+                  >Удалить фото
+                </q-item>
+              </q-list>
+          </q-menu>
+          </q-img>
         </div>
+      </section>
+
+      <section>
+        <q-file
+          class="q-file"
+          outlined
+          v-model="upload_img"
+          accept=".png,.jpg"
+          ref="uploadFile"
+          @update:model-value="updateFile()"
+        />
       </section>
 
       <section class="flex no-wrap">
         <c-label-control label="Название команды">
           <template #control>
             <q-input
-              v-model="text"
+              v-model="form.name"
               placeholder="Название команды"
               class="c-input-outline teamSettingForm-input-small"
               outlined
+              :rules="[required, minLength(2), maxLength(30)]"
             >
               <template #append>
                 <q-icon
@@ -45,11 +76,12 @@
         <c-label-control label="Описание">
           <template #control>
             <q-input
-              v-model="text"
+              v-model="form.description"
               placeholder="Описание команды"
               class="c-textarea-outline teamSettingForm-input"
               outlined
               autogrow
+              :rules="[required, maxLength(1000)]"
             />
           </template>
         </c-label-control>
@@ -61,10 +93,11 @@
         <c-label-control label="Ссылка на Telegram лидера">
           <template #control>
             <q-input
-              v-model="text"
+              v-model="form.telegram_chat_id"
               placeholder="Введите ссылку"
               class="c-input-outline teamSettingForm-input"
               outlined
+              :rules="[maxLength(45)]"
             >
               <template #append>
                 <q-icon
@@ -85,10 +118,11 @@
           <template #control>
             <div class="flex">
               <q-input
-                v-model="text"
+                v-model="form.work_types"
                 placeholder="Введите название работы"
                 class="c-input-outline teamSettingForm-input-small"
                 outlined
+                :rules="[maxLength(30)]"
               >
                 <template #append>
                   <q-icon
@@ -106,7 +140,7 @@
       </section>
     </div>
 
-    <c-team-settings-buttons />
+    <c-team-settings-buttons @updateTeamData="updateTeamData"/>
   </section>
 </template>
 
@@ -115,10 +149,69 @@ import CInput from "./ClubInput.vue";
 import CLabelControl from "./ClubLabelControl.vue";
 import CButton from "src/components/ClubButton.vue";
 import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
+import { ref, inject } from "vue";
+import { useValidators } from "src/use/validators";
+import teamApi from "src/sdk/team";
+import { useRouter } from "vue-router";
 
-import { ref } from "vue";
+const { required, maxLength, minLength } = useValidators();
 
-const text = ref("");
+const currentTeam = inject("currentTeam");
+const upload_img = ref();
+const uploadFile = ref();
+const router = useRouter();
+
+const form = ref({
+  avatar: "/src/assets/previews/avatar-140.png",
+  name: currentTeam.value?.name,
+  description: currentTeam.value?.description,
+  telegram_chat_id: currentTeam.value?.telegram_chat_id,
+  work_types: "",
+});
+
+const updateFile = () => {
+  if (Math.round(upload_img.value.size / Math.pow(1024, 2)) <= 10) {
+    form.value.avatar = URL.createObjectURL(upload_img.value);
+  } else {
+    $q.notify("Максимальный вес картинки 10Mb!");
+  }
+};
+
+const addAvatar = () => {
+  uploadFile.value.pickFiles();
+};
+
+const deleteAvatar = () => {
+  form.value.avatar = "/src/assets/previews/avatar-140.png";
+};
+
+const updateTeamData = async () => {
+  try {
+    await teamApi.update(currentTeam.value.id, {
+      avatar: form.value.avatar,
+      name: form.value.name,
+      description: form.value.description,
+      telegram_chat_id: form.value.telegram_chat_id,
+    });
+
+    await teamApi.refetchPaginateTeams({
+      page: 1,
+      perPage: 1,
+      where: {
+        column: "name",
+        operator: "EQ",
+        value: currentTeam.value.name,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  router.push({
+      name: "teams",
+    });
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -162,5 +255,9 @@ const text = ref("");
       border: 2px solid #ffffff;
     }
   }
+}
+
+.q-file {
+  display: none;
 }
 </style>

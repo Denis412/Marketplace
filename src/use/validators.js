@@ -8,7 +8,7 @@ export function useValidators() {
       `Максимльно возможное количество символов ${length}!`,
 
     minLength: (length) => (val) =>
-      val.length > length ||
+      val.length >= length ||
       `Минимально возможное количество символов ${length}`,
 
     passwordValid: (val) =>

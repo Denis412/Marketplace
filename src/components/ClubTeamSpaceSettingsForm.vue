@@ -7,7 +7,7 @@
         <c-label-control label="Ссылка на чат команды в Telegram">
           <template #control>
             <q-input
-              v-model="text"
+              v-model="telegram_chat_id"
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
@@ -25,7 +25,7 @@
       </section>
     </div>
 
-    <c-team-settings-buttons />
+    <c-team-settings-buttons @updateTeamData="updateTeamData"/>
   </section>
 </template>
 
@@ -34,10 +34,37 @@ import CInput from "./ClubInput.vue";
 import CLabelControl from "./ClubLabelControl.vue";
 import CButton from "src/components/ClubButton.vue";
 import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
+import teamApi from "src/sdk/team";
+import { useRouter } from "vue-router";
+import { ref, inject } from "vue";
 
-import { ref } from "vue";
+const currentTeam = inject("currentTeam");
+const telegram_chat_id = ref(currentTeam.value.telegram_chat_id);
+const router = useRouter();
 
-const text = ref("");
+const updateTeamData = async () => {
+  try {
+    await teamApi.update(currentTeam.value.id, {
+      telegram_chat_id: telegram_chat_id.value,
+    });
+
+    await teamApi.refetchPaginateTeams({
+      page: 1,
+      perPage: 1,
+      where: {
+        column: "name",
+        operator: "EQ",
+        value: currentTeam.value.name,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  router.push({
+      name: "teams",
+    });
+}
 </script>
 
 <style lang="scss" scoped>
