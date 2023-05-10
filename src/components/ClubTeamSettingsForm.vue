@@ -1,7 +1,7 @@
 <!-- Компонент формы редактирования команды -->
 <template>
-  <section class="teamSettingForm c-mr-32 с-pb-32">
-    <div class="flex teamSettingForm-section">
+  <section class="teamSettingForm c-mb-32">
+    <div class="flex no-wrap teamSettingForm-section c-pb-32">
       <section class="large-avatar relative-position c-mr-32">
         <q-avatar class="large-avatar">
           <q-img src="/src/assets/previews/avatar-140.png" />
@@ -21,17 +21,104 @@
       <section class="flex no-wrap">
         <c-label-control label="Название команды">
           <template #control>
-            <c-input :placeholder="Название" />
+            <q-input
+              v-model="text"
+              placeholder="Название команды"
+              class="c-input-outline teamSettingForm-input-small"
+              outlined
+            >
+              <template #append>
+                <q-icon
+                  name="img:/src/assets/icons/editBlack.svg"
+                  class="create-form-icon cursor-pointer"
+                >
+                </q-icon>
+              </template>
+            </q-input>
           </template>
         </c-label-control>
       </section>
     </div>
+
+    <div class="flex teamSettingForm-section c-pb-32">
+      <section class="flex no-wrap">
+        <c-label-control label="Описание">
+          <template #control>
+            <q-input
+              v-model="text"
+              placeholder="Описание команды"
+              class="c-textarea-outline teamSettingForm-input"
+              outlined
+              autogrow
+            />
+          </template>
+        </c-label-control>
+      </section>
+    </div>
+
+    <div class="flex teamSettingForm-section c-pb-32">
+      <section class="flex no-wrap">
+        <c-label-control label="Ссылка на Telegram лидера">
+          <template #control>
+            <q-input
+              v-model="text"
+              placeholder="Введите ссылку"
+              class="c-input-outline teamSettingForm-input"
+              outlined
+            >
+              <template #append>
+                <q-icon
+                  name="img:/src/assets/icons/editBlack.svg"
+                  class="create-form-icon cursor-pointer"
+                >
+                </q-icon>
+              </template>
+            </q-input>
+          </template>
+        </c-label-control>
+      </section>
+    </div>
+
+    <div class="flex teamSettingForm-section c-pb-32 c-mb-40">
+      <section class="flex no-wrap">
+        <c-label-control label="Виды работ">
+          <template #control>
+            <div class="flex">
+              <q-input
+                v-model="text"
+                placeholder="Введите название работы"
+                class="c-input-outline teamSettingForm-input-small"
+                outlined
+              >
+                <template #append>
+                  <q-icon
+                    name="img:/src/assets/icons/editBlack.svg"
+                    class="create-form-icon cursor-pointer"
+                  >
+                  </q-icon>
+                </template>
+              </q-input>
+              <c-button background size="lg" label="Добавить" class="c-ml-32" />
+            </div>
+          </template>
+        </c-label-control>
+        <!-- блок с добавленными видами -->
+      </section>
+    </div>
+
+    <c-team-settings-buttons />
   </section>
 </template>
 
 <script setup>
 import CInput from "./ClubInput.vue";
 import CLabelControl from "./ClubLabelControl.vue";
+import CButton from "src/components/ClubButton.vue";
+import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
+
+import { ref } from "vue";
+
+const text = ref("");
 </script>
 
 <style lang="scss" scoped>
@@ -39,8 +126,18 @@ import CLabelControl from "./ClubLabelControl.vue";
   max-width: 640px;
   width: 100%;
 
-  &-section{
-    border-bottom:1px solid #F4F4F4; ;
+  &-section {
+    border-bottom: 1px solid #f4f4f4;
+  }
+
+  &-input {
+    max-width: 640px;
+    width: 640px;
+  }
+
+  &-input-small {
+    max-width: 468px;
+    width: 468px;
   }
 }
 

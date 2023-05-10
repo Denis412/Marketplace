@@ -6,18 +6,19 @@
       <h3 class="text-h3">Редактирование</h3>
     </header>
 
-    <main class="flex justify-between">
-      <c-team-settings-form />
-      <!-- <c-team-space-settings-form/> -->
+    <main class="flex justify-between no-wrap">
+      <c-team-settings-form v-if="editableItem == 'profile'" />
+      <c-team-space-settings-form v-if="editableItem == 'space'" />
 
       <q-tabs
         v-model="editableItem"
         vertical
         no-caps
         dense
+        active-color="black"
         indicator-color="transparent"
         active-bg-color="white"
-        class="editableItems bg-primary c-pa-16"
+        class="editableItems c-tabs bg-primary c-pa-16 c-ml-32"
       >
         <q-tab class="editableItem" name="profile" label="Профиль команды" />
         <q-tab
@@ -43,6 +44,7 @@ const editableItem = ref("profile");
   max-width: 450px;
   width: 100%;
   border-radius: 8px;
+  color: #686868;
 }
 
 .editableItem {

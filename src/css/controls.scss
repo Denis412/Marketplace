@@ -46,6 +46,60 @@
   }
 }
 
+.c-textarea-outline {
+  padding-bottom: 0 !important;
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__bottom {
+      min-height: 0;
+      padding: 0;
+    }
+
+    & .q-field__bottom--animated {
+      transform: none;
+      position: relative;
+
+      div div {
+        @extend .text-caption2;
+
+        margin-top: 16px;
+      }
+    }
+
+    & .q-field__native {
+      @extend .text-body2;
+
+      margin: 16px 0;
+      padding: 0;
+
+      &::placeholder {
+        color: #6d6d6d4d;
+      }
+    }
+
+    & .q-field__control {
+      padding: 0 24px !important;
+
+      div {
+        input {
+          @extend .text-body2;
+
+          color: #6d6d6d;
+
+          &::placeholder {
+            color: #6d6d6d4d;
+          }
+        }
+      }
+
+      &:before {
+        border-style: solid !important;
+      }
+    }
+  }
+}
+
 .c-input-number {
   div {
     border-radius: 8px !important;
@@ -234,4 +288,10 @@
   background: transparent !important;
   // box-shadow: none;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.c-tabs {
+  & .q-tab__label {
+    @extend .text-body1;
+  }
 }
