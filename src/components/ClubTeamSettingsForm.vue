@@ -1,6 +1,6 @@
 <!-- Компонент формы редактирования команды -->
 <template>
-  <section class="teamSettingForm c-mb-32">
+  <q-form class="teamSettingForm c-mb-32">
     <div class="flex no-wrap teamSettingForm-section c-pb-32">
       <section class="large-avatar relative-position c-mr-32">
         <q-avatar class="large-avatar">
@@ -13,7 +13,6 @@
           <q-img
             src="/src/assets/icons/edit.svg"
             class="create-form-icon"
-        
           >
             <q-menu class="w-max-content">
               <q-list separator>
@@ -22,6 +21,12 @@
                   class="flex no-wrap items-center text-caption1 text-black"
                   @click="addAvatar"
                   >Добавить фото
+                  <q-item-section avatar class="teamSettingForm-icon-section">
+                    <q-icon
+                      name="img:/src/assets/icons/Plus.svg"
+                      class="teamSettingForm-icon"
+                    />
+                  </q-item-section>
                 </q-item>
 
                 <q-item
@@ -32,7 +37,7 @@
                   >Удалить фото
                 </q-item>
               </q-list>
-          </q-menu>
+            </q-menu>
           </q-img>
         </div>
       </section>
@@ -139,9 +144,8 @@
         <!-- блок с добавленными видами -->
       </section>
     </div>
-
     <c-team-settings-buttons @updateTeamData="updateTeamData"/>
-  </section>
+  </q-form>
 </template>
 
 <script setup>
@@ -211,7 +215,6 @@ const updateTeamData = async () => {
       name: "teams",
     });
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -231,6 +234,13 @@ const updateTeamData = async () => {
   &-input-small {
     max-width: 468px;
     width: 468px;
+  }
+
+  &-icon {
+    width: 14px;
+  }
+  &-icon-section {
+    min-width: 14px;
   }
 }
 
