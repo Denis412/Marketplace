@@ -29,7 +29,7 @@
         <q-card flat class="flex flex-center project-card col">
           <q-img
             class="no-projects-img"
-            src="/src/assets/images/team-projects/no-projects.svg"
+            src="/assets/images/team-page/no-projects.svg"
           />
 
           <div class="text-body2 c-ml-64">

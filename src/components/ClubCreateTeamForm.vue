@@ -14,7 +14,7 @@
         </q-avatar>
 
         <q-img
-          src="/src/assets/previews/craete-photo.png"
+          src="/assets/icons/plus/plus-black-add-ellipse.svg"
           class="absolute create-form-avatar-create cursor-pointer"
           @click="triggerInput"
         />
@@ -91,7 +91,7 @@ const form = ref({
 });
 
 const upload_img = ref(null);
-const avatar_URL = ref("/src/assets/previews/avatar-140.png");
+const avatar_URL = ref("/assets/images/preloaders/default-avatar.svg");
 const uploadFile = ref(null);
 const teamData = ref("");
 const avatar = ref("");

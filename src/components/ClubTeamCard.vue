@@ -7,7 +7,7 @@
       <q-card-section class="flex flex-center">
         <q-avatar class="avatar-108">
           <q-img
-            :src="team.avatar || '/src/assets/images/TeamPlaceholder.png'"
+            :src="team.avatar || '/assets/images/preloaders/default-avatar.svg'"
           />
         </q-avatar>
       </q-card-section>

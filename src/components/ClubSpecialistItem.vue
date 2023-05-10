@@ -2,7 +2,9 @@
   <q-item class="flex items-center col-5 rounded-borders-10">
     <q-avatar class="medium-avatar cursor-pointer">
       <q-img
-        :src="specialist.avatar || '/src/assets/images/default-avatar.svg'"
+        :src="
+          specialist.avatar || '/assets/images/preloaders/default-avatar.svg'
+        "
       />
     </q-avatar>
 

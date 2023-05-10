@@ -1,7 +1,7 @@
 <template>
   <section class="section-wrapper">
     <q-img
-      src="/src/assets/images/TeamNotFound.png"
+      src="/assets/images/my-teams-page/not-found.svg"
       style="width: 255px"
       class="c-my-64 c-mr-128"
     />

@@ -36,7 +36,7 @@
 
     <q-card-section class="flex no-wrap c-mx-64 c-mt-64 c-mb-40">
       <q-avatar class="large-avatar">
-        <q-img src="/src/assets/previews/avatar-140.png" />
+        <q-img src="/assets/images/preloaders/default-avatar.svg" />
       </q-avatar>
 
       <section class="c-ml-32">
@@ -97,7 +97,7 @@
             Чат команды
             <q-icon
               class="text-subtitle2"
-              name="img:/src/assets/icons/telegram/telegram-gradient.svg"
+              name="img:/assets/icons/socials/telegram-gradient.svg"
             />
           </a>
         </div>

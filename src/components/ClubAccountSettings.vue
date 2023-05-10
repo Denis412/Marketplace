@@ -15,7 +15,7 @@
                 <q-img
                   :src="
                     currentUser?.avatar ||
-                    '/src/assets/images/default-avatar.svg'
+                    '/assets/images/preloaders/default-avatar.svg'
                   "
                 />
               </q-avatar>
@@ -49,7 +49,7 @@
             </div>
 
             <div class="w-100p col c-ml-72">
-              <q-img src="/src/assets/images/account-settings/level-up.svg" />
+              <q-img src="/assets/images/account-settings-page/level-up.svg" />
             </div>
           </div>
 
@@ -75,7 +75,7 @@
         </div>
 
         <q-img
-          src="/src/assets/images/account-settings/reset-password.svg"
+          src="/assets/images/account-settings-page/reset-password.svg"
           class="col password-image"
         />
       </section>

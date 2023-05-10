@@ -1,6 +1,6 @@
 <template>
   <q-img
-    src="src\assets\images\vectors\Main\1440\desktop\Vector 44.svg"
+    src="/assets/images/landing/branch-1.svg"
     style="
       position: absolute;
       max-width: 346px;
@@ -11,7 +11,7 @@
     "
   />
   <q-img
-    src="src\assets\images\vectors\Main\1440\desktop\Vector 45.svg"
+    src="/assets/images/landing/branch-2.svg"
     style="
       position: absolute;
       max-width: 316.5px;
@@ -22,7 +22,7 @@
     "
   />
   <q-img
-    src="src\assets\images\vectors\Main\1440\desktop\Vector 46.svg"
+    src="/assets/images/landing/branch-3.svg"
     style="
       position: absolute;
       max-width: 335px;
@@ -33,7 +33,7 @@
     "
   />
   <q-img
-    src="src\assets\images\vectors\Main\1440\desktop\Vector 47.svg"
+    src="/assets/images/landing/branch-4.svg"
     style="
       position: absolute;
       max-width: 328px;

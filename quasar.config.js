@@ -57,7 +57,7 @@ module.exports = configure(function (/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: "/",
       // analyze: true,
       env: {
         GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphql",

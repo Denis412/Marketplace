@@ -20,7 +20,7 @@
     <q-img
       class="col"
       style="max-width: 480px"
-      src="src/assets/images/amico.svg"
+      src="/assets/images/amico.svg"
     />
   </section>
 </template>

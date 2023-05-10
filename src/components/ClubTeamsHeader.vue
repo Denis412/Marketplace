@@ -13,7 +13,7 @@
       >
         <template #prepend>
           <q-icon
-            name="img:/src/assets/icons/search/search-grey.svg"
+            name="img:/assets/icons/search/search-grey.svg"
             class="cursor-pointer"
           />
         </template>
@@ -26,7 +26,7 @@
         @update:model-value="emit('filterTeamStatus', $event)"
         :options="filterOptions"
         class="club-dropdown col"
-        dropdown-icon="img:/src/assets/icons/arrow/arrow-down-grey.svg"
+        dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
       />
     </section>
   </section>

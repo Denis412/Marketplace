@@ -1,7 +1,7 @@
 <template>
   <q-header class="header-main flex flex-center bg-dark-purple c-px-32">
     <q-toolbar>
-      <q-img class="logo" src="/src/assets/images/LogoWhite.svg" alt="logo" />
+      <q-img class="logo" src="/assets/images/logo-white.svg" alt="logo" />
       <q-toolbar-title class="text-h3"> Клуб </q-toolbar-title>
 
       <div class="relative-position">
@@ -9,7 +9,7 @@
           class="cursor-pointer relative-position avatar"
           @click="toggleShowIconMenu"
         >
-          <q-img src="/src/assets/images/Ellipse55.svg" />
+          <q-img src="/assets/images/preloaders/default-avatar.svg" />
         </q-avatar>
 
         <transition name="slide">

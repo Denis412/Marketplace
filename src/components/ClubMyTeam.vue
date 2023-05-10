@@ -6,11 +6,7 @@
     >
       <q-img
         class="image c-mt-16"
-        :src="
-          team.avatar?.length
-            ? `/src/assets/images/${team.avatar}`
-            : '/src/assets/images/TeamPlaceholder.png'
-        "
+        :src="team.avatar || '/assets/images/preloaders/default-avatar.svg'"
       />
 
       <div class="text-area col-8">

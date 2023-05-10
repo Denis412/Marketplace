@@ -3,7 +3,10 @@
 
   <div class="c-team-requests flex justify-center">
     <div class="flex flex-center club-my-64">
-      <q-img class="c-team-emptyImg" src="/src/assets/teams/emptyRequest.png" />
+      <q-img
+        class="c-team-emptyImg"
+        src="/assets/images/my-teams-page/not-applications.svg"
+      />
 
       <div class="c-team-ml-78 flex items-center">
         <h6 class="text-body2">Здесь пока пусто</h6>

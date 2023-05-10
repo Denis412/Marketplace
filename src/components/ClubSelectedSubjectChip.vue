@@ -3,7 +3,7 @@
     {{ subject.fullname.first_name }} {{ subject.fullname.last_name }}
 
     <q-icon
-      name="img:/src/assets/icons/close/close-black.svg"
+      name="img:/assets/icons/close/close-black.svg"
       class="cursor-pointer text-h6 q-ml-sm"
       @click="deleteSubject(subject.id)"
     />

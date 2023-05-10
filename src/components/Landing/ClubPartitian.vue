@@ -1,6 +1,6 @@
 <template>
   <img
-    :src="`src/assets/images/partitians/Vector-${index - 1}.png`"
+    :src="`/assets/images/landing/partitians/vector-${index - 1}.png`"
     :class="`face${index} absolute cursor-pointer avatar`"
     :alt="`face${index}`"
   />

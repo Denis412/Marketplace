@@ -3,7 +3,7 @@
     <template #main-content>
       <section class="flex justify-center">
         <q-img
-          src="/src/assets/images/password-recovery/password-recovery.svg"
+          src="/assets/images/account-settings-page/password-recovery.svg"
           class="dialog-image q-mt-md"
         />
 
@@ -20,7 +20,7 @@
         />
 
         <q-icon
-          name="img:/src/assets/icons/arrow/arrow-right-circle-purple.svg"
+          name="img:/assets/icons/arrow/arrow-right-circle-purple.svg"
           class="dialog-icon q-ml-md cursor-pointer"
           @click="sendEmail"
         />

@@ -45,8 +45,8 @@ const iconName = computed(() => {
 
   if (visibility) {
     name = showText.value
-      ? "img:/src/assets/icons/eye/eye-grey.svg"
-      : "img:/src/assets/icons/eye/eye-hidden-grey.svg";
+      ? "img:/assets/icons/eye/eye-grey.svg"
+      : "img:/assets/icons/eye/eye-hidden-grey.svg";
   }
 
   return name;

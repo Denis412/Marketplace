@@ -43,7 +43,7 @@
           >
             <template #append>
               <q-icon
-                name="img:/src/assets/icons/calendar/calendar-grey.svg"
+                name="img:/assets/icons/calendar/calendar-grey.svg"
                 class="cursor-pointer"
               >
                 <q-popup-proxy

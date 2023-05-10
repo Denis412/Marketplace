@@ -2,7 +2,7 @@
   <q-btn-dropdown
     no-caps
     flat
-    dropdown-icon="img:/src/assets/icons/arrow/arrow-down-black.svg"
+    dropdown-icon="img:/assets/icons/arrow/arrow-down-black.svg"
     class="c-dropdown-button text-caption1 bg-white"
     content-class="c-dropdown-content"
   >

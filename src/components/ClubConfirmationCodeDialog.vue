@@ -3,7 +3,7 @@
     <template #main-content>
       <main class="flex column items-center">
         <section class="dialog-content">
-          <q-img src="/src/assets/images/mails.svg" class="q-mt-lg" />
+          <q-img src="/assets/images/mails.svg" class="q-mt-lg" />
 
           <p class="text-body2 c-mt-32 text-center">
             Введите код подтверждения, отправленный на ваш email.

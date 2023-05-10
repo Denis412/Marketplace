@@ -3,7 +3,7 @@
     no-caps
     borderless
     class="club-dropdown"
-    dropdown-icon="img:/src/assets/icons/arrow/arrow-down-grey.svg"
+    dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
   >
     <template v-slot:no-option>
       <q-item>

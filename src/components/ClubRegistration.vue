@@ -4,12 +4,12 @@
       <div class="absolute c-width c-at-0 c-ar-20 c-z--1">
         <q-img
           class="c-img-120"
-          src="../assets/images/authentication/envelope.svg"
+          src="/assets/images/authentication/envelope.svg"
         />
 
         <q-img
           class="c-img-120 c-at--3"
-          src="../assets/images/authentication/speech-bubble.svg"
+          src="/assets/images/authentication/speech-bubble.svg"
         />
       </div>
 
@@ -103,7 +103,7 @@
 
       <q-img
         class="absolute c-img-270 c-ab-0 c-al--11 c-z--1"
-        src="../assets/images/authentication/gears.svg"
+        src="/assets/images/authentication/gears.svg"
       />
     </section>
 
