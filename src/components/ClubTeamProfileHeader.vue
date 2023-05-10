@@ -72,12 +72,14 @@
 
         <div class="flex items-center c-mt-32 header-controls">
           <c-button
-            v-if="!isMember"
+            v-if="!isMember && !isOwner"
             background
             label="Вступить в команду"
             class="text-body2"
-            @click="sendApplication"
+            @click="applicationSend"
           />
+
+          <div v-if="sending" class="text-body2">Отправляем заявку...</div>
 
           <q-checkbox
             dense
@@ -108,11 +110,13 @@
 
 <script setup>
 import { inject, ref } from "vue";
-import CButton from "src/components/ClubButton.vue";
-import teamApi from "src/sdk/team";
-import { useQuasar } from "quasar";
 
-const $q = useQuasar();
+import { useTeamApplication, useTeamUpdate } from "src/use/teams";
+
+import CButton from "src/components/ClubButton.vue";
+
+const { updateTeam } = useTeamUpdate();
+const { loading: sending, sendApplication } = useTeamApplication();
 
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
@@ -123,49 +127,25 @@ const isMember = inject("isMember");
 const fullDes = ref(true);
 
 const updateTeamStatus = async () => {
-  try {
-    await teamApi.update(currentTeam.value.id, {
-      ready_for_orders: isReady.value,
-    });
-
-    await teamApi.refetchPaginateTeams({
-      page: 1,
-      perPage: 1,
-      where: {
-        column: "name",
-        operator: "EQ",
-        value: currentTeam.value.name,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  await updateTeam(currentTeam.value.id, {
+    ready_for_orders: isReady.value,
+  });
 };
 
-const sendApplication = async () => {
-  try {
-    await teamApi.sendApplication({
-      name: currentUser.value.first_name,
-      subject: {
-        [process.env.SUBJECT_TYPE_ID]: currentUser.value.subject_id,
-      },
-      team: {
-        [process.env.TEAM_TYPE_ID]: currentTeam.value.id,
-      },
-      status: process.env.APPLICATION_STATUS_PENDING,
-      sender: "subject",
-    });
-
-    $q.notify({
-      type: "positive",
-      message: "Заявка отправлена!",
-    });
-  } catch (error) {
-    $q.notify({
-      type: "negative",
-      message: "Вы уже подавали заявку в эту команду!",
-    });
-  }
+const applicationSend = async () => {
+  await sendApplication({
+    name: currentUser.value.first_name,
+    subject: {
+      [process.env.SUBJECT_TYPE_ID]: currentUser.value.subject_id,
+    },
+    team: {
+      [process.env.TEAM_TYPE_ID]: currentTeam.value.id,
+    },
+    status: process.env.APPLICATION_STATUS_PENDING,
+    sender: "subject",
+    sender_id: currentUser.value.subject_id,
+    target: currentTeam.value,
+  });
 };
 </script>
 

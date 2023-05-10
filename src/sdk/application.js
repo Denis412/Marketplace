@@ -49,15 +49,23 @@ const refetchPaginateApplications = async ({
 
   const { data: applicationsData } = await refetch();
 
+  console.log("refetch paginate application", applicationsData);
+
   return applicationsData.paginate_application.data;
 };
 
-const create = async (data) => {
+const create = async ({ name, subject, team, status, sender }) => {
   const { data: applicationData } = await creatingApplication({
-    input: data,
+    input: {
+      name,
+      subject,
+      team,
+      status,
+      sender,
+    },
   });
 
-  console.log("createApplication", applicationData);
+  console.log("create application", applicationData);
 
   return applicationData.create_application;
 };
@@ -68,18 +76,17 @@ const update = async (id, data) => {
     input: data,
   });
 
-  console.log("updateApplication", applicationData);
+  console.log("update application", applicationData);
 
   return applicationData.update_application;
 };
 
 const deleteById = async (id) => {
-  console.log("Mayahi", id);
   const { data: applicationData } = await deletingApplication({
     id: id,
   });
 
-  console.log("deleteApplication", applicationData);
+  console.log("delete application", applicationData);
 
   return applicationData.delete_application;
 };

@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject } from "vue";
 import CTeamCardList from "src/components/ClubTeamCardList.vue";
 import CNotFoundTeams from "src/components/ClubNotFoundTeams.vue";
 import CTeamRequest from "src/components/ClubTeamRequest.vue";

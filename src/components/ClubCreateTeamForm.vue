@@ -1,10 +1,12 @@
 <template>
   <q-form
     class="create-form c-pa-32 bg-grey-12 rounded-borders-15"
-    @submit.prevent="createTeam"
+    @submit.prevent="teamCreate"
   >
     <header>
       <h3 class="text-h3 text-center">Создание команды</h3>
+
+      <h3 v-if="creatingTeam" class="text-h3-text-center">Создание...</h3>
     </header>
 
     <main class="flex column flex-center c-mt-32">
@@ -78,12 +80,15 @@ import CButton from "./ClubButton.vue";
 import teamApi from "src/sdk/team";
 import filesApi from "src/sdk/file";
 import userApi from "src/sdk/user";
+import { useTeamCreate } from "src/use/teams";
 
 const currentUser = inject("currentUser");
 
 const { required, maxLength } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
+const { createTeamResult, creatingTeam, createTeamError, createTeam } =
+  useTeamCreate();
 
 const form = ref({
   name: "",
@@ -93,18 +98,16 @@ const form = ref({
 const upload_img = ref(null);
 const avatar_URL = ref("/assets/images/preloaders/default-avatar.svg");
 const uploadFile = ref(null);
-const teamData = ref("");
-const avatar = ref("");
 
-const createTeam = async () => {
+const teamCreate = async () => {
   try {
-    teamData.value = await teamApi.create(form.value);
+    await createTeam(form.value);
 
     router.push({
       name: "my-teams",
     });
 
-    avatar.value = await filesApi.uploadFiles(upload_img.value);
+    // avatar.value = await filesApi.uploadFiles(upload_img.value);
 
     // await teamApi.update(teamData.value.id, {
     //   avatar: avatar.value,

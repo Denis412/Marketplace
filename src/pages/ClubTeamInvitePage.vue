@@ -93,7 +93,9 @@ import userApi from "src/sdk/user";
 import teamApi from "src/sdk/team";
 import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
-import applicationApi from "src/sdk/application";
+import { useTeamApplication } from "src/use/teams";
+
+const { result, loading: sending, sendApplication } = useTeamApplication();
 
 const router = useRouter();
 const route = useRoute();
@@ -124,40 +126,21 @@ const inviteSubjects = async () => {
   if (!selectedSubjects.value.length) return;
 
   try {
-    // Исправить поведение заявок, если в перечне выбранных пользователей есть те,
-    // которые уже были приглашены или состоят в команде. Сейчас при такой ситуции
-    // приглашения отправляются всем, кто ранее не приглашался и выводится ошибка
-
     for (let subject of selectedSubjects.value) {
-      await teamApi.inviteUser({
-        space_id: team.value.paginate_team.data[0].space,
-        team_id: team.value.paginate_team.data[0].id,
-        data: {
-          id: subject.id,
-          name: subject.fullname.first_name,
-          surname: subject.fullname.last_name,
-          email: subject.email.email,
-          subject_id: subject.id,
-          team_id: team.value.paginate_team.data[0].id,
-          sender: "team",
+      await sendApplication({
+        name: team.value.paginate_team.data[0].name,
+        subject: {
+          [process.env.SUBJECT_TYPE_ID]: subject.id,
         },
+        team: {
+          [process.env.TEAM_TYPE_ID]: team.value.paginate_team.data[0].id,
+        },
+        status: process.env.APPLICATION_STATUS_PENDING,
+        sender: "team",
+        sender_id: team.value.paginate_team.data[0].id,
+        target: subject,
       });
     }
-
-    await teamApi.refetchPaginateTeams({
-      page: 1,
-      perPage: 1,
-      where: {
-        column: "name",
-        operator: "EQ",
-        value: route.params.name,
-      },
-    });
-
-    $q.notify({
-      type: "positive",
-      message: "Приглашения отправлены!",
-    });
 
     selectedSubjects.value = [];
 

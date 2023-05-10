@@ -45,6 +45,8 @@ const create = async (data) => {
     input: data,
   });
 
+  console.log("create space", spaceData);
+
   return spaceData.spaceCreate;
 };
 
@@ -52,6 +54,8 @@ const deleteById = async (space_id) => {
   const { data: spaceData } = await deletingSpace({
     id: space_id,
   });
+
+  console.log("delete space", spaceData);
 
   return spaceData.spaceForceDelete;
 };

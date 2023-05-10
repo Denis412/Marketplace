@@ -5,7 +5,7 @@
     </header>
 
     <main v-if="currentTeam">
-      <section v-if="checkingMember" class="loader loader-lg"></section>
+      <section v-if="loading" class="loader loader-lg"></section>
 
       <section v-else>
         <c-team-profile-header />
@@ -22,7 +22,10 @@ import { computed, inject, onMounted, provide, ref } from "vue";
 import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
-import teamApi from "src/sdk/team";
+
+import { useTeamIsMember } from "src/use/teams";
+
+const { result, loading, checkIsMember } = useTeamIsMember();
 
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
@@ -43,21 +46,13 @@ const projects = ref([
 ]);
 
 const isOwner = computed(
-  () => currentUser?.value.subject_id === currentTeam?.value.author_id
+  () => currentUser.value.subject_id === currentTeam?.value.author_id
 );
-const isMember = ref(false);
-const checkingMember = ref(true);
 
 provide("isOwner", isOwner);
-provide("isMember", isMember);
+provide("isMember", result);
 
-onMounted(async () => {
-  checkingMember.value = true;
-
-  isMember.value = await teamApi.isMember(currentTeam?.value);
-
-  checkingMember.value = false;
-});
+onMounted(async () => await checkIsMember(currentTeam?.value));
 </script>
 
 <style scoped lang="scss"></style>

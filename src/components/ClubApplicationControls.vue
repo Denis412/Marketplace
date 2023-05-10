@@ -29,11 +29,13 @@
 <script setup>
 import { computed } from "vue";
 import { useQuasar } from "quasar";
-import applicationsEvents from "src/utils/applicationsEvents";
 
 import CButton from "./ClubButton.vue";
 
 import propertyApi from "src/sdk/property";
+import { useTeamApplication } from "src/use/teams";
+
+const { acceptApplication, cancelApplication } = useTeamApplication();
 
 const $q = useQuasar();
 
@@ -61,7 +63,7 @@ const accept = async () => {
   console.log(application, incoming);
 
   try {
-    await applicationsEvents.accept({ application, is_team });
+    await acceptApplication({ application, is_team });
   } catch (error) {
     if (!incoming) {
       console.log(error);
@@ -74,8 +76,7 @@ const accept = async () => {
   }
 };
 
-const cancel = async () =>
-  await applicationsEvents.cancel({ application, is_team });
+const cancel = async () => await cancelApplication({ application, is_team });
 </script>
 
 <style scoped lang="scss"></style>

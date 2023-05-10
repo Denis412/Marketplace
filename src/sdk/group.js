@@ -28,20 +28,20 @@ const refetchPaginateGroups = async ({ page, perPage, where, space_id }) => {
 
   const { data: groupData } = await refetch();
 
-  console.log("group", groupData);
+  console.log("refetch group", groupData);
 
   return groupData.paginate_group.data;
 };
 
 const create = async (space_id, data) => {
-  // name, description, parent_group_id, with_page, icon,
-
   const { data: groupData } = await creatingGroup(
     {
       input: data,
     },
     spaceHeader(space_id)
   );
+
+  console.log("group create", groupData);
 
   return groupData.userGroupCreate;
 };
@@ -53,6 +53,8 @@ const invite = async (space_id, data) => {
     },
     spaceHeader(space_id)
   );
+
+  console.log("invite group", inviteData);
 
   return inviteData.userGroupInviteUser;
 };

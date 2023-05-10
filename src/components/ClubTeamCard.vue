@@ -17,11 +17,13 @@
           {{ team.name }}
         </h4>
 
+        <pre>{{ team.space }}</pre>
+
         <p class="text-body2 q-mt-md">
           {{ team.description }}
         </p>
 
-        <c-button color="negative" label="Удалить" @click.stop="deleteTeam" />
+        <c-button color="negative" label="Удалить" @click.stop="teamDelete" />
       </q-card-section>
     </section>
 
@@ -36,13 +38,18 @@
 </template>
 
 <script setup>
+import { inject } from "vue";
+import { useRouter } from "vue-router";
+
 import CApplicationControls from "./ClubApplicationControls.vue";
 import CButton from "src/components/ClubButton.vue";
-import teamApi from "src/sdk/team";
-import router from "../router";
-import { inject } from "vue";
+
+import { useTeamDelete } from "src/use/teams";
 
 const currentUser = inject("currentUser");
+const router = useRouter();
+
+const { deletingTeam, deleteTeam } = useTeamDelete();
 
 const { team, application, incoming } = defineProps({
   team: Object,
@@ -57,8 +64,8 @@ const to = async () => {
   });
 };
 
-const deleteTeam = async () =>
-  await teamApi.deleteTeam(team, currentUser.value.subject_id);
+const teamDelete = async () =>
+  await deleteTeam(team, currentUser.value.subject_id);
 </script>
 
 <style lang="scss" scoped>

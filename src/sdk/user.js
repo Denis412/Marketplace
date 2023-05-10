@@ -97,8 +97,6 @@ const refetchPaginateSubjects = async ({
   is_invite,
   is_team,
 }) => {
-  console.log(where);
-
   const { refetch } = paginateSubjects({
     where,
     page,
@@ -110,7 +108,7 @@ const refetchPaginateSubjects = async ({
 
   const { data: subjectsData } = await refetch();
 
-  console.log("subject", subjectsData);
+  console.log("refetch paginate subjects", subjectsData);
 
   return subjectsData.paginate_subject.data;
 };
@@ -120,11 +118,12 @@ const refetchSubjectById = async (id, space_id = 0) => {
 
   const { data: subjectData } = await refetch();
 
+  console.log("get subject", subjectData);
+
   return subjectData.get_subject;
 };
 
 const registration = async ({ name, surname, email }) => {
-  console.log("reg", { name, surname, email });
   const { data: userInfo } = await signUp({
     input: {
       name,
@@ -132,6 +131,8 @@ const registration = async ({ name, surname, email }) => {
       email,
     },
   });
+
+  console.log("registration", userInfo);
 
   return userInfo.userSignUp;
 };
