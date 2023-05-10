@@ -20,13 +20,12 @@
                   clickable
                   class="flex no-wrap items-center text-caption1 text-black"
                   @click="addAvatar"
-                  >Добавить фото
-                  <q-item-section avatar class="teamSettingForm-icon-section">
+                  ><q-item-section avatar class="teamSettingForm-icon-section">
                     <q-icon
                       name="img:/src/assets/icons/Plus.svg"
                       class="teamSettingForm-icon"
                     />
-                  </q-item-section>
+                  </q-item-section>Добавить фото
                 </q-item>
 
                 <q-item
