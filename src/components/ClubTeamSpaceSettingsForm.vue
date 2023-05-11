@@ -14,7 +14,7 @@
             >
               <template #append>
                 <q-icon
-                  name="img:/src/assets/icons/editBlack.svg"
+                  name="img:/icons/editBlack.svg"
                   class="create-form-icon cursor-pointer"
                 >
                 </q-icon>
@@ -25,7 +25,7 @@
       </section>
     </div>
 
-    <c-team-settings-buttons @updateTeamData="updateTeamData"/>
+    <c-team-settings-buttons @updateTeamData="updateTeamData" />
   </section>
 </template>
 
@@ -61,10 +61,8 @@ const updateTeamData = async () => {
     console.log(error);
   }
 
-  router.push({
-      name: "teams",
-    });
-}
+  router.go(-1);
+};
 </script>
 
 <style lang="scss" scoped>
