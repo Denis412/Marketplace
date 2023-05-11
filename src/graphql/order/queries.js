@@ -1,1 +1,32 @@
 import gql from "graphql-tag";
+
+export const getOrderById = gql`
+  query getOrder($id: String!) {
+    get_order(id: $id) {
+      id
+      type_id
+      author_id
+      level
+      position
+      created_at
+      updated_at
+      name
+      customer
+      description
+      consultation
+      files
+      todos
+      functions
+      price_end
+      price_start
+      date_complete
+      draft
+      status
+      team
+      date_approve
+      deal
+      rejection
+      date_update
+    }
+  }
+`;

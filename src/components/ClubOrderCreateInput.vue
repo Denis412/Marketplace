@@ -4,7 +4,7 @@
   </label>
 
   <q-input
-  v-model="value"
+  v-model="inputValue"
   @update:model-value="change"
   :type="type"
   class="input c-mt-24"
@@ -12,6 +12,7 @@
   :placeholder="placeholder"
   outlined
   :rules="[required, maxLength(length)]"
+  :readonly="readonly"
   />
 </template>
 
@@ -19,20 +20,22 @@
 import { ref } from "vue";
 import { useValidators } from "src/use/validators";
 
-const { title, name, placeholder, type, length } = defineProps({
+const { title, name, placeholder, type, length, readonly, value } = defineProps({
   title: String,
   name: String,
   placeholder: String,
   type: String,
   length: Number,
+  readonly: Boolean,
+  value: String
 })
 
 const emit = defineEmits(["change"])
 
-const value = ref();
+const inputValue = ref(value);
 
 const change = () => {
-  emit("change", value.value);
+  emit("change", inputValue.value);
 }
 
 const { required, maxLength } = useValidators();

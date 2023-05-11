@@ -31,9 +31,9 @@
         </q-card-section>
 
         <q-card-section class="oEdit">
-          <a href="#"
-            ><img src="../assets/icons/orderIcons/tripleDot.png" alt="img"
-          /></a>
+          <router-link :to="{ name: 'order-edit', params: { id: item.id } }">
+            <img src="../assets/icons/orderIcons/tripleDot.png" alt="img"/>
+          </router-link>
         </q-card-section>
       </q-card>
     </q-page>
@@ -47,21 +47,25 @@ const { item } = defineProps({
     required: true,
   },
 });
+
 </script>
 
 <style scoped>
 .item {
   padding: 10px;
 }
+
 .qPage {
   min-height: 70px !important;
 }
+
 .oItem {
   width: 1109px;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
 }
+
 .oNum,
 .oName,
 .oState,
@@ -76,9 +80,11 @@ const { item } = defineProps({
   font-size: 14px;
   line-height: 17px;
 }
+
 .oName {
   max-width: 165px;
 }
+
 .oStateIndicator {
   width: 12px;
   height: 12px;
