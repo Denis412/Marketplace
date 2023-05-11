@@ -23,12 +23,16 @@
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
-            <q-icon @click="addDocument" v-if="item.title == 'Лендинг'" name="add" class="addDoc"/>
+            <q-icon
+              @click="addDocument"
+              v-if="item.title == 'Документы'"
+              name="add"
+              class="addDoc"
+            />
           </div>
-          
         </router-link>
 
-        <c-qtabs-document v-if="item.title == 'Лендинг'" />
+        <c-qtabs-document v-if="item.title == 'Документы'" />
       </q-item>
     </q-list>
 
@@ -45,8 +49,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import CQtabsDocument from "src/components/q-tabs/ClubQtabsDocument.vue";
-import { filesApi } from "src/sdk/file";
+import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
+import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
   side: String,
@@ -86,10 +90,15 @@ const mainTreeItems = ref([
     path: "space",
   },
   {
-    title: "Лендинг",
+    title: "Документы",
     img: "HomeIconDemo.svg",
     path: "addDocument",
     content: "+",
+  },
+  {
+    title: "Задачи",
+    img: "HomeIconDemo.svg",
+    path: "taskPage",
   },
 ]);
 
@@ -100,7 +109,6 @@ const toggleDrawer = () => {
 
 const addDocument = () => {
   filesApi.createHtmlFile();
-
 };
 
 const isActive = (path) => {
@@ -164,7 +172,7 @@ const isActive = (path) => {
 .rotate {
   transform: rotate(-180deg);
 }
-.addDoc{
-  padding-left: 5rem;
+.addDoc {
+  padding-left: 4rem;
 }
 </style>

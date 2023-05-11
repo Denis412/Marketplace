@@ -156,7 +156,10 @@
 
 .q-editor__toolbar{
   & .q-icon{
-    font-size: 20px;
+    font-size: 18px;
+  }
+  & .q-btn-dropdown__arrow{
+    font-size: 25px;
   }
   & .q-editor__toolbar-group{
     padding-top: 20px;
@@ -165,7 +168,17 @@
     margin-bottom: 22px;
     margin-top: 22px;
   }
+  & .block{
+    font-size: 16px ;
+  }
+  &.btn__content:active{
+    background-color: red;
+  }
+  & img{
+    margin-top: 6px ;
+  }
   border-top: 1px solid black !important;
   border-radius: 0px;
   height: 80px;
+  color: #545454;
 }

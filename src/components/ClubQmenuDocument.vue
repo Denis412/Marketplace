@@ -4,8 +4,13 @@
       <q-img class="popup-png" src="/src/assets/icons/doc_popup/link.png" />
       <q-item-section>Открыть</q-item-section>
     </q-item>
-
-    <q-item class="popup-component" clickable>
+    <!-- @click="
+        filesApi.createHtmlFile(
+          storeFile.currentEditorValue,
+          storeFile.currentTitleDoc
+        )
+      " -->
+    <q-item @click="duplicateDocument()" class="popup-component" clickable>
       <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
       <q-item-section>Дублировать</q-item-section>
     </q-item>
@@ -30,11 +35,16 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { filesApi } from "src/sdk/file";
+import { ref, computed } from "vue";
+import { filesApi } from "src/sdk/files/file";
 import CDeleteDialogDocument from "./ClubDeleteDialogDocument.vue";
 import CRenameItemDocument from "./ClubRenameItemDocument.vue";
 import { useRouter } from "vue-router";
+import { useFileStore } from "src/stores/file";
+
+const storeFile = useFileStore();
+
+const FILES = computed(() => storeFile.GET_FILES);
 
 const router = useRouter();
 
@@ -42,6 +52,17 @@ const props = defineProps({
   prop_doc: Object,
   prop_clicked_index_doc: Number,
 });
+
+const duplicateDocument = async () => {
+  let document = FILES.value[props.prop_clicked_index_doc];
+  let documentBody = await filesApi.getFileHtmlByUrl(
+    document.path,
+    document.id,
+    document.name,
+    document.extension
+  );
+  filesApi.createHtmlFile(documentBody, document.name.slice(0, -5));
+};
 
 const openDoc = () => {
   router.push({
