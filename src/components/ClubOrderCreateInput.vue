@@ -7,7 +7,8 @@
   v-model="inputValue"
   @update:model-value="change"
   :type="type"
-  class="input c-mt-24"
+  :class="className"
+  class="c-mt-24"
   :name="name"
   :placeholder="placeholder"
   outlined
@@ -20,14 +21,15 @@
 import { ref } from "vue";
 import { useValidators } from "src/use/validators";
 
-const { title, name, placeholder, type, length, readonly, value } = defineProps({
+const { title, name, placeholder, type, length, readonly, value, className, } = defineProps({
   title: String,
   name: String,
   placeholder: String,
   type: String,
   length: Number,
   readonly: Boolean,
-  value: String
+  value: String,
+  className: String,
 })
 
 const emit = defineEmits(["change"])
@@ -43,6 +45,8 @@ const { required, maxLength } = useValidators();
 
 <style lang="scss" scoped>
 .input-title {
+  margin-left: 21px;
+
   &::before {
     content: '';
     display: block;
@@ -52,10 +56,6 @@ const { required, maxLength } = useValidators();
     background: #581C87;
     transform: translate(-21px, 20px);
   }
-}
-
-.input {
-  border-radius: 8px;
 }
 
 .input-mt {

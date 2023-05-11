@@ -17,6 +17,7 @@ const orderCreate = (input) => {
 
 const orderEdit = (input, id, name) => {
   if (!Object.entries(input).length) return;
+
   input.name = name;
   const { data: orderInfo } = Update({
     input,

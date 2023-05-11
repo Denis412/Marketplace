@@ -1,5 +1,5 @@
 <template>
-  <q-page class="c-pa-32">
+  <q-page class="c-pt-32 c-pt-32 container">
     <section>
       <h3 class="text-h3">
         Создать заказ
@@ -15,6 +15,7 @@
         :name="'name-order'"
         :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
         :type="'text'"
+        :class-name="'c-input-outline'"
         @change="(value) => form.name = value"
         :length="500"
         />
@@ -25,21 +26,21 @@
         :placeholder="'Укажите названия компании или ИП...'"
         :type="'text'"
         @change="(value) => form.customer = value"
+        :class-name="'c-input-outline'"
         :length="500"
         />
 
         <div class="text-subtitle3 input-title input-mt">
             Что требуется сделать
         </div>
-        <div class="row justify-between wrap c-mt-24">
+        <div class="button-group row wrap c-mt-24">
           <c-button
           v-for="(button, index) in buttons"
           :key="form.todos + index"
-          class="text-body1 btn"
+          class="text-caption2 btn"
           :label="button.label"
           :outline="!form.todos.includes(button.id)"
           :background="form.todos.includes(button.id)"
-          :iconLeft="`img:/src/assets/icons/${button.icon}`"
           @click="addTodo(button.id)"
           />
         </div>
@@ -47,14 +48,14 @@
         <div class="text-subtitle3 input-mt">
           Функции, блоки, разделы сайта
         </div>
-        <div class="c-mt-24">
+        <div class="c-mt-24 checkboxes-area">
             <q-checkbox
             v-for="(checkbox, index) in checkboxes"
             :key="index"
             v-model="form.functions"
             :val="checkbox.id"
             :label="checkbox.label"
-            color="violet-6"
+            class="c-checkbox-outlined"
             />
         </div>
 
@@ -63,6 +64,7 @@
         :name="'order-description'"
         :placeholder="'Опишите, что требуется сделать по вашей задаче...'"
         :type="'textarea'"
+        :class-name="'c-textarea-outline'"
         @change="(value) => form.description = value"
         :length="5000"
         />
@@ -73,12 +75,13 @@
         :val="true"
         label="Мне нужна консультация"
         color="violet-6"
+        class="c-checkbox-outlined"
         />
         <div>
           Если Вы не знаете, как более точно сформулировать идею - дайте нам знать.
         </div>
 
-        <!-- <label for="file" class="text-subtitle3 input-mt">
+        <label for="file" class="text-subtitle3 input-mt">
             Файлы и документы
         </label>
         <q-file
@@ -86,63 +89,83 @@
         multiple
         use-chips
         append
-        v-model="form.files"
+        v-model="files"
         max-files="10"
         max-file-size="51200"
+        class="c-filepicker-outline"
         >
-          <template v-slot:prepend>
-            <q-icon name="attach_file" />
-          </template>
-        </q-file> -->
-
-        <label for="from-to" class="text-subtitle3 input-title input-mt">
-            Желаемая стоимость
-        </label>
-        <div class="row">
-          <q-input
-          v-model.number="form.price_start"
-          type="number"
-          class="input c-mt-24 col-3"
-          name="from-to"
-          placeholder="Опишите, что требуется сделать по вашей задаче..."
-          outlined
-          :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
+          <div class="c-file-placeholder">
+              Если у вас уже имеются контент, брендбук, бриф, спецификация или иные материалы по заказу, пожалуйста, загрузите их...
+          </div>
+          <c-button
+            class="text-body1 btn c-file-button"
+            :label="'Выберите файл'"
+            :background="true"
           />
 
-          <q-input
-          v-model.number="form.price_end"
-          type="number"
-          class="input c-mt-24 col-3 offset-1"
-          name="from-to"
-          placeholder="Опишите, что требуется сделать по вашей задаче..."
-          outlined
-          :rules="[requiredOneOfNumber(form.price_start), positive, biggerThan(form.price_start)]"
-          />
+        </q-file>
+
+        <div class="input-wrapper row">
+            <div class="col-3">
+              <label for="from-to" class="text-subtitle3 input-title input-mt">
+                Желаемая стоимость
+              </label>
+              <div>
+                <q-input
+                v-model.number="form.price_start"
+                type="number"
+                class="c-input-price c-mt-24 col-3"
+                name="from-to"
+                placeholder="От..."
+                outlined
+                :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
+                />
+              </div>
+
+              <q-input
+                v-model.number="form.price_end"
+                type="number"
+                class="c-input-price c-mt-24 col-3 offset-1"
+                name="from-to"
+                placeholder="До..."
+                outlined
+                :rules="[requiredOneOfNumber(form.price_start), positive, biggerThan(form.price_start)]"
+              />
+            </div>
+
+            <div class="col-3 offset-2">
+              <label for="date" class="text-subtitle3 input-title input-mt">
+                Желаемый срок готовности
+              </label>
+              <q-input
+              placeholder="дд.мм.гггг"
+              class="c-input-outline"
+              name="date"
+              outlined
+              v-model="form.date_complete"
+              :rules="[required]"
+              >
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                      <q-date
+                      :rules="[required]"
+                      v-model="form.date_complete"
+                      mask="DD.MM.YYYY"
+                      :options="optionsFn"
+                      >
+                        <div class="row items-center justify-end">
+                          <q-btn v-close-popup label="Close" color="primary" flat />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
         </div>
 
-        <label for="date" class="text-subtitle3 input-title input-mt">
-            Желаемый срок готовности
-        </label>
-        <q-input style="width: 300px;" name="date" filled v-model="form.date_complete" :rules="[required]">
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date
-                :rules="[required]"
-                v-model="form.date_complete"
-                mask="DD.MM.YYYY"
-                :options="optionsFn"
-                >
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
-
-        <div class="row">
+        <div class="row submit-btns">
           <c-button
             class="text-body1 btn col-2"
             :label="'Разместить заказ'"
@@ -243,6 +266,8 @@ const checkboxes = ref([
   }
 ]);
 
+const files = ref([])
+
 const form = ref({
   name: "",
   customer: "",
@@ -281,6 +306,8 @@ const createOrder = () => {
 
 <style lang="scss" scoped>
 .input-title {
+  margin-left: 21px;
+
   &::before {
     content: '';
     display: block;
@@ -296,13 +323,34 @@ const createOrder = () => {
   border-radius: 8px;
 }
 
+.button-group {
+  gap: 32px;
+}
+
 .btn {
-  width: 265px;
+  white-space: nowrap;
   margin-bottom: 23px;
+  border-radius: 8px !important;
+  height: 37px;
 }
 
 .input-mt {
   margin-top: 80px;
   display: block;
+}
+
+.checkboxes-area {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+}
+
+.submit-btns {
+  margin-top: 120px;
+}
+
+
+.q-chip {
+  margin-top: 20px;
 }
 </style>
