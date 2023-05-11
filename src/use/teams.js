@@ -168,8 +168,10 @@ export const useTeamDelete = () => {
       deleteTeamResult.value = teamData;
 
       deletingTeam.value = false;
-    } catch (error) {
-      deleteTeamError.value = error;
+    } catch (e) {
+      deleteTeamError.value = e;
+
+      console.log(e);
     }
   }
 
