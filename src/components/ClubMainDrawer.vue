@@ -75,6 +75,11 @@ const mainTreeItems = ref([
     path: "teams",
   },
   {
+    title: "Мои команды",
+    img: "HomeIconDemo.svg",
+    path: "my-teams",
+  },
+  {
     title: "Мои проекты",
     img: "HomeIconDemo.svg",
     path: "projects",
