@@ -17,7 +17,7 @@
 
     <main>
       <section
-        v-if="!currentProjects?.paginate_project.data.length"
+        v-if="!currentProjects?.length || loading"
         class="row ptojects-wrapper q-gutter-x-md"
       >
         <c-card-add-project
@@ -47,7 +47,7 @@
           />
 
           <c-project-card
-            v-for="project in currentProjects?.paginate_project.data"
+            v-for="project in currentProjects"
             flat
             class="flex flex-center project-card col-4"
             :key="project.id"
@@ -60,19 +60,17 @@
 </template>
 
 <script setup>
-import projectApi from "src/sdk/project";
-import { inject, ref } from "vue";
+import { inject, onMounted, ref } from "vue";
+
+import { useProjectsQuery } from "src/use/projects";
 
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";
 
-const currentTeam = inject("currentTeam");
+const { result: currentProjects, loading, getWithWere } = useProjectsQuery();
 
-const { result: currentProjects } = projectApi.paginateProject({
-  page: 1,
-  perPage: 50,
-  space_id: currentTeam.value.space,
-});
+const currentTeam = inject("currentTeam");
+const isOwner = inject("isOwner");
 
 const typesProjectsList = ref([
   { label: "Активные", value: "active" },
@@ -80,7 +78,10 @@ const typesProjectsList = ref([
 ]);
 
 const selectProjectsList = ref("");
-const isOwner = inject("isOwner");
+
+onMounted(async () => {
+  await getWithWere({ team: currentTeam });
+});
 </script>
 
 <style scoped lang="scss">

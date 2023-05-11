@@ -9,7 +9,7 @@
 
       <section v-else>
         <c-team-profile-header />
-        <c-team-profile-projects class="c-pt-32" :projects="projects" />
+        <c-team-profile-projects class="c-pt-32" />
         <c-team-profile-members />
       </section>
     </main>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { computed, inject, onMounted, provide, ref } from "vue";
+import { computed, inject, onMounted, provide } from "vue";
 
 import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
@@ -29,23 +29,6 @@ const { result, loading, checkIsMember } = useTeamIsMember();
 
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
-
-console.log("TEEEEEAM", currentTeam);
-
-const projects = ref([
-  {
-    id: 1,
-    name: "Проект1",
-  },
-  {
-    id: 2,
-    name: "Проект2",
-  },
-  {
-    id: 3,
-    name: "Проект3",
-  },
-]);
 
 const isOwner = computed(
   () => currentUser.value.subject_id === currentTeam?.value.author_id

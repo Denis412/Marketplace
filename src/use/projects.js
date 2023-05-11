@@ -5,6 +5,36 @@ import spaceApi from "src/sdk/space";
 import propertyApi from "src/sdk/property";
 import teamApi from "src/sdk/team";
 
+export const useProjectsQuery = () => {
+  const result = ref(null);
+  const loading = ref(false);
+  const error = ref(null);
+
+  async function getWithWere({ where, team, only_one }) {
+    try {
+      loading.value = true;
+
+      const projects = await projectApi.refetchPaginateProjects({
+        page: 1,
+        perPage: 50,
+        where,
+        space_id: team.value.space,
+      });
+
+      result.value = only_one ? projects[0] : projects;
+
+      loading.value = false;
+    } catch (e) {
+      error.value = e;
+      loading.value = false;
+
+      console.log(e);
+    }
+  }
+
+  return { result, loading, error, getWithWere };
+};
+
 export const useProjectCreate = () => {
   const result = ref(null);
   const loading = ref(false);

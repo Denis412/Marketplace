@@ -17,7 +17,6 @@ export const projectUpdate = gql`
     update_project(id: $id, input: $input) {
       record {
         id
-
         type_id
       }
     }
