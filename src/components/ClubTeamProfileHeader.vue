@@ -12,6 +12,7 @@
               v-if="isOwner"
               clickable
               class="flex no-wrap items-center text-caption1 text-black"
+              @click="editProfile"
               >Редактировать
             </q-item>
 
@@ -125,6 +126,13 @@ const isReady = ref(currentTeam.value.ready_for_orders ?? false);
 const isOwner = inject("isOwner");
 const isMember = inject("isMember");
 const fullDes = ref(true);
+
+const editProfile = async () => {
+  router.push({
+    name: "teamEdit",
+    params: { name: currentTeam.value.name },
+  });
+};
 
 const updateTeamStatus = async () => {
   await updateTeam(currentTeam.value.id, {

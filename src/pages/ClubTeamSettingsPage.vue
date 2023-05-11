@@ -1,20 +1,18 @@
 <template>
-  <q-page class="c-pa-32">
-    <div v-if="!team" class="loader loader-lg"></div>
-
-    <c-team-profile v-else />
+  <q-page class="c-pt-32 c-pl-32 c-pr-32">
+    <c-team-settings v-if="team"/>
   </q-page>
 </template>
 
 <script setup>
-import CTeamProfile from "src/components/ClubTeamProfile.vue";
+import CTeamSettings from "src/components/ClubTeamSettings.vue";
 import teamApi from "src/sdk/team";
 import { computed, provide } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const { result: currentTeam } = teamApi.paginateTeams({
+const { result: currentTeam, loading } = teamApi.paginateTeams({
   page: 1,
   perPage: 1,
   where: {
@@ -24,9 +22,8 @@ const { result: currentTeam } = teamApi.paginateTeams({
   },
 });
 
-const team = computed(() => currentTeam.value?.paginate_team.data[0]);
+const team = computed(() => currentTeam.value?.paginate_team?.data[0]);
 
-console.log("ClubTeamPage",team);
 provide("currentTeam", team);
 </script>
 

@@ -34,6 +34,12 @@ const routes = [
         component: () => import("pages/ClubTeamInvitePage.vue"),
       },
       {
+        path: "team/:name/edit",
+        name: "teamEdit",
+        props: true,
+        component: () => import("src/pages/ClubTeamSettingsPage.vue"),
+      },
+      {
         path: "teams",
         name: "teams",
         component: () => import("pages/ClubTeamsPage.vue"),

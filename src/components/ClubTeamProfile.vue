@@ -30,6 +30,8 @@ const { result, loading, checkIsMember } = useTeamIsMember();
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
 
+console.log("TEEEEEAM", currentTeam);
+
 const projects = ref([
   {
     id: 1,

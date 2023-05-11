@@ -107,7 +107,7 @@ const teamCreate = async () => {
       name: "my-teams",
     });
 
-    // avatar.value = await filesApi.uploadFiles(upload_img.value);
+    await filesApi.uploadFiles(upload_img.value);
 
     // await teamApi.update(teamData.value.id, {
     //   avatar: avatar.value,
