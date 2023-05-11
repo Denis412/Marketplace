@@ -54,16 +54,16 @@ const routes = [
         name: "my-teams",
         component: () => import("src/pages/ClubMyTeamsPage.vue"),
       },
+      {
+        path: "my-projects",
+        name: "my-projects",
+        component: () => import("src/pages/ClubMyProjectsPage.vue"),
+      },
 
       //тестовые роуты
       {
         path: "market",
         name: "market",
-        component: () => import("pages/ErrorNotFound.vue"),
-      },
-      {
-        path: "projects",
-        name: "projects",
         component: () => import("pages/ErrorNotFound.vue"),
       },
       {

@@ -45,7 +45,7 @@ const refetchProjectById = async ({ id, space_id }) => {
 
   const { data: projectData } = await refetch();
 
-  console.log("refetch project", projectData);
+  console.log("get project", projectData);
 
   return projectData.get_project;
 };
@@ -58,7 +58,7 @@ const create = async ({ input, space_id }) => {
 
   console.log("create project", projectData);
 
-  return projectData.create_project;
+  return projectData.create_project.record;
 };
 
 const update = async ({ id, input, space_id }) => {
@@ -72,8 +72,15 @@ const update = async ({ id, input, space_id }) => {
   return projectData.update_project;
 };
 
-const deleteProjectById = async (id) => {
-  await deletingProject({ id });
+const deleteProjectById = async ({ id, space_id }) => {
+  const { data: projectData } = await deletingProject(
+    { id },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+  );
+
+  console.log("delete project", projectData);
+
+  return projectData.delete_project;
 };
 
 const projectApi = {

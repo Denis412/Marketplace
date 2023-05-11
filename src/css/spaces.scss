@@ -397,13 +397,15 @@
 
   &x- {
     &32 {
-      padding: 0 32px;
+      padding-left: 32px;
+      padding-right: 32px;
     }
   }
 
   &y- {
     &32 {
-      padding-top: 32px 0;
+      padding-top: 32px;
+      padding-bottom: 32px;
     }
   }
 
@@ -455,6 +457,52 @@
   &a- {
     &10 {
       padding: 10px;
+    }
+  }
+}
+
+.c-p {
+  &t- {
+    &72 {
+      padding-top: 72px;
+    }
+  }
+
+  &b- {
+    &72 {
+      padding-bottom: 72px;
+    }
+  }
+
+  &l- {
+    &72 {
+      padding-left: 72px;
+    }
+  }
+
+  &r- {
+    &72 {
+      padding-right: 72px;
+    }
+  }
+
+  &x- {
+    &72 {
+      padding-left: 72px;
+      padding-right: 72px;
+    }
+  }
+
+  &y- {
+    &72 {
+      padding-top: 72px;
+      padding-bottom: 72px;
+    }
+  }
+
+  &a- {
+    &72 {
+      padding: 72px;
     }
   }
 }

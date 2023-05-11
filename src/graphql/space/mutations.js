@@ -5,6 +5,7 @@ export const createSpace = gql`
     spaceCreate(input: $input) {
       recordId
       record {
+        id
         author_id
         name
         description
@@ -22,6 +23,7 @@ export const updateSpace = gql`
     spaceUpdate(id: $id, input: $input) {
       recordId
       record {
+        id
         author_id
         name
         description

@@ -1,4 +1,61 @@
+import { ref } from "vue";
+
 import projectApi from "src/sdk/project";
+import spaceApi from "src/sdk/space";
+import propertyApi from "src/sdk/property";
+import teamApi from "src/sdk/team";
+
+export const useProjectCreate = () => {
+  const result = ref(null);
+  const loading = ref(false);
+  const error = ref(null);
+
+  async function createProject({ name, team, space_id, is_first }) {
+    try {
+      loading.value = true;
+
+      const spaceData = await spaceApi.create({
+        name: name,
+        description: "Проектное пространство",
+      });
+
+      const projectData = await projectApi.create({
+        input: { name },
+        space_id,
+      });
+
+      const projectUpdateData = await projectApi.update({
+        id: projectData.id,
+        input: {
+          name: projectData.name,
+          space: spaceData.id,
+        },
+        space_id,
+      });
+
+      await teamApi.refetchPaginateTeams({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: team.name,
+        },
+      });
+
+      result.value = projectUpdateData;
+
+      loading.value = false;
+    } catch (e) {
+      error.value = e;
+      loading.value = false;
+
+      console.log(e);
+    }
+  }
+
+  return { result, loading, error, createProject };
+};
 
 export const useProject = () => {
   const create = async ({ input, space_id }) => {

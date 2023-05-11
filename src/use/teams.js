@@ -6,6 +6,7 @@ import spaceApi from "src/sdk/space";
 import teamApi from "src/sdk/team";
 import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
+import propertyApi from "src/sdk/property";
 
 export const useTeamCreate = () => {
   const createTeamResult = ref(null);
@@ -31,30 +32,41 @@ export const useTeamCreate = () => {
           operator: "EQ",
           value: "Команда",
         },
-        space_id: space.recordId,
+        space_id: space.id,
       });
 
-      await groupApi.create(space.recordId, {
+      await groupApi.create(space.id, {
         name: "Участники",
         description: "Группа участников",
         parent_group_id: teamGroup[0].id,
       });
 
-      await groupApi.create(space.recordId, {
+      await groupApi.create(space.id, {
         name: "Приглашенные",
         description: "Группа приглашенных",
         parent_group_id: teamGroup[0].id,
       });
 
-      await typeApi.create({
+      const projectTypeData = await typeApi.create({
         input: {
           name: "project",
           label: "Проект",
         },
-        space_id: space.recordId,
+        space_id: space.id,
       });
 
-      team = await teamApi.create({ name, description, space: space.recordId });
+      await propertyApi.create({
+        input: {
+          name: "space",
+          label: "Проектное пространство",
+          data_type: "text",
+          type_id: projectTypeData.id,
+          order: 2,
+        },
+        space_id: space.id,
+      });
+
+      team = await teamApi.create({ name, description, space: space.id });
 
       await teamApi.update(team.id, {
         members: {
@@ -78,6 +90,8 @@ export const useTeamCreate = () => {
       creatingTeam.value = false;
     } catch (e) {
       createTeamError.value = e;
+
+      console.log(e);
     }
   }
 

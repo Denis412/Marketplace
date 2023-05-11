@@ -77,7 +77,7 @@ const mainTreeItems = ref([
   {
     title: "Мои проекты",
     img: "HomeIconDemo.svg",
-    path: "projects",
+    path: "my-projects",
   },
   {
     title: "Мое пространство",

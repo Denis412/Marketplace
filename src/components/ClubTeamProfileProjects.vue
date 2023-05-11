@@ -17,7 +17,7 @@
 
     <main>
       <section
-        v-if="!projects || !projects.length"
+        v-if="!currentProjects?.paginate_project.data.length"
         class="row ptojects-wrapper q-gutter-x-md"
       >
         <c-card-add-project
@@ -47,7 +47,7 @@
           />
 
           <c-project-card
-            v-for="project in projects"
+            v-for="project in currentProjects?.paginate_project.data"
             flat
             class="flex flex-center project-card col-4"
             :key="project.id"
@@ -60,10 +60,20 @@
 </template>
 
 <script setup>
+import projectApi from "src/sdk/project";
 import { inject, ref } from "vue";
 
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";
+
+const currentTeam = inject("currentTeam");
+
+const { result: currentProjects } = projectApi.paginateProject({
+  page: 1,
+  perPage: 50,
+  where: null,
+  space_id: currentTeam.value.space,
+});
 
 const { projects } = defineProps({
   projects: Array,
