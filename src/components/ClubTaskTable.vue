@@ -1,16 +1,10 @@
 <template>
   <h3 class="text-h3 q-ma-xl">Создание команды</h3>
-  <q-table
-    class="q-mx-lg no-shadow flat"
-    :rows="pokapusto"
-    :columns="columns"
-    :pagination="pagination"
+  <q-table class="q-mx-lg no-shadow flat" :rows="pokapusto" :columns="columns" :pagination="pagination"
     :pagination-labels="{
-      rowsPerPage: 'Строк на странице',
-      rowsPerPageAll: 'Все',
-    }"
-    :rows-per-page-options="[5, 10, 20]"
-  >
+        rowsPerPage: 'Строк на странице',
+        rowsPerPageAll: 'Все',
+      }" :rows-per-page-options="[5, 10, 20]">
 
     <!-- Пример -->
 
@@ -51,7 +45,8 @@ const columns = [
     label: "Задача",
     field: "Задача",
     headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+      "font-family: 'Play'; font-weight: 400; font-size: 20px",
+
   },
   {
     name: "Проект",
@@ -60,6 +55,7 @@ const columns = [
     field: "Проект",
     headerStyle:
       "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+    sortable: true
   },
   {
     name: "Дата начала",
@@ -68,6 +64,7 @@ const columns = [
     field: "Дата начала",
     headerStyle:
       "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+    sortable: true
   },
   {
     name: "Дата окончания",
@@ -76,6 +73,7 @@ const columns = [
     field: "Дата окончания",
     headerStyle:
       "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+    sortable: true
   },
   {
     name: "Статус",
@@ -83,6 +81,7 @@ const columns = [
     label: "Статус",
     field: "Статус",
     headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px;",
+    sortable: true
   },
 ];
 </script>
