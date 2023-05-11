@@ -37,41 +37,31 @@
 </template>
 
 <script setup>
-import CInput from "./ClubInput.vue";
-import CLabelControl from "./ClubLabelControl.vue";
-import CButton from "src/components/ClubButton.vue";
-import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
-import teamApi from "src/sdk/team";
-import { useRouter } from "vue-router";
 import { ref, inject } from "vue";
+import { useRouter } from "vue-router";
+
 import { useValidators } from "src/use/validators";
+import { useTeamUpdate } from "src/use/teams";
+
+import CLabelControl from "./ClubLabelControl.vue";
+import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
 
 const { required, maxLength, minLength } = useValidators();
+const { result: teamData, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
 const telegram_chat_id = ref(currentTeam.value.telegram_chat_id);
 const router = useRouter();
 
 const updateTeamData = async () => {
-  try {
-    await teamApi.update(currentTeam.value.id, {
-      telegram_chat_id: telegram_chat_id.value,
-    });
+  await updateTeam(currentTeam.value.id, {
+    telegram_chat_id: telegram_chat_id.value,
+  });
 
-    await teamApi.refetchPaginateTeams({
-      page: 1,
-      perPage: 1,
-      where: {
-        column: "name",
-        operator: "EQ",
-        value: currentTeam.value.name,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-  }
-
-  router.go(-1);
+  router.push({
+    name: "team",
+    params: { name: teamData.value.name },
+  });
 };
 </script>
 

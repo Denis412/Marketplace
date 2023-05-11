@@ -15,7 +15,7 @@
         >
           <template #prepend>
             <q-icon
-              name="img:/src/assets/icons/search/search-grey.svg"
+              name="img:/assets/icons/search/search-grey.svg"
               class="cursor-pointer"
             />
           </template>

@@ -215,6 +215,8 @@ const login = async (
     },
   });
 
+  console.loh("login", userInfo);
+
   const userData = recovery ? null : await saveUserData(userInfo, first_entry);
 
   return userData?.user;

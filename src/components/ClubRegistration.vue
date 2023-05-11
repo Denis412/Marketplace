@@ -92,8 +92,9 @@
           </template>
         </q-checkbox>
 
+        <!-- :disable="!agreement" -->
         <c-button
-          :disable="!agreement"
+          disable
           type="submit"
           background
           label="Зарегистрироваться"

@@ -10,32 +10,42 @@
         <div
           class="absolute flex flex-center create-form-avatar-create cursor-pointer"
         >
-          <q-img src="/icons/edit.svg" class="create-form-icon">
+          <q-img
+            src="/assets/icons/pen/edit-white.svg"
+            class="create-form-icon"
+          >
             <q-menu class="w-max-content">
               <q-list separator>
                 <q-item
                   clickable
                   class="flex no-wrap items-center text-caption1 text-black"
+                  disable
                   @click="addAvatar"
-                  ><q-item-section avatar class="teamSettingForm-icon-section">
+                >
+                  <q-item-section avatar class="teamSettingForm-icon-section">
                     <q-icon
-                      name="img:/icons/Plus.svg"
+                      name="img:/assets/icons/plus/plus-black.svg"
                       class="teamSettingForm-icon"
-                    /> </q-item-section
-                  >Добавить фото
+                    />
+                  </q-item-section>
+
+                  Добавить фото
                 </q-item>
 
                 <q-item
                   clickable
                   v-ripple
                   class="flex no-wrap items-center text-caption1 text-black"
+                  disable
                   @click="deleteAvatar"
-                  ><q-item-section avatar class="teamSettingForm-icon-section">
+                >
+                  <q-item-section avatar class="teamSettingForm-icon-section">
                     <q-icon
-                      name="img:/icons/delete.svg"
+                      name="img:/assets/icons/delete/delete-black.svg"
                       class="teamSettingForm-icon"
                     />
                   </q-item-section>
+
                   Удалить фото
                 </q-item>
               </q-list>
@@ -67,7 +77,7 @@
             >
               <template #append>
                 <q-icon
-                  name="img:/icons/editBlack.svg"
+                  name="img:/assets/icons/pen/edit-black.svg"
                   class="create-form-icon cursor-pointer"
                 >
                 </q-icon>
@@ -115,7 +125,7 @@
             >
               <template #append>
                 <q-icon
-                  name="img:/icons/editBlack.svg"
+                  name="img:/assets/icons/pen/edit-black.svg"
                   class="create-form-icon cursor-pointer"
                 >
                 </q-icon>
@@ -140,7 +150,7 @@
               >
                 <template #append>
                   <q-icon
-                    name="img:/icons/editBlack.svg"
+                    name="img:/assets/icons/pen/edit-black.svg"
                     class="create-form-icon cursor-pointer"
                   >
                   </q-icon>
@@ -158,16 +168,16 @@
 </template>
 
 <script setup>
-import CInput from "./ClubInput.vue";
 import CLabelControl from "./ClubLabelControl.vue";
 import CButton from "src/components/ClubButton.vue";
 import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
 import { ref, inject } from "vue";
 import { useValidators } from "src/use/validators";
-import teamApi from "src/sdk/team";
 import { useRouter } from "vue-router";
+import { useTeamUpdate } from "src/use/teams";
 
 const { required, maxLength, minLength } = useValidators();
+const { result: teamData, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
 const upload_img = ref();
@@ -175,7 +185,8 @@ const uploadFile = ref();
 const router = useRouter();
 
 const form = ref({
-  avatar: "/src/assets/previews/avatar-140.png",
+  avatar:
+    currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
   name: currentTeam.value?.name,
   description: currentTeam.value?.description,
   telegram_chat_id: currentTeam.value?.telegram_chat_id,
@@ -190,37 +201,23 @@ const updateFile = () => {
   }
 };
 
-const addAvatar = () => {
-  uploadFile.value.pickFiles();
-};
+const addAvatar = () => uploadFile.value.pickFiles();
 
-const deleteAvatar = () => {
-  form.value.avatar = "/src/assets/previews/avatar-140.png";
-};
+const deleteAvatar = () =>
+  (form.value.avatar = "/assets/images/preloaders/default-avatar.svg");
 
 const updateTeamData = async () => {
-  try {
-    await teamApi.update(currentTeam.value.id, {
-      avatar: form.value.avatar,
-      name: form.value.name,
-      description: form.value.description,
-      telegram_chat_id: form.value.telegram_chat_id,
-    });
+  await updateTeam(currentTeam.value.id, {
+    avatar: form.value.avatar,
+    name: form.value.name,
+    description: form.value.description,
+    telegram_chat_id: form.value.telegram_chat_id,
+  });
 
-    await teamApi.refetchPaginateTeams({
-      page: 1,
-      perPage: 1,
-      where: {
-        column: "name",
-        operator: "EQ",
-        value: currentTeam.value.name,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-  }
-
-  router.go(-1);
+  router.push({
+    name: "team",
+    params: { name: teamData.value.name },
+  });
 };
 </script>
 

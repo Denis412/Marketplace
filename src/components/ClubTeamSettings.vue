@@ -6,8 +6,8 @@
     </header>
 
     <main class="flex justify-between no-wrap">
-      <c-team-settings-form v-if="editableItem == 'profile'" />
-      <c-team-space-settings-form v-if="editableItem == 'space'" />
+      <c-team-settings-form v-if="editableItem === 'profile'" />
+      <c-team-space-settings-form v-else />
 
       <q-tabs
         v-model="editableItem"
@@ -20,6 +20,7 @@
         class="editableItems c-tabs bg-primary c-pa-16 c-ml-32"
       >
         <q-tab class="editableItem" name="profile" label="Профиль команды" />
+
         <q-tab
           class="editableItem"
           name="space"

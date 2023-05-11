@@ -85,23 +85,38 @@ export const useTeamCreate = () => {
 };
 
 export const useTeamUpdate = () => {
-  const udpateTeamResult = ref(null);
-  const updatingTeam = ref(false);
-  const updateTeamError = ref("");
+  const result = ref(null);
+  const loading = ref(false);
+  const error = ref("");
 
   async function updateTeam(id, data) {
     try {
-      updatingTeam.value = true;
+      loading.value = true;
 
-      udpateTeamResult.value = await teamApi.update(id, data);
+      const teamData = await teamApi.update(id, data);
 
-      updatingTeam.value = false;
-    } catch (error) {
-      updateTeamError.value = error;
+      await teamApi.refetchPaginateTeams({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "id",
+          operator: "EQ",
+          value: id,
+        },
+      });
+
+      result.value = teamData;
+
+      loading.value = false;
+    } catch (e) {
+      error.value = e;
+      loading.value = false;
+
+      console.log(e);
     }
   }
 
-  return { udpateTeamResult, updatingTeam, updateTeamError, updateTeam };
+  return { result, loading, error, updateTeam };
 };
 
 export const useTeamDelete = () => {

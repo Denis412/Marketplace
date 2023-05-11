@@ -67,7 +67,7 @@ const update = async (id, data) => {
 
   console.log("update team", teamData);
 
-  return teamData.update_team.status;
+  return teamData.update_team.record;
 };
 
 const deleteById = async (id) => {

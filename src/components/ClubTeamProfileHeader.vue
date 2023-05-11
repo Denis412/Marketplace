@@ -13,7 +13,8 @@
               clickable
               class="flex no-wrap items-center text-caption1 text-black"
               @click="editProfile"
-              >Редактировать
+            >
+              Редактировать
             </q-item>
 
             <q-item
@@ -21,14 +22,16 @@
               clickable
               v-ripple
               class="flex no-wrap items-center text-caption1 text-black"
-              >Покинуть команду
+            >
+              Покинуть команду
             </q-item>
 
             <q-item
               clickable
               v-ripple
               class="flex no-wrap items-center text-caption1 text-black"
-              >Поделиться
+            >
+              Поделиться
             </q-item>
           </q-list>
         </q-menu>
@@ -45,9 +48,10 @@
 
         <section>
           <p class="text-body2 q-mt-sm">
-            <span v-if="fullDes"
-              >{{ currentTeam.description.substr(0, 121) }} ...</span
-            >
+            <span v-if="fullDes">
+              {{ currentTeam.description.substr(0, 121) }} ...
+            </span>
+
             <span v-else>{{ currentTeam.description }}</span>
           </p>
 
@@ -98,6 +102,7 @@
             class="text-violet-6 link text-body2"
           >
             Чат команды
+
             <q-icon
               class="text-subtitle2"
               name="img:/assets/icons/socials/telegram-gradient.svg"
@@ -111,11 +116,13 @@
 
 <script setup>
 import { inject, ref } from "vue";
+import { useRouter } from "vue-router";
 
 import { useTeamApplication, useTeamUpdate } from "src/use/teams";
 
 import CButton from "src/components/ClubButton.vue";
 
+const router = useRouter();
 const { updateTeam } = useTeamUpdate();
 const { loading: sending, sendApplication } = useTeamApplication();
 

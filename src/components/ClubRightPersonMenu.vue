@@ -63,7 +63,6 @@ import { useRouter } from "vue-router";
 import CConfirmDialog from "./ClubConfirmDialog.vue";
 
 import userApi from "src/sdk/user";
-import stompApi from "src/sdk/stomp";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -82,7 +81,6 @@ const logout = () => {
   isExit.value = false;
 
   userApi.logout();
-  stompApi.disconnect();
   userStore.LOGOUT_CURRENT_USER();
 
   router.push({

@@ -1,6 +1,6 @@
 <template>
   <q-page class="c-pt-32 c-pl-32 c-pr-32">
-    <c-team-settings v-if="team"/>
+    <c-team-settings v-if="team" />
   </q-page>
 </template>
 
@@ -12,7 +12,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const { result: currentTeam, loading } = teamApi.paginateTeams({
+const { result: currentTeam } = teamApi.paginateTeams({
   page: 1,
   perPage: 1,
   where: {
