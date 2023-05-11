@@ -1,6 +1,9 @@
 <!-- Компонент формы редактирования командного пространства -->
 <template>
-  <section class="teamSettingForm c-mb-32">
+  <q-form
+    @submit="updateTeamData"
+    class="teamSettingForm c-mb-32"
+  >
     <div class="flex teamSettingForm-section c-mb-40 c-pb-32">
       <section class="flex no-wrap">
         <c-label-control label="Ссылка на чат команды в Telegram">
@@ -32,8 +35,8 @@
       </section>
     </div>
 
-    <c-team-settings-buttons @updateTeamData="updateTeamData" />
-  </section>
+    <c-team-settings-buttons />
+  </q-form>
 </template>
 
 <script setup>

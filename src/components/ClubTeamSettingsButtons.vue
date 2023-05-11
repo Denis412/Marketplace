@@ -4,8 +4,8 @@
       background
       size="lg"
       label="Сохранить"
+      type="submit"
       class="c-mr-32"
-      @click="emit('updateTeamData')"
     />
 
     <c-button
