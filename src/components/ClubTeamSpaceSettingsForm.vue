@@ -44,6 +44,9 @@ import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
 import teamApi from "src/sdk/team";
 import { useRouter } from "vue-router";
 import { ref, inject } from "vue";
+import { useValidators } from "src/use/validators";
+
+const { required, maxLength, minLength } = useValidators();
 
 const currentTeam = inject("currentTeam");
 const telegram_chat_id = ref(currentTeam.value.telegram_chat_id);
