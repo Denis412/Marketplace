@@ -81,7 +81,6 @@ const updateFile = (name, doc) => {
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {
-        title: name,
         path: doc.path,
         size: doc.size,
         name: name + '.html',
