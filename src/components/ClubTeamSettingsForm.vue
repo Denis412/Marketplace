@@ -213,9 +213,7 @@ const updateTeamData = async () => {
     console.log(error);
   }
 
-  router.push({
-    name: "teams",
-  });
+  router.go(-1);
 };
 </script>
 

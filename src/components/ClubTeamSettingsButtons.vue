@@ -23,12 +23,5 @@ import CButton from "src/components/ClubButton.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
-const emit = defineEmits(["updateTeamData"])
-
-const to = () => {
-  router.push({
-    name: "teams",
-  });
-};
+const emit = defineEmits(["updateTeamData"]);
 </script>
