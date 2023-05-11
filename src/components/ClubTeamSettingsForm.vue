@@ -1,6 +1,6 @@
 <!-- Компонент формы редактирования команды -->
 <template>
-  <q-form  @submit="updateTeamData" class="teamSettingForm c-mb-32">
+  <q-form @submit="updateTeamData" class="teamSettingForm c-mb-32">
     <div class="flex no-wrap teamSettingForm-section c-pb-32">
       <section class="large-avatar relative-position c-mr-32">
         <q-avatar class="large-avatar">

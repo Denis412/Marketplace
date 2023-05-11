@@ -5,19 +5,24 @@
         <h4 class="text-h4">Проекты</h4>
       </q-toolbar-title>
 
-      <q-btn-toggle
+      <q-tabs
         v-model="selectProjectsList"
-        flat
-        stretch
-        class="text-body1"
-        toggle-color="purple-7"
-        :options="typesProjectsList"
-      />
+        indicator-color="black"
+        class="bg-transparent text-body1"
+      >
+        <q-tab name="active" label="Активные" />
+
+        <q-tab name="finished" label="Завершенные" />
+      </q-tabs>
     </q-toolbar>
 
-    <main>
+    <!-- <pre>{{ currentProjects }}</pre> -->
+
+    <main class="q-mt-md">
       <section
-        v-if="!currentProjects?.length || loading"
+        v-if="
+          !currentProjects?.paginate_project?.data.length || paginateLoading
+        "
         class="row ptojects-wrapper q-gutter-x-md"
       >
         <c-card-add-project
@@ -39,20 +44,27 @@
       </section>
 
       <section v-else class="ptojects-wrapper">
-        <q-list class="row no-wrap q-gutter-md" style="overflow-x: auto">
-          <c-card-add-project
-            v-if="isOwner"
-            flat
-            class="flex flex-center project-card col-4"
-          />
+        <q-list class="row no-wrap" style="overflow-x: auto">
+          <section class="col-4 q-pr-md">
+            <c-card-add-project
+              v-if="isOwner"
+              flat
+              class="flex flex-center project-card"
+            />
+          </section>
 
-          <c-project-card
-            v-for="project in currentProjects"
-            flat
-            class="flex flex-center project-card col-4"
+          <section
+            v-for="project in currentProjects?.paginate_project?.data"
             :key="project.id"
-            :project="project"
-          />
+            class="col-4 q-px-md"
+          >
+            <c-project-card
+              flat
+              class="flex flex-center project-card cursor-pointer"
+              :project="project"
+              @click="redirectProjectPage(project)"
+            />
+          </section>
         </q-list>
       </section>
     </main>
@@ -62,26 +74,43 @@
 <script setup>
 import { inject, onMounted, ref } from "vue";
 
-import { useProjectsQuery } from "src/use/projects";
-
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";
+import projectApi from "src/sdk/project";
+import { useRouter } from "vue-router";
+import { useProjectsQuery } from "src/use/projects";
 
-const { result: currentProjects, loading, getWithWere } = useProjectsQuery();
+const router = useRouter();
+const { result, loading, getWithWere } = useProjectsQuery();
 
 const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
 
-const typesProjectsList = ref([
-  { label: "Активные", value: "active" },
-  { label: "Завершенные", value: "finished" },
-]);
-
-const selectProjectsList = ref("");
-
-onMounted(async () => {
-  await getWithWere({ team: currentTeam });
+const {
+  paginateResult: currentProjects,
+  paginateLoading,
+  refetch,
+} = getWithWere({
+  space_id: currentTeam.value?.space,
 });
+
+// const { result: currentProjects } = projectApi.paginateProject({
+//   page: 1,
+//   perPage: 50,
+//   where: null,
+//   space_id: currentTeam.value?.space,
+// });
+
+const selectProjectsList = ref("active");
+
+const redirectProjectPage = (project) => {
+  router.push({
+    name: "project",
+    params: { name: project.name },
+  });
+};
+
+onMounted(async () => await refetch({}));
 </script>
 
 <style scoped lang="scss">
@@ -94,14 +123,13 @@ onMounted(async () => {
 }
 
 .project-card {
-  min-width: 300px;
   min-height: 256px;
 
   border: 1px dashed $violet-6;
   border-radius: 5px;
 
   &-add {
-    max-width: 352px;
+    // max-width: 352px;
   }
 }
 

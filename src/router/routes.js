@@ -59,6 +59,11 @@ const routes = [
         name: "my-projects",
         component: () => import("src/pages/ClubMyProjectsPage.vue"),
       },
+      {
+        path: "project/:name",
+        name: "project",
+        component: () => import("src/pages/ClubProjectInformationPage.vue"),
+      },
 
       //тестовые роуты
       {

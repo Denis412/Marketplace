@@ -2,26 +2,68 @@ import { ref } from "vue";
 
 import projectApi from "src/sdk/project";
 import spaceApi from "src/sdk/space";
-import propertyApi from "src/sdk/property";
-import teamApi from "src/sdk/team";
 
 export const useProjectsQuery = () => {
   const result = ref(null);
   const loading = ref(false);
   const error = ref(null);
 
-  async function getWithWere({ where, team, only_one }) {
+  function getWithWere({ where, team, space_id }) {
     try {
       loading.value = true;
 
-      const projects = await projectApi.refetchPaginateProjects({
+      const {
+        result: paginateResult,
+        loading: paginateLoading,
+        error: paginateError,
+      } = projectApi.paginateProject({
         page: 1,
         perPage: 50,
         where,
-        space_id: team.value.space,
+        space_id: space_id || team.value.space,
       });
 
-      result.value = only_one ? projects[0] : projects;
+      async function refetch({ only_one }) {
+        try {
+          loading.value = true;
+
+          const projects = await projectApi.refetchPaginateProjects({
+            page: 1,
+            perPage: 50,
+            where,
+            space_id: space_id || team.value.space,
+          });
+
+          loading.value = false;
+
+          return only_one ? projects[0] : projects;
+        } catch (e) {
+          error.value = e;
+          loading.value = false;
+
+          console.log(e);
+        }
+      }
+
+      loading.value = false;
+
+      return { paginateResult, paginateLoading, paginateError, refetch };
+    } catch (e) {
+      error.value = e;
+      loading.value = false;
+
+      console.log(e);
+    }
+  }
+
+  async function getById({ id, team }) {
+    try {
+      loading.value = true;
+
+      result.value = await projectApi.refetchProjectById({
+        id,
+        space_id: team.value.space,
+      });
 
       loading.value = false;
     } catch (e) {
@@ -32,7 +74,7 @@ export const useProjectsQuery = () => {
     }
   }
 
-  return { result, loading, error, getWithWere };
+  return { result, loading, error, getWithWere, getById };
 };
 
 export const useProjectCreate = () => {
@@ -63,11 +105,11 @@ export const useProjectCreate = () => {
         space_id,
       });
 
-      await projectApi.refetchPaginateProjects({
-        page: 1,
-        perPage: 50,
-        space_id,
-      });
+      await useProjectsQuery()
+        .getWithWere({
+          space_id,
+        })
+        .refetch({});
 
       result.value = projectUpdateData;
 
@@ -83,28 +125,28 @@ export const useProjectCreate = () => {
   return { result, loading, error, createProject };
 };
 
-export const useProject = () => {
-  const create = async ({ input, space_id }) => {
-    await projectApi.create({ input, space_id });
+// export const useProject = () => {
+//   const create = async ({ input, space_id }) => {
+//     await projectApi.create({ input, space_id });
 
-    await projectApi.refetchPaginateProjects({ page: 100, perPage: 50 });
-  };
+//     await projectApi.refetchPaginateProjects({ page: 100, perPage: 50 });
+//   };
 
-  const update = async ({ id, input, space_id }) => {
-    await projectApi.update({ id, input, space_id });
+//   const update = async ({ id, input, space_id }) => {
+//     await projectApi.update({ id, input, space_id });
 
-    await projectApi.refetchPaginateProjects({ page: 100, perPage: 50 });
-  };
+//     await projectApi.refetchPaginateProjects({ page: 100, perPage: 50 });
+//   };
 
-  const deleteById = async (id) => {
-    await projectApi.deleteProjectById(id);
+//   const deleteById = async (id) => {
+//     await projectApi.deleteProjectById(id);
 
-    await refetchPaginateProjects({ page: 100, perPage: 50 });
-  };
+//     await refetchPaginateProjects({ page: 100, perPage: 50 });
+//   };
 
-  return {
-    create,
-    update,
-    deleteById,
-  };
-};
+//   return {
+//     create,
+//     update,
+//     deleteById,
+//   };
+// };

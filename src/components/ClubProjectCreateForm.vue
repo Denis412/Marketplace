@@ -9,6 +9,7 @@
               v-model="title"
               class="c-input-outline"
               placeholder="Название проекта"
+              :rules="[required]"
             />
           </template>
         </c-label-control>
@@ -22,8 +23,6 @@
 
           <c-specialist-item current-user class="bg-gray2 q-mt-lg" />
         </section>
-
-        <!-- <pre>{{ currentTeam }}</pre> -->
 
         <footer class="flex justify-center q-gutter-x-lg c-mt-32 text-body1">
           <q-btn
@@ -49,12 +48,16 @@
 
 <script setup>
 import { inject, ref } from "vue";
+
+import { useProjectCreate } from "src/use/projects";
+import { useValidators } from "src/use/validators";
+
 import CClosingDialog from "src/components/ClubClosingDialog.vue";
 import CLabelControl from "src/components/ClubLabelControl.vue";
 import CSpecialistItem from "./ClubSpecialistItem.vue";
-import { useProjectCreate } from "src/use/projects";
 
 const { result, loading, createProject } = useProjectCreate();
+const { required } = useValidators();
 
 const currentTeam = inject("currentTeam");
 
