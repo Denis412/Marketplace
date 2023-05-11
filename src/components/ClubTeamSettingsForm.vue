@@ -101,10 +101,17 @@
           <template #control>
             <q-input
               v-model="form.telegram_chat_id"
-              placeholder="Введите ссылку"
+              placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
-              :rules="[maxLength(45)]"
+              :rules="[
+                minLength(18),
+                maxLength(45),
+                (val) =>
+                  val.slice(0, 13) === 'https://t.me/' ||
+                  val.slice(0, 12) === 'http://t.me/' ||
+                  'Неверный формат ссылки',
+              ]"
             >
               <template #append>
                 <q-icon
