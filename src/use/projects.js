@@ -10,7 +10,7 @@ export const useProjectCreate = () => {
   const loading = ref(false);
   const error = ref(null);
 
-  async function createProject({ name, team, space_id, is_first }) {
+  async function createProject({ name, space_id }) {
     try {
       loading.value = true;
 
@@ -33,14 +33,10 @@ export const useProjectCreate = () => {
         space_id,
       });
 
-      await teamApi.refetchPaginateTeams({
+      await projectApi.refetchPaginateProjects({
         page: 1,
-        perPage: 1,
-        where: {
-          column: "name",
-          operator: "EQ",
-          value: team.name,
-        },
+        perPage: 50,
+        space_id,
       });
 
       result.value = projectUpdateData;

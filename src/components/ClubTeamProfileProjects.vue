@@ -71,12 +71,7 @@ const currentTeam = inject("currentTeam");
 const { result: currentProjects } = projectApi.paginateProject({
   page: 1,
   perPage: 50,
-  where: null,
   space_id: currentTeam.value.space,
-});
-
-const { projects } = defineProps({
-  projects: Array,
 });
 
 const typesProjectsList = ref([

@@ -10,6 +10,7 @@ export const paginateProjects = gql`
       data {
         id
         name
+        space
       }
     }
   }
