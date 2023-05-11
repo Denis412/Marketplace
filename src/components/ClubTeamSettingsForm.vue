@@ -10,10 +10,7 @@
         <div
           class="absolute flex flex-center create-form-avatar-create cursor-pointer"
         >
-          <q-img
-            src="/src/assets/icons/edit.svg"
-            class="create-form-icon"
-          >
+          <q-img src="/icons/edit.svg" class="create-form-icon">
             <q-menu class="w-max-content">
               <q-list separator>
                 <q-item
@@ -22,10 +19,10 @@
                   @click="addAvatar"
                   ><q-item-section avatar class="teamSettingForm-icon-section">
                     <q-icon
-                      name="img:/src/assets/icons/Plus.svg"
+                      name="img:/icons/Plus.svg"
                       class="teamSettingForm-icon"
-                    />
-                  </q-item-section>Добавить фото
+                    /> </q-item-section
+                  >Добавить фото
                 </q-item>
 
                 <q-item
@@ -33,7 +30,13 @@
                   v-ripple
                   class="flex no-wrap items-center text-caption1 text-black"
                   @click="deleteAvatar"
-                  >Удалить фото
+                  ><q-item-section avatar class="teamSettingForm-icon-section">
+                    <q-icon
+                      name="img:/icons/delete.svg"
+                      class="teamSettingForm-icon"
+                    />
+                  </q-item-section>
+                  Удалить фото
                 </q-item>
               </q-list>
             </q-menu>
@@ -64,7 +67,7 @@
             >
               <template #append>
                 <q-icon
-                  name="img:/src/assets/icons/editBlack.svg"
+                  name="img:/icons/editBlack.svg"
                   class="create-form-icon cursor-pointer"
                 >
                 </q-icon>
@@ -105,7 +108,7 @@
             >
               <template #append>
                 <q-icon
-                  name="img:/src/assets/icons/editBlack.svg"
+                  name="img:/icons/editBlack.svg"
                   class="create-form-icon cursor-pointer"
                 >
                 </q-icon>
@@ -130,7 +133,7 @@
               >
                 <template #append>
                   <q-icon
-                    name="img:/src/assets/icons/editBlack.svg"
+                    name="img:/icons/editBlack.svg"
                     class="create-form-icon cursor-pointer"
                   >
                   </q-icon>
@@ -143,7 +146,7 @@
         <!-- блок с добавленными видами -->
       </section>
     </div>
-    <c-team-settings-buttons @updateTeamData="updateTeamData"/>
+    <c-team-settings-buttons @updateTeamData="updateTeamData" />
   </q-form>
 </template>
 
@@ -211,9 +214,9 @@ const updateTeamData = async () => {
   }
 
   router.push({
-      name: "teams",
-    });
-}
+    name: "teams",
+  });
+};
 </script>
 
 <style lang="scss" scoped>

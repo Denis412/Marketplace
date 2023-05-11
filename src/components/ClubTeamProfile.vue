@@ -27,6 +27,8 @@ import teamApi from "src/sdk/team";
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
 
+console.log("TEEEEEAM", currentTeam);
+
 const projects = ref([
   {
     id: 1,
