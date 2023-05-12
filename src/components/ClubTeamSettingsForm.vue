@@ -1,6 +1,6 @@
 <!-- Компонент формы редактирования команды -->
 <template>
-  <q-form  @submit="updateTeamData" class="teamSettingForm c-mb-32">
+  <q-form @submit="updateTeamData" class="teamSettingForm c-mb-32">
     <div class="flex no-wrap teamSettingForm-section c-pb-32">
       <section class="large-avatar relative-position c-mr-32">
         <q-avatar class="large-avatar">
@@ -114,14 +114,7 @@
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
-              :rules="[
-                minLength(18),
-                maxLength(45),
-                (val) =>
-                  val.slice(0, 13) === 'https://t.me/' ||
-                  val.slice(0, 12) === 'http://t.me/' ||
-                  'Неверный формат ссылки',
-              ]"
+              :rules="[minLength(18), maxLength(45), telegramm]"
             >
               <template #append>
                 <q-icon
@@ -176,7 +169,7 @@ import { useValidators } from "src/use/validators";
 import { useRouter } from "vue-router";
 import { useTeamUpdate } from "src/use/teams";
 
-const { required, maxLength, minLength } = useValidators();
+const { required, telegramm, maxLength, minLength } = useValidators();
 const { result: teamData, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");

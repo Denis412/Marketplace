@@ -8,6 +8,7 @@ export function useValidators() {
       `Максимльно возможное количество символов ${length}!`,
 
     minLength: (length) => (val) =>
+      !val ||
       val.length >= length ||
       `Минимально возможное количество символов ${length}`,
 
@@ -18,6 +19,12 @@ export function useValidators() {
     equal: (val1) => (val) => val1 === val || "Значения не совпадают!",
 
     notEqual: (val1) => (val) =>
-      val1 !== val || "Новый пароль не может быть равен сатрому!",
+      val1 !== val || "Новый пароль не может быть равен старому!",
+
+    telegramm: (val) =>
+      !val ||
+      val.slice(0, 13) === "https://t.me/" ||
+      val.slice(0, 12) === "http://t.me/" ||
+      "Неверный формат ссылки",
   };
 }
