@@ -32,7 +32,7 @@
 
         <q-card-section class="oEdit">
           <router-link :to="{ name: 'order-edit', params: { id: item.id } }">
-            <img src="../assets/icons/orderIcons/tripleDot.png" alt="img"/>
+            <img src="../assets/icons/orderIcons/tripleDot.png" alt="img" />
           </router-link>
         </q-card-section>
       </q-card>
@@ -47,12 +47,11 @@ const { item } = defineProps({
     required: true,
   },
 });
-
 </script>
 
 <style scoped>
 .item {
-  padding: 10px;
+  padding: 0 20px 20px 20px;
 }
 
 .qPage {
