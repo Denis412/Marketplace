@@ -11,10 +11,9 @@
     }"
     :rows-per-page-options="[5, 10, 20]"
   >
-
     <!-- Пример -->
 
-    <!-- <template v-slot:body="props">
+    <template v-slot:body="props">
       <q-tr :props="props">
         <q-td>{{ props.row.email.email }}</q-td>
         <q-td>{{ props.row.fullname.first_name }}</q-td>
@@ -39,11 +38,16 @@
           }}
         </q-td>
       </q-tr>
-    </template> -->
+    </template>
   </q-table>
 </template>
 
 <script setup>
+import { taskResult } from "src/sdk/tasks";
+taskResult((queryResult) => {
+  console.log(queryResult.data.paginate_task.data);
+});
+
 const columns = [
   {
     name: "Задача",
