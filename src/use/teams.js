@@ -7,6 +7,7 @@ import teamApi from "src/sdk/team";
 import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
 import propertyApi from "src/sdk/property";
+import pageApi from "src/sdk/page";
 
 export const useTeamCreate = () => {
   const createTeamResult = ref(null);
@@ -72,6 +73,29 @@ export const useTeamCreate = () => {
         members: {
           [process.env.SUBJECT_TYPE_ID]: [team.author_id],
         },
+      });
+
+      const rootPageData = await pageApi.create({
+        input: {
+          title: team.name,
+        },
+        space_id: space.id,
+      });
+
+      await pageApi.create({
+        input: {
+          title: "Профиль команды",
+          parent_id: rootPageData.id,
+        },
+        space_id: space.id,
+      });
+
+      await pageApi.create({
+        input: {
+          title: "Командное пространство",
+          parent_id: rootPageData.id,
+        },
+        space_id: space.id,
       });
 
       await userApi.refetchPaginateSubjects({
