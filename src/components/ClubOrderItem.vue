@@ -1,6 +1,7 @@
 <template>
   <div class="item">
     <q-page class="qPage">
+      <router-link :to="{ name: 'order-info', params: { id: orderId } }">
       <q-card class="oItem">
         <q-card-section class="oNum">
           {{ order?.id }}
@@ -36,6 +37,7 @@
           </router-link>
         </q-card-section>
       </q-card>
+      </router-link>
     </q-page>
   </div>
 </template>

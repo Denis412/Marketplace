@@ -29,7 +29,6 @@
       :key="order?.id"
       :class="{ 'orderItemColorPink': index % 2 !== 0, 'orderItemLightPink': index === 0, 'theVeryFirstLightPink': index % 2 === 0 && index !== 0 }"
     >
-
     </c-orders-item>
   </div>
 </template>
