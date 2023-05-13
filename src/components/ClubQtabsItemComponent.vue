@@ -1,17 +1,23 @@
 <template>
-  <q-tab>
+  <div class="row no-wrap q-pl-lg drawer-item">
     <div class="item_doc" @contextmenu.prevent="showMenu = true">
+      <!-- <span v-if="stat.children.length" @click="stat.open = !stat.open">
+                {{ stat.open ? "-" : "+" }}
+              </span> -->
+
       <img
         :src="`/src/assets/icons/file/file-grey.svg`"
         alt=""
         class="q-pr-md"
       />
+
       <router-link
         class="name_doc link"
-        :to="{ name: 'Document', params: { id: `${index}` } }"
+        :to="{ name: 'Document', params: { id: `${props.node.index}` } }"
       >
-        {{ doc.name.replace(".html", "") }}
+        {{ node.text.replace(".html", "") }}
       </router-link>
+
       <div class="menu-wrapper" clickable>
         <q-btn-dropdown
           no-icon-animation
@@ -24,11 +30,14 @@
           class="btn-dropdown-doc"
           v-model="showMenu"
         >
-          <c-qmenu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
+          <c-qmenu-document
+            :prop_clicked_index_doc="props.node.index"
+            :prop_doc="doc"
+          ></c-qmenu-document>
         </q-btn-dropdown>
       </div>
     </div>
-  </q-tab>
+  </div>
 </template>
 
 <script setup>
@@ -37,7 +46,8 @@ import { ref } from "vue";
 
 const showMenu = ref(false);
 
-defineProps({
+const props = defineProps({
+  node: Object,
   doc: Object,
   index: Number,
 });

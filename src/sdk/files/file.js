@@ -78,10 +78,10 @@ const setTimeoutFunc = ({ minutes, func }) => {
 }
 
 const updateFile = (name, doc) => {
+  console.log(33333, doc)
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {
-        title: name,
         path: doc.path,
         size: doc.size,
         name: name + '.html',
