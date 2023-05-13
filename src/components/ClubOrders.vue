@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="orderHeadingOuter">
+
+    <div v-if="!loadingOrder" class="orderHeadingOuter">
       <div>
         <h3 class="orderHeadTitle">МОИ ЗАКАЗЫ</h3>
 
@@ -28,8 +29,10 @@
       :order="order"
       :key="order?.id"
       :class="{ 'orderItemColorPink': index % 2 !== 0, 'orderItemLightPink': index === 0, 'theVeryFirstLightPink': index % 2 === 0 && index !== 0 }"
-    >
-    </c-orders-item>
+    />
+    <div v-if="loadingOrder">
+      Загрузка...
+    </div>
   </div>
 </template>
 
@@ -39,7 +42,7 @@ import { ref, watch } from 'vue'
 import { useQuery } from '@vue/apollo-composable'
 import { getOrders } from 'src/graphql/order/queries'
 
-const { result: ordersResult} = useQuery(getOrders)
+const { result: ordersResult, loading: loadingOrder } = useQuery(getOrders)
 const orders = ref([])
 
 watch(ordersResult, () => {
