@@ -6,7 +6,7 @@
       </div>
 
       <h3 class="text-h3">
-        Изменить заказ {{ order.id }}
+        Изменить заказ {{ order?.id }}
       </h3>
 
       <p class="text-body2 c-mt-24">
