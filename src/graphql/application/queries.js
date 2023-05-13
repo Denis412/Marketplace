@@ -19,10 +19,7 @@ export const paginateApplications = gql`
           email {
             email
           }
-          speciality {
-            id
-            name
-          }
+          major
         }
         status
         sender

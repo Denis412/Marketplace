@@ -20,7 +20,7 @@
       </div>
 
       <div class="text-caption1 q-mt-sm text-violet-6">
-        {{ user.speciality }}
+        {{ user.major }}
       </div>
     </div>
 
@@ -30,7 +30,7 @@
       </div>
 
       <div class="text-caption1 q-mt-sm text-violet-6">
-        {{ specialist.speciality?.name }}
+        {{ specialist.major }}
       </div>
     </div>
   </q-item>

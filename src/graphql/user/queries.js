@@ -76,6 +76,7 @@ export const paginateSubjectInAnotherSpace = gql`
         email {
           email
         }
+        major
         group {
           id
           name
@@ -85,6 +86,56 @@ export const paginateSubjectInAnotherSpace = gql`
           created_at
           updated_at
         }
+      }
+    }
+  }
+`;
+
+export const paginateSubjectInAnotherSpaceWithGroubByGroup = gql`
+  query paginateSubjectInAnotherSpaceWithGroubByGroup(
+    $page: Int!
+    $perPage: Int!
+  ) {
+    paginate_subject(page: $page, perPage: $perPage) {
+      groupByProperty(columns: [GROUP]) {
+        key
+        objects {
+          ... on subject {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+            major
+          }
+        }
+      }
+      data {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+        major
+        type_id
+        group {
+          id
+          name
+        }
+        created_at
+        updated_at
+        position
+      }
+      paginatorInfo {
+        __typename
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
       }
     }
   }
@@ -112,10 +163,7 @@ export const paginateSubjectsInMainSpace = gql`
         birthday {
           date
         }
-        speciality {
-          id
-          name
-        }
+        major
         teams {
           id
           avatar

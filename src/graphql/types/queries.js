@@ -1,11 +1,7 @@
 import gql from "graphql-tag";
 
 export const paginateTypes = gql`
-  query paginateTypes(
-    $page: Int!
-    $perPage: Int!
-    $where: ObjectPaginatorWhere
-  ) {
+  query paginateTypes($page: Int!, $perPage: Int!, $where: PaginatorWhere) {
     types(page: $page, perPage: $perPage, where: $where) {
       data {
         id

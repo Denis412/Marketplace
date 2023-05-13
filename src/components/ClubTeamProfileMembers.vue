@@ -108,7 +108,7 @@ const specialtiesList = ref([
 
 const selectMembersList = ref("members");
 const groupByMembers = computed(() =>
-  _.groupBy(currentTeam.value.members, "speciality.name")
+  _.groupBy(currentTeam.value.members, "major")
 );
 
 const inviteUser = async () => {

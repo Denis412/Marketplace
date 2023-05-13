@@ -25,6 +25,28 @@ export const useTeamCreate = () => {
         description,
       });
 
+      const subjectType = await typeApi.refetchPaginateType({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "subject",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          name: "major",
+          label: "Специальность",
+          data_type: "text",
+          type_id: subjectType[0].id,
+          order: 2,
+        },
+        space_id: space.id,
+      });
+
       const teamGroup = await groupApi.refetchPaginateGroups({
         page: 1,
         perPage: 1,
@@ -389,6 +411,26 @@ export const useTeamApplication = () => {
             application_id: application.id,
           },
         });
+
+        const subjectData = await userApi.refetchPaginateSubjects({
+          page: 1,
+          perPage: 100,
+          is_team: true,
+          space_id: application.team.space,
+        });
+
+        const subject = subjectData.find(
+          (sub) => sub.email.email === application.subject.email.email
+        );
+
+        await userApi.update(
+          subject.id,
+          {
+            major: application.subject.major,
+          },
+          true,
+          application.team.space
+        );
 
         await applicationApi.deleteById(application.id);
       } else

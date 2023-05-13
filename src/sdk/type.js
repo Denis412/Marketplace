@@ -33,7 +33,7 @@ const refetchPaginateType = async ({ page, perPage, where, space_id }) => {
 
   console.log("refetch paginate types", typesData);
 
-  return typesData.types;
+  return typesData.types.data;
 };
 
 const create = async ({ input, space_id }) => {

@@ -22,7 +22,11 @@ import CMainDrawer from "src/components/ClubMainDrawer.vue";
 import CMainFooter from "src/components/Landing/ClubMainFooter.vue";
 import { useUserStore } from "src/stores/user";
 
-const exclude = ref(["ClubTeamPage", "ClubTeamSettingsPage"]);
+const exclude = ref([
+  "ClubTeamPage",
+  "ClubTeamSettingsPage",
+  "ClubProjectInformationPage",
+]);
 
 const currentUser = computed(() => useUserStore().GET_CURRENT_USER);
 

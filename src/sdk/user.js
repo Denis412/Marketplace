@@ -10,6 +10,7 @@ import {
   userResetPasswordSendCode,
   userResetPasswordConfirmCodeSetPassword,
   updateSubject,
+  updateSubjectInTeam,
 } from "src/graphql/user/mutations";
 import {
   getUser,
@@ -39,6 +40,7 @@ const { mutate: updatingUser } = useMutation(
   updateSubject,
   spaceHeader(process.env.MAIN_SPACE_ID)
 );
+const { mutate: updatingUserInTeamSpace } = useMutation(updateSubjectInTeam);
 const { mutate: resetPasswordSendCode } = useMutation(
   userResetPasswordSendCode
 );
@@ -222,15 +224,23 @@ const login = async (
   return userData?.user;
 };
 
-const update = async (id, updateData) => {
-  console.log(id, updateData);
+const update = async (id, updateData, is_team = false, space_id = 0) => {
+  let subjectData;
 
-  const { data: subjectData } = await updatingUser({
-    id,
-    input: updateData,
-  });
+  if (is_team)
+    ({ data: subjectData } = await updatingUserInTeamSpace(
+      { id, input: updateData },
+      spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+    ));
+  else
+    ({ data: subjectData } = await updatingUser(
+      { id, input: updateData },
+      spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+    ));
 
-  console.log(subjectData);
+  console.log("update subject", subjectData);
+
+  return subjectData.update_subject.record;
 };
 
 const logout = () => {

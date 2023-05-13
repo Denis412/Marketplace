@@ -21,7 +21,7 @@
     <main class="q-mt-md">
       <section
         v-if="
-          !currentProjects?.paginate_project?.data.length || paginateLoading
+          !currentProjects?.paginate_project?.data.length || projectsLoading
         "
         class="row ptojects-wrapper q-gutter-x-md"
       >
@@ -87,26 +87,19 @@ const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
 
 const {
-  paginateResult: currentProjects,
-  paginateLoading,
+  projects: currentProjects,
+  projectsLoading,
   refetch,
 } = getWithWere({
   space_id: currentTeam.value?.space,
 });
-
-// const { result: currentProjects } = projectApi.paginateProject({
-//   page: 1,
-//   perPage: 50,
-//   where: null,
-//   space_id: currentTeam.value?.space,
-// });
 
 const selectProjectsList = ref("active");
 
 const redirectProjectPage = (project) => {
   router.push({
     name: "project",
-    params: { name: project.name },
+    params: { space: project.space, name: project.name },
   });
 };
 

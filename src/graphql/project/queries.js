@@ -16,6 +16,29 @@ export const paginateProjects = gql`
   }
 `;
 
+export const paginateProjectsInProjectSpace = gql`
+  query paginateProjects(
+    $page: Int!
+    $perPage: Int!
+    $where: ObjectPaginatorWhere
+  ) {
+    paginate_project(page: $page, perPage: $perPage, where: $where) {
+      data {
+        id
+        name
+        team_name
+        description
+        target
+        avatar
+        created_at
+        delivery_date {
+          date
+        }
+      }
+    }
+  }
+`;
+
 export const getProjectById = gql`
   query getProjectById($id: String!) {
     get_project(id: $id) {

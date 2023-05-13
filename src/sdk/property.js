@@ -50,6 +50,7 @@ const create = async ({ input, space_id }) => {
 };
 
 const createMany = async ({ input, space_id }) => {
+  console.log(input);
   const { data: propertiesData } = await creatingPropertyMany(
     { input },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
