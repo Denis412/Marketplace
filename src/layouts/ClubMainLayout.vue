@@ -5,7 +5,7 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <keep-alive>
+        <keep-alive :key="$route.fullPath">
           <component :is="Component" />
         </keep-alive>
       </router-view>
@@ -17,7 +17,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "src/stores/user";
 import { useQuasar } from "quasar";
 
@@ -27,6 +27,7 @@ import CMainDrawer from "src/components/ClubMainDrawer.vue";
 import userApi from "src/sdk/user";
 
 const router = useRouter();
+const route = useRoute();
 const store = useUserStore();
 const $q = useQuasar();
 
