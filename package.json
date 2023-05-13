@@ -14,6 +14,7 @@
     "@stomp/stompjs": "^7.0.0",
     "@vue/apollo-composable": "^4.0.0-beta.4",
     "apollo-upload-client": "^17.0.0",
+    "firebase-tools": "^12.0.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "lodash": "^4.17.21",

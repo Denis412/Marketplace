@@ -8,13 +8,13 @@
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
 
-      <!-- <section>
-        <pre>hi{{ currentProject }}</pre>
-        <pre>rt{{ membersGroup("Команда") }}</pre>
-        <pre>hg{{ membersGroup("Заказчики") }}</pre>
-        <pre>gh{{ membersGroup("Участники") }}</pre>
-        <pre>ih{{ currentSubjects }}</pre>
-      </section> -->
+      <!-- <section> -->
+      <!-- <pre>hi{{ currentProject }}</pre> -->
+      <!-- <pre>rt{{ membersGroup("Команда") }}</pre> -->
+      <!-- <pre>hg{{ membersGroup("Заказчики") }}</pre> -->
+      <!-- <pre>gh{{ membersGroup("Участники") }}</pre> -->
+      <pre>ih{{ currentSubjects }}</pre>
+      <!-- </section> -->
 
       <section>
         <q-img
