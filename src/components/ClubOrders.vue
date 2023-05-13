@@ -1,21 +1,17 @@
 <template>
   <div>
-
     <div v-if="!loadingOrder" class="orderHeadingOuter">
       <div>
         <h3 class="orderHeadTitle">МОИ ЗАКАЗЫ</h3>
-
         <div class="addOrderButton">
           <a href="#"><img src="../assets/icons/orderIcons/buttons.png" alt="img"></a>
         </div>
       </div>
-
       <div class="orderIconsCartOuter">
         <img class="orderIconsCart" src="../assets/icons/orderIcons/orderIconsCart.png" alt="">
       </div>
     </div>
-
-    <div class="cOrderItemHeading" >
+    <div class="cOrderItemHeading">
       <p class="orderNumP">Номер заказа</p>
       <p class="orderNameP">Название заказа</p>
       <p class="orderStateP">Статус</p>
@@ -38,17 +34,28 @@
 
 <script setup>
 import COrdersItem from 'src/components/ClubOrderItem.vue'
-import { ref, watch } from 'vue'
+import {onActivated, onMounted, ref, watch} from 'vue'
 import { useQuery } from '@vue/apollo-composable'
 import { getOrders } from 'src/graphql/order/queries'
 
-const { result: ordersResult, loading: loadingOrder } = useQuery(getOrders)
+const { result: ordersResult, loading: loadingOrder, refetch } = useQuery(getOrders)
 const orders = ref([])
 
 watch(ordersResult, () => {
   orders.value = ordersResult.value?.paginate_order?.data
 })
+
+// Refetch data when component is mounted
+onMounted(() => {
+  refetch()
+})
+
+// Refetch data when the page is navigated back to
+onActivated(() => {
+  refetch()
+})
 </script>
+
 
 <style>
 .orderItemColorPink .oItem {
