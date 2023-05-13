@@ -71,6 +71,11 @@ const routes = [
         name: "order-create",
         component: () => import("pages/ClubOrderCreate.vue"),
       },
+      {
+        path: "/order-info/:id",
+        component: () => import("pages/ClubOrderInformation.vue"),
+        props: true
+      },
     ],
   },
 
@@ -89,10 +94,6 @@ const routes = [
   {
     path: "/:catchAll(.*)*",
     component: () => import("pages/ErrorNotFound.vue"),
-  },
-  {
-    path: "/task",
-    component: () => import("src/components/ClubOrderInformation.vue"),
   },
 ];
 

@@ -144,7 +144,17 @@
 
 <script setup>
 import { ref } from "vue";
-import CButton from "./ClubButton.vue";
+import { defineProps } from "vue";
+import CButton from "../components/ClubButton.vue";
+
+const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+});
+
+console.log(props.id);
 
 const colorStatus = ref("#9236DA");
 const dateOrderResponse = ref("01.01.2023");
