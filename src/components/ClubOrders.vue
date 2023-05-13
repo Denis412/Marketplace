@@ -2,14 +2,17 @@
   <div>
     <div v-if="!loadingOrder" class="orderHeadingOuter">
       <div>
+
         <h3 class="orderHeadTitle">МОИ ЗАКАЗЫ</h3>
         <div class="addOrderButton">
           <a href="#"><img src="../assets/icons/orderIcons/buttons.png" alt="img"></a>
         </div>
+
       </div>
       <div class="orderIconsCartOuter">
         <img class="orderIconsCart" src="../assets/icons/orderIcons/orderIconsCart.png" alt="">
       </div>
+
     </div>
     <div class="cOrderItemHeading">
       <p class="orderNumP">Номер заказа</p>
@@ -20,15 +23,18 @@
       <p class="orderDealP">Сделка</p>
       <p class="orderEditP">Редактирование</p>
     </div>
+
     <c-orders-item
       v-for="(order, index) in orders"
       :order="order"
       :key="order?.id"
       :class="{ 'orderItemColorPink': index % 2 !== 0, 'orderItemLightPink': index === 0, 'theVeryFirstLightPink': index % 2 === 0 && index !== 0 }"
     />
+
     <div v-if="loadingOrder">
       Загрузка...
     </div>
+
   </div>
 </template>
 
@@ -45,12 +51,9 @@ watch(ordersResult, () => {
   orders.value = ordersResult.value?.paginate_order?.data
 })
 
-// Refetch data when component is mounted
 onMounted(() => {
   refetch()
 })
-
-// Refetch data when the page is navigated back to
 onActivated(() => {
   refetch()
 })
