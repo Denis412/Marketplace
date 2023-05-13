@@ -132,6 +132,22 @@ export const useProjectCreate = () => {
         description: "Проектное пространство",
       });
 
+      // const subjectData = await userApi.refetchPaginateSubjects({
+      //   page: 1,
+      //   perPage: 1,
+      //   is_team: true,
+      //   space_id: spaceData.id,
+      // });
+
+      // await userApi.update(
+      //   subject.id,
+      //   {
+      //     major: application.subject.major,
+      //   },
+      //   true,
+      //   application.team.space
+      // );
+
       await projectApi.create({
         input: { name, space: spaceData.id },
         space_id,
