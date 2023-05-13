@@ -23,13 +23,14 @@
       <p class="orderDealP">Сделка</p>
       <p class="orderEditP">Редактирование</p>
     </div>
-
     <c-orders-item
       v-for="(order, index) in orders"
       :order="order"
       :key="order?.id"
       :class="{ 'orderItemColorPink': index % 2 !== 0, 'orderItemLightPink': index === 0, 'theVeryFirstLightPink': index % 2 === 0 && index !== 0 }"
-    />
+    >
+
+    </c-orders-item>
   </div>
 </template>
 

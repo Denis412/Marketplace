@@ -31,9 +31,9 @@
         </q-card-section>
 
         <q-card-section class="oEdit">
-<!--          <router-link :to="{ name: 'order-edit', params: { id: orderId } }">-->
+          <router-link :to="{ name: 'order-edit', params: { id: orderId } }">
             <img src="../assets/icons/orderIcons/tripleDot.png" alt="img"/>
-<!--          </router-link>-->
+          </router-link>
         </q-card-section>
       </q-card>
     </q-page>
@@ -49,6 +49,8 @@ const { order } = defineProps({
     required: true,
   },
 });
+
+// массив чисто для цветов, кот. я потом уберу
 const item = ref([
   { id: "4177279091517509819", number: "1260", name: "Лендинг чайного магазина", state: "Поиск исполнителя", date: "24.05.2023", color: "#FF9646" },
   { id: "4448913352824608273", number: "1257", name: "Создание платформы для начинающих мастеров", state: "Есть кандидат", date: "20.05.2023", color: "#521E96" },
@@ -57,9 +59,9 @@ const item = ref([
   { id: "1153382417057413174", number: "1249", name: "Оптимизация ИТ-инфраструктуры для банка «Яблоко банк»", state: "Отменен заказчиком", date: "17.05.2023", color: "#DC283C" },
   { id: "1876099520891424160", number: "1247", name: "Миграция на новые годные ИТ-решения нашей строительной компании «Кирпич»", state: "Черновик", date: "16.05.2023", color: "#C3C3C5" },
 ]);
-// const orderId = computed(() => {
-//   return order.id ? order.id : null;
-// });
+const orderId = computed(() => {
+  return order.id ? order.id : null;
+});
 </script>
 
 
