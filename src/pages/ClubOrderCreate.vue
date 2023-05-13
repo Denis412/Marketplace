@@ -33,7 +33,7 @@
         <div class="text-subtitle3 input-title input-mt">
             Что требуется сделать
         </div>
-        <div class="button-group row wrap c-mt-24">
+        <div class="relative-position button-group row wrap c-mt-24">
           <c-button
           v-for="(button, index) in buttons"
           :key="form.todos + index"
@@ -41,8 +41,11 @@
           :label="button.label"
           :outline="!form.todos.includes(button.id)"
           :background="form.todos.includes(button.id)"
+          :icon-right="form.todos.includes(button.id) ? 'img:/assets/icons/close/cross-white.svg' : ''"
           @click="addTodo(button.id)"
           />
+
+          <img class="absolute mail-img" src="/assets/images/order/mail-icon.svg" alt=""/>
         </div>
 
         <div class="text-subtitle3 input-mt">
@@ -69,16 +72,24 @@
         :length="5000"
         />
 
+        <div class="row">
+          <div class="col-6">
+            <q-checkbox
+            v-model="form.consultation"
+            :val="true"
+            label="Мне нужна консультация"
+            color="violet-6"
+            class="c-checkbox-outlined"
+            />
 
-        <q-checkbox
-        v-model="form.consultation"
-        :val="true"
-        label="Мне нужна консультация"
-        color="violet-6"
-        class="c-checkbox-outlined"
-        />
-        <div>
-          Если Вы не знаете, как более точно сформулировать идею - дайте нам знать.
+            <div>
+              Если Вы не знаете, как более точно сформулировать идею - дайте нам знать.
+            </div>
+          </div>
+
+          <div class="col-6">
+            <img class="question-mark-img" src="/assets/images/order/speech-bubble.svg" alt="">
+          </div>
         </div>
 
         <label for="file" class="text-subtitle3 input-mt">
@@ -93,50 +104,60 @@
         max-files="10"
         max-file-size="51200"
         class="c-filepicker-outline"
+        ref="uploadFile"
         >
           <div class="c-file-placeholder">
               Если у вас уже имеются контент, брендбук, бриф, спецификация или иные материалы по заказу, пожалуйста, загрузите их...
           </div>
+
           <c-button
             class="text-body1 btn c-file-button"
             :label="'Выберите файл'"
             :background="true"
+            @click="addFile"
           />
 
         </q-file>
 
-        <div class="input-wrapper row">
+        <div class="input-wrapper row relative-position">
             <div class="col-3">
               <label for="from-to" class="text-subtitle3 input-title input-mt">
                 Желаемая стоимость
               </label>
-              <div>
+              <div class="row justify-between c-mt-24 col-3">
                 <q-input
                 v-model.number="form.price_start"
                 type="number"
-                class="c-input-price c-mt-24 col-3"
+                class="c-input-price col-10"
                 name="from-to"
                 placeholder="От..."
                 outlined
                 :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
                 />
+
+                <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg"/>
               </div>
 
-              <q-input
+              <div class="row justify-between c-mt-24 col-3">
+                <q-input
                 v-model.number="form.price_end"
                 type="number"
-                class="c-input-price c-mt-24 col-3 offset-1"
+                class="c-input-price col-10"
                 name="from-to"
                 placeholder="До..."
                 outlined
                 :rules="[requiredOneOfNumber(form.price_start), positive, biggerThan(form.price_start)]"
-              />
+                />
+
+                <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg"/>
+              </div>
             </div>
 
             <div class="col-3 offset-2">
               <label for="date" class="text-subtitle3 input-title input-mt">
                 Желаемый срок готовности
               </label>
+
               <q-input
               placeholder="дд.мм.гггг"
               class="c-input-outline"
@@ -146,7 +167,7 @@
               :rules="[required]"
               >
                 <template v-slot:append>
-                  <q-icon name="event" class="cursor-pointer">
+                  <q-icon name="img:/assets/icons/calendar/calendar-purple.svg" class="cursor-pointer">
                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                       <q-date
                       :rules="[required]"
@@ -162,6 +183,8 @@
                   </q-icon>
                 </template>
               </q-input>
+
+              <img class="absolute calendar-img" src="/assets/images/order/calendar-inject.svg" alt="">
             </div>
         </div>
 
@@ -181,8 +204,6 @@
             @click="createDraft"
           />
         </div>
-
-
       </q-form>
     </section>
   </q-page>
@@ -266,7 +287,8 @@ const checkboxes = ref([
   }
 ]);
 
-const files = ref([])
+const files = ref([]);
+const uploadFile = ref();
 
 const form = ref({
   name: "",
@@ -289,8 +311,9 @@ const optionsFn = (date) => {
 }
 
 const addTodo = (id) => {
-  form.value.todos.includes(id) ?
-    form.value.todos.splice(form.value.todos.indexOf(id), 1) :
+  if (form.value.todos.includes(id) && form.value.todos.length > 1)
+    form.value.todos.splice(form.value.todos.indexOf(id), 1)
+  else if (!form.value.todos.includes(id))
     form.value.todos.push(id);
 }
 
@@ -301,6 +324,10 @@ const createDraft = () => {
 const createOrder = () => {
   form.value.draft = false;
   orderApi.orderCreate(form.value);
+}
+
+const addFile = () => {
+  uploadFile.value.pickFiles();
 }
 </script>
 
@@ -325,12 +352,13 @@ const createOrder = () => {
 
 .button-group {
   gap: 32px;
+  width: 70%;
 }
 
 .btn {
   white-space: nowrap;
   margin-bottom: 23px;
-  border-radius: 8px !important;
+  border-radius: 32px !important;
   height: 37px;
 }
 
@@ -349,8 +377,22 @@ const createOrder = () => {
   margin-top: 120px;
 }
 
+.ruble {
+  height: 24px;
+  width: 24px;
+}
 
-.q-chip {
-  margin-top: 20px;
+.mail-img {
+  right: -32%;
+  top: -58px;
+}
+
+.question-mark-img {
+  margin-top: 31px;
+}
+
+.calendar-img {
+  right: 0;
+  top: 221px;
 }
 </style>

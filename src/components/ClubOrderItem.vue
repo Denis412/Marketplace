@@ -23,16 +23,16 @@
         </q-card-section>
 
         <q-card-section class="oResponse">
-          <img src="../assets/icons/orderIcons/deal.png" alt="img" />
+          <img src="/assets/icons/orderIcons/deal.png" alt="img" />
         </q-card-section>
 
         <q-card-section class="oDeal">
-          <img src="../assets/icons/orderIcons/wait.png" alt="img" />
+          <img src="/assets/icons/orderIcons/wait.png" alt="img" />
         </q-card-section>
 
         <q-card-section class="oEdit">
           <router-link :to="{ name: 'order-edit', params: { id: item.id } }">
-            <img src="../assets/icons/orderIcons/tripleDot.png" alt="img"/>
+            <img src="/assets/icons/orderIcons/tripleDot.png" alt="img"/>
           </router-link>
         </q-card-section>
       </q-card>
