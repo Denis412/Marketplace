@@ -1,43 +1,21 @@
 <template>
   <h3 class="text-h3 q-ma-xl">Создание команды</h3>
-  <q-table
-    class="q-mx-lg no-shadow flat"
-    :rows="tasks"
-    :columns="columns"
-    :pagination="pagination"
-    :pagination-labels="{
+  <q-table class="q-mx-lg no-shadow flat" :rows="tasks" :columns="columns" :pagination="pagination" :pagination-labels="{
       rowsPerPage: 'Строк на странице',
       rowsPerPageAll: 'Все',
-    }"
-    :rows-per-page-options="[5, 10, 20]"
-  >
+    }" :rows-per-page-options="[5, 10, 20]">
     <!-- Пример -->
 
     <template v-slot:body="props">
       <q-tr :props="props">
-        <q-td>{{ props.row.name }}</q-td>
-
-        <q-td>
-          {{ "Личная задача" }}
-        </q-td>
-
-        <q-td>
-          {{ props.row.dateStart.date }}
-        </q-td>
-
-        <q-td>
-          {{ props.row.dateEnd.date }}
-        </q-td>
-
-        <q-td
-          :class="
-            props.row.taskStatus == '8407796538990824904'
-              ? 'assigned'
-              : props.row.taskStatus == '7045273205012284690'
-              ? 'accomplished'
-              : 'completed'
-          "
-        >
+        <q-td>{{ props.row.email.email }}</q-td>
+        <q-td>{{ props.row.fullname.first_name }}</q-td>
+        <q-td :class="props.row.property5 == '1700970386717883161'
+          ? 'assigned'
+          : props.row.property5 == '967659251654331262'
+            ? 'accomplished'
+            : 'completed'
+          ">
           {{
             (function () {
               if (props.row.taskStatus == "8407796538990824904") {
@@ -72,7 +50,8 @@ const columns = [
     label: "Задача",
     field: "Задача",
     headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+      "font-family: 'Play'; font-weight: 400; font-size: 20px",
+
   },
   {
     name: "Проект",

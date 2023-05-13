@@ -20,14 +20,38 @@
       <q-item-section @click="showDialog = true">Удалить </q-item-section>
     </q-item>
 
-    <c-delete-dialog-document
-      :prop_doc_id="props.prop_doc.id"
-      v-model="showDialog"
-    />
+    <c-delete-dialog-document :prop_doc_id="props.prop_doc.id" v-model="showDialog" />
 
     <q-item class="popup-component" clickable>
       <q-img class="popup-png" src="/src/assets/icons/doc_popup/lock.png" />
       <q-item-section>Права доступа</q-item-section>
+      <q-item-section side>
+        <q-icon name="keyboard_arrow_right" />
+      </q-item-section>
+
+      <q-menu anchor="bottom right" self="center left">
+        <q-item class="popup-component" clickable>
+          <q-item-section>Закрытый</q-item-section>
+        </q-item>
+
+        <q-item class="popup-component" clickable>
+          <q-item-section>Редактирование</q-item-section>
+        </q-item>
+
+        <q-item class="popup-component" clickable>
+          <q-item-section>Комментирование</q-item-section>
+          <q-item-section side>
+            <q-icon name="keyboard_arrow_down" />
+          </q-item-section>
+        </q-item>
+
+        <q-item class="popup-component" clickable>
+          <q-item-section>Только просмотр</q-item-section>
+          <q-item-section side>
+            <q-icon name="keyboard_arrow_down" />
+          </q-item-section>
+        </q-item>
+      </q-menu>
     </q-item>
 
     <c-rename-item-document :prop_doc="prop_doc" />
@@ -78,14 +102,17 @@ let showDialog = ref(false);
 .q-tab__content {
   width: 100%;
 }
+
 .q-tabs__content {
   width: 100% !important;
   text-align: left !important;
 }
+
 .link {
   color: white;
   text-decoration: none;
 }
+
 .popup {
   align-items: center;
   overflow: hidden;
@@ -93,6 +120,7 @@ let showDialog = ref(false);
   box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
 }
+
 .popup-component {
   display: flex;
   flex-direction: row;
@@ -108,14 +136,17 @@ let showDialog = ref(false);
   line-height: 20px;
   color: #666666;
 }
+
 .popup-png {
   width: 16px;
   height: 14px;
 }
+
 .popup-png2 {
   width: 14px;
   height: 16px;
 }
+
 .doc_wrapper {
   display: flex;
   justify-content: space-between;
