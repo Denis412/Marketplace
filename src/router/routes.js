@@ -73,8 +73,13 @@ const routes = [
       },
       {
         path: "/order-info/:id",
+        name: "order-info",
         component: () => import("pages/ClubOrderInformation.vue"),
-        props: true
+      },
+      {
+        path: "order-edit/:id",
+        name: "order-edit",
+        component: () => import("pages/ClubOrderEdit.vue"),
       },
     ],
   },

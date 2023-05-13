@@ -24,6 +24,87 @@
   }
 }
 
+.c-input-price {
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__control {
+      outline: 1px solid #cacaca !important;
+      padding: 0 24px !important;
+      height: 32px;
+
+      div {
+        height: 32px;
+
+        input {
+          @extend .text-body2;
+
+          &::placeholder {
+            color: #6d6d6d;
+          }
+        }
+      }
+    }
+  }
+}
+
+.c-textarea-outline {
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__control {
+      outline: 1px solid #cacaca !important;
+      padding: 0 24px !important;
+      height: $input-height-lg;
+
+      div {
+        height: $input-height-lg;
+
+        textarea {
+          @extend .text-body2;
+
+          &::placeholder {
+            color: #6d6d6d;
+          }
+        }
+      }
+    }
+  }
+}
+
+.c-filepicker-outline {
+  position: relative;
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__control {
+      outline: 1px solid #cacaca !important;
+      padding: 0 24px !important;
+      height: $input-height-lg;
+
+      div {
+        .c-file-placeholder {
+          @extend .text-body2;
+          cursor: pointer;
+          position: absolute;
+          padding: 24px 18px !important;
+          color: #6d6d6d;
+          height: fit-content;
+        }
+
+        .c-file-button {
+          position: absolute;
+          bottom: 0;
+        }
+        .q-field__native {
+          padding-left: 206px;
+          margin-top: 96px;
+        }
+      }
+    }
+  }
+}
+
 .c-input-number {
   div {
     border-radius: 8px !important;
@@ -57,6 +138,28 @@
 .c-checkbox-rounded {
   & .q-checkbox__label {
     color: #adadad;
+  }
+
+  div {
+    border-radius: 5px;
+  }
+}
+
+.c-checkbox-outlined {
+  & .q-checkbox__label {
+    @extend .text-caption1;
+    margin-left: 4px;
+  }
+
+  & .q-checkbox__inner {
+    color: $violet-6 !important;
+    & .q-checkbox__bg {
+      background: none;
+    }
+  }
+
+  & .q-checkbox__svg {
+    color: $violet-6 !important;
   }
 
   div {
@@ -154,14 +257,14 @@
   }
 }
 
-.q-editor__toolbar{
-  & .q-icon{
+.q-editor__toolbar {
+  & .q-icon {
     font-size: 20px;
   }
-  & .q-editor__toolbar-group{
+  & .q-editor__toolbar-group {
     padding-top: 20px;
   }
-  & .q-editor__toolbar-group::before{
+  & .q-editor__toolbar-group::before {
     margin-bottom: 22px;
     margin-top: 22px;
   }
