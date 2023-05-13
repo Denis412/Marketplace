@@ -1,19 +1,9 @@
 <template>
   <div>
-    <!-- <q-tabs
-      class="row no-wrap q-pl-lg drawer-item"
-      indicator-color="transparent"
-      v-for="(doc, index) in FILES"
-      :key="doc.id"
-      align="left"
-    >
-      <q-tabs-item :doc="doc" :index="index" />
-    </q-tabs> -->
-
     <div>
       <Draggable v-model="data" ref="tree" virtualization style="height: 500px">
         <template #default="{ node, stat }">
-          <q-tabs-item :node="node" :doc="FILES[node.index]" />
+          <c-qtabs-item :node="node" :doc="FILES[node.index]" />
         </template>
       </Draggable>
     </div>
@@ -24,42 +14,32 @@
 import { computed, watch, ref } from "vue";
 import { useFileStore } from "src/stores/file";
 
-import QTabsItem from "./ClubQtabsItemComponent.vue";
+import CQtabsItem from "./ClubQtabsItemComponent.vue";
 
-////
 import { Draggable } from "@he-tree/vue";
 import "@he-tree/vue/style/default.css";
 
-const data = ref([
-  // {
-  //   text: "Документы",
-  //   children: [],
-  // },
-]);
-////
+const data = ref([]);
 
 const storeFile = useFileStore();
 const FILES = computed(() => storeFile.GET_FILES);
 
-watch(FILES, () => {
-  console.log("watch FIELS");
+let index = 0;
 
-  let index = 0;
+watch(FILES, () => {
+  index = 0;
 
   data.value = FILES.value.map((file) => {
     return { text: file.name.replace(".html", ""), index: index++ };
   });
 
+  console.log(FILES.value);
   console.log(data.value);
 });
-
-let index = 0;
 
 data.value = FILES.value.map((file) => {
   return { text: file.name.replace(".html", ""), index: index++ };
 });
-
-console.log(data.value);
 </script>
 
 <style scoped lang="scss">

@@ -1,10 +1,6 @@
 <template>
   <div class="row no-wrap q-pl-lg drawer-item">
     <div class="item_doc" @contextmenu.prevent="showMenu = true">
-      <!-- <span v-if="stat.children.length" @click="stat.open = !stat.open">
-                {{ stat.open ? "-" : "+" }}
-              </span> -->
-
       <img
         :src="`/src/assets/icons/file/file-grey.svg`"
         alt=""
@@ -47,8 +43,8 @@ import { ref } from "vue";
 const showMenu = ref(false);
 
 const props = defineProps({
-  node: Object,
   doc: Object,
+  node: Object,
   index: Number,
 });
 </script>
