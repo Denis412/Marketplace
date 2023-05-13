@@ -11,10 +11,10 @@
         <q-td>{{ props.row.email.email }}</q-td>
         <q-td>{{ props.row.fullname.first_name }}</q-td>
         <q-td :class="props.row.property5 == '1700970386717883161'
-            ? 'assigned'
-            : props.row.property5 == '967659251654331262'
-              ? 'accomplished'
-              : 'completed'
+          ? 'assigned'
+          : props.row.property5 == '967659251654331262'
+            ? 'accomplished'
+            : 'completed'
           ">
           {{
             (function () {
