@@ -13,6 +13,7 @@
             <div class="flex items-center col">
               <q-avatar class="avatar">
                 <q-img
+                  style="object-fit: cover"
                   :src="
                     newAvatar ||
                     currentUser?.avatar ||

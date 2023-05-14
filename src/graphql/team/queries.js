@@ -24,6 +24,7 @@ export const getTeamsWithWhere = gql`
             email {
               email
             }
+            avatar
             major
           }
           team {
@@ -40,6 +41,7 @@ export const getTeamsWithWhere = gql`
             first_name
             last_name
           }
+          avatar
           major
         }
         space

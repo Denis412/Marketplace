@@ -37,14 +37,23 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
-      await propertyApi.create({
-        input: {
-          name: "major",
-          label: "Специальность",
-          data_type: "text",
-          type_id: subjectType[0].id,
-          order: 2,
-        },
+      await propertyApi.createMany({
+        input: [
+          {
+            name: "major",
+            label: "Специальность",
+            data_type: "text",
+            type_id: subjectType[0].id,
+            order: 2,
+          },
+          {
+            name: "avatar",
+            label: "Аватар",
+            data_type: "text",
+            type_id: subjectType[0].id,
+            order: 3,
+          },
+        ],
         space_id: space.id,
       });
 
@@ -136,6 +145,7 @@ export const useTeamCreate = () => {
         projectTypeData.author_id,
         {
           major: mainSpaceSubject[0].major,
+          avatar: mainSpaceSubject[0].avatar,
         },
         true,
         space.id
