@@ -68,6 +68,7 @@ export const paginateSubjectInAnotherSpace = gql`
       data {
         id
         user_id
+
         fullname {
           first_name
           middle_name
@@ -91,62 +92,13 @@ export const paginateSubjectInAnotherSpace = gql`
   }
 `;
 
-export const paginateSubjectInAnotherSpaceWithGroubByGroup = gql`
-  query paginateSubjectInAnotherSpaceWithGroubByGroup(
-    $page: Int!
-    $perPage: Int!
-  ) {
-    paginate_subject(page: $page, perPage: $perPage) {
-      groupByProperty(columns: [GROUP]) {
-        key
-        objects {
-          ... on subject {
-            id
-            fullname {
-              first_name
-              last_name
-            }
-            major
-          }
-        }
-      }
-      data {
-        id
-        fullname {
-          first_name
-          last_name
-        }
-        major
-        type_id
-        group {
-          id
-          name
-        }
-        created_at
-        updated_at
-        position
-      }
-      paginatorInfo {
-        __typename
-        perPage
-        currentPage
-        lastPage
-        total
-        count
-        from
-        to
-        hasMorePages
-      }
-    }
-  }
-`;
-
 export const paginateSubjectsInMainSpace = gql`
   query getSubjects($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
     paginate_subject(page: $page, perPage: $perPage, where: $where) {
       data {
         id
         user_id
+        avatar
         fullname {
           first_name
           middle_name

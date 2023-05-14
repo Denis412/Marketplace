@@ -66,15 +66,11 @@ const filteredSubjects = computed(() =>
 
 const selectedList = ref("members");
 
-const membersGroup = (group_name) => {
-  let members = [];
-
-  currentSubjects.value.forEach((group) => {
-    if (group.name === group_name) members.push(...group.subject);
-  });
-
-  return members;
-};
+const membersGroup = (group_name) =>
+  currentSubjects.value.reduce((filtered, group) => {
+    if (group.name === group_name) filtered.push(...group.subject);
+    return filtered;
+  }, []);
 </script>
 
 <style scoped lang="scss">

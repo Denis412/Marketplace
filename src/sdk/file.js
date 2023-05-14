@@ -26,11 +26,7 @@ const uploadFiles = async (files) => {
     }
   );
 
-  console.log("file", uploadedData);
-
-  console.log(typeof BigInt(data.data.filesUpload.ids[0]).toString());
-
-  return BigInt(data.data.filesUpload.ids[0]).toString();
+  return uploadedData.filesUpload.ids;
 };
 
 const get = async (file_id) => {
@@ -43,6 +39,8 @@ const get = async (file_id) => {
       value: `${file_id}`,
     },
   });
+
+  console.log(fileData);
 
   return fileData.paginate_file.data;
 };

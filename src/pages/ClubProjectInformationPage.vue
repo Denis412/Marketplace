@@ -1,9 +1,6 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <div
-      class="loader loader-lg"
-      v-if="projectsLoading || subjectsLoading"
-    ></div>
+    <div class="loader loader-lg" v-if="projectsLoading || subjectsLoading" />
 
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
