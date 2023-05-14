@@ -1,34 +1,14 @@
 <template>
-  <q-drawer
-    show-if-above
-    bordered
-    :side="side"
-    :mini="miniState"
-    v-model="drawer"
-    :width="256"
-    :mini-width="64"
-  >
+  <q-drawer show-if-above bordered :side="side" :mini="miniState" v-model="drawer" :width="256" :mini-width="64">
     <q-list class="c-pr-8 c-pt-12 no-scroll">
-      <q-item
-        v-for="item in mainTreeItems"
-        :key="item.title"
-        :class="{ active: isActive(item.path) }"
-        class="drawer-wrapper"
-      >
-        <router-link
-          :to="{ name: item.path }"
-          class="row no-wrap c-pl-16 drawer-item"
-        >
+      <q-item v-for="item in mainTreeItems" :key="item.title" :class="{ active: isActive(item.path) }"
+        class="drawer-wrapper">
+        <router-link :to="{ name: item.path }" class="row no-wrap c-pl-16 drawer-item">
           <img :src="`/src/assets/icons/${item.img}`" alt="" />
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
-            <q-icon
-              @click="addDocument"
-              v-if="item.title == 'Документы'"
-              name="add"
-              class="addDoc"
-            />
+            <q-icon @click="addDocument" v-if="item.title == 'Документы'" name="add" class="addDoc" />
           </div>
         </router-link>
 
@@ -36,11 +16,7 @@
       </q-item>
     </q-list>
 
-    <button
-      ref="btn"
-      class="bg-violet-6 drawer-btn absolute"
-      @click="toggleDrawer()"
-    >
+    <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
       <img src="/src/assets/icons/DrawerArrow.svg" />
     </button>
   </q-drawer>
@@ -172,6 +148,7 @@ const isActive = (path) => {
 .rotate {
   transform: rotate(-180deg);
 }
+
 .addDoc {
   padding-left: 4rem;
 }

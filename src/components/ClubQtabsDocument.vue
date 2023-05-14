@@ -1,62 +1,61 @@
 <template>
-  <q-tabs
-    class="row no-wrap q-pl-lg drawer-item"
-    indicator-color="transparent"
-    v-for="(doc, index) in FILES"
-    :key="doc.id"
-    align="left"
-  >
-    <q-tabs-item :doc="doc" :index="index" />
-  </q-tabs>
+  <div>
+    <div>
+      <Draggable v-model="data" ref="tree" virtualization style="height: 500px">
+        <template #default="{ node, stat }">
+          <c-qtabs-item :node="node" :doc="FILES[node.index]" />
+        </template>
+      </Draggable>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, watch, ref } from "vue";
 import { useFileStore } from "src/stores/file";
 
-import QTabsItem from "./ClubQtabsItemComponent.vue";
+import CQtabsItem from "./ClubQtabsItemComponent.vue";
+
+import { Draggable } from "@he-tree/vue";
+import "@he-tree/vue/style/default.css";
+
+const data = ref([]);
 
 const storeFile = useFileStore();
 const FILES = computed(() => storeFile.GET_FILES);
+
+let index = 0;
+
+watch(FILES, () => {
+  index = 0;
+
+  data.value = FILES.value.map((file) => {
+    return { text: file.name.replace(".html", ""), index: index++ };
+  });
+
+  console.log(FILES.value);
+  console.log(data.value);
+});
+
+data.value = FILES.value.map((file) => {
+  return { text: file.name.replace(".html", ""), index: index++ };
+});
 </script>
 
 <style scoped lang="scss">
-.menu-wrapper {
-  width: 40px;
-}
-
-.item_doc {
-  width: 190px;
-  display: flex;
-  justify-content: space-between;
+.drawer-item {
   align-items: center;
-}
-
-.link {
   text-decoration: none;
-}
+  width: 100%;
+  height: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
 
-.link:visited {
-  color: inherit;
-}
-
-.btn-dropdown-doc {
-  visibility: hidden;
-}
-
-.item_doc:hover .btn-dropdown-doc {
-  opacity: 0;
-  animation: ani 0.3s forwards;
-  visibility: visible;
-}
-
-@keyframes ani {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
+  .drawer-text {
+    height: 20px;
+    width: fit-content;
+    overflow: hidden;
+    color: grey;
   }
 }
 </style>
