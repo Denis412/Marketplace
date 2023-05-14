@@ -1,5 +1,5 @@
 <template>
-  <h3 class="text-h3 q-ma-xl">Создание команды</h3>
+  <h3 class="text-h3 q-ma-xl">Мои задачи</h3>
   <q-table class="q-mx-lg no-shadow flat" :rows="tasks" :columns="columns" :pagination="pagination" :pagination-labels="{
       rowsPerPage: 'Строк на странице',
       rowsPerPageAll: 'Все',
@@ -50,8 +50,7 @@ const columns = [
     label: "Задача",
     field: "Задача",
     headerStyle:
-      "font-family: 'Play'; font-weight: 400; font-size: 20px",
-
+      "font-family: 'Play'; font-weight: 400; font-size: 20px; padding-right: 260px;",
   },
   {
     name: "Проект",
@@ -59,7 +58,7 @@ const columns = [
     label: "Проект",
     field: "Проект",
     headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px; padding-right: 30px;",
   },
   {
     name: "Дата начала",
@@ -87,8 +86,4 @@ const columns = [
 ];
 </script>
 
-<style scoped>
-.q-table th {
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
-</style>
+<style scoped></style>
