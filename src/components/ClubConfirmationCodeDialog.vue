@@ -11,58 +11,82 @@
         </section>
 
         <section class="flex flex-center no-wrap q-gutter-x-sm c-mt-32">
-          <c-input
+          <q-input
             type="text"
-            countInput="1"
-            v-model.numberCode="codeNumber"
-            class="dialog-input c-input-number"
+            flat
+            outlined
+            ref="firstInput"
+            v-model="form.firstNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
+            @update:modelValue="
+              inputCode($event, 1), focusInput($event, $refs.firstInput)
+            "
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="2"
-            v-model.numberCode="codeNumber"
-            class="dialog-input c-input-number"
+            flat
+            outlined
+            ref="secondInput"
+            @update:modelValue="
+              inputCode($event, 2), focusInput($event, $refs.firstInput)
+            "
+            v-model="form.secondNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="3"
-            v-model.numberCode="codeNumber"
-            class="dialog-input c-input-number"
+            flat
+            outlined
+            ref="thirdInput"
+            @update:modelValue="
+              inputCode($event, 3), focusInput($event, $refs.secondInput)
+            "
+            v-model="form.thirdNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="4"
-            v-model.numberCode="codeNumber"
-            class="dialog-input c-input-number"
+            flat
+            outlined
+            ref="fourthInput"
+            @update:modelValue="
+              inputCode($event, 4), focusInput($event, $refs.thirdInput)
+            "
+            v-model="form.fourthNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="5"
-            v-model.numberCode="codeNumber"
-            class="dialog-input c-input-number"
+            flat
+            outlined
+            ref="fifthInput"
+            @update:modelValue="
+              inputCode($event, 5), focusInput($event, $refs.fourthInput)
+            "
+            v-model="form.fifthNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="6"
-            v-model.numberCode="codeNumber"
-            class="dialog-input c-input-number"
+            flat
+            outlined
+            ref="sixthInput"
+            v-model="form.sixthNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
+            @update:modelValue="
+              inputCode($event, 6), focusInput($event, $refs.fifthInput)
+            "
           />
         </section>
 
@@ -91,7 +115,6 @@ import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
-import CInput from "./ClubInput.vue";
 import CClosingDialog from "./ClubClosingDialog.vue";
 import userApi from "src/sdk/user";
 import replaceAt from "src/utils/replaceAt";
@@ -105,13 +128,42 @@ const { timer, authInfo, reset } = defineProps({
   reset: Boolean,
 });
 
-const codeNumber = ref("");
 const fullCode = ref(" ".repeat(6));
 const resetCode = ref(reset);
+
+const form = ref({
+  firstNumber: "",
+  secondNumber: "",
+  thirdNumber: "",
+  fourthNumber: "",
+  fifthNumber: "",
+  sixthNumber: "",
+});
+
+const firstInput = ref(null);
+const secondInput = ref(null);
+const thirdInput = ref(null);
+const fourthInput = ref(null);
+const fifthInput = ref(null);
+const sixthInput = ref(null);
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
   console.log(authInfo);
+
+  console.log(
+    "hello",
+    value,
+    inputNumber,
+    fullCode.value,
+    fullCode.value.length
+  );
+
+  if (inputNumber === 1) secondInput.value.focus();
+  else if (inputNumber === 2) thirdInput.value.focus();
+  else if (inputNumber === 3) fourthInput.value.focus();
+  else if (inputNumber === 4) fifthInput.value.focus();
+  else if (inputNumber === 5) sixthInput.value.focus();
 
   if (fullCode.value.indexOf(" ") === -1) {
     console.log(authInfo);
@@ -169,6 +221,10 @@ const sendCode = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const focusInput = (value, object) => {
+  if (value === " " || value === "") object.focus();
 };
 </script>
 

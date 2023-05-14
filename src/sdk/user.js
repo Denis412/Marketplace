@@ -152,16 +152,20 @@ const setPassword = async ({ user_id, password, code }) => {
 };
 
 const userPasswordSendCode = async ({ email }) => {
+  console.log("send", email);
   const { data: resetSendCode } = await resetPasswordSendCode({
     input: {
       email,
     },
   });
 
+  console.log("send code", resetSendCode);
+
   return resetSendCode.userResetPasswordSendCode;
 };
 
 const userPasswordConfirmCode = async ({ user_id, code, password }) => {
+  console.log("ghghgh", { user_id, code, password });
   await resetPasswordConfirmCode({
     input: {
       user_id,
