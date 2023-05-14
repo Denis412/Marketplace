@@ -131,6 +131,7 @@ const registration = async ({ name, surname, email }) => {
       name,
       surname,
       email,
+      space_id: process.env.MAIN_SPACE_ID,
     },
   });
 
@@ -178,23 +179,6 @@ const saveUserData = async (userInfo, first_entry = false) => {
   tokenApi.save(userInfo.userSignIn.record);
 
   const userData = await refetchUserById(userInfo.userSignIn.recordId);
-
-  // if (first_entry) {
-  //   const { data: spaceData } = await creatingSpace({
-  //     input: {
-  //       name: userData.user.name,
-  //       description: userData.user.surname,
-  //     },
-  //   });
-
-  //   const { data: updateSubjectData } = await updatingUser({
-  //     input: {
-  //       personal_space_id: spaceData.spaceCreate.recordId,
-  //     },
-  //   });
-
-  //   console.log("data", spaceData, updateSubjectData);
-  // }
 
   console.log("userData", userData);
 

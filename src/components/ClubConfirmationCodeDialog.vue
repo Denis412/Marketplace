@@ -107,6 +107,7 @@ const { timer, authInfo, reset } = defineProps({
 
 const codeNumber = ref("");
 const fullCode = ref(" ".repeat(6));
+const resetCode = ref(reset);
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
@@ -116,7 +117,7 @@ const inputCode = async (value, inputNumber) => {
     console.log(authInfo);
 
     try {
-      if (!reset)
+      if (!reset && !resetCode.value)
         await userApi.setPassword({
           user_id: authInfo.user_id,
           password: authInfo.password,
@@ -157,6 +158,8 @@ const sendCode = async () => {
 
     timer.clear();
     timer.start();
+
+    resetCode.value = true;
 
     $q.notify({
       type: "positive",

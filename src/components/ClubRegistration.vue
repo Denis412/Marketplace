@@ -94,7 +94,7 @@
 
         <!-- :disable="!agreement" -->
         <c-button
-          disable
+          :disable="!agreement"
           type="submit"
           background
           label="Зарегистрироваться"
