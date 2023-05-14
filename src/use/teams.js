@@ -8,6 +8,7 @@ import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
 import propertyApi from "src/sdk/property";
 import pageApi from "src/sdk/page";
+import projectApi from "src/sdk/project";
 
 export const useTeamCreate = () => {
   const createTeamResult = ref(null);
@@ -120,7 +121,7 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
-      await userApi.refetchPaginateSubjects({
+      const mainSpaceSubject = await userApi.refetchPaginateSubjects({
         page: 1,
         perPage: 1,
         where: {
@@ -130,6 +131,15 @@ export const useTeamCreate = () => {
         },
         is_my_teams: true,
       });
+
+      await userApi.update(
+        projectTypeData.author_id,
+        {
+          major: mainSpaceSubject[0].major,
+        },
+        true,
+        space.id
+      );
 
       createTeamResult.value = { team, space };
 

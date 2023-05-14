@@ -132,24 +132,20 @@ export const useProjectCreate = () => {
         description: "Проектное пространство",
       });
 
-      // const subjectData = await userApi.refetchPaginateSubjects({
-      //   page: 1,
-      //   perPage: 1,
-      //   is_team: true,
-      //   space_id: spaceData.id,
-      // });
-
-      // await userApi.update(
-      //   subject.id,
-      //   {
-      //     major: application.subject.major,
-      //   },
-      //   true,
-      //   application.team.space
-      // );
-
-      await projectApi.create({
+      const projectInTeam = await projectApi.create({
         input: { name, space: spaceData.id },
+        space_id,
+      });
+
+      const subjectInTeam = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "id",
+          operator: "EQ",
+          value: projectInTeam.author_id,
+        },
+        is_team: true,
         space_id,
       });
 
@@ -207,6 +203,13 @@ export const useProjectCreate = () => {
             order: 4,
           },
           {
+            name: "parent_space",
+            label: "Командное пространство",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 5,
+          },
+          {
             name: "target",
             label: "Цель проекта",
             data_type: "text",
@@ -223,7 +226,7 @@ export const useProjectCreate = () => {
           label: "Дата сдачи",
           data_type: "datetime",
           type_id: projectTypeData.id,
-          order: 4,
+          order: 7,
           meta: {
             properties: [
               {
@@ -251,9 +254,18 @@ export const useProjectCreate = () => {
       });
 
       const projectData = await projectApi.create({
-        input: { name, team_name },
+        input: { name, team_name, parent_space: space_id },
         space_id: spaceData.id,
       });
+
+      await userApi.update(
+        projectData.author_id,
+        {
+          major: subjectInTeam.major,
+        },
+        true,
+        spaceData.id
+      );
 
       const rootPageData = await pageApi.create({
         input: {
@@ -328,29 +340,3 @@ export const useProjectCreate = () => {
 
   return { result, loading, error, createProject };
 };
-
-// export const useProject = () => {
-//   const create = async ({ input, space_id }) => {
-//     await projectApi.create({ input, space_id });
-
-//     await projectApi.refetchPaginateProjects({ page: 100, perPage: 50 });
-//   };
-
-//   const update = async ({ id, input, space_id }) => {
-//     await projectApi.update({ id, input, space_id });
-
-//     await projectApi.refetchPaginateProjects({ page: 100, perPage: 50 });
-//   };
-
-//   const deleteById = async (id) => {
-//     await projectApi.deleteProjectById(id);
-
-//     await refetchPaginateProjects({ page: 100, perPage: 50 });
-//   };
-
-//   return {
-//     create,
-//     update,
-//     deleteById,
-//   };
-// };

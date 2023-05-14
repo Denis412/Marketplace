@@ -28,6 +28,7 @@ export const paginateProjectsInProjectSpace = gql`
         name
         team_name
         description
+        parent_space
         target
         avatar
         created_at

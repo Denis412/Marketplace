@@ -7,6 +7,7 @@ export const projectCreate = gql`
         id
         name
         type_id
+        author_id
       }
     }
   }
