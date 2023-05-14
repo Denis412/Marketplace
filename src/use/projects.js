@@ -261,7 +261,7 @@ export const useProjectCreate = () => {
       await userApi.update(
         projectData.author_id,
         {
-          major: subjectInTeam.major,
+          major: subjectInTeam[0].major,
         },
         true,
         spaceData.id
