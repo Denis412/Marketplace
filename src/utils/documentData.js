@@ -82,22 +82,22 @@ const monthNames = [
 ]
 const definitions = {
   undo: {
-    icon: 'img:..\\icons\\back.svg',
+    icon: 'img:..\\src\\assets\\images\\back.svg',
   },
   redo: {
-    icon: 'img:..\\icons\\forward.svg',
+    icon: 'img:..\\src\\assets\\images\\forward.svg',
   },
   underline: {
-    icon: 'img:..\\icons\\underline.svg',
+    icon: 'img:..\\src\\assets\\images\\underline.svg',
   },
   strike: {
-    icon: 'img:..\\icons\\strike.svg',
+    icon: 'img:..\\src\\assets\\images\\strike.svg',
   },
   bold: {
-    icon: 'img:..\\icons\\bold.svg',
+    icon: 'img:..\\src\\assets\\images\\bold.svg',
   },
   italic: {
-    icon: 'img:..\\icons\\italic.svg',
+    icon: 'img:..\\src\\assets\\images\\italic.svg',
   },
 }
 
