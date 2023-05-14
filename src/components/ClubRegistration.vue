@@ -142,37 +142,46 @@ const { required, minLength, maxLength, passwordValid, equal, onlyLatin } =
 
 const authUserInfo = ref({});
 const agreement = ref(false);
-const showConfirmCode = ref(true);
+const showConfirmCode = ref(false);
 
 const form = ref({
   name: "",
   surname: "",
+  previousEmail: "",
   email: "",
   password: "",
   confirmPassword: "",
 });
 
 const registration = async () => {
-  registration.count++;
-
   try {
     let userInfo;
 
     console.log(timer.timer.value);
 
-    if (registration.count === 1) {
-      if (timer.timer.value === 90)
+    if (form.value.previousEmail !== form.value.email) {
+      console.log(form.value.previousEmail, form.value.email);
+
+      if (timer.timer.value === 90 || timer.timer.value === 0) {
         userInfo = await userApi.registration(form.value);
 
-      console.log(userInfo);
+        form.value.previousEmail = form.value.email;
 
-      $q.notify({
-        type: "positive",
-        message: "Вам на почту отправлено письмо с кодом подтверждения!",
-      });
+        if (timer.timer.value === 0) timer.clear();
+        timer.start();
+
+        $q.notify({
+          type: "positive",
+          message: "Вам на почту отправлено письмо с кодом подтверждения!",
+        });
+      } else {
+        $q.notify({
+          type: "warning",
+          message: `Подождите еще ${timer.timer.value} секунд!`,
+        });
+      }
     }
 
-    timer.start();
     showConfirmCode.value = true;
 
     if (userInfo) {

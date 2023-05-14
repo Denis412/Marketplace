@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { ref, toRefs } from "vue";
+import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -151,8 +151,6 @@ const inputCode = async (value, inputNumber) => {
   else if (inputNumber === 4) fifthInput.value.focus();
   else if (inputNumber === 5) sixthInput.value.focus();
   else if (inputNumber === 6) firstInput.value.focus();
-
-  // console.log("full", fullCode.value);
 
   if (fullCode.value.indexOf(" ") === -1) {
     console.log(authInfo);
