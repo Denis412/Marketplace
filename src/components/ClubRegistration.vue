@@ -68,7 +68,14 @@
           type="password"
           placeholder="Введите пароль"
           visibility
-          :rules="[required, minLength(8), maxLength(30), passwordValid]"
+          :rules="[
+            required,
+            onlyLatin,
+            minLength(8),
+            maxLength(30),
+            passwordValid,
+          ]"
+          lazy-rules
         />
 
         <c-input
@@ -118,7 +125,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useTimer } from "src/use/timer";
 import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
@@ -130,12 +137,12 @@ import userApi from "src/sdk/user";
 
 const $q = useQuasar();
 const timer = useTimer(90);
-const { required, minLength, maxLength, passwordValid, equal } =
+const { required, minLength, maxLength, passwordValid, equal, onlyLatin } =
   useValidators();
 
 const authUserInfo = ref({});
 const agreement = ref(false);
-const showConfirmCode = ref(false);
+const showConfirmCode = ref(true);
 
 const form = ref({
   name: "",
