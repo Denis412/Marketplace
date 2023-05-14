@@ -16,11 +16,12 @@
             flat
             outlined
             ref="firstInput"
-            @keydown.enter.prevent="$refs.secondInput.focus()"
             v-model="form.firstNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode($event, 1)"
+            @update:modelValue="
+              inputCode($event, 1), focusInput($event, $refs.firstInput)
+            "
           />
 
           <q-input
@@ -28,11 +29,12 @@
             flat
             outlined
             ref="secondInput"
-            @keydown.enter.prevent="$refs.thirdInput.focus()"
+            @update:modelValue="
+              inputCode($event, 2), focusInput($event, $refs.firstInput)
+            "
             v-model="form.secondNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode($event, 2)"
           />
 
           <q-input
@@ -40,11 +42,12 @@
             flat
             outlined
             ref="thirdInput"
-            @keydown.enter.prevent="$refs.fourthInput.focus()"
+            @update:modelValue="
+              inputCode($event, 3), focusInput($event, $refs.secondInput)
+            "
             v-model="form.thirdNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode($event, 3)"
           />
 
           <q-input
@@ -52,11 +55,12 @@
             flat
             outlined
             ref="fourthInput"
-            @keydown.enter.prevent="$refs.fifthInput.focus()"
+            @update:modelValue="
+              inputCode($event, 4), focusInput($event, $refs.thirdInput)
+            "
             v-model="form.fourthNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode($event, 4)"
           />
 
           <q-input
@@ -64,11 +68,12 @@
             flat
             outlined
             ref="fifthInput"
-            @keydown.enter.prevent="$refs.sixthInput.focus()"
+            @update:modelValue="
+              inputCode($event, 5), focusInput($event, $refs.fourthInput)
+            "
             v-model="form.fifthNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode($event, 5)"
           />
 
           <q-input
@@ -76,11 +81,12 @@
             flat
             outlined
             ref="sixthInput"
-            @keydown.enter.prevent="$refs.firstInput.focus()"
             v-model="form.sixthNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode($event, 6)"
+            @update:modelValue="
+              inputCode($event, 6), focusInput($event, $refs.fifthInput)
+            "
           />
         </section>
 
@@ -145,12 +151,19 @@ const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
   console.log(authInfo);
 
+  console.log(
+    "hello",
+    value,
+    inputNumber,
+    fullCode.value,
+    fullCode.value.length
+  );
+
   if (inputNumber === 1) secondInput.value.focus();
   else if (inputNumber === 2) thirdInput.value.focus();
   else if (inputNumber === 3) fourthInput.value.focus();
   else if (inputNumber === 4) fifthInput.value.focus();
   else if (inputNumber === 5) sixthInput.value.focus();
-  else if (inputNumber === 6) firstInput.value.focus();
 
   if (fullCode.value.indexOf(" ") === -1) {
     console.log(authInfo);
@@ -208,6 +221,10 @@ const sendCode = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const focusInput = (value, object) => {
+  if (value === " " || value === "") object.focus();
 };
 </script>
 
