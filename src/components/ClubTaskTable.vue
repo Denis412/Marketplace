@@ -11,7 +11,6 @@
     }"
     :rows-per-page-options="[5, 10, 20]"
   >
-
     <!-- Пример -->
 
     <!-- <template v-slot:body="props">
@@ -44,6 +43,15 @@
 </template>
 
 <script setup>
+import { Quasar } from "quasar";
+import quasarIconSet from "quasar/icon-set/svg-material-icons"; // импортируем набор иконок Quasar
+
+// Добавляем свою иконку в набор иконок Quasar
+quasarIconSet.table.mySortIcon = "прив";
+
+Quasar.iconSet.set(quasarIconSet); // устанавливаем набор иконок Quasar для Quasar
+quasarIconSet.table.arrowUp = "img:..\\icons\\SortableArrow.svg"; // используем свою иконку как иконку стрелки сортировки
+
 const columns = [
   {
     name: "Задача",
@@ -55,23 +63,23 @@ const columns = [
   },
   {
     name: "Проект",
-    align: "left",
     label: "Проект",
+    align: "right",
     field: "Проект",
     headerStyle:
       "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+    sortable: true,
   },
   {
     name: "Дата начала",
-    align: "left",
     label: "Дата начала",
+    align: "center",
     field: "Дата начала",
     headerStyle:
       "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
   },
   {
     name: "Дата окончания",
-    align: "left",
     label: "Дата окончания",
     field: "Дата окончания",
     headerStyle:
@@ -79,7 +87,6 @@ const columns = [
   },
   {
     name: "Статус",
-    align: "left",
     label: "Статус",
     field: "Статус",
     headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px;",
@@ -87,8 +94,4 @@ const columns = [
 ];
 </script>
 
-<style scoped>
-.q-table th {
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
-</style>
+<style scoped></style>
