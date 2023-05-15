@@ -100,15 +100,15 @@ const mainTreeItems = ref([
     path: "space",
   },
   {
+    title: "Задачи",
+    img: "HomeIconDemo.svg",
+    path: "taskPage",
+  },
+  {
     title: "Документы",
     img: "HomeIconDemo.svg",
     path: "addDocument",
     content: "+",
-  },
-  {
-    title: "Задачи",
-    img: "HomeIconDemo.svg",
-    path: "taskPage",
   },
 ]);
 
