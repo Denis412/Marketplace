@@ -105,6 +105,11 @@ const mainTreeItems = ref([
     path: "addDocument",
     content: "+",
   },
+  {
+    title: "Задачи",
+    img: "HomeIconDemo.svg",
+    path: "taskPage",
+  },
 ]);
 
 const toggleDrawer = () => {
@@ -177,6 +182,7 @@ const isActive = (path) => {
 .rotate {
   transform: rotate(-180deg);
 }
+
 .addDoc {
   padding-left: 4rem;
 }
