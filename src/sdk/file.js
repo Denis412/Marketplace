@@ -5,12 +5,12 @@ import {
 } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import { filesUpload } from "src/graphql/files/mutations";
-import { getFile } from "src/graphql/files/queries";
+import { getFiles } from "src/graphql/files/queries";
 
 provideApolloClient(apolloClient);
 
 const { mutate } = useMutation(filesUpload);
-const { refetch } = useQuery(getFile);
+const { refetch } = useQuery(getFiles);
 
 const uploadFiles = async (files) => {
   console.log("file", files);

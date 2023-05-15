@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
+
 import userApi from "src/sdk/user";
 import { convertSubject } from "src/utils/convertSubject";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     currentUser: null,
+    files: "wtf",
   }),
 
   getters: {

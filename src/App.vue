@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component }">
-    <keep-alive>
+    <keep-alive exclude="Document">
       <component :is="Component" />
     </keep-alive>
   </router-view>
@@ -9,12 +9,14 @@
 <script setup>
 import { onMounted } from "vue";
 import { useUserStore } from "./stores/user";
-
+import { useFileStore } from "src/stores/file";
 import userApi from "src/sdk/user";
 
 const store = useUserStore();
+const storeFile = useFileStore();
 
 onMounted(async () => {
+  storeFile.SET_FILES();
   userApi.isAuth() ? await store.FETCH_CURRENT_USER() : null;
 });
 </script>
