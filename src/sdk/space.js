@@ -47,7 +47,7 @@ const create = async (data) => {
 
   console.log("create space", spaceData);
 
-  return spaceData.spaceCreate;
+  return spaceData.spaceCreate.record;
 };
 
 const deleteById = async (space_id) => {

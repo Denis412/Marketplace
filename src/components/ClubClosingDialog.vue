@@ -10,7 +10,7 @@
       <slot name="main">
         <q-card-section class="flex column">
           <slot name="main-title">
-            <h3 class="text-h3" :class="titlePositionClass">{{ title }}</h3>
+            <h4 class="text-h4" :class="titlePositionClass">{{ title }}</h4>
           </slot>
 
           <slot name="main-content"></slot>

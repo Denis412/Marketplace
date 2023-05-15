@@ -6,6 +6,8 @@ export const projectCreate = gql`
       record {
         id
         name
+        type_id
+        author_id
       }
     }
   }
@@ -16,6 +18,7 @@ export const projectUpdate = gql`
     update_project(id: $id, input: $input) {
       record {
         id
+        type_id
       }
     }
   }
@@ -25,6 +28,7 @@ export const projectDelete = gql`
   mutation deleteProject($id: String!) {
     delete_project(id: $id) {
       recordId
+      status
     }
   }
 `;

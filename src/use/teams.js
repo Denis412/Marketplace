@@ -6,6 +6,9 @@ import spaceApi from "src/sdk/space";
 import teamApi from "src/sdk/team";
 import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
+import propertyApi from "src/sdk/property";
+import pageApi from "src/sdk/page";
+import projectApi from "src/sdk/project";
 
 export const useTeamCreate = () => {
   const createTeamResult = ref(null);
@@ -23,6 +26,37 @@ export const useTeamCreate = () => {
         description,
       });
 
+      const subjectType = await typeApi.refetchPaginateType({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "subject",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.createMany({
+        input: [
+          {
+            name: "major",
+            label: "Специальность",
+            data_type: "text",
+            type_id: subjectType[0].id,
+            order: 2,
+          },
+          {
+            name: "avatar",
+            label: "Аватар",
+            data_type: "text",
+            type_id: subjectType[0].id,
+            order: 3,
+          },
+        ],
+        space_id: space.id,
+      });
+
       const teamGroup = await groupApi.refetchPaginateGroups({
         page: 1,
         perPage: 1,
@@ -31,30 +65,41 @@ export const useTeamCreate = () => {
           operator: "EQ",
           value: "Команда",
         },
-        space_id: space.recordId,
+        space_id: space.id,
       });
 
-      await groupApi.create(space.recordId, {
+      await groupApi.create(space.id, {
         name: "Участники",
         description: "Группа участников",
         parent_group_id: teamGroup[0].id,
       });
 
-      await groupApi.create(space.recordId, {
+      await groupApi.create(space.id, {
         name: "Приглашенные",
         description: "Группа приглашенных",
         parent_group_id: teamGroup[0].id,
       });
 
-      await typeApi.create({
+      const projectTypeData = await typeApi.create({
         input: {
           name: "project",
           label: "Проект",
         },
-        space_id: space.recordId,
+        space_id: space.id,
       });
 
-      team = await teamApi.create({ name, description, space: space.recordId });
+      await propertyApi.create({
+        input: {
+          name: "space",
+          label: "Проектное пространство",
+          data_type: "text",
+          type_id: projectTypeData.id,
+          order: 2,
+        },
+        space_id: space.id,
+      });
+
+      team = await teamApi.create({ name, description, space: space.id });
 
       await teamApi.update(team.id, {
         members: {
@@ -62,7 +107,30 @@ export const useTeamCreate = () => {
         },
       });
 
-      await userApi.refetchPaginateSubjects({
+      const rootPageData = await pageApi.create({
+        input: {
+          title: team.name,
+        },
+        space_id: space.id,
+      });
+
+      await pageApi.create({
+        input: {
+          title: "Профиль команды",
+          parent_id: rootPageData.id,
+        },
+        space_id: space.id,
+      });
+
+      await pageApi.create({
+        input: {
+          title: "Командное пространство",
+          parent_id: rootPageData.id,
+        },
+        space_id: space.id,
+      });
+
+      const mainSpaceSubject = await userApi.refetchPaginateSubjects({
         page: 1,
         perPage: 1,
         where: {
@@ -73,11 +141,23 @@ export const useTeamCreate = () => {
         is_my_teams: true,
       });
 
+      await userApi.update(
+        projectTypeData.author_id,
+        {
+          major: mainSpaceSubject[0].major,
+          avatar: mainSpaceSubject[0].avatar,
+        },
+        true,
+        space.id
+      );
+
       createTeamResult.value = { team, space };
 
       creatingTeam.value = false;
     } catch (e) {
       createTeamError.value = e;
+
+      console.log(e);
     }
   }
 
@@ -154,8 +234,10 @@ export const useTeamDelete = () => {
       deleteTeamResult.value = teamData;
 
       deletingTeam.value = false;
-    } catch (error) {
-      deleteTeamError.value = error;
+    } catch (e) {
+      deleteTeamError.value = e;
+
+      console.log(e);
     }
   }
 
@@ -349,6 +431,26 @@ export const useTeamApplication = () => {
             application_id: application.id,
           },
         });
+
+        const subjectData = await userApi.refetchPaginateSubjects({
+          page: 1,
+          perPage: 100,
+          is_team: true,
+          space_id: application.team.space,
+        });
+
+        const subject = subjectData.find(
+          (sub) => sub.email.email === application.subject.email.email
+        );
+
+        await userApi.update(
+          subject.id,
+          {
+            major: application.subject.major,
+          },
+          true,
+          application.team.space
+        );
 
         await applicationApi.deleteById(application.id);
       } else

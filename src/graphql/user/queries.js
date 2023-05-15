@@ -68,6 +68,7 @@ export const paginateSubjectInAnotherSpace = gql`
       data {
         id
         user_id
+        avatar
         fullname {
           first_name
           middle_name
@@ -76,6 +77,7 @@ export const paginateSubjectInAnotherSpace = gql`
         email {
           email
         }
+        major
         group {
           id
           name
@@ -96,6 +98,7 @@ export const paginateSubjectsInMainSpace = gql`
       data {
         id
         user_id
+        avatar
         fullname {
           first_name
           middle_name
@@ -112,10 +115,7 @@ export const paginateSubjectsInMainSpace = gql`
         birthday {
           date
         }
-        speciality {
-          id
-          name
-        }
+        major
         teams {
           id
           avatar
@@ -147,6 +147,7 @@ export const paginateSubjectsForInvite = gql`
       data {
         id
         user_id
+        avatar
         fullname {
           first_name
           middle_name

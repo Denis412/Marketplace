@@ -39,10 +39,11 @@ const { acceptApplication, cancelApplication } = useTeamApplication();
 
 const $q = useQuasar();
 
-const { application, incoming, is_team } = defineProps({
+const { application, incoming, is_team, team_id } = defineProps({
   application: Object,
   incoming: Boolean,
   is_team: Boolean,
+  team_id: String,
 });
 
 const { result: statusProperty } = propertyApi.queryPropertyById({

@@ -24,9 +24,8 @@ export const getTeamsWithWhere = gql`
             email {
               email
             }
-            speciality {
-              name
-            }
+            avatar
+            major
           }
           team {
             id
@@ -42,9 +41,8 @@ export const getTeamsWithWhere = gql`
             first_name
             last_name
           }
-          speciality {
-            name
-          }
+          avatar
+          major
         }
         space
         level

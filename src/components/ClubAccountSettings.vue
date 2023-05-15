@@ -13,7 +13,9 @@
             <div class="flex items-center col">
               <q-avatar class="avatar">
                 <q-img
+                  style="object-fit: cover"
                   :src="
+                    newAvatar ||
                     currentUser?.avatar ||
                     '/assets/images/preloaders/default-avatar.svg'
                   "
@@ -24,15 +26,15 @@
                 <c-button
                   background
                   label="Загрузить фото"
-                  @click="uploadAvatar"
+                  @click="pickFiles"
                 />
 
                 <q-file
-                  v-show="false"
-                  id="filePick"
-                  standout="bg-teal text-white"
+                  style="display: none"
                   v-model="selectAvatar"
-                  label="Custom standout"
+                  accept=".png,.jpg"
+                  ref="uploader"
+                  @update:model-value="updateAvatar"
                 />
 
                 <c-button
@@ -101,7 +103,7 @@
 </template>
 
 <script setup>
-import { ref, watch, inject } from "vue";
+import { ref, watch, inject, onMounted } from "vue";
 
 import CButton from "src/components/ClubButton.vue";
 import CAccountSettingsForm from "./ClubAccountSettingsForm.vue";
@@ -110,21 +112,36 @@ import CConfirmDialog from "./ClubConfirmDialog.vue";
 
 import userApi from "src/sdk/user";
 import filesApi from "src/sdk/file";
+import { useUserStore } from "src/stores/user";
+
+const userStore = useUserStore();
 
 const currentUser = inject("currentUser");
 
 const isDeletePhoto = ref(false);
 const isChanging = ref(false);
 const authInfo = ref({});
+const uploader = ref(null);
 const selectAvatar = ref(null);
+const newAvatar = ref(null);
 
-const uploadAvatar = async () => {
-  document.querySelector("input[type='file']").click();
-};
+const pickFiles = () => uploader.value.pickFiles();
+const updateAvatar = () =>
+  (newAvatar.value = URL.createObjectURL(selectAvatar.value));
+
 const toggleIsDeletePhoto = () => {
   isDeletePhoto.value = !isDeletePhoto.value;
 };
-const deletePhoto = () => {};
+
+const deletePhoto = async () => {
+  newAvatar.value = null;
+
+  await userApi.update(currentUser.value.subject_id, {
+    avatar: null,
+  });
+
+  userStore.SET_AVATAR(null);
+};
 
 const changePassword = () => {
   authInfo.value.email = currentUser.value?.email;
@@ -137,23 +154,20 @@ watch(selectAvatar, async (value) => {
 
   const avatarId = await userApi.uploadAvatar(value);
 
-  const files = await filesApi.get(
-    avatarId
-      .toString()
-      .slice(0, avatarId.toString().length - 3)
-      .toString()
-  );
+  const files = await filesApi.get(avatarId);
 
-  console.log(
-    avatarId,
-    files,
-    `${process.env.FILE_STORAGE_URI}/${files[0].path}/${avatarId}/${files[0].extension}?n=${files[0].name}`
-  );
+  const fileUrl = `${process.env.FILE_STORAGE_URI}/${files[0].path}/${avatarId}.${files[0].extension}?n=${files[0].name}`;
 
-  userStore.SET_AVATAR(
-    `${process.env.FILE_STORAGE_URI}/${files[0].path}/${avatarId}/${files[0].extension}?n=${files[0].name}`
-  );
+  userStore.SET_AVATAR(fileUrl);
+
+  await userApi.update(currentUser.value.subject_id, {
+    avatar: fileUrl,
+  });
 });
+
+// onMounted(async () => {
+//   await fetch(currentUser.value.avatar, { mode: "no-cors" });
+// });
 </script>
 
 <style scoped lang="scss">

@@ -30,18 +30,10 @@
       </q-toolbar>
     </div>
 
-    <section v-if="selectMembersList === 'members'">
-      <div v-for="specialties in specialtiesList" :key="specialties.index">
-        <div class="text-body2 text-violet-6">
-          {{ specialties.displayName }}
-        </div>
-
-        <c-specialists-list
-          class="flex q-mt-md q-gutter-x-md"
-          :specialists="groupByMembers[specialties.filterName]"
-        />
-      </div>
-    </section>
+    <c-team-members-list
+      v-if="selectMembersList === 'members'"
+      :members="currentTeam.members"
+    />
 
     <section v-else>
       <section v-if="!currentTeam.applications.length">
@@ -79,13 +71,15 @@
 </template>
 
 <script setup>
-import { computed, inject, ref } from "vue";
-import CSpecialistsList from "./ClubSpecialistsList.vue";
-import CApplicationsList from "./ClubApplicationsList.vue";
-import CButton from "./ClubButton.vue";
+import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
-import _ from "lodash";
 import { useApplications } from "src/use/applications";
+
+import _ from "lodash";
+
+import CApplicationsList from "./ClubApplicationsList.vue";
+import CTeamMembersList from "./ClubTeamMembersList.vue";
+import CButton from "./ClubButton.vue";
 
 const isOwner = inject("isOwner");
 const currentTeam = inject("currentTeam");
@@ -93,23 +87,7 @@ const currentTeam = inject("currentTeam");
 const router = useRouter();
 const { filteredApplications } = useApplications(currentTeam, true);
 
-const specialtiesList = ref([
-  { filterName: "Заказчик", displayName: "Заказчики", value: "customers" },
-  {
-    filterName: "Разработчик",
-    displayName: "Разработчики",
-    value: "developers",
-  },
-  { filterName: "Менеджер", displayName: "Менеджеры", value: "managers" },
-  { filterName: "Маркетолог", displayName: "Маркетологи", value: "marketers" },
-  { filterName: "Дизайнер", displayName: "Дизайнеры", value: "designers" },
-  { filterName: "Аналитик", displayName: "Аналитики", value: "analitics" },
-]);
-
 const selectMembersList = ref("members");
-const groupByMembers = computed(() =>
-  _.groupBy(currentTeam.value.members, "speciality.name")
-);
 
 const inviteUser = async () => {
   router.push({

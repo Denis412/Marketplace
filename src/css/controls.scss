@@ -28,61 +28,8 @@
       div {
         height: $input-height-md;
 
-        input {
-          @extend .text-body2;
-
-          color: #6d6d6d;
-
-          &::placeholder {
-            color: #6d6d6d4d;
-          }
-        }
-      }
-
-      &:before {
-        border-style: solid !important;
-      }
-    }
-  }
-}
-
-.c-textarea-outline {
-  padding-bottom: 0 !important;
-  div {
-    border-radius: 8px !important;
-
-    & .q-field__bottom {
-      min-height: 0;
-      padding: 0;
-    }
-
-    & .q-field__bottom--animated {
-      transform: none;
-      position: relative;
-
-      div div {
-        @extend .text-caption2;
-
-        margin-top: 16px;
-      }
-    }
-
-    & .q-field__native {
-      @extend .text-body2;
-
-      margin: 16px 0;
-      padding: 0;
-
-      &::placeholder {
-        color: #6d6d6d4d;
-      }
-    }
-
-    & .q-field__control {
-      padding: 0 24px !important;
-
-      div {
-        input {
+        input,
+        textarea {
           @extend .text-body2;
 
           color: #6d6d6d;
@@ -126,6 +73,28 @@
 
       &:before {
         border: none !important;
+      }
+    }
+  }
+}
+
+.c-input-area-mh {
+  min-height: 100%;
+
+  div {
+    .q-field__control {
+      min-height: 100%;
+
+      &::after {
+        min-height: 100%;
+      }
+
+      div {
+        min-height: 100%;
+
+        textarea {
+          min-height: 100%;
+        }
       }
     }
   }
@@ -294,4 +263,32 @@
   & .q-tab__label {
     @extend .text-body1;
   }
+}
+.q-editor__toolbar {
+  & .q-icon {
+    font-size: 18px;
+  }
+  & .q-btn-dropdown__arrow {
+    font-size: 25px;
+  }
+  & .q-editor__toolbar-group {
+    padding-top: 20px;
+  }
+  & .q-editor__toolbar-group::before {
+    margin-bottom: 22px;
+    margin-top: 22px;
+  }
+  & .block {
+    font-size: 16px;
+  }
+  &.btn__content:active {
+    background-color: red;
+  }
+  & img {
+    margin-top: 6px;
+  }
+  border-top: 1px solid black !important;
+  border-radius: 0px;
+  height: 80px;
+  color: #545454;
 }

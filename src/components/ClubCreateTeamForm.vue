@@ -70,17 +70,16 @@
 
 <script setup>
 import { inject, ref } from "vue";
-import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+
+import { useValidators } from "src/use/validators";
+import { useTeamCreate } from "src/use/teams";
 
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
 
-import teamApi from "src/sdk/team";
 import filesApi from "src/sdk/file";
-import userApi from "src/sdk/user";
-import { useTeamCreate } from "src/use/teams";
 
 const currentUser = inject("currentUser");
 
@@ -107,7 +106,7 @@ const teamCreate = async () => {
       name: "my-teams",
     });
 
-    await filesApi.uploadFiles(upload_img.value);
+    // await filesApi.uploadFiles(upload_img.value);
 
     // await teamApi.update(teamData.value.id, {
     //   avatar: avatar.value,
@@ -127,7 +126,11 @@ const updateFile = () => {
 };
 
 const triggerInput = () => {
-  uploadFile.value.pickFiles();
+  $q.notify({
+    type: "negative",
+    message: "В разработке!",
+  });
+  // uploadFile.value.pickFiles();
 };
 </script>
 

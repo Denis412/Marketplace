@@ -54,6 +54,16 @@ const routes = [
         name: "my-teams",
         component: () => import("src/pages/ClubMyTeamsPage.vue"),
       },
+      {
+        path: "my-projects",
+        name: "my-projects",
+        component: () => import("src/pages/ClubMyProjectsPage.vue"),
+      },
+      {
+        path: "project/:space/:name",
+        name: "project",
+        component: () => import("src/pages/ClubProjectInformationPage.vue"),
+      },
 
       //тестовые роуты
       {
@@ -70,6 +80,16 @@ const routes = [
         path: "space",
         name: "space",
         component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
+        path: "addDocument",
+        name: "addDocument",
+        component: () => import("pages/ClubAddNewDocument.vue"),
+      },
+      {
+        path: "addDocument/:id",
+        name: "Document",
+        component: () => import("pages/ClubAddNewDocument.vue"),
       },
     ],
   },

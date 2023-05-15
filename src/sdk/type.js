@@ -26,44 +26,47 @@ const paginateType = ({ page, perPage, where, space_id }) => {
   );
 };
 
-const refetchPaginateType = async ({ page: perPage, where, space_id }) => {
+const refetchPaginateType = async ({ page, perPage, where, space_id }) => {
   const { refetch } = paginateType({ page, perPage, where, space_id });
 
   const { data: typesData } = await refetch();
 
-  return typesData.types;
+  console.log("refetch paginate types", typesData);
+
+  return typesData.types.data;
 };
 
 const create = async ({ input, space_id }) => {
   const { data: typeData } = await creatingType(
-    {
-      input,
-    },
+    { input },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  return typeData.typeCreate.recordId;
+  console.log("create type", typeData);
+
+  return typeData.typeCreate.record;
 };
 
 const update = async ({ id, input, space_id }) => {
   const { data: typeData } = await updatingType(
-    {
-      id,
-      input,
-    },
+    { id, input },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
+
+  console.log("update type", typeData);
 
   return typeData.typeUpdate;
 };
 
 const deleteTypeById = async ({ id, space_id }) => {
-  await deletingType(
-    {
-      id: id,
-    },
+  const { data: typeData } = await deletingType(
+    { id },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
+
+  console.log("delete type", typeData);
+
+  return typeData.typeDelete;
 };
 
 const typeApi = {
