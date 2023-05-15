@@ -15,31 +15,31 @@ import { ref } from "vue";
 const categories = ref([
   {
     id: 1,
-    imageUrl: "src/assets/images/Freelansers.svg",
+    imageUrl: "/assets/images/landing/freelansers.svg",
     title: "Фрилансеры",
     content: "Получайте заказы или работайте над проектами в составе команды.",
   },
   {
     id: 2,
-    imageUrl: "src/assets/images/PredPrenimateli.svg",
+    imageUrl: "/assets/images/landing/entrepreneurs.svg",
     title: "Предприниматели",
     content: "Получайте заказы или работайте над проектами в составе команды.",
   },
   {
     id: 3,
-    imageUrl: "src/assets/images/Startup.svg",
+    imageUrl: "/assets/images/landing/startup.svg",
     title: "Стартап",
     content: "Получайте заказы или работайте над проектами в составе команды.",
   },
   {
     id: 4,
-    imageUrl: "src/assets/images/Experts.svg",
+    imageUrl: "/assets/images/landing/experts.svg",
     title: "Эксперты",
     content: "Получайте заказы или работайте над проектами в составе команды.",
   },
   {
     id: 5,
-    imageUrl: "src/assets/images/News.svg",
+    imageUrl: "/assets/images/landing/novelties.svg",
     title: "Новинки",
     content: "Получайте заказы или работайте над проектами в составе команды.",
   },

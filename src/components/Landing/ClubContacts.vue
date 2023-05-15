@@ -15,21 +15,21 @@
 
           <c-contacts-section
             title="Адрес"
-            image-url="src/assets/images/Map.svg"
+            image-url="/assets/images/landing/map-gradient.svg"
             text-content="ул. Ростовская набережная д.5,"
             row
           />
 
           <c-contacts-section
             title="Телефон"
-            image-url="src/assets/images/Phone.svg"
+            image-url="/assets/images/landing/phone-gradient.svg"
             text-content="+7 (999) 333-33-07"
             row
           />
 
           <c-contacts-section
             title="Эл. почта"
-            image-url="src/assets/images/Email.svg"
+            image-url="/assets/images/landing/email-gradient.svg"
             text-content="Club@1T.ru"
             row
           />

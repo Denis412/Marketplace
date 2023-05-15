@@ -4,12 +4,12 @@
       <div class="absolute c-width c-at-0 c-ar-20 c-z--1">
         <q-img
           class="c-img-120"
-          src="../assets/images/authentication/envelope.svg"
+          src="/assets/images/authentication/envelope.svg"
         />
 
         <q-img
           class="c-img-120 c-at--3"
-          src="../assets/images/authentication/speech-bubble.svg"
+          src="/assets/images/authentication/speech-bubble.svg"
         />
       </div>
 
@@ -47,7 +47,7 @@
         />
 
         <c-input
-          class="c-input-400"
+          class="c-input-400 q-mt-md"
           v-model="form.surname"
           type="text"
           placeholder="Введите вашу фамилию"
@@ -55,7 +55,7 @@
         />
 
         <c-input
-          class="c-input-400"
+          class="c-input-400 q-mt-md"
           v-model="form.email"
           type="email"
           placeholder="Введите ваш e-mail"
@@ -63,16 +63,23 @@
         />
 
         <c-input
-          class="c-input-400"
+          class="c-input-400 q-mt-md"
           v-model="form.password"
           type="password"
           placeholder="Введите пароль"
           visibility
-          :rules="[required, minLength(8), maxLength(30), passwordValid]"
+          :rules="[
+            required,
+            onlyLatin,
+            minLength(8),
+            maxLength(30),
+            passwordValid,
+          ]"
+          lazy-rules
         />
 
         <c-input
-          class="c-input-400"
+          class="c-input-400 q-mt-md"
           v-model="form.confirmPassword"
           type="password"
           placeholder="Повторите пароль"
@@ -84,7 +91,7 @@
           dense
           v-model="agreement"
           color="purple"
-          class="c-mb-30 c-maxw-350 c-checkbox-rounded"
+          class="c-mb-30 q-mt-md c-maxw-350 c-checkbox-rounded"
         >
           <template v-slot:default>
             Я принимаю <a href="">Условия использования</a> и соглашаюсь с
@@ -92,6 +99,7 @@
           </template>
         </q-checkbox>
 
+        <!-- :disable="!agreement" -->
         <c-button
           :disable="!agreement"
           type="submit"
@@ -103,7 +111,7 @@
 
       <q-img
         class="absolute c-img-270 c-ab-0 c-al--11 c-z--1"
-        src="../assets/images/authentication/gears.svg"
+        src="/assets/images/authentication/gears.svg"
       />
     </section>
 
@@ -117,7 +125,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useTimer } from "src/use/timer";
 import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
@@ -129,7 +137,7 @@ import userApi from "src/sdk/user";
 
 const $q = useQuasar();
 const timer = useTimer(90);
-const { required, minLength, maxLength, passwordValid, equal } =
+const { required, minLength, maxLength, passwordValid, equal, onlyLatin } =
   useValidators();
 
 const authUserInfo = ref({});
@@ -139,32 +147,41 @@ const showConfirmCode = ref(false);
 const form = ref({
   name: "",
   surname: "",
+  previousEmail: "",
   email: "",
   password: "",
   confirmPassword: "",
 });
 
 const registration = async () => {
-  registration.count++;
-
   try {
     let userInfo;
 
     console.log(timer.timer.value);
 
-    if (registration.count === 1) {
-      if (timer.timer.value === 90)
+    if (form.value.previousEmail !== form.value.email) {
+      console.log(form.value.previousEmail, form.value.email);
+
+      if (timer.timer.value === 90 || timer.timer.value === 0) {
         userInfo = await userApi.registration(form.value);
 
-      console.log(userInfo);
+        form.value.previousEmail = form.value.email;
 
-      $q.notify({
-        type: "positive",
-        message: "Вам на почту отправлено письмо с кодом подтверждения!",
-      });
+        if (timer.timer.value === 0) timer.clear();
+        timer.start();
+
+        $q.notify({
+          type: "positive",
+          message: "Вам на почту отправлено письмо с кодом подтверждения!",
+        });
+      } else {
+        $q.notify({
+          type: "warning",
+          message: `Подождите еще ${timer.timer.value} секунд!`,
+        });
+      }
     }
 
-    timer.start();
     showConfirmCode.value = true;
 
     if (userInfo) {

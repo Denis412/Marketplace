@@ -1,11 +1,11 @@
 <template>
   <section class="section-margin how-join container row justify-between">
     <div class="image relative-position">
-      <img src="src/assets/images/cuate.svg" />
+      <img src="/assets/images/landing/welcome.svg" />
 
       <img
         class="absolute-center"
-        src="src/assets/images/Ellipse%2070.svg"
+        src="/assets/images/landing-background/main-page/bg-15.svg"
         style="z-index: -1"
       />
     </div>

@@ -1,7 +1,7 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export const getFiles = gql`
-  query(
+  query (
     $where: ObjectPaginatorWhere
     $orderBy: ObjectPaginatorOrderBy
     $page: Int!
@@ -43,4 +43,4 @@ export const getFiles = gql`
       __typename
     }
   }
-`
+`;

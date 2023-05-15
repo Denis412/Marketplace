@@ -1,30 +1,43 @@
 <template>
   <section>
-    <header>
+    <header class="q-pb-md">
       <h3 class="text-h3">Профиль команды</h3>
     </header>
 
-    <main class="c-mt-24">
-      <c-team-profile-header
-        :title="team.title"
-        :description="team.description"
-        :directions="team.directions"
-      />
+    <main v-if="currentTeam">
+      <section v-if="loading" class="loader loader-lg"></section>
 
-      <c-team-profile-projects :projects="team.projects" />
-      <c-team-profile-members :team="team" />
+      <section v-else>
+        <c-team-profile-header />
+        <c-team-profile-projects class="c-pt-32" />
+        <c-team-profile-members />
+      </section>
     </main>
   </section>
 </template>
 
 <script setup>
+import { computed, inject, onMounted, provide } from "vue";
+
 import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
 
-const { team } = defineProps({
-  team: Object,
-});
+import { useTeamIsMember } from "src/use/teams";
+
+const { result, loading, checkIsMember } = useTeamIsMember();
+
+const currentUser = inject("currentUser");
+const currentTeam = inject("currentTeam");
+
+const isOwner = computed(
+  () => currentUser.value.subject_id === currentTeam?.value.author_id
+);
+
+provide("isOwner", isOwner);
+provide("isMember", result);
+
+onMounted(async () => await checkIsMember(currentTeam?.value));
 </script>
 
 <style scoped lang="scss"></style>
