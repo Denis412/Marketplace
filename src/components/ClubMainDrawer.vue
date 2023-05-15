@@ -41,6 +41,8 @@
       </q-item>
     </q-list>
 
+    <c-tree-teams />
+
     <button
       ref="btn"
       class="bg-violet-6 drawer-btn absolute"
@@ -55,6 +57,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
+import CTreeTeams from "src/components/ClubTreeTeams.vue";
 import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
