@@ -14,7 +14,7 @@
       class="text-h3 q-mb-sm col-12"
       id="id"
       placeholder="Придумайте название документа"
-      v-model="vModelTitleDocument"
+      v-model="title"
     />
   </div>
 </template>
@@ -37,25 +37,17 @@ const day = date.getDate();
 const month = data.monthNames[date.getMonth()];
 const year = date.getFullYear();
 const titleDocument = computed(() => storeFile.currentTitleDoc);
-
-//****************************************************************************** */
-// Не называйте переменные с VModel.
-// В данном случае можно обойтись просто title,
-// так как в контексте данного компонента и так ясно, что это название документа
-
-const vModelTitleDocument = ref();
-
-//****************************************************************************** */
+const title = ref();
 
 watch(titleDocument, () => {
-  vModelTitleDocument.value = titleDocument.value;
+  title.value = titleDocument.value;
 });
 
-watch(vModelTitleDocument, () => {
+watch(title, () => {
   //****************************************************************************** */
   // В рамках стора устанавливайте значения через методы actions
 
-  storeFile.currentTitleDoc = vModelTitleDocument.value;
+  storeFile.currentTitleDoc = title.value;
 
   //****************************************************************************** */
 });
