@@ -1,11 +1,7 @@
 <template>
   <div class="row no-wrap q-pl-lg drawer-item">
     <div class="item_doc" @contextmenu.prevent="showMenu = true">
-      <img
-        :src="`/src/assets/icons/file/file-grey.svg`"
-        alt=""
-        class="q-pr-md"
-      />
+      <img :src="`/icons/file-grey.svg`" alt="" class="q-pr-md" />
 
       <router-link
         class="name_doc link"

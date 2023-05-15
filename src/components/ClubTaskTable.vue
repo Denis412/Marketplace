@@ -17,7 +17,7 @@
           <span class="q-pl-sm">Новая задача</span>
         </q-td>
         <q-td v-else>{{ props.row.name }}</q-td>
-        <q-td>-</q-td>
+        <q-td v-if="!props.row.first">-</q-td>
         <q-td>{{ props.row.dateStart?.date }}</q-td>
         <q-td>{{ props.row.dateEnd?.date }}</q-td>
         <q-td
