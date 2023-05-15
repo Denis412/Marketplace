@@ -88,6 +88,103 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
+      const applicationProjectType = await typeApi.create({
+        input: {
+          name: "application",
+          label: "Заявка",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          label: "Субъект",
+          name: "subject",
+          type_id: applicationProjectType.id,
+          data_type: "object",
+          order: 2,
+          multiple: {
+            status: false,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
+                inverse_relation: true,
+                inverse_relation_label: "Заявки",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          label: "Проект",
+          name: "project",
+          type_id: applicationProjectType.id,
+          data_type: "object",
+          order: 3,
+          multiple: {
+            status: false,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: projectTypeData.id,
+                inverse_relation: true,
+                inverse_relation_label: "Заявки",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          type_id: applicationProjectType.id,
+          data_type: "list",
+          name: "status",
+          label: "Статус",
+          meta: {
+            options: [
+              {
+                label: "В ожидании",
+                order: 0,
+                color: "#f2c037",
+              },
+              {
+                label: "Отклонена",
+                order: 1,
+                color: "#c10015",
+              },
+              {
+                label: "Одобрена",
+                order: 2,
+                color: "#21ba45",
+              },
+            ],
+            placeholder: null,
+            mask: null,
+            is_allow_custom_option: false,
+          },
+          default: {
+            value: {
+              id: 1,
+            },
+          },
+          order: 1,
+          required: false,
+          multiple: {
+            status: false,
+            button_text: "Добавить",
+          },
+        },
+        space_id: space.id,
+      });
+
       await propertyApi.create({
         input: {
           name: "space",

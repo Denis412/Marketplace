@@ -8,7 +8,7 @@
       <section>
         <q-img
           :src="currentProject?.avatar || ''"
-          class="bg-violet4 rounded-borders-8 project-avatar c-mt-40"
+          class="bg-violet4 rounded-borders-8 project-avatar c-mt-40 cursor-pointer"
         />
 
         <div class="flex justify-end c-mt-40">
@@ -57,7 +57,6 @@
 import { useProjectsQuery } from "src/use/projects";
 import { computed, provide } from "vue";
 import { useRoute } from "vue-router";
-import _ from "lodash";
 
 import CProjectInformationSection from "src/components/ClubProjectInformationSection.vue";
 import CProjectTargetDescriptionSections from "src/components/ClubProjectTargetDescriptionSections.vue";
@@ -81,6 +80,7 @@ const { projects, subjects, projectsLoading, subjectsLoading } =
 const currentProject = computed(() => projects.value?.paginate_project.data[0]);
 const currentSubjects = computed(() => subjects.value?.paginate_group.data);
 
+provide("spaceId", route.params.space);
 provide("currentProject", currentProject);
 provide("currentSubjects", currentSubjects);
 </script>

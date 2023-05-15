@@ -58,7 +58,7 @@ import CTeamMembersList from "src/components/ClubTeamMembersList.vue";
 const currentSubjects = inject("currentSubjects");
 
 const filteredSubjects = computed(() =>
-  currentSubjects.value.reduce((filtered, group) => {
+  currentSubjects.value?.reduce((filtered, group) => {
     filtered.push(...group.subject);
     return filtered;
   }, [])
@@ -67,7 +67,7 @@ const filteredSubjects = computed(() =>
 const selectedList = ref("members");
 
 const membersGroup = (group_name) =>
-  currentSubjects.value.reduce((filtered, group) => {
+  currentSubjects.value?.reduce((filtered, group) => {
     if (group.name === group_name) filtered.push(...group.subject);
     return filtered;
   }, []);

@@ -28,16 +28,11 @@ export const useProjectsQuery = () => {
         page: page || 1,
         perPage: perPage || 50,
         where,
-        space_id: space_id || team.value.space,
+        space_id: space_id || team?.value?.space,
         project_space,
       };
 
-      const subjectParameters = {
-        page: 1,
-        perPage: 100,
-        is_team: true,
-        space_id,
-      };
+      console.log(parameters);
 
       const {
         result: projects,
@@ -168,14 +163,24 @@ export const useProjectCreate = () => {
         space_id: spaceData.id,
       });
 
-      await propertyApi.create({
-        input: {
-          name: "major",
-          label: "Специальность",
-          data_type: "text",
-          type_id: subjectType[0].id,
-          order: 2,
-        },
+      await propertyApi.createMany({
+        input: [
+          {
+            name: "avatar",
+            label: "Фотография",
+            data_type: "text",
+            type_id: subjectType[0].id,
+            order: 2,
+          },
+          {
+            name: "major",
+            label: "Специальность",
+            data_type: "text",
+            type_id: subjectType[0].id,
+            order: 3,
+          },
+        ],
+
         space_id: spaceData.id,
       });
 
@@ -262,6 +267,7 @@ export const useProjectCreate = () => {
         projectData.author_id,
         {
           major: subjectInTeam[0].major,
+          avatar: subjectInTeam[0].avatar,
         },
         true,
         spaceData.id
@@ -339,4 +345,43 @@ export const useProjectCreate = () => {
   }
 
   return { result, loading, error, createProject };
+};
+
+export const useProjectUpdate = () => {
+  const result = ref(null);
+  const loading = ref(false);
+  const error = ref(null);
+
+  async function updateProject({ id, input, space_id }) {
+    try {
+      loading.value = true;
+
+      console.log("space", { id, input, space_id });
+
+      result.value = await projectApi.update({ id, input, space_id });
+
+      await useProjectsQuery()
+        .getWithWere({
+          page: 1,
+          perPage: 1,
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: result.value.name,
+          },
+          space_id,
+          project_space: true,
+        })
+        .refetch({});
+
+      loading.value = false;
+    } catch (e) {
+      error.value = e;
+      loading.value = false;
+
+      console.log(e);
+    }
+  }
+
+  return { result, loading, error, updateProject };
 };

@@ -7,6 +7,7 @@
         autogrow
         outlined
         v-model="target"
+        @change="updateProp('target', $event)"
         class="c-input-outline c-input-area-mh q-mt-lg col"
         placeholder="Опишите цель проекта"
       />
@@ -31,6 +32,7 @@
         autogrow
         outlined
         v-model="description"
+        @change="updateProp('description', $event)"
         class="c-input-outline c-input-area-mh q-mt-lg col"
         placeholder="Напишите описание проекта"
       />
@@ -39,10 +41,27 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { useProjectUpdate } from "src/use/projects";
+import { ref, inject } from "vue";
 
-const target = ref("");
-const description = ref("");
+const { result, updateProject } = useProjectUpdate();
+
+const currentProject = inject("currentProject");
+const space_id = inject("spaceId");
+
+const target = ref(currentProject.value?.target);
+const description = ref(currentProject.value?.description);
+
+const updateProp = async (prop_name, value) => {
+  await updateProject({
+    id: currentProject.value.id,
+    input: {
+      name: currentProject.value.name,
+      [prop_name]: value,
+    },
+    space_id,
+  });
+};
 </script>
 
 <style scoped lang="scss">

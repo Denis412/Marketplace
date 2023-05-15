@@ -1,20 +1,18 @@
 <template>
   <section>
-    <q-toolbar class="flex items-center">
-      <q-toolbar-title style="max-width: min-content">
-        <h4 class="text-h4">Проекты</h4>
-      </q-toolbar-title>
+    <div class="column" style="max-width: min-content">
+      <h4 class="text-h4">Проекты</h4>
 
       <q-tabs
         v-model="selectProjectsList"
         indicator-color="black"
-        class="bg-transparent text-body1"
+        class="bg-transparent text-body1 q-mt-md"
       >
         <q-tab name="active" label="Активные" />
 
         <q-tab name="finished" label="Завершенные" />
       </q-tabs>
-    </q-toolbar>
+    </div>
 
     <!-- <pre>{{ currentProjects }}</pre> -->
 

@@ -78,6 +78,7 @@ const create = async ({ input, space_id }) => {
 };
 
 const update = async ({ id, input, space_id }) => {
+  console.log({ id, input, space_id });
   const { data: projectData } = await updatingProject(
     { id, input },
     spaceHeader(space_id)
@@ -85,7 +86,7 @@ const update = async ({ id, input, space_id }) => {
 
   console.log("update project", projectData);
 
-  return projectData.update_project;
+  return projectData.update_project.record;
 };
 
 const deleteProjectById = async ({ id, space_id }) => {
