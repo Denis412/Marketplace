@@ -37,7 +37,7 @@
           </div>
         </router-link>
 
-        <c-qtabs-document v-if="item.title == 'Документы'" />
+        <c-tabs-document v-if="item.title == 'Документы'" />
       </q-item>
     </q-list>
 
@@ -54,7 +54,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
+import CTabsDocument from "src/components/ClubTabsDocument.vue";
 import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({

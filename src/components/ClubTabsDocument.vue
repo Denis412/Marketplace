@@ -6,7 +6,7 @@
     :key="doc.id"
     align="left"
   >
-    <q-tabs-item :doc="doc" :index="index" />
+    <tabs-item :doc="doc" :index="index" />
   </q-tabs>
 </template>
 
@@ -14,7 +14,7 @@
 import { computed } from "vue";
 import { useFileStore } from "src/stores/file";
 
-import QTabsItem from "./ClubQtabsItemComponent.vue";
+import TabsItem from "./ClubTabsItemComponent.vue";
 
 const storeFile = useFileStore();
 const FILES = computed(() => storeFile.GET_FILES);

@@ -24,7 +24,7 @@
           class="btn-dropdown-doc"
           v-model="showMenu"
         >
-          <c-qmenu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
+          <c-menu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
         </q-btn-dropdown>
       </div>
     </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import CQmenuDocument from "./ClubQmenuDocument.vue";
+import CMenuDocument from "./ClubMenuDocument.vue";
 import { ref } from "vue";
 
 const showMenu = ref(false);
