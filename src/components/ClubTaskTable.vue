@@ -48,12 +48,20 @@
 <script setup>
 import { taskResult } from "src/sdk/tasks";
 import { ref } from "vue";
+import { Quasar } from "quasar";
+import quasarIconSet from "quasar/icon-set/svg-material-icons";
 
 const tasks = ref([
   {
     first: true,
   },
 ]);
+
+// Добавляем свою иконку в набор иконок Quasar
+quasarIconSet.table.mySortIcon = "прив";
+
+Quasar.iconSet.set(quasarIconSet); // устанавливаем набор иконок Quasar для Quasar
+quasarIconSet.table.arrowUp = "img:..\\icons\\SortableArrow.svg"; // используем свою иконку как иконку стрелки сортировки
 
 taskResult((queryResult) => {
   queryResult.data.paginate_task.data.forEach((element) => {
@@ -71,37 +79,39 @@ const columns = [
     align: "left",
     label: "Задача",
     field: "Задача",
-    headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px",
+    headerStyle:
+      "font-family: 'Play'; font-weight: 400; font-size: 20px; padding-right: 260px;",
   },
   {
     name: "Проект",
-    align: "left",
     label: "Проект",
+    align: "right",
     field: "Проект",
+    sortable: true,
     headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px; padding-right: 30px;",
   },
   {
     name: "Дата начала",
-    align: "left",
     label: "Дата начала",
     field: "Дата начала",
+    sortable: true,
     headerStyle:
       "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
   },
   {
     name: "Дата окончания",
-    align: "left",
     label: "Дата окончания",
     field: "Дата окончания",
+    sortable: true,
     headerStyle:
       "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
   },
   {
     name: "Статус",
-    align: "left",
     label: "Статус",
     field: "Статус",
+    sortable: true,
     headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px;",
   },
 ];
