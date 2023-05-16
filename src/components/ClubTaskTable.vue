@@ -5,6 +5,7 @@
     :rows="tasks"
     :columns="data.columns"
     :rows-per-page-options="[5, 10, 20]"
+    dense
   >
     <template v-slot:body="props">
       <q-tr :props="props">
@@ -23,9 +24,9 @@
         <q-td>{{ props.row.dateEnd?.date }}</q-td>
         <q-td
           :class="
-            props.row.property5 == '1700970386717883161'
+            props.row.taskStatus == '8407796538990824904'
               ? 'assigned'
-              : props.row.property5 == '967659251654331262'
+              : props.row.taskStatus == '7045273205012284690'
               ? 'accomplished'
               : 'completed'
           "
@@ -33,11 +34,11 @@
           {{
             (function () {
               if (props.row.taskStatus == "8407796538990824904") {
-                return "Назначена";
+                return "надо сделать";
               } else if (props.row.taskStatus == "7045273205012284690")
-                return "Выполнена";
+                return "в процессе";
               else if (props.row.taskStatus == "2406017079472962662")
-                return "Завершена";
+                return "выполнено";
             })()
           }}
         </q-td>
@@ -84,7 +85,25 @@ const addNewTask = () => {
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
+.q-table tbody td {
+  font-size: 16px;
+}
+
 .addNewTask:hover {
   cursor: pointer;
+}
+
+.assigned {
+  background: #d8b4fe;
+  border-radius: 12px;
+  text-align: center;
+  width: 139px;
+  height: 20px;
+}
+.accomplished {
+  background-color: rgb(235, 220, 20);
+}
+.completed {
+  background-color: rgb(100, 207, 67);
 }
 </style>

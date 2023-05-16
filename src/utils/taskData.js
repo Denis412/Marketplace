@@ -4,23 +4,24 @@ const columns =
       name: "Задача",
       align: "left",
       label: "Задача",
-      field: "Задача",
+      field: "name",
       headerStyle:
-        "font-family: 'Play'; font-weight: 400; font-size: 20px; padding-right: 260px;",
+        "font-family: 'Play'; font-weight: 400; font-size: 20px; padding-right: 200px; width: 600px",
     },
     {
       name: "Проект",
       label: "Проект",
-      align: "right",
+      align: 'left',
       field: "Проект",
       sortable: true,
       headerStyle:
-        "font-family: 'Play', Regular; font-weight: 400; font-size: 20px; padding-right: 30px;",
+        "font-family: 'Play', Regular; font-weight: 400; font-size: 20px; padding-right: 20px;",
     },
     {
       name: "Дата начала",
       label: "Дата начала",
       field: "Дата начала",
+      align: 'left',
       sortable: true,
       headerStyle:
         "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
@@ -29,6 +30,7 @@ const columns =
       name: "Дата окончания",
       label: "Дата окончания",
       field: "Дата окончания",
+      align: 'left',
       sortable: true,
       headerStyle:
         "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
@@ -37,6 +39,7 @@ const columns =
       name: "Статус",
       label: "Статус",
       field: "Статус",
+      align: 'left',
       sortable: true,
       headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px;",
     },
