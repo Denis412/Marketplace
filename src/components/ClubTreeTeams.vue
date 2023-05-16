@@ -1,8 +1,7 @@
-<!-- Дерево "Команды" -->
 <template>
-  <div class="q-pa-md q-gutter-sm" v-if="pagesTree.length">
+  <div class="q-pa-md q-gutter-sm">
     <q-tree
-      :nodes="pagesTree"
+      :nodes="pages"
       node-key="id"
       no-connectors
       v-model:selected="selected"
@@ -10,26 +9,24 @@
       no-selection-unset
     />
 
-    <pre>{{ pagesTeams }}</pre>
+    <!-- <pre>{{ pages }}</pre> -->
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import pageApi from "src/sdk/page";
 import userApi from "src/sdk/user";
 
 const pagesTree = ref([]);
 const selected = ref("");
 
-console.log("FUCK!!!!!!!");
-
 const log = () => {
   //функция для навигации
   console.log(selected.value);
 };
 
-const { result: pagesTeams, onResult: createTree } = pageApi.paginatePages({
+const { result: pagesTeams } = pageApi.paginatePages({
   page: 1,
   perPage: 10,
   where: {
@@ -39,7 +36,7 @@ const { result: pagesTeams, onResult: createTree } = pageApi.paginatePages({
   },
 });
 
-const { result: myTeams, onResult: createSubTree } = userApi.paginateSubjects({
+const { result: myTeams } = userApi.paginateSubjects({
   page: 1,
   perPage: 1,
   where: {
@@ -50,34 +47,30 @@ const { result: myTeams, onResult: createSubTree } = userApi.paginateSubjects({
   is_my_teams: true,
 });
 
-createTree(() => {
-  pagesTeams.value.pages.data.forEach((page) => {
+const pages = computed(() => {
+  if (!pagesTeams.value?.pages.data || !myTeams.value?.paginate_subject.data)
+    return [];
+
+  return pagesTeams.value?.pages.data?.map((page) => {
     let treeElem = {
       id: page.id,
       label: page.title,
       children: [],
     };
 
-    pagesTree.value.push(treeElem);
-  });
-});
+    if (page.id === process.env.MY_TEAMS_PAGE_ID)
+      treeElem.children = myTeams.value?.paginate_subject.data[0].teams?.map(
+        (team) => {
+          return {
+            id: team.id,
+            label: team.name,
+          };
+        }
+      );
 
-createSubTree(() => {
-  let index = pagesTree.value.findIndex(
-    (elem) => elem.id === process.env.MY_TEAMS_PAGE_ID
-  );
-
-  myTeams.value.paginate_subject?.data[0].teams.forEach((team) => {
-    let treeSubElem = {
-      id: team.id,
-      label: team.name,
-      children: [],
-    };
-
-    pagesTree.value[index].children.push(treeSubElem);
+    return treeElem;
   });
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
