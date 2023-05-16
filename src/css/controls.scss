@@ -159,7 +159,7 @@
   $border: 3px;
 
   border: $border solid transparent !important;
-  border-radius: 8px !important;
+  border-radius: 8px;
 
   background: white;
   background-clip: padding-box !important;
@@ -186,6 +186,15 @@
 
   &:disabled {
     color: rgba(255, 255, 255, 0.3) !important;
+  }
+}
+
+.c-button-br-100 {
+  border-radius: 100px;
+
+  span,
+  .q-focus-helper {
+    border-radius: 100px !important;
   }
 }
 
@@ -291,4 +300,54 @@
   border-radius: 0px;
   height: 80px;
   color: #545454;
+}
+
+.c-chip-gradient {
+  $border: 2px;
+
+  position: relative;
+  border: 2px;
+  border-radius: 100px;
+
+  height: 40px;
+
+  padding-left: 16px;
+  padding-right: 8px;
+
+  background: white;
+  background-clip: padding-box;
+
+  span {
+    background-image: $primary-gradient !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+  .q-icon {
+    border-radius: 100px;
+
+    img {
+      border-radius: 50% !important;
+
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: lightgray;
+      }
+    }
+  }
+
+  &::before {
+    content: "";
+    margin: -$border;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    border: none;
+    border-radius: inherit;
+    background: $primary-gradient;
+  }
 }

@@ -35,6 +35,7 @@ export const teamUpdate = gql`
         type_id
         author_id
         telegram_chat_id
+        directions
         applications {
           id
         }
