@@ -41,7 +41,8 @@ const uploadFiles = async (files) => {
 const getFileHtmlByUrl = async (path, id, name, extension) => {
   //mode: no-cores
   const response = await fetch(
-    `https://cdn.stud.druid.1t.ru/${path}/${id}.${extension}?n=${name}`,
+    `${process.env.FILE_STORAGE_URI}${path}/${id}.${extension}?n=${name}`,
+    // `https://cdn.stud.druid.1t.ru/${path}/${id}.${extension}?n=${name}`,
     {
       mode: 'cors',
     },
@@ -78,7 +79,6 @@ const setTimeoutFunc = ({ minutes, func }) => {
 }
 
 const updateFile = (name, doc) => {
-  console.log(33333, doc)
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {

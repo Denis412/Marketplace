@@ -110,11 +110,6 @@ const mainTreeItems = ref([
     path: "addDocument",
     content: "+",
   },
-  {
-    title: "Задачи",
-    img: "HomeIconDemo.svg",
-    path: "taskPage",
-  },
 ]);
 
 const toggleDrawer = () => {
