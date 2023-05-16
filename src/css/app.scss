@@ -8,6 +8,7 @@
 
 .w-100p {
   width: 100%;
+  max-width: 100%;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -34,6 +35,22 @@
   font-size: 24px;
 }
 
+.w-min-content {
+  width: min-content !important;
+}
+
+.w-max-content {
+  min-width: max-content !important;
+}
+
+.link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .bg-dark-purple {
   background: $bg-dark-purple !important;
   background-clip: padding-box !important;
@@ -46,6 +63,10 @@
 
   &-main {
     min-height: 84px;
+
+    .q-toolbar {
+      padding: 0;
+    }
   }
 }
 
@@ -57,6 +78,10 @@
 .container {
   max-width: 1120px;
   margin: 0 auto;
+}
+
+.rounded-borders-8 {
+  border-radius: 8px;
 }
 
 .rounded-borders-10 {
@@ -73,6 +98,82 @@
 
 // Отступы
 
+.club-mt-32 {
+  margin-top: 32px;
+}
+
+.club-mb-32 {
+  margin-bottom: 32px;
+}
+
+.club-my-32 {
+  margin: 32px 0;
+}
+
+.club-my-64 {
+  margin: 64px 0;
+}
+
+.club-ml-32 {
+  margin-left: 2rem;
+}
+
+.club-mt-24 {
+  margin-top: 24px;
+}
+
+.c-ml-24 {
+  margin-left: 24px;
+}
+
+.club-mt-72 {
+  margin-top: 72px;
+}
+
+.club-mt-80 {
+  margin-top: 80px;
+}
+
+.club-mt-215 {
+  margin-top: 215px;
+}
+
+.club-mb-10 {
+  margin-bottom: 10px;
+}
+
+.club-mb-16 {
+  margin-bottom: 16px;
+}
+
+.c-pa-24 {
+  padding: 24px;
+}
+
+.c-pt-24 {
+  padding-top: 24px !important;
+}
+
+.c-pb-24 {
+  padding-bottom: 24px !important;
+}
+
+.c-pa-32 {
+  padding: 2rem;
+}
+
+.c-py-24 {
+  padding: 24px 0 !important;
+}
+
+.c-px-64 {
+  padding: 0 4rem;
+}
+
+.px-160 {
+  padding: 0 10rem;
+}
+
 .section-margin {
   margin-top: 124px;
 }
@@ -86,6 +187,11 @@
     max-height: 125px;
     overflow-y: auto;
   }
+}
+
+.avatar-108 {
+  width: 108px;
+  height: 108px;
 }
 
 .medium-avatar {
@@ -120,4 +226,36 @@
 
 .border-section-bottom {
   border-bottom: 1px solid #dcdcdc;
+}
+
+.text-violet-6 {
+  color: $violet-6;
+}
+
+.text-grey-6 {
+  color: $grey-6;
+}
+
+.loader-lg {
+  width: 120px;
+  height: 120px;
+}
+
+.loader {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid $violet-6; /* Blue */
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

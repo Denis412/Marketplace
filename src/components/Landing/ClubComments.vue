@@ -19,7 +19,7 @@ import { ref } from "vue";
 const comments = ref([
   {
     id: 1,
-    avatarUrl: "src/assets/images/Ellipse55.svg",
+    avatarUrl: "/assets/images/preloaders/default-avatar.svg",
     fullname: "Дмитрий Соколов",
     jobTitle: "Дизайнер",
     content:
@@ -28,7 +28,7 @@ const comments = ref([
   },
   {
     id: 2,
-    avatarUrl: "src/assets/images/Ellipse54.svg",
+    avatarUrl: "/assets/images/preloaders/default-avatar.svg",
     fullname: "Александр Иванов",
     jobTitle: "Менеджер",
     content:
@@ -37,7 +37,7 @@ const comments = ref([
   },
   {
     id: 3,
-    avatarUrl: "src/assests/images/Ellipse55.svg",
+    avatarUrl: "/assets/images/preloaders/default-avatar.svg",
     fullname: "Александр Иванов",
     jobTitle: "Менеджер",
     content:
@@ -46,7 +46,7 @@ const comments = ref([
   },
   // {
   //   id: 4,
-  //   avatarUrl: "src/assests/images/Ellipse55.svg",
+  //   avatarUrl: "/assets/images/preloaders/default-avatar.svg",
   //   fullname: "Александр Иванов",
   //   jobTitle: "Менеджер",
   //   content:
@@ -55,7 +55,7 @@ const comments = ref([
   // },
   // {
   //   id: 5,
-  //   avatarUrl: "src/assests/images/Ellipse55.svg",
+  //   avatarUrl: "/assets/images/preloaders/default-avatar.svg",
   //   fullname: "Александр Иванов",
   //   jobTitle: "Менеджер",
   //   content:

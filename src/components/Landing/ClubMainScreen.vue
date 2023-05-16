@@ -3,7 +3,7 @@
     <div class="col">
       <h1 class="text-h1">1Т Клуб</h1>
 
-      <p class="text-subtitle2 q-mt-md">
+      <p class="text-subtitle3 q-mt-md">
         1Т Клуб - сообщество единомышленников, которых объединяет страсть к
         работе и саморазвитию.
       </p>
@@ -20,7 +20,7 @@
     <q-img
       class="col"
       style="max-width: 480px"
-      src="src/assets/images/amico.svg"
+      src="/assets/images/amico.svg"
     />
   </section>
 </template>

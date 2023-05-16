@@ -21,7 +21,13 @@ module.exports = configure(function (/* ctx */) {
     boot: [],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
-    css: ["app.scss", "fonts.scss", "controls.scss", "spaces.scss"],
+    css: [
+      "app.scss",
+      "fonts.scss",
+      "controls.scss",
+      "spaces.scss",
+      "colors.scss",
+    ],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -51,11 +57,32 @@ module.exports = configure(function (/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: "/",
       // analyze: true,
       env: {
         GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphql",
-        USERS_GROUP_ID: "1319554634306561363",
+        FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru/",
+        RABBIT_URI: "wss://stud.druid.1t.ru/ws",
+
+        MAIN_SPACE_ID: 42,
+
+        USERS_GROUP_ID: "2954744714133191151", // Группа разработчиков
+
+        APPLICATION_STATUS_PROPERTY: "5892464470060638614",
+
+        APPLICATION_STATUS_PENDING: "1672342866228253681",
+        APPLICATION_STATUS_REJECTED: "7969392693338571273",
+        APPLICATION_STATUS_APPROVED: "6989336487856023800",
+
+        APPLICATION_TEAM_PROPERTY: "3278596465340119929",
+        APPLICATION_SUBJECT_PROPERTY: "8095962102739461791",
+
+        SUBJECT_TYPE_ID: "6410837257365292951",
+        TEAM_TYPE_ID: "5546930648465563539",
+        TASK_TYPE_ID: "3",
+        PROJECT_TYPE_ID: "4",
+        FILE_TYPE_ID: "5",
+        COMMENT_TYPE_ID: "6",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
@@ -79,7 +106,7 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      lang: 'ru',
+      lang: "ru",
       config: {},
 
       // iconSet: 'material-icons', // Quasar icon set

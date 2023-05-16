@@ -1,94 +1,113 @@
 <template>
-  <q-dialog>
-    <q-card class="dialog-size text-center">
-      <q-card-section>
-        <section class="flex justify-end">
-          <q-btn icon="close" flat round dense v-close-popup />
-        </section>
-      </q-card-section>
+  <c-closing-dialog title="Код подтверждения" title-position="center">
+    <template #main-content>
+      <main class="flex column items-center">
+        <section class="dialog-content">
+          <q-img src="/assets/images/mails.svg" class="q-mt-lg" />
 
-      <q-card-section class="flex flex-center">
-        <h3 class="text-h3">Код подтверждения</h3>
-
-        <section class="dialog-size-content">
-          <q-img src="/src/assets/images/mails.svg" class="q-mt-lg" />
-
-          <div class="text-body2 club-mt-32">
+          <p class="text-body2 c-mt-32 text-center">
             Введите код подтверждения, отправленный на ваш email.
-          </div>
+          </p>
         </section>
 
-        <section class="flex no-wrap q-gutter-x-sm c-mt-32">
-          <c-input
+        <section class="flex flex-center no-wrap q-gutter-x-sm c-mt-32">
+          <q-input
             type="text"
-            countInput="1"
-            v-model.numberCode="codeNumber"
-            class="dialog-size-input c-input-number"
+            flat
+            outlined
+            ref="firstInput"
+            v-model="form.firstNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
+            @update:modelValue="
+              inputCode($event, 1), focusInput($event, $refs.firstInput)
+            "
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="2"
-            v-model.numberCode="codeNumber"
-            class="dialog-size-input c-input-number"
+            flat
+            outlined
+            ref="secondInput"
+            @update:modelValue="
+              inputCode($event, 2), focusInput($event, $refs.firstInput)
+            "
+            v-model="form.secondNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="3"
-            v-model.numberCode="codeNumber"
-            class="dialog-size-input c-input-number"
+            flat
+            outlined
+            ref="thirdInput"
+            @update:modelValue="
+              inputCode($event, 3), focusInput($event, $refs.secondInput)
+            "
+            v-model="form.thirdNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="4"
-            v-model.numberCode="codeNumber"
-            class="dialog-size-input c-input-number"
+            flat
+            outlined
+            ref="fourthInput"
+            @update:modelValue="
+              inputCode($event, 4), focusInput($event, $refs.thirdInput)
+            "
+            v-model="form.fourthNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="5"
-            v-model.numberCode="codeNumber"
-            class="dialog-size-input c-input-number"
+            flat
+            outlined
+            ref="fifthInput"
+            @update:modelValue="
+              inputCode($event, 5), focusInput($event, $refs.fourthInput)
+            "
+            v-model="form.fifthNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
           />
 
-          <c-input
+          <q-input
             type="text"
-            countInput="6"
-            v-model.numberCode="codeNumber"
-            class="dialog-size-input c-input-number"
+            flat
+            outlined
+            ref="sixthInput"
+            v-model="form.sixthNumber"
+            class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="inputCode"
+            @update:modelValue="
+              inputCode($event, 6), focusInput($event, $refs.fifthInput)
+            "
           />
         </section>
-      </q-card-section>
 
-      <q-card-section class="text-caption1" v-if="timer.timer.value">
-        Отправить код повторно ({{ timer.timer }} секунд)
-      </q-card-section>
+        <section
+          v-if="timer.timer.value"
+          class="text-caption1 q-mt-md text-center"
+        >
+          Отправить код повторно ({{ timer.timer }} секунд)
+        </section>
 
-      <q-card-section
-        v-else
-        class="text-violet-6 text-caption1 cursor-pointer"
-        style="text-decoration: underline"
-        @click="sendCode"
-      >
-        Отправить код повторно
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+        <section
+          v-else
+          class="text-violet-6 text-caption1 cursor-pointer q-mt-md text-center"
+          style="text-decoration: underline"
+          @click="sendCode"
+        >
+          Отправить код повторно
+        </section>
+      </main>
+    </template>
+  </c-closing-dialog>
 </template>
 
 <script setup>
@@ -96,45 +115,85 @@ import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
-import CInput from "./ClubInput.vue";
+import CClosingDialog from "./ClubClosingDialog.vue";
 import userApi from "src/sdk/user";
 import replaceAt from "src/utils/replaceAt";
 
 const $q = useQuasar();
 const router = useRouter();
 
-const { timer, authInfo, editPassword } = defineProps({
+const { timer, authInfo, reset } = defineProps({
   timer: Object,
   authInfo: Object,
-  editPassword: Boolean,
+  reset: Boolean,
 });
 
-const codeNumber = ref("");
 const fullCode = ref(" ".repeat(6));
-const userIdRefetch = ref("");
+const resetCode = ref(reset);
+
+const form = ref({
+  firstNumber: "",
+  secondNumber: "",
+  thirdNumber: "",
+  fourthNumber: "",
+  fifthNumber: "",
+  sixthNumber: "",
+});
+
+const firstInput = ref(null);
+const secondInput = ref(null);
+const thirdInput = ref(null);
+const fourthInput = ref(null);
+const fifthInput = ref(null);
+const sixthInput = ref(null);
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
+  console.log(authInfo);
+
+  console.log(
+    "hello",
+    value,
+    inputNumber,
+    fullCode.value,
+    fullCode.value.length
+  );
+
+  if (inputNumber === 1) secondInput.value.focus();
+  else if (inputNumber === 2) thirdInput.value.focus();
+  else if (inputNumber === 3) fourthInput.value.focus();
+  else if (inputNumber === 4) fifthInput.value.focus();
+  else if (inputNumber === 5) sixthInput.value.focus();
 
   if (fullCode.value.indexOf(" ") === -1) {
+    console.log(authInfo);
+
     try {
-      if (!userIdRefetch.value)
+      if (!reset && !resetCode.value)
         await userApi.setPassword({
           user_id: authInfo.user_id,
-          password: currentPassword,
+          password: authInfo.password,
           code: fullCode.value,
         });
       else
         await userApi.userPasswordConfirmCode({
-          user_id: userIdRefetch.value,
-          password: currentPassword,
+          user_id: authInfo.user_id,
+          password: authInfo.password,
           code: parseInt(fullCode.value),
         });
 
       router.push({
         name: "auth",
       });
+
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: "Все отлично! Осталось войти в аккаунт!",
+      });
     } catch (error) {
+      console.log(error);
+
       $q.notify({
         type: "negative",
         message: "Вы неверно ввели код!",
@@ -144,32 +203,34 @@ const inputCode = async (value, inputNumber) => {
 };
 
 const sendCode = async () => {
-  console.log("info", authInfo);
-
   try {
-    const userId = await userApi.userPasswordSendCode({
+    await userApi.userPasswordSendCode({
       email: authInfo.email,
     });
-
-    userIdRefetch.value = userId.record.user_id;
 
     timer.clear();
     timer.start();
 
+    resetCode.value = true;
+
     $q.notify({
       type: "positive",
+      position: "top",
       message: "Код выслан повторно!",
     });
   } catch (error) {
     console.log(error);
   }
 };
+
+const focusInput = (value, object) => {
+  if (value === " " || value === "") object.focus();
+};
 </script>
 
 <style scoped lang="scss">
-.dialog-size {
-  width: 500px;
-  height: 500px;
+.dialog {
+  padding: 64px 56px;
 
   &-input {
     max-width: 40px;
@@ -178,5 +239,11 @@ const sendCode = async () => {
   &-content {
     max-width: 300px;
   }
+}
+
+.close-section {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>

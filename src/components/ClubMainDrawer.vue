@@ -19,7 +19,12 @@
           :to="{ name: item.path }"
           class="row no-wrap c-pl-16 drawer-item"
         >
-          <img :src="`/src/assets/icons/${item.img}`" alt="" />
+          <div
+            class="flex flex-center bg-primary"
+            style="border-radius: 6px; padding: 4px"
+          >
+            <img src="/assets/icons/home/home-white.svg" alt="" />
+          </div>
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
@@ -32,7 +37,7 @@
           </div>
         </router-link>
 
-        <c-qtabs-document v-if="item.title == 'Документы'" />
+        <c-tabs-document v-if="item.title == 'Документы'" />
       </q-item>
     </q-list>
 
@@ -41,7 +46,7 @@
       class="bg-violet-6 drawer-btn absolute"
       @click="toggleDrawer()"
     >
-      <img src="/src/assets/icons/DrawerArrow.svg" />
+      <img src="/assets/icons/arrow/drawer-arrow.svg" />
     </button>
   </q-drawer>
 </template>
@@ -49,7 +54,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
+import CTabsDocument from "src/components/ClubTabsDocument.vue";
 import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
@@ -80,14 +85,24 @@ const mainTreeItems = ref([
     path: "teams",
   },
   {
+    title: "Мои команды",
+    img: "HomeIconDemo.svg",
+    path: "my-teams",
+  },
+  {
     title: "Мои проекты",
     img: "HomeIconDemo.svg",
-    path: "projects",
+    path: "my-projects",
   },
   {
     title: "Мое пространство",
     img: "HomeIconDemo.svg",
     path: "space",
+  },
+  {
+    title: "Задачи",
+    img: "HomeIconDemo.svg",
+    path: "taskPage",
   },
   {
     title: "Документы",
@@ -172,6 +187,7 @@ const isActive = (path) => {
 .rotate {
   transform: rotate(-180deg);
 }
+
 .addDoc {
   padding-left: 4rem;
 }

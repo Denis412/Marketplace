@@ -1,76 +1,132 @@
 <template>
-  <section class="c-mt-32">
+  <section>
     <q-toolbar class="flex items-center">
       <q-toolbar-title style="max-width: min-content">
         <h4 class="text-h4">Проекты</h4>
       </q-toolbar-title>
 
-      <q-btn-toggle
+      <q-tabs
         v-model="selectProjectsList"
-        flat
-        stretch
-        class="text-body1 text-violet-6"
-        toggle-color="purple-7"
-        :options="typesProjectsList"
-      />
+        indicator-color="black"
+        class="bg-transparent text-body1"
+      >
+        <q-tab name="active" label="Активные" />
+
+        <q-tab name="finished" label="Завершенные" />
+      </q-tabs>
     </q-toolbar>
 
-    <main>
-      <div v-if="!projects || !projects.length">
-        <q-list
-          class="flex justify-between w-100p no-wrap q-gutter-x-lg"
-          style="overflow-x: auto"
-        >
-          <q-card
-            v-for="n in 3"
-            :key="n"
-            flat
-            class="flex flex-center project-card"
+    <!-- <pre>{{ currentProjects }}</pre> -->
+
+    <main class="q-mt-md">
+      <section
+        v-if="
+          !currentProjects?.paginate_project?.data.length || projectsLoading
+        "
+        class="row ptojects-wrapper q-gutter-x-md"
+      >
+        <c-card-add-project
+          v-if="isOwner"
+          flat
+          class="flex flex-center project-card col-4"
+        />
+
+        <q-card flat class="flex flex-center project-card col">
+          <q-img
+            class="no-projects-img"
+            src="/assets/images/team-page/no-projects.svg"
+          />
+
+          <div class="text-body2 c-ml-64">
+            У вашей команды пока нет проектов...
+          </div>
+        </q-card>
+      </section>
+
+      <section v-else class="ptojects-wrapper">
+        <q-list class="row no-wrap" style="overflow-x: auto">
+          <section class="col-4 q-pr-md">
+            <c-card-add-project
+              v-if="isOwner"
+              flat
+              class="flex flex-center project-card"
+            />
+          </section>
+
+          <section
+            v-for="project in currentProjects?.paginate_project?.data"
+            :key="project.id"
+            class="col-4 q-px-md"
           >
-            <q-card-section class="text-center" v-if="n === 2">
-              <div class="text-body2">
-                Чтобы ваш проект был доступнен всем, добавьте его в это поле
-              </div>
-
-              <c-button
-                outline
-                label="Создать проект"
-                class="q-mt-md"
-                icon-left="img:/src/assets/icons/Plus/plusPrimaryGradient.svg"
-              />
-            </q-card-section>
-          </q-card>
+            <c-project-card
+              flat
+              class="flex flex-center project-card cursor-pointer"
+              :project="project"
+              @click="redirectProjectPage(project)"
+            />
+          </section>
         </q-list>
-      </div>
-
-      <div></div>
+      </section>
     </main>
   </section>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import CButton from "src/components/ClubButton.vue";
+import { inject, onMounted, ref } from "vue";
 
-const { projects } = defineProps({
-  projects: Array,
+import CCardAddProject from "./ClubCardAddProject.vue";
+import CProjectCard from "./ClubProjectCard.vue";
+import projectApi from "src/sdk/project";
+import { useRouter } from "vue-router";
+import { useProjectsQuery } from "src/use/projects";
+
+const router = useRouter();
+const { result, loading, getWithWere } = useProjectsQuery();
+
+const currentTeam = inject("currentTeam");
+const isOwner = inject("isOwner");
+
+const {
+  projects: currentProjects,
+  projectsLoading,
+  refetch,
+} = getWithWere({
+  space_id: currentTeam.value?.space,
 });
 
-const typesProjectsList = ref([
-  { label: "Завершенные", value: "finished" },
-  { label: "Активные", value: "active" },
-]);
+const selectProjectsList = ref("active");
 
-const selectProjectsList = ref("");
+const redirectProjectPage = (project) => {
+  router.push({
+    name: "project",
+    params: { space: project.space, name: project.name },
+  });
+};
+
+onMounted(async () => await refetch({}));
 </script>
 
 <style scoped lang="scss">
+.no-projects-img {
+  max-width: 212px;
+}
+
+.ptojects-wrapper {
+  min-height: 256px;
+}
+
 .project-card {
-  width: 352px;
-  min-width: 300px;
-  height: 256px;
+  min-height: 256px;
 
   border: 1px dashed $violet-6;
   border-radius: 5px;
+
+  &-add {
+    // max-width: 352px;
+  }
+}
+
+.q-toolbar {
+  padding: 0px;
 }
 </style>
