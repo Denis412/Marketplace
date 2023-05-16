@@ -69,16 +69,18 @@ const route = useRoute();
 const { projects, projectsLoading } = useProjectsQuery().getWithWere({
   page: 1,
   perPage: 1,
-  where: null,
+  where: {
+    column: "id",
+    operator: "EQ",
+    value: route.params.id,
+  },
   space_id: route.params.space,
 });
 
 const currentProject = computed(() => projects.value?.paginate_project.data[0]);
-// const currentSubjects = computed(() => subjects.value?.paginate_group.data);
 
-provide("spaceId", route.params.id);
+provide("spaceId", route.params.space);
 provide("currentProject", currentProject);
-// provide("currentSubjects", currentSubjects);
 </script>
 
 <style scoped lang="scss">

@@ -1,12 +1,7 @@
 import { ref } from "vue";
 
 import projectApi from "src/sdk/project";
-import spaceApi from "src/sdk/space";
-import groupApi from "src/sdk/group";
 import pageApi from "src/sdk/page";
-import typeApi from "src/sdk/type";
-import propertyApi from "src/sdk/property";
-import userApi from "src/sdk/user";
 
 export const useProjectsQuery = () => {
   const result = ref(null);

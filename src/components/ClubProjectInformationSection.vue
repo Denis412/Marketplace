@@ -26,6 +26,7 @@
           <template #control>
             <q-input
               :placeholder="created_at || 'ДД.ММ.ГГГГ'"
+              v-model="form.created_at"
               class="date-input c-input-outline"
               outlined
               readonly
@@ -110,10 +111,9 @@ const created_at = computed(() =>
 const delivery_date = computed(() => currentProject.value?.delivery_date?.date);
 
 const form = ref({
-  name: "",
-  team_name: "",
-  created_at: "",
-  delivery_date: "",
+  name: currentProject.value.name,
+  created_at: created_at.value,
+  delivery_date: delivery_date.value,
 });
 
 const updateProp = async (prop_name, value) => {
@@ -140,12 +140,6 @@ const updateProp = async (prop_name, value) => {
     project_space: currentProject.value.space,
     space_id: space_id,
   });
-
-  if (prop_name === "name")
-    router.push({
-      name: "project",
-      params: { space: space_id, name: result.value.name },
-    });
 };
 </script>
 
