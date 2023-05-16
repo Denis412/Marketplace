@@ -42,6 +42,7 @@ export const paginateGroupsSubjects = gql`
             first_name
             last_name
           }
+          avatar
           major
         }
       }

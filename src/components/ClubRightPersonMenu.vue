@@ -2,7 +2,12 @@
   <q-card class="dropdown">
     <q-card-section class="dropdown-top-section flex column items-center">
       <q-avatar class="dropdown-avatar">
-        <q-img src="/assets/images/preloaders/default-avatar.svg" />
+        <q-img
+          :src="
+            currentUser?.avatar ||
+            '/assets/images/preloaders/default-avatar.svg'
+          "
+        />
       </q-avatar>
 
       <div class="text-body2 text-violet-6 q-mt-md">

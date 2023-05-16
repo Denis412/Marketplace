@@ -60,7 +60,7 @@ const routes = [
         component: () => import("src/pages/ClubMyProjectsPage.vue"),
       },
       {
-        path: "project/:space/:name",
+        path: "project/:space/:id",
         name: "project",
         component: () => import("src/pages/ClubProjectInformationPage.vue"),
       },
@@ -72,9 +72,24 @@ const routes = [
         component: () => import("pages/ErrorNotFound.vue"),
       },
       {
+        path: "projects",
+        name: "projects",
+        component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
         path: "space",
         name: "space",
         component: () => import("pages/ErrorNotFound.vue"),
+      },
+      {
+        path: "addDocument",
+        name: "addDocument",
+        component: () => import("pages/ClubAddNewDocument.vue"),
+      },
+      {
+        path: "addDocument/:id",
+        name: "Document",
+        component: () => import("pages/ClubAddNewDocument.vue"),
       },
     ],
   },

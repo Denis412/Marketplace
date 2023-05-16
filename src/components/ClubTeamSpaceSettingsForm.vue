@@ -1,9 +1,6 @@
 <!-- Компонент формы редактирования командного пространства -->
 <template>
-  <q-form
-    @submit="updateTeamData"
-    class="teamSettingForm c-mb-32"
-  >
+  <q-form @submit="updateTeamData" class="teamSettingForm c-mb-32">
     <div class="flex teamSettingForm-section c-mb-40 c-pb-32">
       <section class="flex no-wrap">
         <c-label-control label="Ссылка на чат команды в Telegram">
@@ -13,14 +10,7 @@
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
-              :rules="[
-                minLength(18),
-                maxLength(45),
-                (val) =>
-                  val.slice(0, 13) === 'https://t.me/' ||
-                  val.slice(0, 12) === 'http://t.me/' ||
-                  'Неверный формат ссылки',
-              ]"
+              :rules="[minLength(18), maxLength(45), telegramm]"
             >
               <template #append>
                 <q-icon
@@ -49,7 +39,7 @@ import { useTeamUpdate } from "src/use/teams";
 import CLabelControl from "./ClubLabelControl.vue";
 import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
 
-const { required, maxLength, minLength } = useValidators();
+const { maxLength, telegramm, minLength } = useValidators();
 const { result: teamData, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");

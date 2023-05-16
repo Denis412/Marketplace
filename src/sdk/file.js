@@ -5,12 +5,12 @@ import {
 } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import { filesUpload } from "src/graphql/files/mutations";
-import { getFile } from "src/graphql/files/queries";
+import { getFiles } from "src/graphql/files/queries";
 
 provideApolloClient(apolloClient);
 
 const { mutate } = useMutation(filesUpload);
-const { refetch } = useQuery(getFile);
+const { refetch } = useQuery(getFiles);
 
 const uploadFiles = async (files) => {
   console.log("file", files);
@@ -26,11 +26,7 @@ const uploadFiles = async (files) => {
     }
   );
 
-  console.log("file", uploadedData);
-
-  console.log(typeof BigInt(data.data.filesUpload.ids[0]).toString());
-
-  return BigInt(data.data.filesUpload.ids[0]).toString();
+  return uploadedData.filesUpload.ids;
 };
 
 const get = async (file_id) => {
@@ -43,6 +39,8 @@ const get = async (file_id) => {
       value: `${file_id}`,
     },
   });
+
+  console.log(fileData);
 
   return fileData.paginate_file.data;
 };

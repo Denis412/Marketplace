@@ -36,14 +36,23 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
-      await propertyApi.create({
-        input: {
-          name: "major",
-          label: "Специальность",
-          data_type: "text",
-          type_id: subjectType[0].id,
-          order: 2,
-        },
+      await propertyApi.createMany({
+        input: [
+          {
+            name: "major",
+            label: "Специальность",
+            data_type: "text",
+            type_id: subjectType[0].id,
+            order: 2,
+          },
+          {
+            name: "avatar",
+            label: "Аватар",
+            data_type: "text",
+            type_id: subjectType[0].id,
+            order: 3,
+          },
+        ],
         space_id: space.id,
       });
 
@@ -78,13 +87,159 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
+      const applicationProjectType = await typeApi.create({
+        input: {
+          name: "application",
+          label: "Заявка",
+        },
+        space_id: space.id,
+      });
+
       await propertyApi.create({
         input: {
-          name: "space",
-          label: "Проектное пространство",
-          data_type: "text",
-          type_id: projectTypeData.id,
+          label: "Субъект",
+          name: "subject",
+          type_id: applicationProjectType.id,
+          data_type: "object",
           order: 2,
+          multiple: {
+            status: false,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
+                inverse_relation: true,
+                inverse_relation_label: "Заявки",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.createMany({
+        input: [
+          {
+            name: "avatar",
+            label: "Фотография",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 2,
+          },
+          {
+            name: "description",
+            label: "Описание проекта",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 4,
+          },
+          {
+            name: "target",
+            label: "Цель проекта",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 6,
+          },
+        ],
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          name: "delivery_date",
+          label: "Дата сдачи",
+          data_type: "datetime",
+          type_id: projectTypeData.id,
+          order: 7,
+          meta: {
+            properties: [
+              {
+                order: 1,
+                data_type: "date",
+                name: "date",
+                meta: {
+                  min: null,
+                  consider_time_zones: false,
+                  max: "31.12.2050",
+                  mask: "DD.MM.YYYY",
+                },
+                default: {
+                  value: "01.12.2023",
+                },
+                required: false,
+                multiple: {
+                  status: false,
+                },
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          label: "Проект",
+          name: "project",
+          type_id: applicationProjectType.id,
+          data_type: "object",
+          order: 3,
+          multiple: {
+            status: false,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: projectTypeData.id,
+                inverse_relation: true,
+                inverse_relation_label: "Заявки",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          type_id: applicationProjectType.id,
+          data_type: "list",
+          name: "status",
+          label: "Статус",
+          meta: {
+            options: [
+              {
+                label: "В ожидании",
+                order: 0,
+                color: "#f2c037",
+              },
+              {
+                label: "Отклонена",
+                order: 1,
+                color: "#c10015",
+              },
+              {
+                label: "Одобрена",
+                order: 2,
+                color: "#21ba45",
+              },
+            ],
+            placeholder: null,
+            mask: null,
+            is_allow_custom_option: false,
+          },
+          default: {
+            value: {
+              id: 1,
+            },
+          },
+          order: 1,
+          required: false,
+          multiple: {
+            status: false,
+            button_text: "Добавить",
+          },
         },
         space_id: space.id,
       });
@@ -120,7 +275,7 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
-      await userApi.refetchPaginateSubjects({
+      const mainSpaceSubject = await userApi.refetchPaginateSubjects({
         page: 1,
         perPage: 1,
         where: {
@@ -130,6 +285,16 @@ export const useTeamCreate = () => {
         },
         is_my_teams: true,
       });
+
+      await userApi.update(
+        projectTypeData.author_id,
+        {
+          major: mainSpaceSubject[0].major,
+          avatar: mainSpaceSubject[0].avatar,
+        },
+        true,
+        space.id
+      );
 
       createTeamResult.value = { team, space };
 

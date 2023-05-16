@@ -9,7 +9,12 @@
           class="cursor-pointer relative-position avatar"
           @click="toggleShowIconMenu"
         >
-          <q-img src="/assets/images/preloaders/default-avatar.svg" />
+          <q-img
+            :src="
+              currentUser?.avatar ||
+              '/assets/images/preloaders/default-avatar.svg'
+            "
+          />
         </q-avatar>
 
         <transition name="slide">

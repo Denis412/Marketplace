@@ -1,19 +1,28 @@
 import gql from "graphql-tag";
 
-export const getFile = gql`
-  query objects_file(
+export const getFiles = gql`
+  query (
+    $where: ObjectPaginatorWhere
+    $orderBy: ObjectPaginatorOrderBy
     $page: Int!
     $perPage: Int!
-    $where: ObjectPaginatorWhere
   ) {
-    paginate_file(page: $page, perPage: $perPage, where: $where) {
+    paginate_file(
+      page: $page
+      perPage: $perPage
+      where: $where
+      orderBy: $orderBy
+    ) {
       data {
+        type_id
         id
         author_id
         position
         created_at
         updated_at
         id
+        disk
+        hash
         path
         size
         name

@@ -12,6 +12,7 @@ export const getTeamsWithWhere = gql`
         type_id
         author_id
         telegram_chat_id
+        directions
         applications {
           id
           name
@@ -24,6 +25,7 @@ export const getTeamsWithWhere = gql`
             email {
               email
             }
+            avatar
             major
           }
           team {
@@ -40,6 +42,7 @@ export const getTeamsWithWhere = gql`
             first_name
             last_name
           }
+          avatar
           major
         }
         space

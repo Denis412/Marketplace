@@ -8,7 +8,9 @@
     :width="256"
     :mini-width="64"
   >
-    <q-list class="c-pr-8 c-pt-12 no-scroll">
+    <c-tree-teams v-if="route.path.includes('teams')" />
+
+    <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
         v-for="item in mainTreeItems"
         :key="item.title"
@@ -28,8 +30,16 @@
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
+            <q-icon
+              @click="addDocument"
+              v-if="item.title == 'Документы'"
+              name="add"
+              class="addDoc"
+            />
           </div>
         </router-link>
+
+        <c-qtabs-document v-if="item.title == 'Документы'" />
       </q-item>
     </q-list>
 
@@ -46,6 +56,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
+import CTreeTeams from "src/components/ClubTreeTeams.vue";
+import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
   side: String,
@@ -89,11 +102,21 @@ const mainTreeItems = ref([
     img: "HomeIconDemo.svg",
     path: "space",
   },
+  {
+    title: "Документы",
+    img: "HomeIconDemo.svg",
+    path: "addDocument",
+    content: "+",
+  },
 ]);
 
 const toggleDrawer = () => {
   miniState.value = !miniState.value;
   btn.value.classList.toggle("rotate");
+};
+
+const addDocument = () => {
+  filesApi.createHtmlFile();
 };
 
 const isActive = (path) => {
@@ -156,5 +179,8 @@ const isActive = (path) => {
 
 .rotate {
   transform: rotate(-180deg);
+}
+.addDoc {
+  padding-left: 4rem;
 }
 </style>

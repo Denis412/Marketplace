@@ -66,7 +66,6 @@ const title = ref("");
 const projectCreate = async () => {
   await createProject({
     name: title.value,
-    team_name: currentTeam.value.name,
     space_id: currentTeam.value.space,
   });
 

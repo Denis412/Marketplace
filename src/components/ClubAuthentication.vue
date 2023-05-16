@@ -83,7 +83,9 @@ import CButton from "src/components/ClubButton.vue";
 import CPasswordRecoveryDialog from "./ClubPasswordRecoveryDialog.vue";
 import userApi from "src/sdk/user";
 import { useQuasar } from "quasar";
-import filesApi from "src/sdk/file";
+// import filesApi from "src/sdk/file";
+// import { useTimer } from "src/use/timer";
+// import { filesApi } from "src/sdk/files/file";
 
 const $q = useQuasar();
 const router = useRouter();

@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
+
 import userApi from "src/sdk/user";
 import { convertSubject } from "src/utils/convertSubject";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     currentUser: null,
+    files: "wtf",
   }),
 
   getters: {
@@ -24,14 +26,15 @@ export const useUserStore = defineStore("user", {
           value: JSON.parse(localStorage.getItem("user-data")).user_id,
         },
       });
+
       const userData = await userApi.refetchUserById(
         JSON.parse(localStorage.getItem("user-data")).user_id
       );
+
       this.currentUser = convertSubject({
         ...userData,
         ...subjectsData[0],
       });
-      console.log("user", this.currentUser);
     },
 
     SET_PROP(prop, value) {

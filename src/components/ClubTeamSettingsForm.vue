@@ -114,14 +114,7 @@
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
-              :rules="[
-                minLength(18),
-                maxLength(45),
-                (val) =>
-                  val.slice(0, 13) === 'https://t.me/' ||
-                  val.slice(0, 12) === 'http://t.me/' ||
-                  'Неверный формат ссылки',
-              ]"
+              :rules="[minLength(18), maxLength(45), telegramm]"
             >
               <template #append>
                 <q-icon
@@ -137,12 +130,13 @@
     </div>
 
     <div class="flex teamSettingForm-section c-pb-32 c-mb-40">
-      <section class="flex no-wrap">
+      <q-form class="flex" @submit.prevent="">
         <c-label-control label="Виды работ">
           <template #control>
             <div class="flex">
               <q-input
-                v-model="form.work_types"
+                v-model="form.current_work_type"
+                @change="addChip"
                 placeholder="Введите название работы"
                 class="c-input-outline teamSettingForm-input-small"
                 outlined
@@ -156,28 +150,56 @@
                   </q-icon>
                 </template>
               </q-input>
-              <c-button background size="lg" label="Добавить" class="c-ml-32" />
+
+              <div class="flex items-center">
+                <c-button
+                  :disable="!form.current_work_type"
+                  background
+                  type="submit"
+                  label="Добавить"
+                  class="c-ml-32 text-body2"
+                />
+              </div>
             </div>
           </template>
         </c-label-control>
-        <!-- блок с добавленными видами -->
-      </section>
+      </q-form>
+
+      <!-- <pre>{{ currentTeam }}</pre> -->
+
+      <div class="q-mt-md">
+        <section class="flex q-gutter-sm">
+          <c-chip
+            v-for="direction in form.work_types"
+            :key="direction"
+            gradient-outline
+            :label="direction"
+            @remove="deleteChip"
+          />
+        </section>
+      </div>
     </div>
+
     <c-team-settings-buttons />
   </q-form>
 </template>
 
 <script setup>
-import CLabelControl from "./ClubLabelControl.vue";
-import CButton from "src/components/ClubButton.vue";
-import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
 import { ref, inject } from "vue";
 import { useValidators } from "src/use/validators";
 import { useRouter } from "vue-router";
 import { useTeamUpdate } from "src/use/teams";
 
+import CLabelControl from "./ClubLabelControl.vue";
+import CButton from "src/components/ClubButton.vue";
+import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
+import CChip from "./ClubChip.vue";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
+
 const { required, maxLength, minLength } = useValidators();
-const { result: teamData, updateTeam } = useTeamUpdate();
+const { result: teamData, error, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
 const upload_img = ref();
@@ -190,8 +212,46 @@ const form = ref({
   name: currentTeam.value?.name,
   description: currentTeam.value?.description,
   telegram_chat_id: currentTeam.value?.telegram_chat_id,
-  work_types: "",
+  current_work_type: "",
+  work_types: currentTeam.value?.directions ?? [],
 });
+
+const addChip = async (label) => {
+  if (form.value.work_types.find((type) => type === label)) {
+    $q.notify({
+      type: "warning",
+      message: "Такой вид работ уже есть в списке!",
+    });
+    return;
+  }
+
+  form.value.current_work_type = "";
+
+  const previous = currentTeam.value.directions ?? [];
+  let added = [...form.value.work_types, label];
+
+  if (previous[0] === "  ") added = [label];
+
+  console.log(previous[0] === "  ", added);
+
+  await updateTeam(currentTeam.value.id, {
+    directions: added.length === 1 ? [...added] : [...previous, ...added],
+  });
+
+  if (!error.value) form.value.work_types = [...form.value.work_types, label];
+};
+
+const deleteChip = async (label) => {
+  const filtered = form.value.work_types.filter((type) => type !== label);
+
+  console.log("filter", filtered);
+
+  await updateTeam(currentTeam.value.id, {
+    directions: filtered.length ? [...filtered] : ["  "],
+  });
+
+  if (!error.value) form.value.work_types = filtered;
+};
 
 const updateFile = () => {
   if (Math.round(upload_img.value.size / Math.pow(1024, 2)) <= 10) {
@@ -212,6 +272,7 @@ const updateTeamData = async () => {
     name: form.value.name,
     description: form.value.description,
     telegram_chat_id: form.value.telegram_chat_id,
+    directions: [...currentTeam.value.directions, ...work_types.value],
   });
 
   router.push({
