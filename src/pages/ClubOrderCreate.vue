@@ -193,7 +193,7 @@
             class="text-body1 btn col-2"
             :label="'Разместить заказ'"
             :background="true"
-            @click="createOrder(form)"
+            @click="createOrder"
 
           />
 
@@ -215,8 +215,11 @@ import CInput from "src/components/ClubOrderCreateInput.vue";
 import { ref } from "vue";
 import { useValidators } from "src/use/validators";
 import orderApi from "src/sdk/order";
-import { addTodo, createOrder } from "src/use/order";
+import { useRouter } from "vue-router";
+import { addTodo } from "src/use/order";
 import { optionsFn } from "src/use/date";
+
+const router = useRouter();
 
 const buttons = ref([
   {
@@ -310,6 +313,12 @@ const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } = useVa
 
 const createDraft = () => {
   orderApi.orderCreate(form.value);
+}
+
+const createOrder = () => {
+  form.value.draft = false;
+  orderApi.orderCreate(form.value);
+  router.push({ name: 'order-created' });
 }
 
 const addFile = () => {
