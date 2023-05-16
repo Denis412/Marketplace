@@ -46,10 +46,13 @@
 </template>
 
 <script setup>
-import { taskResult } from "src/sdk/tasks";
+import { useQuery } from "@vue/apollo-composable";
+import { getTasks } from "src/graphql/tasks/queries";
 import { ref } from "vue";
 import { Quasar } from "quasar";
 import quasarIconSet from "quasar/icon-set/svg-material-icons";
+
+const { onResult: taskResult, refetch: taskRefetch } = useQuery(getTasks);
 
 const tasks = ref([
   {
