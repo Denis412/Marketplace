@@ -66,7 +66,9 @@ module.exports = configure(function (/* ctx */) {
 
         MAIN_SPACE_ID: 42,
 
-        TEAMS_PAGES_ID: "4854717215393261588",
+        TEAMS_PAGE_ID: "4854717215393261588",
+        ALL_TEAMS_PAGE_ID: "5191226628121289747",
+        MY_TEAMS_PAGE_ID: "8468639696257370763",
 
         USERS_GROUP_ID: "2954744714133191151", // Группа разработчиков
 

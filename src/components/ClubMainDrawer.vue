@@ -8,7 +8,8 @@
     :width="256"
     :mini-width="64"
   >
-    <q-list class="c-pr-8 c-pt-12 no-scroll">
+    <c-tree-teams v-if="route.path.includes('teams')" />
+    <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
         v-for="item in mainTreeItems"
         :key="item.title"
@@ -40,8 +41,6 @@
         <c-qtabs-document v-if="item.title == 'Документы'" />
       </q-item>
     </q-list>
-
-    <c-tree-teams />
 
     <button
       ref="btn"
