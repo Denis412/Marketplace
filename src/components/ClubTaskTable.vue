@@ -3,7 +3,7 @@
   <q-table
     class="q-mx-lg no-shadow flat"
     :rows="tasks"
-    :columns="columns"
+    :columns="data.columns"
     :rows-per-page-options="[5, 10, 20]"
   >
     <template v-slot:body="props">
@@ -18,6 +18,7 @@
         </q-td>
         <q-td v-else>{{ props.row.name }}</q-td>
         <q-td v-if="!props.row.first">-</q-td>
+        <q-td v-else></q-td>
         <q-td>{{ props.row.dateStart?.date }}</q-td>
         <q-td>{{ props.row.dateEnd?.date }}</q-td>
         <q-td
@@ -48,6 +49,7 @@
 <script setup>
 import { useQuery } from "@vue/apollo-composable";
 import { getTasks } from "src/graphql/tasks/queries";
+import { data } from "src/utils/taskData";
 import { ref } from "vue";
 import { Quasar } from "quasar";
 import quasarIconSet from "quasar/icon-set/svg-material-icons";
@@ -75,49 +77,6 @@ taskResult((queryResult) => {
 const addNewTask = () => {
   console.log("add");
 };
-
-const columns = [
-  {
-    name: "Задача",
-    align: "left",
-    label: "Задача",
-    field: "Задача",
-    headerStyle:
-      "font-family: 'Play'; font-weight: 400; font-size: 20px; padding-right: 260px;",
-  },
-  {
-    name: "Проект",
-    label: "Проект",
-    align: "right",
-    field: "Проект",
-    sortable: true,
-    headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px; padding-right: 30px;",
-  },
-  {
-    name: "Дата начала",
-    label: "Дата начала",
-    field: "Дата начала",
-    sortable: true,
-    headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
-  },
-  {
-    name: "Дата окончания",
-    label: "Дата окончания",
-    field: "Дата окончания",
-    sortable: true,
-    headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
-  },
-  {
-    name: "Статус",
-    label: "Статус",
-    field: "Статус",
-    sortable: true,
-    headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px;",
-  },
-];
 </script>
 
 <style scoped>
