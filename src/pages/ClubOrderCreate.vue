@@ -215,6 +215,9 @@ import CInput from "src/components/ClubOrderCreateInput.vue";
 import { ref } from "vue";
 import { useValidators } from "src/use/validators";
 import orderApi from "src/sdk/order";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const buttons = ref([
   {
@@ -324,6 +327,7 @@ const createDraft = () => {
 const createOrder = () => {
   form.value.draft = false;
   orderApi.orderCreate(form.value);
+  router.push({ name: 'order-created' });
 }
 
 const addFile = () => {
