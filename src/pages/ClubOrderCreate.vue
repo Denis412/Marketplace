@@ -42,7 +42,7 @@
           :outline="!form.todos.includes(button.id)"
           :background="form.todos.includes(button.id)"
           :icon-right="form.todos.includes(button.id) ? 'img:/assets/icons/close/cross-white.svg' : ''"
-          @click="addTodo(button.id)"
+          @click="addTodo(button.id, form)"
           />
 
           <img class="absolute mail-img" src="/assets/images/order/mail-icon.svg" alt=""/>
@@ -193,7 +193,7 @@
             class="text-body1 btn col-2"
             :label="'Разместить заказ'"
             :background="true"
-            @click="createOrder"
+            @click="createOrder(form)"
 
           />
 
@@ -215,9 +215,8 @@ import CInput from "src/components/ClubOrderCreateInput.vue";
 import { ref } from "vue";
 import { useValidators } from "src/use/validators";
 import orderApi from "src/sdk/order";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
+import { addTodo, createOrder } from "src/use/order";
+import { optionsFn } from "src/use/date";
 
 const buttons = ref([
   {
@@ -309,25 +308,8 @@ const form = ref({
 
 const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } = useValidators();
 
-const optionsFn = (date) => {
-  return new Date(date).getTime() > Date.now() - 86_400_000;
-}
-
-const addTodo = (id) => {
-  if (form.value.todos.includes(id) && form.value.todos.length > 1)
-    form.value.todos.splice(form.value.todos.indexOf(id), 1)
-  else if (!form.value.todos.includes(id))
-    form.value.todos.push(id);
-}
-
 const createDraft = () => {
   orderApi.orderCreate(form.value);
-}
-
-const createOrder = () => {
-  form.value.draft = false;
-  orderApi.orderCreate(form.value);
-  router.push({ name: 'order-created' });
 }
 
 const addFile = () => {

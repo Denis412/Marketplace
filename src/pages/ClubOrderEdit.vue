@@ -52,7 +52,7 @@
           :outline="!order.todos.includes(button.id)"
           :background="order.todos.includes(button.id)"
           :icon-right="order.todos.includes(button.id) ? 'img:/assets/icons/close/cross-white.svg' : ''"
-          @click="addTodo(button.id)"
+          @click="addTodo(button.id, form, order)"
           />
 
           <img class="absolute mail-img" src="/assets/images/order/mail-icon.svg" alt=""/>
@@ -70,7 +70,7 @@
             :label="checkbox.label"
             color="violet-6"
             class="c-checkbox-outlined"
-            @update:model-value="setValue('functions')"
+            @update:model-value="setValue('functions', form, order)"
             />
         </div>
 
@@ -95,7 +95,7 @@
             color="violet-6"
             :disable="!order.draft"
             class="c-checkbox-outlined"
-            @update:model-value="setValue('consultation')"
+            @update:model-value="setValue('consultation', form, order)"
             />
 
             <div>
@@ -149,7 +149,7 @@
               outlined
               :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
               :readonly="!order.draft"
-              @update:model-value="setPrice()"
+              @update:model-value="setPrice(form, order)"
               />
               <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg"/>
             </div>
@@ -164,7 +164,7 @@
               outlined
               :rules="[requiredOneOfNumber(form.price_start), positive, biggerThan(form.price_start)]"
               :readonly="!order.draft"
-              @update:model-value="setPrice()"
+              @update:model-value="setPrice(form, order)"
               />
 
               <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg"/>
@@ -182,7 +182,7 @@
             name="date"
             outlined
             v-model="order.date_complete"
-            @update:model-value="setValue('date_complete')"
+            @update:model-value="setValue('date_complete', form, order)"
             :rules="[required]"
             >
               <template v-slot:append>
@@ -191,7 +191,7 @@
                     <q-date
                     :rules="[required]"
                     v-model="order.date_complete"
-                    @update:model-value="setValue('date_complete')"
+                    @update:model-value="setValue('date_complete', form, order)"
                     mask="DD.MM.YYYY"
                     :options="optionsFn"
                     >
@@ -213,7 +213,7 @@
             class="text-body1 btn col-2"
             :label="'Изменить'"
             :background="true"
-            @click="editOrder"
+            @click="editOrder(form, order)"
           />
         </div>
       </q-form>
@@ -229,7 +229,8 @@ import { useValidators } from "src/use/validators";
 import { useRoute } from "vue-router";
 import { useQuery } from "@vue/apollo-composable";
 import { getOrderById } from "src/graphql/order/queries";
-import orderApi from "src/sdk/order";
+import { addTodo, setPrice, setValue, editOrder } from "src/use/order";
+import { optionsFn } from "src/use/date";
 
 const route = useRoute();
 const { result: getOrder, loading: loadingOrder } = useQuery(getOrderById, route.params);
@@ -316,41 +317,6 @@ const checkboxes = ref([
 watch(loadingOrder, () => {
   Object.assign(order.value, getOrder.value.get_order)
 })
-
-const optionsFn = (date) => {
-  return new Date(date).getTime() > Date.now() - 86_400_000;
-}
-
-const addTodo = (id) => {
-  if (!order.value.draft)
-    return;
-
-  if (!form.value.hasOwnProperty('todos')) {
-    form.value.todos = []
-    Object.assign(form.value.todos, order.value.todos);
-  }
-
-  if (form.value.todos.includes(id) && order.value.todos.length > 1)
-    form.value.todos.splice(form.value.todos.indexOf(id), 1)
-  else if (!form.value.todos.includes(id))
-    form.value.todos.push(id);
-
-  order.value.todos = form.value.todos
-}
-
-const setPrice = () => {
-  form.value.price_start = order.value.price_start;
-  form.value.price_end = order.value.price_end
-}
-
-const setValue = (value) => {
-  form.value[value] = order.value[value];
-}
-
-const editOrder = () => {
-  orderApi.orderEdit(form.value, order.value.id, order.value.name)
-}
-
 
 const addFile = () => {
   uploadFile.value.pickFiles();
