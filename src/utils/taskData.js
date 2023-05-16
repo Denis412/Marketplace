@@ -7,6 +7,8 @@ const columns =
       field: "name",
       headerStyle:
         "font-family: 'Play'; font-weight: 400; font-size: 20px; padding-right: 200px; width: 600px",
+      headerClasses: 'text-subtitle3'
+      
     },
     {
       name: "Проект",
@@ -16,6 +18,7 @@ const columns =
       sortable: true,
       headerStyle:
         "font-family: 'Play', Regular; font-weight: 400; font-size: 20px; padding-right: 20px;",
+      headerClasses: 'text-subtitle3'
     },
     {
       name: "Дата начала",
@@ -25,6 +28,7 @@ const columns =
       sortable: true,
       headerStyle:
         "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+      headerClasses: 'text-subtitle3'
     },
     {
       name: "Дата окончания",
@@ -34,6 +38,7 @@ const columns =
       sortable: true,
       headerStyle:
         "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
+      headerClasses: 'text-subtitle3'
     },
     {
       name: "Статус",
@@ -42,6 +47,7 @@ const columns =
       align: 'left',
       sortable: true,
       headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px;",
+      headerClasses: 'text-subtitle3'
     },
 ];
 

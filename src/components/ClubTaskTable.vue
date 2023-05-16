@@ -17,30 +17,32 @@
           <q-icon name="add" align="left" />
           <span class="q-pl-sm">Новая задача</span>
         </q-td>
-        <q-td v-else>{{ props.row.name }}</q-td>
-        <q-td v-if="!props.row.first">-</q-td>
+        <q-td class="text-subtitle3" v-else>{{ props.row.name }}</q-td>
+        <q-td class="text-subtitle3" v-if="!props.row.first">-</q-td>
         <q-td v-else></q-td>
-        <q-td>{{ props.row.dateStart?.date }}</q-td>
-        <q-td>{{ props.row.dateEnd?.date }}</q-td>
-        <q-td
-          :class="
-            props.row.taskStatus == '8407796538990824904'
-              ? 'assigned'
-              : props.row.taskStatus == '7045273205012284690'
-              ? 'accomplished'
-              : 'completed'
-          "
-        >
-          {{
-            (function () {
-              if (props.row.taskStatus == "8407796538990824904") {
-                return "надо сделать";
-              } else if (props.row.taskStatus == "7045273205012284690")
-                return "в процессе";
-              else if (props.row.taskStatus == "2406017079472962662")
-                return "выполнено";
-            })()
-          }}
+        <q-td class="text-subtitle3">{{ props.row.dateStart?.date }}</q-td>
+        <q-td class="text-subtitle3">{{ props.row.dateEnd?.date }}</q-td>
+        <q-td>
+          <div
+            :class="
+              props.row.taskStatus == '8407796538990824904'
+                ? 'assigned'
+                : props.row.taskStatus == '7045273205012284690'
+                ? 'accomplished'
+                : 'completed'
+            "
+          >
+            {{
+              (function () {
+                if (props.row.taskStatus == "8407796538990824904") {
+                  return "надо сделать";
+                } else if (props.row.taskStatus == "7045273205012284690")
+                  return "в процессе";
+                else if (props.row.taskStatus == "2406017079472962662")
+                  return "выполнено";
+              })()
+            }}
+          </div>
         </q-td>
       </q-tr>
     </template>
@@ -81,10 +83,6 @@ const addNewTask = () => {
 </script>
 
 <style scoped>
-.q-table th {
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
-
 .q-table tbody td {
   font-size: 16px;
 }
@@ -101,9 +99,17 @@ const addNewTask = () => {
   height: 20px;
 }
 .accomplished {
-  background-color: rgb(235, 220, 20);
+  background: #7dd3fc;
+  border-radius: 12px;
+  text-align: center;
+  width: 139px;
+  height: 20px;
 }
 .completed {
-  background-color: rgb(100, 207, 67);
+  background: #86efac;
+  border-radius: 12px;
+  text-align: center;
+  width: 139px;
+  height: 20px;
 }
 </style>
