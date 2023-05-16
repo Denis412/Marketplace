@@ -60,7 +60,7 @@ const routes = [
         component: () => import("src/pages/ClubMyProjectsPage.vue"),
       },
       {
-        path: "project/:space/:name",
+        path: "project/:space/:id",
         name: "project",
         component: () => import("src/pages/ClubProjectInformationPage.vue"),
       },

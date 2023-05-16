@@ -164,10 +164,6 @@ watch(selectAvatar, async (value) => {
     avatar: fileUrl,
   });
 });
-
-// onMounted(async () => {
-//   await fetch(currentUser.value.avatar, { mode: "no-cors" });
-// });
 </script>
 
 <style scoped lang="scss">

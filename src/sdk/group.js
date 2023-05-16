@@ -40,9 +40,7 @@ const refetchPaginateGroups = async ({ page, perPage, where, space_id }) => {
 
 const create = async (space_id, data) => {
   const { data: groupData } = await creatingGroup(
-    {
-      input: data,
-    },
+    { input: data },
     spaceHeader(space_id)
   );
 

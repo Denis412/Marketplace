@@ -13,14 +13,7 @@ export const useProjectsQuery = () => {
   const loading = ref(false);
   const error = ref(null);
 
-  function getWithWere({
-    page,
-    perPage,
-    where,
-    team,
-    space_id,
-    project_space,
-  }) {
+  function getWithWere({ page, perPage, where, space_id }) {
     try {
       loading.value = true;
 
@@ -28,8 +21,7 @@ export const useProjectsQuery = () => {
         page: page || 1,
         perPage: perPage || 50,
         where,
-        space_id: space_id || team?.value?.space,
-        project_space,
+        space_id,
       };
 
       console.log(parameters);
@@ -40,30 +32,13 @@ export const useProjectsQuery = () => {
         error: projectsError,
       } = projectApi.paginateProject(parameters);
 
-      const { result: subjects, loading: subjectsLoading } =
-        groupApi.paginateGroups({
-          page: 1,
-          perPage: 100,
-          is_subjects: true,
-          space_id,
-        });
-
       async function refetch({ only_one }) {
         try {
           loading.value = true;
 
           const projects = await projectApi.refetchPaginateProjects(parameters);
-          const subjects = await groupApi.refetchPaginateGroups({
-            page: 1,
-            perPage: 100,
-            space_id,
-            is_subjects: true,
-          });
 
-          result.value = {
-            projects: only_one ? projects[0] : projects,
-            subjects: subjects,
-          };
+          result.value = only_one ? projects[0] : projects;
 
           loading.value = false;
         } catch (e) {
@@ -78,9 +53,7 @@ export const useProjectsQuery = () => {
 
       return {
         projects,
-        subjects,
         projectsLoading,
-        subjectsLoading,
         projectsError,
         refetch,
       };
@@ -118,213 +91,44 @@ export const useProjectCreate = () => {
   const loading = ref(false);
   const error = ref(null);
 
-  async function createProject({ name, team_name, space_id }) {
+  async function createProject({ name, space_id }) {
     try {
       loading.value = true;
 
-      const spaceData = await spaceApi.create({
-        name: name,
-        description: "Проектное пространство",
-      });
-
-      const projectInTeam = await projectApi.create({
-        input: { name, space: spaceData.id },
-        space_id,
-      });
-
-      const subjectInTeam = await userApi.refetchPaginateSubjects({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "id",
-          operator: "EQ",
-          value: projectInTeam.author_id,
-        },
-        is_team: true,
-        space_id,
-      });
-
-      const projectTypeData = await typeApi.create({
-        input: {
-          name: "project",
-          label: "Проект",
-        },
-        space_id: spaceData.id,
-      });
-
-      const subjectType = await typeApi.refetchPaginateType({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "name",
-          operator: "EQ",
-          value: "subject",
-        },
-        space_id: spaceData.id,
-      });
-
-      await propertyApi.createMany({
-        input: [
-          {
-            name: "avatar",
-            label: "Фотография",
-            data_type: "text",
-            type_id: subjectType[0].id,
-            order: 2,
-          },
-          {
-            name: "major",
-            label: "Специальность",
-            data_type: "text",
-            type_id: subjectType[0].id,
-            order: 3,
-          },
-        ],
-
-        space_id: spaceData.id,
-      });
-
-      await propertyApi.createMany({
-        input: [
-          {
-            name: "avatar",
-            label: "Фотография",
-            data_type: "text",
-            type_id: projectTypeData.id,
-            order: 2,
-          },
-          {
-            name: "team_name",
-            label: "Название команды",
-            data_type: "text",
-            type_id: projectTypeData.id,
-            order: 3,
-          },
-          {
-            name: "description",
-            label: "Описание проекта",
-            data_type: "text",
-            type_id: projectTypeData.id,
-            order: 4,
-          },
-          {
-            name: "parent_space",
-            label: "Командное пространство",
-            data_type: "text",
-            type_id: projectTypeData.id,
-            order: 5,
-          },
-          {
-            name: "target",
-            label: "Цель проекта",
-            data_type: "text",
-            type_id: projectTypeData.id,
-            order: 6,
-          },
-        ],
-        space_id: spaceData.id,
-      });
-
-      await propertyApi.create({
-        input: {
-          name: "delivery_date",
-          label: "Дата сдачи",
-          data_type: "datetime",
-          type_id: projectTypeData.id,
-          order: 7,
-          meta: {
-            properties: [
-              {
-                order: 1,
-                data_type: "date",
-                name: "date",
-                meta: {
-                  min: null,
-                  consider_time_zones: false,
-                  max: "31.12.2050",
-                  mask: "DD.MM.YYYY",
-                },
-                default: {
-                  value: "01.12.2023",
-                },
-                required: false,
-                multiple: {
-                  status: false,
-                },
-              },
-            ],
-          },
-        },
-        space_id: spaceData.id,
-      });
-
       const projectData = await projectApi.create({
-        input: { name, team_name, parent_space: space_id },
-        space_id: spaceData.id,
+        input: { name },
+        space_id,
       });
 
-      await userApi.update(
-        projectData.author_id,
-        {
-          major: subjectInTeam[0].major,
-          avatar: subjectInTeam[0].avatar,
-        },
-        true,
-        spaceData.id
-      );
-
-      const rootPageData = await pageApi.create({
+      const rootProjectPageData = await pageApi.create({
         input: {
           title: projectData.name,
         },
-        space_id: spaceData.id,
+        space_id,
       });
 
       await pageApi.create({
         input: {
           title: "О проекте",
-          parent_id: rootPageData.id,
+          parent_id: rootProjectPageData.id,
         },
-        space_id: spaceData.id,
+        space_id,
       });
 
       await pageApi.create({
         input: {
           title: "Список задач",
-          parent_id: rootPageData.id,
+          parent_id: rootProjectPageData.id,
         },
-        space_id: spaceData.id,
+        space_id,
       });
 
       await pageApi.create({
         input: {
           title: "Документы",
-          parent_id: rootPageData.id,
+          parent_id: rootProjectPageData.id,
         },
-        space_id: spaceData.id,
-      });
-
-      const teamGroup = await groupApi.refetchPaginateGroups({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "name",
-          operator: "EQ",
-          value: "Команда",
-        },
-        space_id: spaceData.id,
-      });
-
-      await groupApi.create(spaceData.id, {
-        name: "Заказчики",
-        description: "Группа заказчиков",
-        parent_group_id: teamGroup[0].id,
-      });
-
-      await groupApi.create(spaceData.id, {
-        name: "Участники",
-        description: "Группа участников",
-        parent_group_id: teamGroup[0].id,
+        space_id,
       });
 
       await useProjectsQuery()

@@ -114,14 +114,7 @@
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
-              :rules="[
-                minLength(18),
-                maxLength(45),
-                (val) =>
-                  val.slice(0, 13) === 'https://t.me/' ||
-                  val.slice(0, 12) === 'http://t.me/' ||
-                  'Неверный формат ссылки',
-              ]"
+              :rules="[minLength(18), maxLength(45), telegramm]"
             >
               <template #append>
                 <q-icon

@@ -97,7 +97,7 @@ const selectProjectsList = ref("active");
 const redirectProjectPage = (project) => {
   router.push({
     name: "project",
-    params: { space: project.space, name: project.name },
+    params: { id: project.id, space: currentTeam.value.space },
   });
 };
 

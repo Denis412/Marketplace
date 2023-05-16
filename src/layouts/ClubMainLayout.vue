@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { computed, ref, provide } from "vue";
+import { computed, ref, provide, onMounted } from "vue";
 import CMainHeader from "src/components/ClubMainHeader.vue";
 import CMainDrawer from "src/components/ClubMainDrawer.vue";
 import CMainFooter from "src/components/Landing/ClubMainFooter.vue";
@@ -31,6 +31,10 @@ const exclude = ref([
 const currentUser = computed(() => useUserStore().GET_CURRENT_USER);
 
 provide("currentUser", currentUser);
+
+onMounted(async () => {
+  await fetch(currentUser.value?.avatar, { mode: "no-cors" });
+});
 </script>
 
 <style lang="scss"></style>

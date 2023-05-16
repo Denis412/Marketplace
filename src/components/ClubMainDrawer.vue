@@ -8,7 +8,9 @@
     :width="256"
     :mini-width="64"
   >
-    <q-list class="c-pr-8 c-pt-12 no-scroll">
+    <c-tree-teams v-if="route.path.includes('teams')" />
+
+    <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
         v-for="item in mainTreeItems"
         :key="item.title"
@@ -55,6 +57,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
+import CTreeTeams from "src/components/ClubTreeTeams.vue";
 import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({

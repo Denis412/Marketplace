@@ -8,7 +8,6 @@ import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
 import propertyApi from "src/sdk/property";
 import pageApi from "src/sdk/page";
-import projectApi from "src/sdk/project";
 
 export const useTeamCreate = () => {
   const createTeamResult = ref(null);
@@ -119,6 +118,66 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
+      await propertyApi.createMany({
+        input: [
+          {
+            name: "avatar",
+            label: "Фотография",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 2,
+          },
+          {
+            name: "description",
+            label: "Описание проекта",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 4,
+          },
+          {
+            name: "target",
+            label: "Цель проекта",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 6,
+          },
+        ],
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          name: "delivery_date",
+          label: "Дата сдачи",
+          data_type: "datetime",
+          type_id: projectTypeData.id,
+          order: 7,
+          meta: {
+            properties: [
+              {
+                order: 1,
+                data_type: "date",
+                name: "date",
+                meta: {
+                  min: null,
+                  consider_time_zones: false,
+                  max: "31.12.2050",
+                  mask: "DD.MM.YYYY",
+                },
+                default: {
+                  value: "01.12.2023",
+                },
+                required: false,
+                multiple: {
+                  status: false,
+                },
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
       await propertyApi.create({
         input: {
           label: "Проект",
@@ -181,17 +240,6 @@ export const useTeamCreate = () => {
             status: false,
             button_text: "Добавить",
           },
-        },
-        space_id: space.id,
-      });
-
-      await propertyApi.create({
-        input: {
-          name: "space",
-          label: "Проектное пространство",
-          data_type: "text",
-          type_id: projectTypeData.id,
-          order: 2,
         },
         space_id: space.id,
       });

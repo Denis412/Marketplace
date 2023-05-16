@@ -1,9 +1,11 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <div class="loader loader-lg" v-if="projectsLoading || subjectsLoading" />
+    <div class="loader loader-lg" v-if="projectsLoading" />
 
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
+
+      <!-- <pre>{{ currentProject }}</pre> -->
 
       <section>
         <q-img
@@ -25,7 +27,7 @@
 
       <c-project-information-section />
       <c-project-target-description-sections />
-      <c-project-members-sections />
+      <!-- <c-project-members-sections /> -->
 
       <section class="c-mt-72">
         <h4 class="text-h4">Договор</h4>
@@ -64,25 +66,19 @@ import CProjectMembersSections from "src/components/ClubProjectMembersSections.v
 
 const route = useRoute();
 
-const { projects, subjects, projectsLoading, subjectsLoading } =
-  useProjectsQuery().getWithWere({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: route.params.name,
-    },
-    space_id: route.params.space,
-    project_space: true,
-  });
+const { projects, projectsLoading } = useProjectsQuery().getWithWere({
+  page: 1,
+  perPage: 1,
+  where: null,
+  space_id: route.params.space,
+});
 
 const currentProject = computed(() => projects.value?.paginate_project.data[0]);
-const currentSubjects = computed(() => subjects.value?.paginate_group.data);
+// const currentSubjects = computed(() => subjects.value?.paginate_group.data);
 
-provide("spaceId", route.params.space);
+provide("spaceId", route.params.id);
 provide("currentProject", currentProject);
-provide("currentSubjects", currentSubjects);
+// provide("currentSubjects", currentSubjects);
 </script>
 
 <style scoped lang="scss">
