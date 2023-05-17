@@ -18,7 +18,6 @@
 
 <script setup>
 import { computed, watch, ref } from "vue";
-import { useFileStore } from "src/stores/file";
 import CTabsItem from "./ClubTabsItemComponent.vue";
 import { Draggable } from "@he-tree/vue";
 import "@he-tree/vue/style/default.css";
@@ -27,9 +26,8 @@ import pageApi from "src/sdk/page";
 
 const rootPage = ref();
 const data_tree = ref();
-const storeFile = useFileStore();
-const FILES = computed(() => storeFile.GET_FILES);
 
+//Получение корневой страницы документов
 const getData = async () => {
   data_tree.value = await filesApi.getRootPage("4440891212883535597", 13);
 };

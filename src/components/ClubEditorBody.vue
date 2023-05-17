@@ -86,7 +86,20 @@ const color = (cmd, name) => {
   edit._value.focus();
 };
 
+let currentFile = null;
+
 watch(route, async () => {
+  currentFile = route.params.id
+    ? (
+        await filesApi.refetchQueryFileById({
+          id: route.params.id,
+          space_id: 13,
+        })
+      ).get_file
+    : "";
+
+  console.log("currentFile", currentFile);
+
   if (!previousRout.value && editor.value) {
     filesApi.createHtmlFile(
       editor.value,
@@ -95,14 +108,12 @@ watch(route, async () => {
   }
 
   if (route.params.id && FILES.value.length) {
-    storeFile.SET_CURRENT_TITLE_DOC(
-      FILES.value[route.params.id].name.slice(0, -5)
-    );
+    storeFile.SET_CURRENT_TITLE_DOC(currentFile.name.slice(0, -5));
     editor.value = await filesApi.getFileHtmlByUrl(
-      FILES.value[route.params.id].path,
-      FILES.value[route.params.id].id,
-      FILES.value[route.params.id].name,
-      FILES.value[route.params.id].extension
+      currentFile.path,
+      currentFile.id,
+      currentFile.name,
+      currentFile.extension
     );
 
     storeFile.SET_CURRENT_EDITOR_VALUE(editor.value);
@@ -115,15 +126,24 @@ watch(route, async () => {
 });
 
 onMounted(async () => {
+  currentFile = route.params.id
+    ? (
+        await filesApi.refetchQueryFileById({
+          id: route.params.id,
+          space_id: 13,
+        })
+      ).get_file
+    : "";
+
+  console.log(currentFile);
+
   if (route.params.id && FILES.value.length) {
-    storeFile.SET_CURRENT_TITLE_DOC(
-      FILES.value[route.params.id].name.slice(0, -5)
-    );
+    storeFile.SET_CURRENT_TITLE_DOC(currentFile.name.slice(0, -5));
     editor.value = await filesApi.getFileHtmlByUrl(
-      FILES.value[route.params.id].path,
-      FILES.value[route.params.id].id,
-      FILES.value[route.params.id].name,
-      FILES.value[route.params.id].extension
+      currentFile.path,
+      currentFile.id,
+      currentFile.name,
+      currentFile.extension
     );
   }
 });

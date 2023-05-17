@@ -9,7 +9,7 @@
 
       <router-link
         class="name_doc link"
-        :to="{ name: 'Document', params: { id: `${props.node.index}` } }"
+        :to="{ name: 'Document', params: { id: `${props.node.object_id}` } }"
       >
         {{ node.title_page.replace(".html", "") }}
       </router-link>
