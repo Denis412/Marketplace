@@ -9,6 +9,7 @@ import { ApolloClient } from '@apollo/client/core'
 import { getClientOptions } from 'src/apollo/index'
 import { Notify } from 'quasar'
 import { useFileStore } from 'src/stores/file'
+import pageApi from '../page.js'
 
 const fileStore = useFileStore()
 
@@ -17,7 +18,7 @@ provideApolloClient(apolloClient)
 const uploadFiles = async (files) => {
   const { mutate } = useMutation(filesUpload)
 
-  await mutate(
+  let data = await mutate(
     {
       files,
     },
@@ -28,14 +29,25 @@ const uploadFiles = async (files) => {
     },
   )
 
-  const data = await response(
+  await response(
     'Файл добавлен',
     'Ошибка',
     () => {},
     fileStore.refetchFiles,
   )
-
-  // console.log(BigInt(data.data.filesUpload.ids[0]).toString())
+   if(data){
+    pageApi.create({
+      input: {
+        title: "UNKNOWN",
+        page_type: "node",
+        object: {
+          id: BigInt(data.data.filesUpload.ids[0]).toString(),
+          type_id: "6923351168454209144", //id типа файла
+        },
+      },
+      space_id: 13,
+    });
+   }
 }
 
 const getFileHtmlByUrl = async (path, id, name, extension) => {
