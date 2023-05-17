@@ -26,7 +26,8 @@
           class="btn-dropdown-doc"
           v-model="showMenu"
         >
-          <c-menu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
+          <c-menu-document :prop_doc="doc" />
+          <!-- <c-menu-document :prop_clicked_index_doc="index" :prop_doc="doc" /> -->
         </q-btn-dropdown>
       </div>
     </div>
@@ -45,17 +46,19 @@ const doc = ref();
 
 const props = defineProps({
   node: Object,
-  index: Number,
+  // index: Number,
   stat: Object,
 });
 
 const getFile = async () => {
+  console.log("id", props.node.object_id);
   doc.value = (
     await filesApi.refetchQueryFileById({
       id: props.node.object_id,
       space_id: 13,
     })
   ).get_file;
+  console.log(2343, doc.value);
 };
 
 getFile();

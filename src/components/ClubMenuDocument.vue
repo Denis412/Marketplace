@@ -83,7 +83,7 @@ const props = defineProps({
 console.log("menu_doc", props.prop_doc);
 
 const duplicateDocument = async () => {
-  let document = FILES.value[props.prop_clicked_index_doc];
+  let document = props.prop_doc;
   let documentBody = await filesApi.getFileHtmlByUrl(
     document.path,
     document.id,

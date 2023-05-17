@@ -164,6 +164,8 @@ const getRootPage = async (rootPageId, space_id) => {
   if (rootPage.page.children.data.length > 0) {
     await getChildrenPages(rootPage.page.children.data, data_tree, space_id)
   }
+
+  console.log('data_tree', data_tree)
   return data_tree
 }
 
