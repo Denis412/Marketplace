@@ -1,4 +1,5 @@
 // app global css in SCSS form
+@import "fonts.scss";
 
 * {
   padding: 0;
@@ -48,6 +49,23 @@
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+.c-tab-text {
+  .q-tab__content,
+  .q-tab__label {
+    @extend .text-body1;
+  }
+}
+
+.c-carousel {
+  padding-right: 0;
+  padding-left: 0;
+
+  .q-carousel__slides-container .q-panel .q-carousel__slide {
+    padding-right: 0;
+    padding-left: 0;
   }
 }
 

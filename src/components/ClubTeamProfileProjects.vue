@@ -6,11 +6,11 @@
       <q-tabs
         v-model="selectProjectsList"
         indicator-color="black"
-        class="bg-transparent text-body1 q-mt-md"
+        class="bg-transparent c-tab-text q-mt-md"
       >
-        <q-tab name="active" label="Активные" />
+        <q-tab no-caps name="active" label="Активные" />
 
-        <q-tab name="finished" label="Завершенные" />
+        <q-tab no-caps name="finished" label="Завершенные" />
       </q-tabs>
     </div>
 
@@ -35,13 +35,45 @@
             src="/assets/images/team-page/no-projects.svg"
           />
 
-          <div class="text-body2 c-ml-64">
-            У вашей команды пока нет проектов...
-          </div>
+          <div class="text-body2 c-ml-64">У команды пока нет проектов...</div>
         </q-card>
       </section>
 
       <section v-else class="ptojects-wrapper">
+        <!-- <q-carousel
+          v-model="slide"
+          transition-prev="jump-right"
+          transition-next="jump-left"
+          swipeable
+          animated
+          control-color="black"
+          navigation-icon="radio_button_unchecked"
+          navigation
+          padding
+          height="300px"
+          class="rounded-borders c-carousel"
+        >
+          <q-carousel-slide
+            v-for="(projects, index) in chunkedProjects"
+            :key="projects[0].id"
+            :name="index"
+            class="row q-col-gutter-x-md"
+          >
+            <section
+              v-for="project in projects"
+              :key="project.id"
+              class="col-4"
+            >
+              <c-project-card
+                flat
+                class="flex flex-center project-card cursor-pointer"
+                :project="project"
+                @click="redirectProjectPage(project)"
+              />
+            </section>
+          </q-carousel-slide>
+        </q-carousel> -->
+
         <q-list class="row no-wrap" style="overflow-x: auto">
           <section class="col-4 q-pr-md">
             <c-card-add-project
@@ -70,13 +102,14 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from "vue";
+import { computed, inject, onMounted, ref } from "vue";
 
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";
 import projectApi from "src/sdk/project";
 import { useRouter } from "vue-router";
 import { useProjectsQuery } from "src/use/projects";
+import _ from "lodash";
 
 const router = useRouter();
 const { result, loading, getWithWere } = useProjectsQuery();
@@ -91,6 +124,14 @@ const {
 } = getWithWere({
   space_id: currentTeam.value?.space,
 });
+
+const chunkedProjects = computed(() =>
+  _.chunk(currentProjects.value?.paginate_project.data, 3)
+);
+
+const slide = ref("1");
+const lorem =
+  "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo.";
 
 const selectProjectsList = ref("active");
 

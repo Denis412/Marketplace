@@ -7,16 +7,11 @@
         <q-tabs
           v-model="selectMembersList"
           indicator-color="black"
-          class="bg-transparent"
+          class="bg-transparent c-tab-text"
         >
-          <q-tab name="members" class="text-body1" label="Участники" />
+          <q-tab no-caps name="members" label="Участники" />
 
-          <q-tab
-            v-if="isOwner"
-            name="applications"
-            class="text-body1"
-            label="Заявки"
-          />
+          <q-tab v-if="isOwner" no-caps name="applications" label="Заявки" />
         </q-tabs>
 
         <q-space />
@@ -24,6 +19,7 @@
         <c-button
           v-if="isOwner"
           background
+          class="text-body1"
           label="Пригласить"
           @click="inviteUser"
         />

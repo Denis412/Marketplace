@@ -95,7 +95,7 @@
             <q-input
               v-model="form.description"
               placeholder="Описание команды"
-              class="c-textarea-outline teamSettingForm-input"
+              class="c-input-outline teamSettingForm-input"
               outlined
               autogrow
               :rules="[required, maxLength(1000)]"
@@ -272,7 +272,7 @@ const updateTeamData = async () => {
     name: form.value.name,
     description: form.value.description,
     telegram_chat_id: form.value.telegram_chat_id,
-    directions: [...currentTeam.value.directions, ...work_types.value],
+    directions: [...currentTeam.value.directions, ...form.value.work_types],
   });
 
   router.push({

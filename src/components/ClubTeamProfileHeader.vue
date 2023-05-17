@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="header-wrapper w-100p text-violet-6">
+  <q-card flat class="header-wrapper w-100p">
     <q-toolbar class="absolute flex justify-end">
       <q-icon
         class="cursor-pointer relative-position"
@@ -44,22 +44,23 @@
       </q-avatar>
 
       <section class="c-ml-32">
-        <h4 class="text-h4">{{ currentTeam.name }}</h4>
+        <h4 class="text-subtitle1 text-violet6">{{ currentTeam.name }}</h4>
 
         <section>
-          <p class="text-body2 q-mt-sm">
-            <span v-if="fullDes">
-              {{ currentTeam.description.substr(0, 121) }} ...
+          <p class="text-subtitle5 q-mt-sm">
+            <span v-if="fullDes && currentTeam.description.length > 121">
+              {{ currentTeam.description.substr(0, 121) }}...
             </span>
 
             <span v-else>{{ currentTeam.description }}</span>
           </p>
 
           <p
-            class="text-grey-8 text-body2 btn-text-align cursor-pointer"
+            class="text-violet4 text-body1 btn-text-align cursor-pointer"
             @click="fullDes = !fullDes"
+            v-if="currentTeam.description.length > 121"
           >
-            {{ !fullDes ? "Cкрыть" : "Показать" }}
+            {{ !fullDes ? "Cкрыть" : "Подробнее" }}
           </p>
         </section>
 
@@ -93,18 +94,18 @@
             @update:model-value="updateTeamStatus"
             left-label
             label="Готовность к заказам"
-            class="c-mr-32 c-checkbox-violet-6 text-body2 c-checkbox-label-pr-md c-checkbox-rounded"
+            class="c-mr-32 c-checkbox-violet-6 text-liner-button text-body1 c-checkbox-label-pr-md c-checkbox-rounded"
           />
 
           <a
             v-if="isMember || isOwner"
             href="#"
-            class="text-violet-6 link text-body2"
+            class="text-liner-button link text-body1"
           >
             Чат команды
 
             <q-icon
-              class="text-subtitle2"
+              class="text-subtitle4"
               name="img:/assets/icons/socials/telegram-gradient.svg"
             />
           </a>
