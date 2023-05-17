@@ -1,51 +1,41 @@
 <template>
-  <q-drawer
-    show-if-above
-    bordered
-    :side="side"
-    :mini="miniState"
-    v-model="drawer"
-    :width="256"
-    :mini-width="64"
-  >
+  <q-drawer show-if-above bordered :side="side" :mini="miniState" v-model="drawer" :width="256" :mini-width="64">
     <q-list class="c-pr-8 c-pt-12 no-scroll">
-      <q-item
-        v-for="item in mainTreeItems"
-        :key="item.title"
-        :class="{ active: isActive(item.path) }"
-        class="drawer-wrapper"
-      >
-        <router-link
-          :to="{ name: item.path }"
-          class="row no-wrap c-pl-16 drawer-item"
-        >
-          <div
-            class="flex flex-center bg-primary"
-            style="border-radius: 6px; padding: 4px"
-          >
-            <img src="/assets/icons/home/home-white.svg" alt="" />
-          </div>
+      <q-item v-for="item in mainTreeItems" :key="item.title" :class="{ active: isActive(item.path) }"
+        class="drawer-wrapper">
+        <router-link :to="{ name: item.path }" class="row no-wrap c-pl-16 drawer-item">
 
-          <div class="text-caption1 drawer-text c-ml-12">
-            {{ item.title }}
-            <q-icon
-              @click="addDocument"
-              v-if="item.title == 'Документы'"
-              name="add"
-              class="addDoc"
-            />
-          </div>
+          <template v-if="item.title == 'Документы'">
+            <q-expansion-item label="Документы" class="documents">
+              <template v-slot:header>
+                <img src="/assets/icons/home/home-white.svg" class="home-icon bg-primary">
+                <q-item-section>
+                  Документы
+                </q-item-section>
+              </template>
+
+              <q-item class="addDoc">
+                Добавить документ
+                <q-icon @click="addDocument" name="add" class="q-pl-md" />
+              </q-item>
+              <c-tabs-document />
+
+            </q-expansion-item>
+          </template>
+
+          <template v-else>
+            <div class="flex flex-center bg-primary " style="border-radius: 6px; padding: 4px">
+              <img src="/assets/icons/home/home-white.svg" alt="" />
+            </div>
+            <div class="text-caption1 drawer-text c-ml-12">
+              {{ item.title }}
+            </div>
+          </template>
         </router-link>
-
-        <c-tabs-document v-if="item.title == 'Документы'" />
       </q-item>
     </q-list>
 
-    <button
-      ref="btn"
-      class="bg-violet-6 drawer-btn absolute"
-      @click="toggleDrawer()"
-    >
+    <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
       <img src="/assets/icons/arrow/drawer-arrow.svg" />
     </button>
   </q-drawer>
@@ -159,6 +149,12 @@ const isActive = (path) => {
   }
 }
 
+.documents {
+  overflow: hidden;
+  color: grey;
+  align-items: center;
+}
+
 .drawer-wrapper {
   border-radius: 0px 6px 6px 0px;
   margin-top: 4px;
@@ -184,6 +180,13 @@ const isActive = (path) => {
 }
 
 .addDoc {
-  padding-left: 4rem;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.home-icon {
+  display: flex;
+  border-radius: 6px;
+  padding: 4px
 }
 </style>
