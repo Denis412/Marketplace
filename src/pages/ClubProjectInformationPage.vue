@@ -1,5 +1,6 @@
 <template>
   <q-page class="c-px-32 c-py-72">
+    <pre>{{ currentProject }}</pre>
     <div class="loader loader-lg" v-if="!currentProject" />
 
     <div v-else>
@@ -25,7 +26,7 @@
 
       <c-project-information-section />
       <c-project-target-description-sections />
-      <!-- <c-project-members-sections /> -->
+      <c-project-members-sections />
 
       <section class="c-mt-72">
         <h4 class="text-h4">Договор</h4>

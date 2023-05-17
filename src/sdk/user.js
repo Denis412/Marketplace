@@ -79,12 +79,16 @@ const queryGetSubjectById = (id, space_id = 0) => {
   );
 };
 
-const queryGetUserById = (id) => {
-  return useQuery(getUser, { id });
+const queryGetUserById = (id, space_id = 0) => {
+  return useQuery(
+    getUser,
+    { id },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+  );
 };
 
-const refetchUserById = async (id) => {
-  const { refetch } = queryGetUserById(id);
+const refetchUserById = async (id, space_id = 0) => {
+  const { refetch } = queryGetUserById(id, space_id);
 
   const { data: userData } = await refetch();
 

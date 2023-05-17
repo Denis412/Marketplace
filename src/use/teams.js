@@ -97,6 +97,17 @@ export const useTeamCreate = () => {
 
       await propertyApi.create({
         input: {
+          name: "major",
+          label: "Специальность",
+          data_type: "text",
+          type_id: subjectType[0].id,
+          order: 6,
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
           label: "Субъект",
           name: "subject",
           type_id: applicationProjectType.id,
@@ -149,6 +160,30 @@ export const useTeamCreate = () => {
             order: 5,
           },
         ],
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          label: "Участники",
+          name: "members",
+          type_id: projectTypeData.id,
+          data_type: "object",
+          order: 6,
+          multiple: {
+            status: true,
+            max_number: 50,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
+                inverse_relation: true,
+                inverse_relation_label: "Проекты",
+              },
+            ],
+          },
+        },
         space_id: space.id,
       });
 

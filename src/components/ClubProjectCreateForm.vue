@@ -60,6 +60,7 @@ const { result, loading, createProject } = useProjectCreate();
 const { required } = useValidators();
 
 const currentTeam = inject("currentTeam");
+const currentUser = inject("currentUser");
 
 const title = ref("");
 
@@ -67,6 +68,7 @@ const projectCreate = async () => {
   await createProject({
     name: title.value,
     team: currentTeam.value,
+    user: currentUser.value,
     space_id: currentTeam.value.space,
   });
 

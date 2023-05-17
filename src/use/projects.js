@@ -3,6 +3,7 @@ import { ref } from "vue";
 import projectApi from "src/sdk/project";
 import pageApi from "src/sdk/page";
 import teamApi from "src/sdk/team";
+import userApi from "src/sdk/user";
 
 export const useProjectsQuery = () => {
   const result = ref(null);
@@ -87,7 +88,7 @@ export const useProjectCreate = () => {
   const loading = ref(false);
   const error = ref(null);
 
-  async function createProject({ name, team, space_id }) {
+  async function createProject({ name, team, user, space_id }) {
     try {
       loading.value = true;
 
@@ -100,8 +101,28 @@ export const useProjectCreate = () => {
         },
       });
 
+      const subject = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "user_id",
+          operator: "EQ",
+          value: user.user_id,
+        },
+        is_team: true,
+        space_id,
+      });
+
+      console.log("subject", subject);
+
       const projectData = await projectApi.create({
-        input: { name, team_name: team.name },
+        input: {
+          name,
+          team_name: team.name,
+          members: {
+            [subject[0].type_id]: [subject[0].id],
+          },
+        },
         space_id,
       });
 

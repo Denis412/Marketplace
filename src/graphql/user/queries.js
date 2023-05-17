@@ -67,6 +67,7 @@ export const paginateSubjectInAnotherSpace = gql`
     paginate_subject(page: $page, perPage: $perPage, where: $where) {
       data {
         id
+        type_id
         user_id
         avatar
         fullname {
