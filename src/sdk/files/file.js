@@ -1,4 +1,8 @@
-import { provideApolloClient, useMutation } from '@vue/apollo-composable'
+import {
+  provideApolloClient,
+  useMutation,
+  useQuery,
+} from '@vue/apollo-composable'
 import apolloClient from 'src/apollo/apollo-client'
 import {
   filesUpload,
@@ -9,7 +13,9 @@ import { ApolloClient } from '@apollo/client/core'
 import { getClientOptions } from 'src/apollo/index'
 import { Notify } from 'quasar'
 import { useFileStore } from 'src/stores/file'
-import pageApi from 'src/sdk/page'
+import pageApi from 'src/sdk/page.js'
+import { getFileById } from 'src/graphql/files/queries'
+import { spaceHeader } from 'src/utils/spaceHeader'
 
 const fileStore = useFileStore()
 
@@ -18,7 +24,7 @@ provideApolloClient(apolloClient)
 const uploadFiles = async (files) => {
   const { mutate } = useMutation(filesUpload)
 
-  await mutate(
+  let data = await mutate(
     {
       files,
     },
@@ -29,14 +35,20 @@ const uploadFiles = async (files) => {
     },
   )
 
-  const data = await response(
-    'Файл добавлен',
-    'Ошибка',
-    () => {},
-    fileStore.refetchFiles,
-  )
-
-  // console.log(BigInt(data.data.filesUpload.ids[0]).toString())
+  await response('Файл добавлен', 'Ошибка', () => {}, fileStore.refetchFiles)
+  if (data) {
+    pageApi.create({
+      input: {
+        title: 'UNKNOWN',
+        page_type: 'node',
+        object: {
+          id: BigInt(data.data.filesUpload.ids[0]).toString(),
+          type_id: '6923351168454209144', //id типа файла
+        },
+      },
+      space_id: 13,
+    })
+  }
 }
 
 const getFileHtmlByUrl = async (path, id, name, extension) => {
@@ -152,7 +164,6 @@ const getRootPage = async (rootPageId, space_id) => {
   if (rootPage.page.children.data.length > 0) {
     await getChildrenPages(rootPage.page.children.data, data_tree, space_id)
   }
-  console.log(8, data_tree)
   return data_tree
 }
 
@@ -182,6 +193,22 @@ const getChildrenPages = async (children, parent, space_id) => {
   }
 }
 
+const queryFileById = ({ id, space_id }) => {
+  return useQuery(
+    getFileById,
+    { id },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID),
+  )
+}
+
+const refetchQueryFileById = async ({ id, space_id }) => {
+  const { refetch } = queryFileById({ id, space_id })
+
+  const { data: fileData } = await refetch({ id })
+
+  return fileData
+}
+
 const filesApi = {
   uploadFiles,
   getFileHtmlByUrl,
@@ -193,6 +220,8 @@ const filesApi = {
   updateRouteId,
   getRootPage,
   getChildrenPages,
+  refetchQueryFileById,
+  queryFileById,
 }
 
 export { filesApi }

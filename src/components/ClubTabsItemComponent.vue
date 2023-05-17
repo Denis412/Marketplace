@@ -36,15 +36,29 @@
 <script setup>
 import CMenuDocument from "./ClubMenuDocument.vue";
 import { ref } from "vue";
+import { filesApi } from "src/sdk/files/file";
 
 const showMenu = ref(false);
+const doc = ref();
+
+// console.log("node", props.node.object_id);
 
 const props = defineProps({
-  doc: Object,
   node: Object,
   index: Number,
   stat: Object,
 });
+
+const getFile = async () => {
+  doc.value = (
+    await filesApi.refetchQueryFileById({
+      id: props.node.object_id,
+      space_id: 13,
+    })
+  ).get_file;
+};
+
+getFile();
 </script>
 
 <style scoped lang="scss">

@@ -80,7 +80,7 @@ const props = defineProps({
   prop_clicked_index_doc: Number,
 });
 
-console.log(props.prop_doc);
+console.log("menu_doc", props.prop_doc);
 
 const duplicateDocument = async () => {
   let document = FILES.value[props.prop_clicked_index_doc];
