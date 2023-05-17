@@ -18,9 +18,7 @@
 
     <main class="q-mt-md">
       <section
-        v-if="
-          !currentProjects?.paginate_project?.data.length || projectsLoading
-        "
+        v-if="!chunkedProjects?.length"
         class="row ptojects-wrapper q-gutter-x-md"
       >
         <c-card-add-project
@@ -40,99 +38,96 @@
       </section>
 
       <section v-else class="ptojects-wrapper">
-        <!-- <q-carousel
-          v-model="slide"
-          transition-prev="jump-right"
-          transition-next="jump-left"
-          swipeable
-          animated
-          control-color="black"
-          navigation-icon="radio_button_unchecked"
-          navigation
-          padding
-          height="300px"
-          class="rounded-borders c-carousel"
-        >
-          <q-carousel-slide
-            v-for="(projects, index) in chunkedProjects"
-            :key="projects[0].id"
-            :name="index"
-            class="row q-col-gutter-x-md"
+        <section>
+          <q-carousel
+            v-model="slide"
+            transition-prev="jump-right"
+            transition-next="jump-left"
+            swipeable
+            animated
+            control-color="black"
+            padding
+            height="300px"
+            class="rounded-borders c-carousel"
           >
-            <section
-              v-for="project in projects"
-              :key="project.id"
-              class="col-4"
+            <q-carousel-slide
+              v-for="(projects, index) in chunkedProjects"
+              :key="projects[0].id"
+              :name="index"
+              class="row q-col-gutter-x-md"
             >
-              <c-project-card
-                flat
-                class="flex flex-center project-card cursor-pointer"
-                :project="project"
-                @click="redirectProjectPage(project)"
-              />
-            </section>
-          </q-carousel-slide>
-        </q-carousel> -->
+              <section class="col-4">
+                <c-card-add-project
+                  v-if="isOwner"
+                  flat
+                  class="flex flex-center project-card"
+                />
+              </section>
 
-        <q-list class="row no-wrap" style="overflow-x: auto">
-          <section class="col-4 q-pr-md">
-            <c-card-add-project
-              v-if="isOwner"
-              flat
-              class="flex flex-center project-card"
-            />
-          </section>
+              <section
+                v-for="project in projects"
+                :key="project.id"
+                class="col-4"
+              >
+                <c-project-card
+                  flat
+                  class="flex flex-center project-card cursor-pointer"
+                  :project="project"
+                  @click="redirectProjectPage(project)"
+                />
+              </section>
+            </q-carousel-slide>
+          </q-carousel>
 
-          <section
-            v-for="project in currentProjects?.paginate_project?.data"
-            :key="project.id"
-            class="col-4 q-px-md"
-          >
-            <c-project-card
-              flat
-              class="flex flex-center project-card cursor-pointer"
-              :project="project"
-              @click="redirectProjectPage(project)"
+          <div class="row justify-center items-center q-gutter-x-md">
+            <q-icon
+              name="img:/assets/icons/arrow/arrow-left-violet4.svg"
+              class="text-subtitle3 cursor-pointer"
+              @click="switchSlide('prev')"
             />
-          </section>
-        </q-list>
+
+            <div>
+              <section class="q-gutter-x-md">
+                <q-btn
+                  flat
+                  v-for="(chunk, index) in chunkedProjects"
+                  :key="index"
+                  class="c-carousel-control-button"
+                  :class="{ 'active-control': slide === index }"
+                  @click="switchSlide(_, index)"
+                />
+              </section>
+            </div>
+
+            <q-icon
+              name="img:/assets/icons/arrow/arrow-left-violet4.svg"
+              class="text-subtitle3 arrow-right cursor-pointer"
+              @click="switchSlide('next')"
+            />
+          </div>
+        </section>
       </section>
     </main>
   </section>
 </template>
 
 <script setup>
-import { computed, inject, onMounted, ref } from "vue";
+import { computed, inject, ref } from "vue";
+
+import { useRouter } from "vue-router";
+import _ from "lodash";
 
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";
-import projectApi from "src/sdk/project";
-import { useRouter } from "vue-router";
-import { useProjectsQuery } from "src/use/projects";
-import _ from "lodash";
 
 const router = useRouter();
-const { result, loading, getWithWere } = useProjectsQuery();
 
 const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
 
-const {
-  projects: currentProjects,
-  projectsLoading,
-  refetch,
-} = getWithWere({
-  space_id: currentTeam.value?.space,
-});
+const chunkedProjects = computed(() => _.chunk(currentTeam.value?.projects, 2));
 
-const chunkedProjects = computed(() =>
-  _.chunk(currentProjects.value?.paginate_project.data, 3)
-);
-
-const slide = ref("1");
-const lorem =
-  "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo.";
-
+const slide = ref(0);
 const selectProjectsList = ref("active");
 
 const redirectProjectPage = (project) => {
@@ -142,7 +137,19 @@ const redirectProjectPage = (project) => {
   });
 };
 
-onMounted(async () => await refetch({}));
+const switchSlide = (direction = "", position = -1) => {
+  let currentValue = slide.value;
+
+  if (position !== -1) currentValue = position;
+  else if (direction === "prev")
+    currentValue - 1 < 0 ? null : (currentValue -= 1);
+  else if (direction === "next")
+    currentValue + 1 >= chunkedProjects.value.length
+      ? null
+      : (currentValue += 1);
+
+  slide.value = currentValue;
+};
 </script>
 
 <style scoped lang="scss">
@@ -165,7 +172,20 @@ onMounted(async () => await refetch({}));
   }
 }
 
+.active-control {
+  max-width: 24px;
+  width: 24px;
+  min-height: 24px;
+
+  // border: none;
+  background-color: $violet-4;
+}
+
 .q-toolbar {
   padding: 0px;
+}
+
+.arrow-right {
+  transform: rotate(180deg);
 }
 </style>

@@ -80,7 +80,7 @@
           <c-button
             v-if="!isMember && !isOwner"
             background
-            label="Вступить в команду"
+            label="Подать заявку"
             class="text-body2"
             @click="applicationSend"
           />
@@ -138,7 +138,7 @@ const fullDes = ref(true);
 const editProfile = async () => {
   router.push({
     name: "teamEdit",
-    params: { name: currentTeam.value.name },
+    params: { id: currentTeam.value.id },
   });
 };
 

@@ -2,6 +2,7 @@ import { ref } from "vue";
 
 import projectApi from "src/sdk/project";
 import pageApi from "src/sdk/page";
+import teamApi from "src/sdk/team";
 
 export const useProjectsQuery = () => {
   const result = ref(null);
@@ -86,9 +87,18 @@ export const useProjectCreate = () => {
   const loading = ref(false);
   const error = ref(null);
 
-  async function createProject({ name, space_id }) {
+  async function createProject({ name, team, space_id }) {
     try {
       loading.value = true;
+
+      await projectApi.create({
+        input: {
+          name,
+          team: {
+            [process.env.TEAM_TYPE_ID]: team.id,
+          },
+        },
+      });
 
       const projectData = await projectApi.create({
         input: { name },
@@ -131,6 +141,16 @@ export const useProjectCreate = () => {
           space_id,
         })
         .refetch({});
+
+      await teamApi.refetchPaginateTeams({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "id",
+          operator: "EQ",
+          value: team.id,
+        },
+      });
 
       result.value = projectData;
 

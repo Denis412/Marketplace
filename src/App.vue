@@ -13,6 +13,7 @@ import { useFileStore } from "src/stores/file";
 import userApi from "src/sdk/user";
 
 const store = useUserStore();
+
 const storeFile = useFileStore();
 
 onMounted(async () => {

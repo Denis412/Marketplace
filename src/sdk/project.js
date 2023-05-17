@@ -22,7 +22,7 @@ const paginateProject = ({ page, perPage, where, space_id }) => {
   return useQuery(
     paginateProjects,
     { page, perPage, where },
-    spaceHeader(space_id)
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 };
 
@@ -58,7 +58,7 @@ const refetchProjectById = async ({ id, space_id }) => {
 const create = async ({ input, space_id }) => {
   const { data: projectData } = await creatingProject(
     { input },
-    spaceHeader(space_id)
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
   console.log("create project", projectData);
@@ -70,7 +70,7 @@ const update = async ({ id, input, space_id }) => {
   console.log({ id, input, space_id });
   const { data: projectData } = await updatingProject(
     { id, input },
-    spaceHeader(space_id)
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
   console.log("update project", projectData);

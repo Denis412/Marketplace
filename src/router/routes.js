@@ -24,17 +24,23 @@ const routes = [
         component: () => import("pages/ClubAccountSettingsPage.vue"),
       },
       {
-        path: "team/:name",
+        path: "team/:id",
         name: "team",
         component: () => import("pages/ClubTeamPage.vue"),
       },
       {
-        path: "team/:name/invite",
+        path: "team-space/:id",
+        name: "teamSpace",
+        meta: { isTeamMember: true },
+        component: () => import("pages/ClubTeamSpace.vue"),
+      },
+      {
+        path: "team/:id/invite",
         name: "teamInvite",
         component: () => import("pages/ClubTeamInvitePage.vue"),
       },
       {
-        path: "team/:name/edit",
+        path: "team/:id/edit",
         name: "teamEdit",
         props: true,
         component: () => import("src/pages/ClubTeamSettingsPage.vue"),

@@ -6,6 +6,7 @@ import { convertSubject } from "src/utils/convertSubject";
 export const useUserStore = defineStore("user", {
   state: () => ({
     currentUser: null,
+    currentSpaceSubject: null,
     files: "wtf",
   }),
 
@@ -35,6 +36,32 @@ export const useUserStore = defineStore("user", {
         ...userData,
         ...subjectsData[0],
       });
+    },
+
+    async FETCH_CURRENT_SPACE_SUBJECT(space_id = 0, is_team = false) {
+      try {
+        const subjectsData = await userApi.refetchPaginateSubjects({
+          page: 1,
+          perPage: 1,
+          where: {
+            column: "user_id",
+            operator: "EQ",
+            value: JSON.parse(localStorage.getItem("user-data")).user_id,
+          },
+          is_team,
+          space_id,
+        });
+
+        this.currentSpaceSubject = subjectsData[0];
+
+        return subjectsData[0];
+      } catch (e) {
+        return null;
+      }
+    },
+
+    RESET_CURRENT_SPACE_SUBJECT() {
+      this.currentSpaceSubject = null;
     },
 
     SET_PROP(prop, value) {
