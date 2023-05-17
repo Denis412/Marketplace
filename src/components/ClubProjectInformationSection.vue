@@ -40,10 +40,11 @@
       </div>
 
       <div class="flex no-wrap justify-between q-gutter-x-md">
-        <!-- <c-label-control label="Команда" class="information-section-left">
+        <c-label-control label="Команда" class="information-section-left">
           <template #control>
             <q-input
               outlined
+              readonly
               v-model="form.team_name"
               class="c-input-outline"
               @change="updateProp('team_name', $event)"
@@ -52,7 +53,7 @@
               "
             />
           </template>
-        </c-label-control> -->
+        </c-label-control>
 
         <c-label-control
           label="Дата сдачи проекта"
@@ -112,6 +113,7 @@ const delivery_date = computed(() => currentProject.value?.delivery_date?.date);
 
 const form = ref({
   name: currentProject.value.name,
+  team_name: currentProject.value.team_name,
   created_at: created_at.value,
   delivery_date: delivery_date.value,
 });

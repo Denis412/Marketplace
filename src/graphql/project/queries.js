@@ -13,6 +13,7 @@ export const paginateProjects = gql`
         description
         target
         avatar
+        team_name
         created_at
         delivery_date {
           date

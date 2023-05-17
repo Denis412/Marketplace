@@ -101,7 +101,7 @@ export const useProjectCreate = () => {
       });
 
       const projectData = await projectApi.create({
-        input: { name },
+        input: { name, team_name: team.name },
         space_id,
       });
 

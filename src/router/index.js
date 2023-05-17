@@ -48,6 +48,8 @@ export default route(function (/* { store, ssrContext } */) {
         true
       );
 
+      console.log("subject", result);
+
       if (teamMember && !result)
         next(`/club/team/${to.params.id}?space=${to.query.space}`);
     } else userStore.RESET_CURRENT_SPACE_SUBJECT();

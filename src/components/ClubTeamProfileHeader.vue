@@ -1,41 +1,7 @@
 <template>
   <q-card flat class="header-wrapper w-100p">
     <q-toolbar class="absolute flex justify-end">
-      <q-icon
-        class="cursor-pointer relative-position"
-        name="more_horiz"
-        size="40px"
-      >
-        <q-menu class="w-max-content">
-          <q-list separator>
-            <q-item
-              v-if="isOwner"
-              clickable
-              class="flex no-wrap items-center text-caption1 text-black"
-              @click="editProfile"
-            >
-              Редактировать
-            </q-item>
-
-            <q-item
-              v-else
-              clickable
-              v-ripple
-              class="flex no-wrap items-center text-caption1 text-black"
-            >
-              Покинуть команду
-            </q-item>
-
-            <q-item
-              clickable
-              v-ripple
-              class="flex no-wrap items-center text-caption1 text-black"
-            >
-              Поделиться
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-icon>
+      <c-popup-team-actions />
     </q-toolbar>
 
     <q-card-section class="flex no-wrap c-mx-64 c-mt-64 c-mb-40">
@@ -122,6 +88,7 @@ import { useRouter } from "vue-router";
 import { useTeamApplication, useTeamUpdate } from "src/use/teams";
 
 import CButton from "src/components/ClubButton.vue";
+import CPopupTeamActions from "./ClubPopupTeamActions.vue";
 
 const router = useRouter();
 const { updateTeam } = useTeamUpdate();
@@ -135,12 +102,12 @@ const isOwner = inject("isOwner");
 const isMember = inject("isMember");
 const fullDes = ref(true);
 
-const editProfile = async () => {
-  router.push({
-    name: "teamEdit",
-    params: { id: currentTeam.value.id },
-  });
-};
+// const editProfile = async () => {
+//   router.push({
+//     name: "teamEdit",
+//     params: { id: currentTeam.value.id },
+//   });
+// };
 
 const updateTeamStatus = async () => {
   await updateTeam(currentTeam.value.id, {

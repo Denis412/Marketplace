@@ -66,7 +66,7 @@ const routes = [
         component: () => import("src/pages/ClubMyProjectsPage.vue"),
       },
       {
-        path: "project/:space/:id",
+        path: "project/:id",
         name: "project",
         component: () => import("src/pages/ClubProjectInformationPage.vue"),
       },

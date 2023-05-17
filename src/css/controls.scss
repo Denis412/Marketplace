@@ -78,6 +78,32 @@
   }
 }
 
+.c-input-area-mc {
+  min-height: max-content !important;
+  height: max-content;
+
+  div {
+    .q-field__control {
+      min-height: max-content !important;
+      height: max-content;
+
+      &::after {
+        height: 100%;
+      }
+
+      div {
+        min-height: max-content !important;
+        height: max-content;
+
+        textarea {
+          min-height: max-content !important;
+          height: max-content;
+        }
+      }
+    }
+  }
+}
+
 .c-input-area-mh {
   min-height: 100%;
 

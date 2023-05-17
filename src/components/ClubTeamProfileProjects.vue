@@ -14,8 +14,6 @@
       </q-tabs>
     </div>
 
-    <!-- <pre>{{ currentProjects }}</pre> -->
-
     <main class="q-mt-md">
       <section
         v-if="!chunkedProjects?.length"
@@ -133,7 +131,8 @@ const selectProjectsList = ref("active");
 const redirectProjectPage = (project) => {
   router.push({
     name: "project",
-    params: { id: project.id, space: currentTeam.value.space },
+    params: { id: project.id },
+    query: { name: project.name, space: currentTeam.value.space },
   });
 };
 

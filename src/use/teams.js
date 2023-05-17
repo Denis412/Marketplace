@@ -128,6 +128,13 @@ export const useTeamCreate = () => {
             order: 2,
           },
           {
+            name: "team_name",
+            label: "Название команды",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 3,
+          },
+          {
             name: "description",
             label: "Описание проекта",
             data_type: "text",
@@ -139,7 +146,7 @@ export const useTeamCreate = () => {
             label: "Цель проекта",
             data_type: "text",
             type_id: projectTypeData.id,
-            order: 6,
+            order: 5,
           },
         ],
         space_id: space.id,
@@ -151,7 +158,7 @@ export const useTeamCreate = () => {
           label: "Дата сдачи",
           data_type: "datetime",
           type_id: projectTypeData.id,
-          order: 7,
+          order: 6,
           meta: {
             properties: [
               {

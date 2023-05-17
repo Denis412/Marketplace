@@ -1,11 +1,9 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <div class="loader loader-lg" v-if="projectsLoading" />
+    <div class="loader loader-lg" v-if="!currentProject" />
 
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
-
-      <!-- <pre>{{ currentProject }}</pre> -->
 
       <section>
         <q-img
@@ -63,23 +61,24 @@ import { useRoute } from "vue-router";
 import CProjectInformationSection from "src/components/ClubProjectInformationSection.vue";
 import CProjectTargetDescriptionSections from "src/components/ClubProjectTargetDescriptionSections.vue";
 import CProjectMembersSections from "src/components/ClubProjectMembersSections.vue";
+import projectApi from "src/sdk/project";
 
 const route = useRoute();
 
-const { projects, projectsLoading } = useProjectsQuery().getWithWere({
+const { result: projects } = projectApi.paginateProject({
   page: 1,
   perPage: 1,
   where: {
-    column: "id",
+    column: "name",
     operator: "EQ",
-    value: route.params.id,
+    value: route.query.name,
   },
-  space_id: route.params.space,
+  space_id: route.query.space,
 });
 
 const currentProject = computed(() => projects.value?.paginate_project.data[0]);
 
-provide("spaceId", route.params.space);
+provide("spaceId", route.query.space);
 provide("currentProject", currentProject);
 </script>
 
