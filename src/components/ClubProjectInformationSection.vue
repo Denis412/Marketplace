@@ -62,6 +62,7 @@
           <template #control>
             <q-input
               v-model="form.delivery_date"
+              mask="##.##.####"
               :placeholder="delivery_date || 'ДД.ММ.ГГГГ'"
               class="date-input c-input-outline"
               outlined

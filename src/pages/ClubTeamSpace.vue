@@ -1,7 +1,32 @@
 <template>
-  <q-page> hello </q-page>
+  <q-page class="c-pa-32">
+    <div v-if="!team" class="loader loader-lg" />
+
+    <c-team-profile v-else />
+  </q-page>
 </template>
 
-<script setup></script>
+<script setup>
+import CTeamProfile from "src/components/ClubTeamProfile.vue";
+import teamApi from "src/sdk/team";
+import { computed, provide } from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+const { result: currentTeam } = teamApi.paginateTeams({
+  page: 1,
+  perPage: 1,
+  where: {
+    column: "id",
+    operator: "EQ",
+    value: route.params.id,
+  },
+});
+
+const team = computed(() => currentTeam.value?.paginate_team.data[0]);
+
+provide("currentTeam", team);
+</script>
 
 <style scoped lang="scss"></style>

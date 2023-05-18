@@ -37,12 +37,14 @@ const routes = [
       {
         path: "team/:id/invite",
         name: "teamInvite",
+        meta: { isTeamOwner: true },
         component: () => import("pages/ClubTeamInvitePage.vue"),
       },
       {
         path: "team/:id/edit",
         name: "teamEdit",
         props: true,
+        meta: { isTeamOwner: true },
         component: () => import("src/pages/ClubTeamSettingsPage.vue"),
       },
       {

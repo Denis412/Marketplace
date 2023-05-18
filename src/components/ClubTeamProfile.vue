@@ -8,9 +8,9 @@
       <section v-if="loading" class="loader loader-lg"></section>
 
       <section v-else>
-        <c-team-profile-header />
-        <c-team-profile-projects class="c-pt-32" />
-        <c-team-profile-members />
+        <c-team-profile-header :is-profile="isProfile" />
+        <c-team-profile-projects :is-profile="isProfile" class="c-pt-32" />
+        <c-team-profile-members :is-profile="isProfile" />
       </section>
     </main>
   </section>
@@ -24,6 +24,10 @@ import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
 
 import { useTeamIsMember } from "src/use/teams";
+
+const { isProfile } = defineProps({
+  isProfile: Boolean,
+});
 
 const { result, loading, checkIsMember } = useTeamIsMember();
 

@@ -2,7 +2,7 @@
   <q-page class="c-pa-32">
     <div v-if="!team" class="loader loader-lg" />
 
-    <c-team-profile v-else />
+    <c-team-profile is-profile v-else />
   </q-page>
 </template>
 

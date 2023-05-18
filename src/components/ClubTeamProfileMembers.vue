@@ -11,13 +11,18 @@
         >
           <q-tab no-caps name="members" label="Участники" />
 
-          <q-tab v-if="isOwner" no-caps name="applications" label="Заявки" />
+          <q-tab
+            v-if="!isProfile && isOwner"
+            no-caps
+            name="applications"
+            label="Заявки"
+          />
         </q-tabs>
 
         <q-space />
 
         <c-button
-          v-if="isOwner"
+          v-if="!isProfile && isOwner"
           background
           class="text-body1"
           label="Пригласить"
@@ -76,6 +81,10 @@ import _ from "lodash";
 import CApplicationsList from "./ClubApplicationsList.vue";
 import CTeamMembersList from "./ClubTeamMembersList.vue";
 import CButton from "./ClubButton.vue";
+
+const { isProfile } = defineProps({
+  isProfile: Boolean,
+});
 
 const isOwner = inject("isOwner");
 const currentTeam = inject("currentTeam");

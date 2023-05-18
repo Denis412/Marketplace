@@ -44,7 +44,7 @@
 
         <div class="flex items-center c-mt-32 header-controls">
           <c-button
-            v-if="!isMember && !isOwner"
+            v-if="!isMember && !isOwner && isProfile"
             background
             label="Подать заявку"
             class="text-body2"
@@ -55,7 +55,7 @@
 
           <q-checkbox
             dense
-            v-if="isOwner"
+            v-if="!isProfile && isOwner"
             v-model="isReady"
             @update:model-value="updateTeamStatus"
             left-label
@@ -65,13 +65,14 @@
 
           <a
             v-if="isMember || isOwner"
-            href="#"
+            :href="isProfile ? '#' : '#'"
             class="text-liner-button link text-body1"
           >
-            Чат команды
+            <span v-if="isProfile">Лидер команды</span>
+            <span v-else>Чат команды</span>
 
             <q-icon
-              class="text-subtitle4"
+              class="text-subtitle4 q-ml-sm"
               name="img:/assets/icons/socials/telegram-gradient.svg"
             />
           </a>
@@ -89,6 +90,10 @@ import { useTeamApplication, useTeamUpdate } from "src/use/teams";
 
 import CButton from "src/components/ClubButton.vue";
 import CPopupTeamActions from "./ClubPopupTeamActions.vue";
+
+const { isProfile } = defineProps({
+  isProfile: Boolean,
+});
 
 const router = useRouter();
 const { updateTeam } = useTeamUpdate();

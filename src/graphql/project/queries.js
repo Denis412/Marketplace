@@ -21,6 +21,7 @@ export const paginateProjects = gql`
             first_name
             last_name
           }
+          major
           group {
             id
             name

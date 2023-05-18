@@ -49,6 +49,7 @@ const editProfile = async () => {
   router.push({
     name: "teamEdit",
     params: { id: currentTeam.value.id },
+    query: { space: currentTeam.value.space },
   });
 };
 </script>

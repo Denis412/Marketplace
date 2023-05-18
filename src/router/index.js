@@ -7,6 +7,7 @@ import {
 } from "vue-router";
 import routes from "./routes";
 import { useUserStore } from "src/stores/user";
+import teamApi from "src/sdk/team";
 
 /*
  * If not building with SSR mode, you can
@@ -41,6 +42,24 @@ export default route(function (/* { store, ssrContext } */) {
 
     const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
     const teamMember = to.matched.some((record) => record.meta.isTeamMember);
+    const teamOwner = to.matched.some((record) => record.meta.isTeamOwner);
+
+    if (teamOwner) {
+      const team = await teamApi.refetchPaginateTeams({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "id",
+          operator: "EQ",
+          value: to.params.id,
+        },
+      });
+
+      const subject = await userStore.FETCH_CURRENT_SPACE_SUBJECT(0, true);
+
+      if (team.authoe_id !== subject.id)
+        next(`/club/team/${to.params.id}?space=${to.query.space}`);
+    }
 
     if (teamMember || to.name === "team") {
       const result = await userStore.FETCH_CURRENT_SPACE_SUBJECT(

@@ -35,11 +35,11 @@
         indicator-color="black"
         class="bg-transparent"
       >
-        <q-tab name="members" class="text-body1" label="Участники" />
+        <q-tab name="members" class="c-tab-text" label="Участники" />
 
         <q-tab
           name="applications"
-          class="text-body1"
+          class="c-tab-text"
           label="Исходящие заявки"
         />
       </q-tabs>

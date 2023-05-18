@@ -120,6 +120,10 @@ import CProjectCard from "./ClubProjectCard.vue";
 
 const router = useRouter();
 
+const { isProfile } = defineProps({
+  isProfile: Boolean,
+});
+
 const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
 
@@ -129,11 +133,12 @@ const slide = ref(0);
 const selectProjectsList = ref("active");
 
 const redirectProjectPage = (project) => {
-  router.push({
-    name: "project",
-    params: { id: project.id },
-    query: { name: project.name, space: currentTeam.value.space },
-  });
+  if (!isProfile)
+    router.push({
+      name: "project",
+      params: { id: project.id },
+      query: { name: project.name, space: currentTeam.value.space },
+    });
 };
 
 const switchSlide = (direction = "", position = -1) => {
