@@ -9,6 +9,7 @@
           /></a>
         </div>
       </div>
+
       <div class="orderIconsCartOuter">
         <img
           class="orderIconsCart"
@@ -17,6 +18,7 @@
         />
       </div>
     </div>
+
     <div class="cOrderItemHeading">
       <p class="orderNumP">Номер заказа</p>
       <p class="orderNameP">Название заказа</p>
