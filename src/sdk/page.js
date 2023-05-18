@@ -71,9 +71,9 @@ const create = async ({ input, space_id }) => {
   return pageData.pageCreate.record
 }
 
-const update = async ({ input, space_id }) => {
+const update = async ({ input, id, space_id }) => {
   const { data: pageData } = await updatingPage(
-    { input },
+    { input, id },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID),
   )
 
