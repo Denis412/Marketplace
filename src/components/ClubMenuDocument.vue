@@ -54,7 +54,6 @@
 
     <c-rename-item-document
       :prop_doc="prop_doc"
-      :prop_doc_id="props.prop_data.object_id"
       :prop_page_id="props.prop_data.page_id"
     />
   </q-list>
