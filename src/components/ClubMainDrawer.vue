@@ -78,29 +78,9 @@ const mainTreeItems = ref([
     path: "club",
   },
   {
-    title: "Магазин",
-    img: "HomeIconDemo.svg",
-    path: "market",
-  },
-  {
-    title: "Команды",
-    img: "HomeIconDemo.svg",
-    path: "teams",
-  },
-  {
     title: "Мои команды",
     img: "HomeIconDemo.svg",
     path: "my-teams",
-  },
-  {
-    title: "Мои проекты",
-    img: "HomeIconDemo.svg",
-    path: "my-projects",
-  },
-  {
-    title: "Мое пространство",
-    img: "HomeIconDemo.svg",
-    path: "space",
   },
   {
     title: "Документы",

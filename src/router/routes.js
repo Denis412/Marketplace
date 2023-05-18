@@ -43,7 +43,6 @@ const routes = [
       {
         path: "team/:id/edit",
         name: "teamEdit",
-        props: true,
         meta: { isTeamOwner: true },
         component: () => import("src/pages/ClubTeamSettingsPage.vue"),
       },
@@ -70,6 +69,7 @@ const routes = [
       {
         path: "project/:id",
         name: "project",
+        meta: { isTeamMember: true },
         component: () => import("src/pages/ClubProjectInformationPage.vue"),
       },
 

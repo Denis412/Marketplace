@@ -54,9 +54,8 @@
               :name="index"
               class="row q-col-gutter-x-md"
             >
-              <section class="col-4">
+              <section v-if="isOwner && !isProfile" class="col-4">
                 <c-card-add-project
-                  v-if="isOwner"
                   flat
                   class="flex flex-center project-card"
                 />

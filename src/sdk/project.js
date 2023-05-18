@@ -9,7 +9,11 @@ import {
   projectDelete,
   projectUpdate,
 } from "src/graphql/project/mutations";
-import { getProjectById, paginateProjects } from "src/graphql/project/queries";
+import {
+  getProjectById,
+  projectsPaginate,
+  projectsPaginateInMainSpace,
+} from "src/graphql/project/queries";
 import { spaceHeader } from "src/utils/spaceHeader";
 
 provideApolloClient(apolloClient);
@@ -19,8 +23,10 @@ const { mutate: updatingProject } = useMutation(projectUpdate);
 const { mutate: deletingProject } = useMutation(projectDelete);
 
 const paginateProject = ({ page, perPage, where, space_id }) => {
+  const query = space_id ? projectsPaginate : projectsPaginateInMainSpace;
+
   return useQuery(
-    paginateProjects,
+    query,
     { page, perPage, where },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );

@@ -78,6 +78,18 @@
   }
 }
 
+.c-tab-row {
+  min-height: min-content;
+  border-radius: 5px;
+  .q-tab__content {
+    flex-direction: row;
+
+    .q-tab__label {
+      margin-left: 12px;
+    }
+  }
+}
+
 .c-input-area-mc {
   min-height: max-content !important;
   height: max-content;

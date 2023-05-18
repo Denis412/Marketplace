@@ -30,7 +30,7 @@
           </p>
         </section>
 
-        <q-list
+        <!-- <q-list
           v-if="currentTeam?.directions"
           class="c-mt-32 q-gutter-sm text-caption1"
         >
@@ -40,7 +40,7 @@
             :key="direction.title"
             :label="direction.title"
           />
-        </q-list>
+        </q-list> -->
 
         <div class="flex items-center c-mt-32 header-controls">
           <c-button

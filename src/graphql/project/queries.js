@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
-export const paginateProjects = gql`
-  query paginateProjects(
+export const projectsPaginate = gql`
+  query projectsPaginate(
     $page: Int!
     $perPage: Int!
     $where: ObjectPaginatorWhere
@@ -30,6 +30,31 @@ export const paginateProjects = gql`
         delivery_date {
           date
         }
+      }
+    }
+  }
+`;
+
+export const projectsPaginateInMainSpace = gql`
+  query projectsPaginateInMainSpace(
+    $page: Int!
+    $perPage: Int!
+    $where: ObjectPaginatorWhere
+  ) {
+    paginate_project(page: $page, perPage: $perPage, where: $where) {
+      data {
+        id
+        name
+        description
+        avatar
+        team {
+          id
+          name
+        }
+        delivery_date {
+          date
+        }
+        created_at
       }
     }
   }

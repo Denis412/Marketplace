@@ -54,7 +54,6 @@
 </template>
 
 <script setup>
-import { useProjectsQuery } from "src/use/projects";
 import { computed, provide } from "vue";
 import { useRoute } from "vue-router";
 

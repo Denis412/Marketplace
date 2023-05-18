@@ -29,7 +29,7 @@
             flat
             no-caps
             label="Создать"
-            class="club-button-background"
+            class="club-button-background text-body1"
             @click="projectCreate"
           />
 
@@ -37,7 +37,7 @@
             flat
             no-caps
             label="Отмена"
-            class="club-button-outline"
+            class="club-button-outline text-body1"
             v-close-popup
           />
         </footer>

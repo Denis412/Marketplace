@@ -110,6 +110,19 @@ export const paginateSubjectsInMainSpace = gql`
         }
         gender
         city
+        projects {
+          id
+          name
+          avatar
+          description
+          team {
+            id
+            name
+          }
+          delivery_date {
+            date
+          }
+        }
         applications {
           id
         }

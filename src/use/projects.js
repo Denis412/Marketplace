@@ -92,7 +92,7 @@ export const useProjectCreate = () => {
     try {
       loading.value = true;
 
-      await projectApi.create({
+      const projectInMainSpace = await projectApi.create({
         input: {
           name,
           team: {
@@ -112,6 +112,36 @@ export const useProjectCreate = () => {
         is_team: true,
         space_id,
       });
+
+      const subjectInMainSpace = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "user_id",
+          operator: "EQ",
+          value: user.user_id,
+        },
+      });
+
+      await userApi.update(subjectInMainSpace[0].id, {
+        projects: {
+          [process.env.PROJECT_TYPE_ID]: [
+            ...subjectInMainSpace[0].projects,
+            projectInMainSpace.id,
+          ],
+        },
+      });
+
+      // const subjectInMainSpace = await userApi.refetchPaginateSubjects({
+      //   page: 1,
+      //   perPage: 1,
+      //   where: {
+      //     column: "user_id",
+      //     operator: "EQ",
+      //     value: user.user_id,
+      //   },
+      //   is_team: true,
+      // });
 
       console.log("subject", subject);
 
