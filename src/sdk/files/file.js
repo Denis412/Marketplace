@@ -21,9 +21,12 @@ const fileStore = useFileStore()
 
 provideApolloClient(apolloClient)
 
-const uploadFiles = async (files) => {
+const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
   const { mutate } = useMutation(filesUpload)
 
+  console.log('upload', files)
+
+  //Если вместо files использовать file, то работать не будет (?!)
   let data = mutate(
     {
       files,
@@ -34,18 +37,6 @@ const uploadFiles = async (files) => {
       },
     },
   )
-  data.then((result)=>{pageApi.create({
-    input: {
-      title: files[0].name.slice(0,-5),
-      page_type: "node",
-      parent_id: "4440891212883535597",
-      object: {
-        id: BigInt(result.data.filesUpload.ids[0]).toString(),
-        type_id: "6923351168454209144", //id типа файла
-      },
-    },
-    space_id: 13,
-  })})
 
   await response('Файл добавлен', 'Ошибка', () => {}, fileStore.refetchFiles)
 }
@@ -66,15 +57,20 @@ const getFileHtmlByUrl = async (path, id, name, extension) => {
   return res
 }
 
-const upload = async (files) => {
-  try {
-    await uploadFiles(files)
-  } catch (error) {
-    console.log(error)
-  }
-}
+// const upload = async (files) => {
+//   try {
+//     await uploadFiles(files)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
-const createHtmlFile = async function (editorValue = '', fileName = 'UNKNOWN') {
+const createHtmlFile = async function ({
+  editorValue = '',
+  fileName = 'UNKNOWN',
+  parent_id = '',
+  space_id,
+}) {
   console.log('editorValue, fileName', editorValue, fileName)
   const blob = new Blob([editorValue], { type: 'text/html' })
   const formData = new FormData()
@@ -83,7 +79,7 @@ const createHtmlFile = async function (editorValue = '', fileName = 'UNKNOWN') {
 
   const file = formData.getAll('files')
 
-  upload(file)
+  uploadFiles({ files: file, parent_id, space_id, fileName })
 }
 
 const setTimeoutFunc = ({ minutes, func }) => {
@@ -122,7 +118,7 @@ const deleteDoc = function (id, page_id) {
   const apolloClient = new ApolloClient(getClientOptions())
   provideApolloClient(apolloClient)
 
-  pageApi.deleteById(page_id,13)
+  pageApi.deleteById(page_id, 13)
 
   const { mutate } = useMutation(fileDelete, () => ({
     variables: {
@@ -225,7 +221,7 @@ const filesApi = {
   uploadFiles,
   getFileHtmlByUrl,
   createHtmlFile,
-  upload,
+  // upload,
   setTimeoutFunc,
   updateFile,
   deleteDoc,

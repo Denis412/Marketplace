@@ -14,6 +14,8 @@
         {{ node.title_page.replace(".html", "") }}
       </router-link>
 
+      <c-add-document :node="props.node" class="addDoc q-px-md" />
+
       <div class="menu-wrapper" clickable>
         <q-btn-dropdown
           no-icon-animation
@@ -35,9 +37,10 @@
 </template>
 
 <script setup>
-import CMenuDocument from "./ClubMenuDocument.vue";
+import CMenuDocument from "src/components/ClubMenuDocument.vue";
 import { ref } from "vue";
 import { filesApi } from "src/sdk/files/file";
+import CAddDocument from "src/components/ClubAddDocument.vue";
 
 const showMenu = ref(false);
 const doc = ref();
@@ -50,16 +53,13 @@ const props = defineProps({
   stat: Object,
 });
 
-console.log(props);
 const getFile = async () => {
-  console.log("id", props.node.object_id);
   doc.value = (
     await filesApi.refetchQueryFileById({
       id: props.node.object_id,
       space_id: 13,
     })
   ).get_file;
-  console.log(2343, doc.value);
 };
 
 getFile();
@@ -84,6 +84,16 @@ getFile();
 
 .link {
   text-decoration: none;
+}
+
+.addDoc {
+  visibility: hidden;
+}
+
+.item_doc:hover .addDoc {
+  opacity: 0;
+  animation: ani 0.3s forwards;
+  visibility: visible;
 }
 
 .link:visited {
