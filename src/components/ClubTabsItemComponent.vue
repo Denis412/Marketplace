@@ -1,13 +1,17 @@
 <template>
   <div class="row no-wrap q-pl-lg drawer-item">
     <div class="item_doc" @contextmenu.prevent="showMenu = true">
+      <span v-if="stat.children.length" @click="stat.open = !stat.open">
+        {{ stat.open ? "-" : "+" }}
+      </span>
+
       <img :src="`/icons/file-grey.svg`" alt="" class="q-pr-md" />
 
       <router-link
         class="name_doc link"
         :to="{ name: 'Document', params: { id: `${props.node.index}` } }"
       >
-        {{ node.text.replace(".html", "") }}
+        {{ node.title_page.replace(".html", "") }}
       </router-link>
 
       <div class="menu-wrapper" clickable>
@@ -39,6 +43,7 @@ const props = defineProps({
   doc: Object,
   node: Object,
   index: Number,
+  stat: Object,
 });
 </script>
 

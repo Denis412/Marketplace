@@ -9,7 +9,7 @@ import { ApolloClient } from '@apollo/client/core'
 import { getClientOptions } from 'src/apollo/index'
 import { Notify } from 'quasar'
 import { useFileStore } from 'src/stores/file'
-import pageApi from '../page.js'
+import pageApi from 'src/sdk/page'
 
 const fileStore = useFileStore()
 
@@ -53,6 +53,7 @@ const uploadFiles = async (files) => {
 const getFileHtmlByUrl = async (path, id, name, extension) => {
   //mode: no-cores
   const response = await fetch(
+    // `${process.env.FILE_STORAGE_URI}${path}/${id}.${extension}?n=${name}`,
     `https://cdn.stud.druid.1t.ru/${path}/${id}.${extension}?n=${name}`,
     {
       mode: 'cors',
@@ -90,7 +91,6 @@ const setTimeoutFunc = ({ minutes, func }) => {
 }
 
 const updateFile = (name, doc) => {
-  console.log(33333, doc)
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {
@@ -152,6 +152,47 @@ const response = async function (
   }
 }
 
+const getRootPage = async (rootPageId, space_id) => {
+  let data_tree = []
+  let rootPage = null
+  rootPage = await pageApi.refetchQueryPageById({
+    id: rootPageId,
+    space_id: space_id,
+  })
+
+  if (rootPage.page.children.data.length > 0) {
+    await getChildrenPages(rootPage.page.children.data, data_tree, space_id)
+  }
+  console.log(8, data_tree)
+  return data_tree
+}
+
+const getChildrenPages = async (children, parent, space_id) => {
+  let page = null
+  for (const child of children) {
+    page = await pageApi.refetchQueryPageById({
+      id: child.id,
+      space_id: space_id,
+    })
+
+    const childData = {
+      title_page: page.page.title,
+      object_id: page.page.object.id,
+      page_id: page.page.id,
+      children: [],
+    }
+
+    if (parent.children == undefined) {
+      parent.push(childData)
+    } else {
+      parent.children.push(childData)
+    }
+    if (page.page.children.data.length > 0) {
+      await getChildrenPages(page.page.children.data, childData, space_id)
+    }
+  }
+}
+
 const filesApi = {
   uploadFiles,
   getFileHtmlByUrl,
@@ -161,6 +202,8 @@ const filesApi = {
   updateFile,
   deleteDoc,
   updateRouteId,
+  getRootPage,
+  getChildrenPages,
 }
 
 export { filesApi }

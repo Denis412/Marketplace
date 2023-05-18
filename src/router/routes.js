@@ -96,6 +96,11 @@ const routes = [
         name: 'taskPage',
         component: () => import('pages/ClubTaskPage.vue'),
       },
+      {
+        path: 'taskPage',
+        name: 'taskPage',
+        component: () => import('pages/ClubTaskPage.vue'),
+      },
     ],
   },
 
