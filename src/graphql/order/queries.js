@@ -30,3 +30,45 @@ export const getOrderById = gql`
     }
   }
 `;
+export const getOrders = gql`
+  query {
+  paginate_order( page: 1, perPage: 100) {
+  data {
+    id
+    type_id
+    author_id
+    level
+    position
+    created_at
+    updated_at
+    name
+    customer
+    description
+    consultation
+    files
+    todos
+    functions
+    price_end
+    price_start
+    date_complete
+    draft
+    status
+    team
+    date_approve
+    deal
+    rejection
+    date_update
+  }
+  paginatorInfo {
+    perPage
+    currentPage
+    lastPage
+    total
+    count
+    from
+    to
+    hasMorePages
+  }
+}
+}
+`;
