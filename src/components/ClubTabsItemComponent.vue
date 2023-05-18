@@ -9,7 +9,7 @@
 
       <router-link
         class="name_doc link"
-        :to="{ name: 'Document', params: { id: `${props.node.index}` } }"
+        :to="{ name: 'Document', params: { id: `${props.node.object_id}` } }"
       >
         {{ node.title_page.replace(".html", "") }}
       </router-link>
@@ -26,7 +26,8 @@
           class="btn-dropdown-doc"
           v-model="showMenu"
         >
-          <c-menu-document :prop_clicked_index_doc="index" :prop_doc="doc" />
+          <c-menu-document :prop_doc="doc" />
+          <!-- <c-menu-document :prop_clicked_index_doc="index" :prop_doc="doc" /> -->
         </q-btn-dropdown>
       </div>
     </div>
@@ -36,15 +37,31 @@
 <script setup>
 import CMenuDocument from "./ClubMenuDocument.vue";
 import { ref } from "vue";
+import { filesApi } from "src/sdk/files/file";
 
 const showMenu = ref(false);
+const doc = ref();
+
+// console.log("node", props.node.object_id);
 
 const props = defineProps({
-  doc: Object,
   node: Object,
-  index: Number,
+  // index: Number,
   stat: Object,
 });
+
+const getFile = async () => {
+  console.log("id", props.node.object_id);
+  doc.value = (
+    await filesApi.refetchQueryFileById({
+      id: props.node.object_id,
+      space_id: 13,
+    })
+  ).get_file;
+  console.log(2343, doc.value);
+};
+
+getFile();
 </script>
 
 <style scoped lang="scss">
