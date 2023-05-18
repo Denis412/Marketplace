@@ -6,6 +6,7 @@
         ref="tree"
         virtualization
         style="height: 500px"
+        @after-drop="contex()"
       >
         <template #default="{ node, stat }">
           <c-tabs-item :stat="stat" :node="node" />
@@ -20,6 +21,7 @@
 import { computed, watch, ref } from "vue";
 import CTabsItem from "./ClubTabsItemComponent.vue";
 import { Draggable } from "@he-tree/vue";
+import { dragContext } from "@he-tree/vue";
 import "@he-tree/vue/style/default.css";
 import { filesApi } from "src/sdk/files/file";
 import pageApi from "src/sdk/page";
@@ -30,6 +32,10 @@ const data_tree = ref([]);
 //Получение корневой страницы документов
 const getData = async () => {
   data_tree.value = await filesApi.getRootPage("4440891212883535597", 13);
+};
+
+const contex = () => {
+  console.log(dragContext);
 };
 
 getData();

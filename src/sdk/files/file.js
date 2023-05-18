@@ -21,24 +21,39 @@ const fileStore = useFileStore()
 
 provideApolloClient(apolloClient)
 
-const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
-  const { mutate } = useMutation(filesUpload)
-
-  console.log('upload', files)
-
-  //Если вместо files использовать file, то работать не будет (?!)
-  let data = mutate(
-    {
-      files,
-    },
-    {
-      context: {
-        hasUpload: true,
-      },
-    },
-  )
-
-  await response('Файл добавлен', 'Ошибка', () => {}, fileStore.refetchFiles)
+  const uploadFiles = async ({ files, parent_id, space_id, fileName }) => { 
+    const { mutate } = useMutation(filesUpload) 
+   
+    console.log('upload', files) 
+   
+    //Если вместо files использовать file, то работать не будет (?!) 
+    let data = mutate( 
+      { 
+        files, 
+      }, 
+      { 
+        context: { 
+          hasUpload: true, 
+        }, 
+      }, 
+    ) 
+   
+    await response('Файл добавлен', 'Ошибка', () => {}, fileStore.refetchFiles) 
+    data.then(async (result) => { 
+      pageApi.create({ 
+        input: { 
+          // title: createdFile[0].name.slice(0, -5), 
+          title: fileName, 
+          page_type: 'node', 
+          parent_id: parent_id || '4440891212883535597', 
+          object: { 
+            id: BigInt(result.data.filesUpload.ids[0]).toString(), 
+            type_id: '6923351168454209144', //id типа файла 
+          }, 
+        }, 
+        space_id: space_id, 
+      }) 
+    })
 }
 
 const getFileHtmlByUrl = async (path, id, name, extension) => {
@@ -86,7 +101,7 @@ const setTimeoutFunc = ({ minutes, func }) => {
   setTimeout(func, minutes * 60)
 }
 
-const updateFile = (name, doc, page_id, parent_id = "") => {
+const updateFile = (name, doc, page_id, parent_id) => {
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {
@@ -164,7 +179,7 @@ const getRootPage = async (rootPageId, space_id) => {
   let rootPage = null
   rootPage = await pageApi.refetchQueryPageById({
     id: rootPageId,
-    space_id: space_id,
+    space_id: space_id, 
   })
 
   if (rootPage.page.children.data.length > 0) {
@@ -188,6 +203,7 @@ const getChildrenPages = async (children, parent, space_id) => {
       object_id: page.page.object.id,
       page_id: page.page.id,
       children: [],
+      page_parent_id: page.page.parent_id
     }
 
     if (parent.children == undefined) {
