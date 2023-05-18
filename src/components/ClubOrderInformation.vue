@@ -23,10 +23,11 @@
         <q-item-section class="block-control-response">
           <section class="q-mt-lg q-mb-md flex justify-start no-wrap">
             <div
-              class="image-block-control-response q-ml-xl q-mr-md flex center justify-center"
+              class="image-block-control-response q-ml-xl q-mr-md flex items-center justify-center"
             >
-              <q-img
-                src="/assets/icons/person/person-white.svg"
+              <q-icon
+                size="45px"
+                name="img:/assets/icons/person/person-white.svg"
                 alt="person-white"
               />
             </div>
@@ -169,6 +170,7 @@
 <script setup>
 import { ref, defineProps } from "vue";
 import CButton from "../components/ClubButton.vue";
+import personWhite from "/assets/icons/person/person-white.svg";
 
 const props = defineProps({
   order: {
