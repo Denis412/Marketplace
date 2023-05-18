@@ -26,7 +26,7 @@ import pageApi from "src/sdk/page";
 
 // const data = ref([]);
 const rootPage = ref();
-const data_tree = ref();
+const data_tree = ref([]);
 const storeFile = useFileStore();
 const FILES = computed(() => storeFile.GET_FILES);
 
