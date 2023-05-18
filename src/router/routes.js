@@ -76,6 +76,11 @@ const routes = [
         name: "order-edit",
         component: () => import("pages/ClubOrderEdit.vue"),
       },
+      {
+        path: "order-created",
+        name: "order-created",
+        component: () => import("pages/ClubOrderCreated.vue"),
+      },
     ],
   },
 

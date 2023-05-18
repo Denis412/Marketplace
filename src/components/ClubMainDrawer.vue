@@ -19,7 +19,7 @@
           :to="{ name: item.path }"
           class="row no-wrap c-pl-16 drawer-item"
         >
-          <img :src="`/src/assets/icons/${item.img}`" alt="" />
+          <img :src="`/assets/icons/${item.img}`" alt="" />
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
@@ -34,7 +34,7 @@
       class="bg-violet-6 drawer-btn absolute"
       @click="toggleDrawer()"
     >
-      <img src="/src/assets/icons/DrawerArrow.svg" />
+      <img src="/assets/icons/DrawerArrow.svg" />
     </button>
   </q-drawer>
 </template>

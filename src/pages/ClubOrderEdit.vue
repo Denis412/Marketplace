@@ -1,5 +1,5 @@
 <template>
-  <q-page class="c-pa-32">
+  <q-page class="c-pt-32 c-pt-32 container">
     <section v-if="!loadingOrder">
       <div v-if="loadingOrder">
         Загрузка...
@@ -21,6 +21,7 @@
         :name="'name-order'"
         :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
         :type="'text'"
+        :class-name="'c-input-outline'"
         :value = "order.name"
         @change="(value) => form.name = value"
         :length="500"
@@ -32,6 +33,7 @@
         :name="'name-customer'"
         :placeholder="'Укажите названия компании или ИП...'"
         :type="'text'"
+        :class-name="'c-input-outline'"
         :value = "order.customer"
         @change="(value) => form.customer = value"
         :length="500"
@@ -41,23 +43,25 @@
         <div class="text-subtitle3 input-title input-mt">
             Что требуется сделать
         </div>
-        <div class="row justify-between wrap c-mt-24">
+        <div class="button-group row wrap c-mt-24 relative-position">
           <c-button
           v-for="(button, index) in buttons"
           :key="form?.todos + index || index"
-          class="text-body1 btn"
+          class="text-caption2 btn"
           :label="button.label"
           :outline="!order.todos.includes(button.id)"
           :background="order.todos.includes(button.id)"
-          :iconLeft="`img:/src/assets/icons/${button.icon}`"
-          @click="addTodo(button.id)"
+          :icon-right="order.todos.includes(button.id) ? 'img:/assets/icons/close/cross-white.svg' : ''"
+          @click="addTodo(button.id, form, order)"
           />
+
+          <img class="absolute mail-img" src="/assets/images/order/mail-icon.svg" alt=""/>
         </div>
 
         <div class="text-subtitle3 input-mt">
           Функции, блоки, разделы сайта
         </div>
-        <div class="c-mt-24">
+        <div class="c-mt-24 checkboxes-area">
             <q-checkbox
             v-for="(checkbox, index) in checkboxes"
             :key="index"
@@ -65,7 +69,8 @@
             :val="checkbox.id"
             :label="checkbox.label"
             color="violet-6"
-            @update:model-value="setValue('functions')"
+            class="c-checkbox-outlined"
+            @update:model-value="setValue('functions', form, order)"
             />
         </div>
 
@@ -75,24 +80,35 @@
         :placeholder="'Опишите, что требуется сделать по вашей задаче...'"
         :type="'textarea'"
         :value = "order.description"
+        :class-name="'c-textarea-outline'"
         @change="(value) => form.description = value"
         :length="5000"
         />
 
 
-        <q-checkbox
-        v-model="order.consultation"
-        :val="true"
-        label="Мне нужна консультация"
-        color="violet-6"
-        :disable="!order.draft"
-        @update:model-value="setValue('consultation')"
-        />
-        <div>
-          Если Вы не знаете, как более точно сформулировать идею - дайте нам знать.
+        <div class="row">
+          <div class="col-6">
+            <q-checkbox
+            v-model="order.consultation"
+            :val="true"
+            label="Мне нужна консультация"
+            color="violet-6"
+            :disable="!order.draft"
+            class="c-checkbox-outlined"
+            @update:model-value="setValue('consultation', form, order)"
+            />
+
+            <div>
+              Если Вы не знаете, как более точно сформулировать идею - дайте нам знать.
+            </div>
+          </div>
+
+          <div class="col-6">
+            <img class="question-mark-img" src="/assets/images/order/speech-bubble.svg" alt="">
+          </div>
         </div>
 
-        <!-- <label for="file" class="text-subtitle3 input-mt">
+        <label for="file" class="text-subtitle3 input-mt">
             Файлы и документы
         </label>
         <q-file
@@ -100,84 +116,106 @@
         multiple
         use-chips
         append
-        v-model="form.files"
+        v-model="files"
         max-files="10"
         max-file-size="51200"
+        class="c-filepicker-outline"
+        ref="uploadFile"
         >
-          <template v-slot:prepend>
-            <q-icon name="attach_file" />
-          </template>
-        </q-file> -->
-
-        <label for="from-to" class="text-subtitle3 input-title input-mt">
-            Желаемая стоимость
-        </label>
-        <div class="row">
-          <q-input
-          v-model.number="order.price_start"
-          type="number"
-          class="input c-mt-24 col-3"
-          name="from-to"
-          placeholder="Опишите, что требуется сделать по вашей задаче..."
-          outlined
-          :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
-          :readonly="!order.draft"
-          @update:model-value="setPrice()"
+          <div class="c-file-placeholder">
+              Если у вас уже имеются контент, брендбук, бриф, спецификация или иные материалы по заказу, пожалуйста, загрузите их...
+          </div>
+          <c-button
+            class="text-body1 btn c-file-button"
+            :label="'Выберите файл'"
+            :background="true"
+            @click="addFile"
           />
+        </q-file>
 
-          <q-input
-          v-model.number="order.price_end"
-          type="number"
-          class="input c-mt-24 col-3 offset-1"
-          name="from-to"
-          placeholder="Опишите, что требуется сделать по вашей задаче..."
-          outlined
-          :rules="[requiredOneOfNumber(form.price_start), positive, biggerThan(form.price_start)]"
-          :readonly="!order.draft"
-          @update:model-value="setPrice()"
-          />
+        <div class="input-wrapper row relative-position">
+          <div class="col-3">
+            <label for="from-to" class="text-subtitle3 input-title input-mt">
+              Желаемая стоимость
+            </label>
+
+            <div class="row justify-between c-mt-24 col-3">
+              <q-input
+              v-model.number="order.price_start"
+              type="number"
+              class="c-input-price col-10"
+              name="from-to"
+              placeholder="Опишите, что требуется сделать по вашей задаче..."
+              outlined
+              :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
+              :readonly="!order.draft"
+              @update:model-value="setPrice(form, order)"
+              />
+              <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg"/>
+            </div>
+
+            <div class="row justify-between c-mt-24 col-3">
+              <q-input
+              v-model.number="order.price_end"
+              type="number"
+              class="c-input-price col-10"
+              name="from-to"
+              placeholder="Опишите, что требуется сделать по вашей задаче..."
+              outlined
+              :rules="[requiredOneOfNumber(form.price_start), positive, biggerThan(form.price_start)]"
+              :readonly="!order.draft"
+              @update:model-value="setPrice(form, order)"
+              />
+
+              <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg"/>
+            </div>
+          </div>
+
+          <div class="col-3 offset-2">
+            <label for="date" class="text-subtitle3 input-title input-mt">
+                Желаемый срок готовности
+            </label>
+
+            <q-input
+            placeholder="дд.мм.гггг"
+            class="c-input-outline"
+            name="date"
+            outlined
+            v-model="order.date_complete"
+            @update:model-value="setValue('date_complete', form, order)"
+            :rules="[required]"
+            >
+              <template v-slot:append>
+                <q-icon name="img:/assets/icons/calendar/calendar-purple.svg" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date
+                    :rules="[required]"
+                    v-model="order.date_complete"
+                    @update:model-value="setValue('date_complete', form, order)"
+                    mask="DD.MM.YYYY"
+                    :options="optionsFn"
+                    >
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+
+          <img class="absolute calendar-img" src="/assets/images/order/calendar-inject.svg" alt="">
         </div>
 
-        <label for="date" class="text-subtitle3 input-title input-mt">
-            Желаемый срок готовности
-        </label>
-        <q-input
-        style="width: 300px;"
-        name="date"
-        filled
-        v-model="order.date_complete"
-        @update:model-value="setValue('date_complete')"
-        :rules="[required]"
-        >
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date
-                :rules="[required]"
-                v-model="order.date_complete"
-                @update:model-value="setValue('date_complete')"
-                mask="DD.MM.YYYY"
-                :options="optionsFn"
-                >
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
-
-        <div class="row">
+        <div class="row submit-btns">
           <c-button
             class="text-body1 btn col-2"
             :label="'Изменить'"
             :background="true"
-            @click="editOrder"
+            @click="editOrder(form, order)"
           />
         </div>
-
-
       </q-form>
     </section>
   </q-page>
@@ -191,7 +229,8 @@ import { useValidators } from "src/use/validators";
 import { useRoute } from "vue-router";
 import { useQuery } from "@vue/apollo-composable";
 import { getOrderById } from "src/graphql/order/queries";
-import orderApi from "src/sdk/order";
+import { addTodo, setPrice, setValue, editOrder } from "src/use/order";
+import { optionsFn } from "src/use/date";
 
 const route = useRoute();
 const { result: getOrder, loading: loadingOrder } = useQuery(getOrderById, route.params);
@@ -199,6 +238,9 @@ const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } = useVa
 
 const order = ref({});
 const form = ref({});
+
+const files = ref([])
+const uploadFile = ref();
 
 const buttons = ref([
   {
@@ -276,42 +318,15 @@ watch(loadingOrder, () => {
   Object.assign(order.value, getOrder.value.get_order)
 })
 
-const optionsFn = (date) => {
-  return new Date(date).getTime() > Date.now() - 86_400_000;
-}
-
-const addTodo = (id) => {
-  if (!order.value.draft)
-    return;
-
-  if (!form.value.hasOwnProperty('todos')) {
-    form.value.todos = []
-    Object.assign(form.value.todos, order.value.todos);
-  }
-
-  form.value.todos.includes(id) ?
-    form.value.todos.splice(form.value.todos.indexOf(id), 1) :
-    form.value.todos.push(id);
-
-  order.value.todos = form.value.todos
-}
-
-const setPrice = () => {
-  form.value.price_start = order.value.price_start;
-  form.value.price_end = order.value.price_end
-}
-
-const setValue = (value) => {
-  form.value[value] = order.value[value];
-}
-
-const editOrder = () => {
-  orderApi.orderEdit(form.value, order.value.id, order.value.name)
+const addFile = () => {
+  uploadFile.value.pickFiles();
 }
 </script>
 
 <style lang="scss" scoped>
 .input-title {
+  margin-left: 21px;
+
   &::before {
     content: '';
     display: block;
@@ -327,13 +342,54 @@ const editOrder = () => {
   border-radius: 8px;
 }
 
+.button-group {
+  gap: 32px;
+  width: 70%;
+}
+
 .btn {
-  width: 265px;
+  white-space: nowrap;
   margin-bottom: 23px;
+  border-radius: 32px !important;
+  height: 37px;
 }
 
 .input-mt {
   margin-top: 80px;
   display: block;
+}
+
+.checkboxes-area {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+}
+
+.submit-btns {
+  margin-top: 120px;
+}
+
+
+.q-chip {
+  margin-top: 20px;
+}
+
+.ruble {
+  height: 24px;
+  width: 24px;
+}
+
+.mail-img {
+  right: -32%;
+  top: -58px;
+}
+
+.question-mark-img {
+  margin-top: 31px;
+}
+
+.calendar-img {
+  right: 0;
+  top: 221px;
 }
 </style>
