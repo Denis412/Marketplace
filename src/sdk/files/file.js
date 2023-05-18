@@ -18,7 +18,7 @@ provideApolloClient(apolloClient)
 const uploadFiles = async (files) => {
   const { mutate } = useMutation(filesUpload)
 
-  let data = await mutate(
+  let data = mutate(
     {
       files,
     },
@@ -28,6 +28,17 @@ const uploadFiles = async (files) => {
       },
     },
   )
+  data.then((result)=>{pageApi.create({
+    input: {
+      title: files[0].name.slice(0,-5),
+      page_type: "node",
+      object: {
+        id: BigInt(result.data.filesUpload.ids[0]).toString(),
+        type_id: "6923351168454209144", //id типа файла
+      },
+    },
+    space_id: 13,
+  })})
 
   await response(
     'Файл добавлен',
@@ -35,19 +46,8 @@ const uploadFiles = async (files) => {
     () => {},
     fileStore.refetchFiles,
   )
-   if(data){
-    pageApi.create({
-      input: {
-        title: "UNKNOWN",
-        page_type: "node",
-        object: {
-          id: BigInt(data.data.filesUpload.ids[0]).toString(),
-          type_id: "6923351168454209144", //id типа файла
-        },
-      },
-      space_id: 13,
-    });
-   }
+
+  
 }
 
 const getFileHtmlByUrl = async (path, id, name, extension) => {
