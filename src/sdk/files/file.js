@@ -48,19 +48,6 @@ const uploadFiles = async (files) => {
   })})
 
   await response('Файл добавлен', 'Ошибка', () => {}, fileStore.refetchFiles)
-  if (data) {
-    pageApi.create({
-      input: {
-        title: 'UNKNOWN',
-        page_type: 'node',
-        object: {
-          id: BigInt(data.data.filesUpload.ids[0]).toString(),
-          type_id: '6923351168454209144', //id типа файла
-        },
-      },
-      space_id: 13,
-    })
-  }
 }
 
 const getFileHtmlByUrl = async (path, id, name, extension) => {
