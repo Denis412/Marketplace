@@ -3,33 +3,51 @@
     <main class="q-gutter-y-md">
       <q-card-section class="column wrap">
         <section class="q-gutter-y-sm">
-          <span class="text-subtitle4 text-violet8">
-            {{ currentProject.name }}
-          </span>
+          <div>
+            <span class="text-subtitle4 text-violet8">
+              {{ currentProject.name }}
+            </span>
+          </div>
 
-          <span class="text-caption1 text-gray7">
-            Команда: {{ currentProject.team.name }}
-          </span>
+          <div>
+            <span class="text-caption1 text-gray7">
+              Команда: {{ currentProject.team_name }}
+            </span>
+          </div>
         </section>
       </q-card-section>
 
       <q-card-section>
-        <q-img class="bg-violet4" />
+        <q-img class="bg-violet4 cursor-pointer" @click="redirectProjectPage" />
       </q-card-section>
 
-      <q-card-section class="column text-caption1 text-gra7 q-gutter-y-lg">
-        <span>{{ currentProject.description }}</span>
-        <span>до {{ currentProject.delivery_date?.date }}</span>
-        <span>Роль в проекте: Участник</span>
+      <q-card-section>
+        <div class="column text-caption1 text-gray7 q-gutter-y-lg">
+          <span>{{ currentProject.description }}</span>
+          <span>до {{ currentProject.delivery_date?.date }}</span>
+          <span>Роль в проекте: Участник</span>
+        </div>
       </q-card-section>
     </main>
   </q-card>
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
+
 const { currentProject } = defineProps({
   currentProject: Object,
 });
+
+const router = useRouter();
+
+const redirectProjectPage = () => {
+  router.push({
+    name: "project",
+    params: { id: currentProject.id },
+    query: { name: currentProject.name, space: currentProject.space },
+  });
+};
 </script>
 
 <style scoped lang="scss">

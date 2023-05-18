@@ -123,25 +123,19 @@ export const useProjectCreate = () => {
         },
       });
 
+      console.log("hi", [
+        ...subjectInMainSpace[0].projects,
+        projectInMainSpace.id,
+      ]);
+
       await userApi.update(subjectInMainSpace[0].id, {
         projects: {
           [process.env.PROJECT_TYPE_ID]: [
-            ...subjectInMainSpace[0].projects,
+            ...subjectInMainSpace[0].projects.map((project) => project.id),
             projectInMainSpace.id,
           ],
         },
       });
-
-      // const subjectInMainSpace = await userApi.refetchPaginateSubjects({
-      //   page: 1,
-      //   perPage: 1,
-      //   where: {
-      //     column: "user_id",
-      //     operator: "EQ",
-      //     value: user.user_id,
-      //   },
-      //   is_team: true,
-      // });
 
       console.log("subject", subject);
 

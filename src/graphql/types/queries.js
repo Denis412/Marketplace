@@ -12,6 +12,10 @@ export const paginateTypes = gql`
         searchable
         id_ai
         author_id
+        properties {
+          id
+          name
+        }
         meta {
           headline
           icon

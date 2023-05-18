@@ -88,9 +88,12 @@ const queryGetUserById = (id, space_id = 0) => {
 };
 
 const refetchUserById = async (id, space_id = 0) => {
+  console.log("id", id);
   const { refetch } = queryGetUserById(id, space_id);
 
   const { data: userData } = await refetch();
+
+  console.log("refetch user", userData);
 
   return userData.user;
 };
@@ -156,7 +159,6 @@ const setPassword = async ({ user_id, password, code }) => {
 };
 
 const userPasswordSendCode = async ({ email }) => {
-  console.log("send", email);
   const { data: resetSendCode } = await resetPasswordSendCode({
     input: {
       email,
@@ -169,12 +171,12 @@ const userPasswordSendCode = async ({ email }) => {
 };
 
 const userPasswordConfirmCode = async ({ user_id, code, password }) => {
-  console.log("ghghgh", { user_id, code, password });
   await resetPasswordConfirmCode({
     input: {
       user_id,
       code,
       password,
+      send_mail: true,
     },
   });
 };
@@ -187,6 +189,8 @@ const saveUserData = async (userInfo, first_entry = false) => {
   tokenApi.save(userInfo.userSignIn.record);
 
   const userData = await refetchUserById(userInfo.userSignIn.recordId);
+
+  console.log("ghgh");
 
   // if (first_entry) {
   //   const { data: spaceData } = await creatingSpace({
