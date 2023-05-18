@@ -4,12 +4,6 @@
       <q-img class="popup-png" src="/src/assets/icons/doc_popup/link.png" />
       <q-item-section>Открыть</q-item-section>
     </q-item>
-    <!-- @click="
-        filesApi.createHtmlFile(
-          storeFile.currentEditorValue,
-          storeFile.currentTitleDoc
-        )
-      " -->
     <q-item @click="duplicateDocument()" class="popup-component" clickable>
       <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
       <q-item-section>Дублировать</q-item-section>
@@ -21,7 +15,8 @@
     </q-item>
 
     <c-delete-dialog-document
-      :prop_doc_id="props.prop_doc.id"
+      :prop_doc_id="props.prop_data.object_id"
+      :prop_page_id="props.prop_data.page_id"
       v-model="showDialog"
     />
 
@@ -57,7 +52,11 @@
       </q-menu>
     </q-item>
 
-    <c-rename-item-document :prop_doc="prop_doc" />
+    <c-rename-item-document
+      :prop_doc="prop_doc"
+      :prop_doc_id="props.prop_data.object_id"
+      :prop_page_id="props.prop_data.page_id"
+    />
   </q-list>
 </template>
 
@@ -77,9 +76,11 @@ const router = useRouter();
 
 const props = defineProps({
   prop_doc: Object,
+  prop_data: Object,
   prop_clicked_index_doc: Number,
 });
 
+console.log(props);
 console.log("menu_doc", props.prop_doc);
 
 const duplicateDocument = async () => {

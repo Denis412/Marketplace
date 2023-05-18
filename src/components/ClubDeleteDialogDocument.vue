@@ -13,7 +13,9 @@
       <q-card-actions align="right">
         <q-btn
           label="Да"
-          @click="filesApi.deleteDoc(prop_doc_id), (showDialog = false)"
+          @click="
+            filesApi.deleteDoc(prop_doc_id, prop_page_id), (showDialog = false)
+          "
         />
         <q-btn label="Нет" @click="showDialog = false" />
       </q-card-actions>
@@ -26,6 +28,7 @@ import { filesApi } from "src/sdk/files/file";
 
 const props = defineProps({
   prop_doc_id: String,
+  prop_page_id: String,
 });
 </script>
 

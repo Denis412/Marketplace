@@ -38,6 +38,7 @@ const uploadFiles = async (files) => {
     input: {
       title: files[0].name.slice(0,-5),
       page_type: "node",
+      parent_id: "4440891212883535597",
       object: {
         id: BigInt(result.data.filesUpload.ids[0]).toString(),
         type_id: "6923351168454209144", //id типа файла
@@ -121,15 +122,17 @@ const updateFile = (name, doc) => {
   response('Файл обновлен', 'Ошибка', mutate, fileStore.refetchFiles)
 }
 
-const deleteDoc = function (id) {
+const deleteDoc = function (id, page_id) {
   const apolloClient = new ApolloClient(getClientOptions())
   provideApolloClient(apolloClient)
+
+  pageApi.deleteById(page_id,13)
+
   const { mutate } = useMutation(fileDelete, () => ({
     variables: {
       id: id,
     },
   }))
-
   response('Документ удален', 'Ошибка', mutate, fileStore.refetchFiles)
 }
 

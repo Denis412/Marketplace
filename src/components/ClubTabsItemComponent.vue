@@ -26,7 +26,7 @@
           class="btn-dropdown-doc"
           v-model="showMenu"
         >
-          <c-menu-document :prop_doc="doc" />
+          <c-menu-document :prop_doc="doc" :prop_data="props.node" />
           <!-- <c-menu-document :prop_clicked_index_doc="index" :prop_doc="doc" /> -->
         </q-btn-dropdown>
       </div>
@@ -50,6 +50,7 @@ const props = defineProps({
   stat: Object,
 });
 
+console.log(props);
 const getFile = async () => {
   console.log("id", props.node.object_id);
   doc.value = (
