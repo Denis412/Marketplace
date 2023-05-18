@@ -118,6 +118,7 @@ export const paginateSubjectsInMainSpace = gql`
           team {
             id
             name
+            space
           }
           delivery_date {
             date

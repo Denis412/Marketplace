@@ -1,6 +1,5 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <pre>{{ currentUser.teams }}</pre>
     <div class="loader loader-lg" v-if="loading" />
 
     <div v-else>
@@ -40,6 +39,8 @@ import projectApi from "src/sdk/project";
 
 const userStore = useUserStore();
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
+
+// const currentProjects = computed(() => currentUser.value?)
 
 const projects = ref([]);
 const loading = ref(true);

@@ -509,6 +509,52 @@
 
 .c-p {
   &t- {
+    &64 {
+      padding-top: 64px;
+    }
+  }
+
+  &b- {
+    &64 {
+      padding-bottom: 64px;
+    }
+  }
+
+  &l- {
+    &64 {
+      padding-left: 64px;
+    }
+  }
+
+  &r- {
+    &64 {
+      padding-right: 64px;
+    }
+  }
+
+  &x- {
+    &64 {
+      padding-left: 64px;
+      padding-right: 64px;
+    }
+  }
+
+  &y- {
+    &64 {
+      padding-top: 64px;
+      padding-bottom: 64px;
+    }
+  }
+
+  &a- {
+    &64 {
+      padding: 64px;
+    }
+  }
+}
+
+.c-p {
+  &t- {
     &72 {
       padding-top: 72px;
     }

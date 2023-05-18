@@ -224,6 +224,12 @@ export const useProjectUpdate = () => {
 
       result.value = await projectApi.update({ id, input, space_id });
 
+      await projectApi.refetchPaginateProjects({
+        page: 1,
+        perPage: 100,
+        space_id,
+      });
+
       await useProjectsQuery()
         .getWithWere({
           page: 1,

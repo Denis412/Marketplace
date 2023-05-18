@@ -21,12 +21,20 @@
     </q-card-section>
 
     <q-card-section class="c-mt-20">
-      <q-card flat class="text-body2 cursor-pointer" @click="toAccountSettings">
+      <q-card
+        flat
+        class="text-body2 cursor-pointer"
+        @click="redirect('account')"
+      >
         <q-icon name="img:/assets/icons/pen/pen-grey.svg" class="q-mr-sm" />
         Учетная запись
       </q-card>
 
-      <q-card flat class="text-body2 cursor-pointer q-mt-md">
+      <q-card
+        flat
+        class="text-body2 cursor-pointer q-mt-md"
+        @click="redirect('profile')"
+      >
         <q-icon
           name="img:/assets/icons/person/person-grey.svg"
           class="q-mr-sm"
@@ -76,9 +84,9 @@ const currentUser = inject("currentUser");
 
 const isExit = ref(false);
 
-const toAccountSettings = () => {
+const redirect = (route_name) => {
   router.push({
-    name: "account",
+    name: route_name,
   });
 };
 
