@@ -1,57 +1,53 @@
 <template>
-  <q-page>
-    <div v-if="loadingOrder">
-      <p>Загрузка...</p>
-    </div>
-    <div v-else class="q-mx-auto q-mt-md wrapper-page-order-info">
-      <div class="flex items-end">
-        <div>
-          <p class="text-h4 q-mb-sm">просмотр заказа {{ order.id }}</p>
-        </div>
-        <div class="q-ml-sm flex items-baseline">
+  <section>
+    <section class="q-mx-auto q-mt-md wrapper-page-order-info">
+      <section class="flex items-end">
+        <h4 class="text-h4 q-mb-sm">просмотр заказа {{ props.order.id }}</h4>
+
+        <section class="q-ml-sm flex items-baseline">
           <div
             class="color-type-status"
             :style="`background-color: ${colorStatus}`"
           ></div>
-          <p class="text-h6 q-mx-sm q-mb-sm">Есть кандидат</p>
-        </div>
-      </div>
+          <h6 class="text-h6 q-mx-sm q-mb-sm">Есть кандидат</h6>
+        </section>
+      </section>
 
-      <div>
-        <p class="text-from-order-info q-mb-xl">{{ order.name }}</p>
-      </div>
+      <section>
+        <p class="text-from-order-info q-mb-xl">{{ props.order.name }}</p>
+      </section>
 
-      <div>
-        <p class="text-h4">Отклик</p>
+      <section>
+        <h4 class="text-h4">Отклик</h4>
 
-        <div class="block-control-response">
-          <div class="q-mt-lg q-mb-md flex justify-start no-wrap">
+        <q-item-section class="block-control-response">
+          <section class="q-mt-lg q-mb-md flex justify-start no-wrap">
             <div
               class="image-block-control-response q-ml-xl q-mr-md flex center justify-center"
             >
-              <img
-                src="assets/icons/person/person-white.svg"
+              <q-img
+                src="/assets/icons/person/person-white.svg"
                 alt="person-white"
               />
             </div>
 
             <div class="flex column wrap content-block-control-response">
-              <p class="q-mb-md text-h5 text-weight-medium">
+              <h5 class="q-mb-md text-h5 text-weight-medium">
                 Lorem ipsum dolor sit.
-              </p>
-              <p class="q-mb-xl text-h6 text-weight-regular">
+              </h5>
+              <h6 class="q-mb-xl text-h6 text-weight-regular">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Numquam, incidunt similique quisquam esse quaerat quibusdam.
-              </p>
-              <p class="text-h6 text-weight-regular">
+              </h6>
+              <h6 class="text-h6 text-weight-regular">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Exercitationem iusto quos blanditiis repellendus praesentium
                 fuga?
-              </p>
+              </h6>
             </div>
-          </div>
+          </section>
 
-          <div class="flex items-center">
+          <section class="flex items-center">
             <div class="q-ml-xl">11.11.2011</div>
 
             <c-button
@@ -74,23 +70,23 @@
               :textColor="'white'"
               :background="true"
             />
-          </div>
-        </div>
-      </div>
+          </section>
+        </q-item-section>
+      </section>
 
-      <div>
-        <p class="q-mt-md q-mb-xs text-h5">Заказчик</p>
+      <section>
+        <h5 class="q-mt-md q-mb-xs text-h5">Заказчик</h5>
         <!-- <div>Тут будут ссылки на заказчиков =)</div>   -->
         <p class="text-content-component">
-          {{ order.customer }}
+          {{ props.order.customer }}
         </p>
-      </div>
+      </section>
 
-      <div class="q-mt-lg">
-        <p class="q-mt-sm q-mb-sm text-h5">Что требуется</p>
+      <section class="q-mt-lg">
+        <h5 class="q-mt-sm q-mb-sm text-h5">Что требуется</h5>
         <div class="flex justify-start">
           <p
-            v-for="todo in order.todos"
+            v-for="todo in props.order.todos"
             class="q-pa-sm q-mr-sm"
             style="
               border-radius: 25px;
@@ -105,29 +101,32 @@
             {{ todo }}
           </p>
         </div>
-      </div>
+      </section>
 
-      <div class="q-mt-lg">
-        <p class="q-mt-sm q-mb-sm text-h5">Функции, блоки, разделы сайта</p>
+      <section class="q-mt-lg">
+        <h5 class="q-mt-sm q-mb-sm text-h5">Функции, блоки, разделы сайта</h5>
 
-        <div class="flex justify-start">
+        <section class="flex justify-start">
           <div>
             <div
-              v-for="todo in order.todos"
+              v-for="todo in props.order.todos"
               class="text-content-component-todo"
             >
               {{ todo }}
             </div>
-            <div class="text-content-component" v-for="fun in order.functions">
+            <div
+              class="text-content-component"
+              v-for="fun in props.order.functions"
+            >
               {{ fun }}
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </section>
 
-      <div class="q-mt-lg">
+      <section class="q-mt-lg">
         <div class="q-mt-sm q-mb-sm flex justify-start items-center">
-          <p class="text-h5" style="margin: 0">Описание заказа</p>
+          <h5 class="text-h5" style="margin: 0">Описание заказа</h5>
 
           <div
             v-if="order.consultation"
@@ -140,52 +139,45 @@
         <p class="text-content-component">
           {{ order.description }}
         </p>
-      </div>
+      </section>
 
-      <div class="q-mt-lg">
-        <p class="q-mt-sm q-mb-sm text-h5">Файлы и документы</p>
+      <section class="q-mt-lg">
+        <h5 class="q-mt-sm q-mb-sm text-h5">Файлы и документы</h5>
 
-        {{ order.files }}
-      </div>
+        {{ props.order.files }}
+      </section>
 
-      <div class="q-mt-lg">
-        <p class="q-mt-sm q-mb-sm text-h5">Желаемая стоимость</p>
+      <section class="q-mt-lg">
+        <h5 class="q-mt-sm q-mb-sm text-h5">Желаемая стоимость</h5>
 
         <p class="text-content-component">
-          от {{ order.price_start }} ₽ до {{ order.price_end }} ₽
+          от {{ props.order.price_start }} ₽ до {{ props.order.price_end }} ₽
         </p>
-      </div>
+      </section>
 
-      <div class="q-mt-lg">
-        <p class="q-mt-sm q-mb-sm text-h5">Желаемый срок готовности</p>
+      <section class="q-mt-lg">
+        <h5 class="q-mt-sm q-mb-sm text-h5">Желаемый срок готовности</h5>
 
-        <div class="text-content-component">{{ order.date_complete }}</div>
-      </div>
-    </div>
-  </q-page>
+        <div class="text-content-component">
+          {{ props.order.date_complete }}
+        </div>
+      </section>
+    </section>
+  </section>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, defineProps } from "vue";
 import CButton from "../components/ClubButton.vue";
-import { useQuery } from "@vue/apollo-composable";
-import { getOrderById } from "src/graphql/order/queries";
-import { useRoute } from "vue-router";
 
-const route = useRoute();
-const { result: getOrder, loading: loadingOrder } = useQuery(
-  getOrderById,
-  route.params
-);
-
-const order = ref({});
-
-watch(loadingOrder, () => {
-  Object.assign(order.value, getOrder.value.get_order);
+const props = defineProps({
+  order: {
+    type: Object,
+    required: true,
+  },
 });
 
-console.log(getOrder);
-console.log(route.params);
+console.log(props.order);
 
 const colorStatus = ref("#9236DA");
 </script>
