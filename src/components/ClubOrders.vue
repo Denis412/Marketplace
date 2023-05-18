@@ -5,16 +5,14 @@
         <h3 class="orderHeadTitle">МОИ ЗАКАЗЫ</h3>
         <div class="addOrderButton">
           <a href="#"
-            ><img
-              src="../../public/assets/icons/orderIcons/buttons.png"
-              alt="img"
+            ><img src="/assets/icons/orderIcons/buttons.png" alt="img"
           /></a>
         </div>
       </div>
       <div class="orderIconsCartOuter">
         <img
           class="orderIconsCart"
-          src="../../public/assets/icons/orderIcons/orderIconsCart.png"
+          src="/assets/icons/orderIcons/orderIconsCart.png"
           alt=""
         />
       </div>

@@ -36,10 +36,7 @@
 
           <q-card-section class="oEdit">
             <router-link :to="{ name: 'order-edit', params: { id: orderId } }">
-              <img
-                src="../../public/assets/icons/orderIcons/tripleDot.png"
-                alt="img"
-              />
+              <img src="/assets/icons/orderIcons/tripleDot.png" alt="img" />
             </router-link>
           </q-card-section>
         </q-card>
