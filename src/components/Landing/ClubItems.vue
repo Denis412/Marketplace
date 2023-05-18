@@ -16,24 +16,24 @@ import { ref } from "vue";
 const cards = ref([
   {
     id: 1,
-    imageUrl: "src/assets/images/Colloboration.svg",
+    imageUrl: "/assets/images/landing/colloboration.svg",
     title: "Сообщества",
   },
-  { id: 2, imageUrl: "src/assets/images/Comand.svg", title: "Команды" },
-  { id: 3, imageUrl: "src/assets/images/Projects.svg", title: "Проекты" },
+  { id: 2, imageUrl: "/assets/images/landing/comand.svg", title: "Команды" },
+  { id: 3, imageUrl: "/assets/images/landing/projects.svg", title: "Проекты" },
   {
     id: 4,
-    imageUrl: "src/assets/images/Accelerator.svg",
+    imageUrl: "/assets/images/landing/accelerator.svg",
     title: "Акселератор",
   },
-  { id: 5, imageUrl: "src/assets/images/Mentor.svg", title: "Менторство" },
+  { id: 5, imageUrl: "/assets/images/landing/mentor.svg", title: "Менторство" },
   {
     id: 6,
-    imageUrl: "src/assets/images/Consultation.svg",
+    imageUrl: "/assets/images/landing/consultation.svg",
     title: "Консультация",
   },
-  { id: 7, imageUrl: "src/assets/images/Tools.svg", title: "Инструменты" },
-  { id: 8, imageUrl: "src/assets/images/Cubok.svg", title: "Привелегии" },
+  { id: 7, imageUrl: "/assets/images/landing/tools.svg", title: "Инструменты" },
+  { id: 8, imageUrl: "/assets/images/landing/cubok.svg", title: "Привелегии" },
 ]);
 </script>
 

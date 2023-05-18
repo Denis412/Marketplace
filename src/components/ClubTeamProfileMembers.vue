@@ -1,82 +1,100 @@
 <template>
-  <section class="c-mt-32">
-    <h4 class="text-h4">Участники</h4>
+  <section class="club-mt-32">
+    <h4 class="text-h4">Cостав команды</h4>
 
-    <div class="q-mt-md rounded-borders-10 bg-white c-pa-32">
-      <q-toolbar class="toolbar-bottom-border q-pb-md">
-        <q-btn-toggle
+    <div class="row justify-between items-center club-mt-24">
+      <q-toolbar class="q-pb-md q-pa-none">
+        <q-tabs
           v-model="selectMembersList"
-          flat
-          stretch
-          class="text-body1 text-violet-6"
-          toggle-color="purple-7"
-          :options="membersTeamList"
-        />
+          indicator-color="black"
+          class="bg-transparent"
+        >
+          <q-tab name="members" class="text-body1" label="Участники" />
+
+          <q-tab
+            v-if="isOwner"
+            name="applications"
+            class="text-body1"
+            label="Заявки"
+          />
+        </q-tabs>
+
+        <q-space />
 
         <c-button
+          v-if="isOwner"
           background
           label="Пригласить"
-          class="text-body2"
           @click="inviteUser"
         />
       </q-toolbar>
-
-      <q-toolbar class="overflow-auto">
-        <q-btn-toggle
-          v-model="selectSpecialistsList"
-          flat
-          stretch
-          class="text-caption1 text-violet-6"
-          toggle-color="purple-7"
-          :options="specialtiesList"
-        />
-      </q-toolbar>
-
-      <c-specialists-list
-        class="flex q-mt-md q-gutter-x-md"
-        :specialists="team[selectSpecialistsList]"
-      />
     </div>
+
+    <c-team-members-list
+      v-if="selectMembersList === 'members'"
+      :members="currentTeam.members"
+    />
+
+    <section v-else>
+      <section v-if="!currentTeam.applications.length">
+        <h3 class="text-h3 text-center text-liner-button">
+          На данный момент нет заявок!
+        </h3>
+      </section>
+
+      <section v-if="filteredApplications.outgoing.length">
+        <div class="text-body1 text-liner-button w-min-content q-mb-md">
+          Исходящие
+        </div>
+
+        <c-applications-list
+          :applications="filteredApplications.outgoing"
+          subjects
+          is_team
+        />
+      </section>
+
+      <section v-if="filteredApplications.incoming.length" class="q-mt-md">
+        <div class="text-body1 text-liner-button w-min-content q-mb-md">
+          Входящие
+        </div>
+
+        <c-applications-list
+          :applications="filteredApplications.incoming"
+          incoming
+          subjects
+          is_team
+        />
+      </section>
+    </section>
   </section>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import CSpecialistsList from "./ClubSpecialistsList.vue";
-import CButton from "./ClubButton.vue";
+import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useApplications } from "src/use/applications";
+
+import _ from "lodash";
+
+import CApplicationsList from "./ClubApplicationsList.vue";
+import CTeamMembersList from "./ClubTeamMembersList.vue";
+import CButton from "./ClubButton.vue";
+
+const isOwner = inject("isOwner");
+const currentTeam = inject("currentTeam");
 
 const router = useRouter();
+const { filteredApplications } = useApplications(currentTeam, true);
 
-const { team } = defineProps({
-  team: Object,
-});
+const selectMembersList = ref("members");
 
-const membersTeamList = ref([
-  { label: "Команда", value: "team" },
-  { label: "Отправленные заявки", value: "sended" },
-]);
-const specialtiesList = ref([
-  { label: "Разработчики", value: "developers" },
-  { label: "Менеджеры", value: "managers" },
-  { label: "Маркетологи", value: "marketers" },
-  { label: "Дизайнеры", value: "designers" },
-  { label: "Аналитики", value: "analitics" },
-]);
-
-const selectMembersList = ref("");
-const selectSpecialistsList = ref("");
-
-const inviteUser = () => {
+const inviteUser = async () => {
   router.push({
     name: "teamInvite",
-    params: { id: team.id || 1 },
+    params: { name: currentTeam.value.name },
   });
 };
 </script>
 
-<style scoped lang="scss">
-.toolbar-bottom-border {
-  border-bottom: 1px solid #d8c4e7;
-}
-</style>
+<style scoped lang="scss"></style>

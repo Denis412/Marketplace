@@ -17,10 +17,10 @@
 import { ref } from "vue";
 
 const partners = ref([
-  { id: 1, imageUrl: "src/assets/images/logoRSO.svg" },
-  { id: 2, imageUrl: "src/assets/images/logoRAO.svg" },
-  { id: 3, imageUrl: "src/assets/images/logoRosnou.svg" },
-  { id: 4, imageUrl: "src/assets/images/logoObrsoyuz.svg" },
+  { id: 1, imageUrl: "/assets/images/landing/partners/logo-rso.svg" },
+  { id: 2, imageUrl: "/assets/images/landing/partners/logo-rao.svg" },
+  { id: 3, imageUrl: "/assets/images/landing/partners/logo-rosnou.svg" },
+  { id: 4, imageUrl: "/assets/images/landing/partners/logo-obrsoyuz.svg" },
 ]);
 </script>
 

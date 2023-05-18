@@ -2,7 +2,7 @@
   <q-footer class="footer px-160">
     <div class="flex q-pt-lg" style="width: 100%">
       <section class="col relative">
-        <q-img src="/src/assets/images/LogoWhite.svg" class="footer-logo" />
+        <q-img src="/assets/images/logo-white.svg" class="footer-logo" />
 
         <div class="flex q-gutter-x-md q-mt-lg">
           <div
@@ -45,7 +45,10 @@
         <div class="text-16 q-md-sm">Приложения</div>
 
         <q-btn color="white club-mt-32">
-          <q-img style="width: 24px" src="/src/assets/icons/GooglePlay.svg" />
+          <q-img
+            style="width: 24px"
+            src="/assets/icons/socials/google-play.svg"
+          />
 
           <div class="q-ml-sm text-left" style="color: #333333">
             <span class="store-btn-text1"> Загрузите в </span>
@@ -55,7 +58,7 @@
         </q-btn>
 
         <q-btn class="q-mt-md" color="white">
-          <q-img style="width: 24px" src="/src/assets/icons/Apple.svg" />
+          <q-img style="width: 24px" src="/assets/icons/socials/apple.svg" />
 
           <div class="q-ml-sm text-left" style="color: #333333">
             <span class="store-btn-text1">Загрузите в</span>
@@ -72,15 +75,27 @@
 import { ref } from "vue";
 
 const contacts = ref([
-  { id: 1, imageUrl: "src/assets/icons/Intersect.svg", text: "Text" },
-  { id: 2, imageUrl: "src/assets/icons/Mail.svg", text: "Text@Text.ru" },
-  { id: 3, imageUrl: "src/assets/icons/Phone.svg", text: "+7 (999) 999 99 99" },
+  {
+    id: 1,
+    imageUrl: "/assets/icons/geodata/geodata-white.svg",
+    text: "Text",
+  },
+  {
+    id: 2,
+    imageUrl: "/assets/icons/mail/mail-white.svg",
+    text: "Text@Text.ru",
+  },
+  {
+    id: 3,
+    imageUrl: "/assets/icons/phone/phone-white.svg",
+    text: "+7 (999) 999 99 99",
+  },
 ]);
 
 const socials = ref([
-  { id: 1, imageUrl: "/src/assets/images/VK.svg" },
-  { id: 2, imageUrl: "/src/assets/images/Youtube.svg" },
-  { id: 3, imageUrl: "/src/assets/images/Telegram.svg" },
+  { id: 1, imageUrl: "/assets/icons/socials/vk-white.svg" },
+  { id: 2, imageUrl: "/assets/icons/socials/youtube-white.svg" },
+  { id: 3, imageUrl: "/assets/icons/socials/telegram-white.svg" },
 ]);
 </script>
 

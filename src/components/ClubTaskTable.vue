@@ -1,21 +1,34 @@
 <template>
   <h3 class="text-h3 q-ma-xl">Мои задачи</h3>
-  <q-table class="q-mx-lg no-shadow flat" :rows="tasks" :columns="columns" :pagination="pagination" :pagination-labels="{
-      rowsPerPage: 'Строк на странице',
-      rowsPerPageAll: 'Все',
-    }" :rows-per-page-options="[5, 10, 20]">
-    <!-- Пример -->
-
+  <q-table
+    class="q-mx-lg no-shadow flat"
+    :rows="tasks"
+    :columns="columns"
+    :rows-per-page-options="[5, 10, 20]"
+  >
     <template v-slot:body="props">
       <q-tr :props="props">
-        <q-td>{{ props.row.email.email }}</q-td>
-        <q-td>{{ props.row.fullname.first_name }}</q-td>
-        <q-td :class="props.row.property5 == '1700970386717883161'
-          ? 'assigned'
-          : props.row.property5 == '967659251654331262'
-            ? 'accomplished'
-            : 'completed'
-          ">
+        <q-td
+          v-if="props.row.first"
+          @click="addNewTask"
+          class="items-centered addNewTask"
+        >
+          <q-icon name="add" align="left" />
+          <span class="q-pl-sm">Новая задача</span>
+        </q-td>
+        <q-td v-else>{{ props.row.name }}</q-td>
+        <q-td v-if="!props.row.first">-</q-td>
+        <q-td>{{ props.row.dateStart?.date }}</q-td>
+        <q-td>{{ props.row.dateEnd?.date }}</q-td>
+        <q-td
+          :class="
+            props.row.property5 == '1700970386717883161'
+              ? 'assigned'
+              : props.row.property5 == '967659251654331262'
+              ? 'accomplished'
+              : 'completed'
+          "
+        >
           {{
             (function () {
               if (props.row.taskStatus == "8407796538990824904") {
@@ -36,12 +49,21 @@
 import { taskResult } from "src/sdk/tasks";
 import { ref } from "vue";
 
-const tasks = ref([]);
+const tasks = ref([
+  {
+    first: true,
+  },
+]);
 
 taskResult((queryResult) => {
-  tasks.value = queryResult.data.paginate_task.data;
-  console.log(queryResult.data.paginate_task.data);
+  queryResult.data.paginate_task.data.forEach((element) => {
+    tasks.value.push(element);
+  });
 });
+
+const addNewTask = () => {
+  console.log("add");
+};
 
 const columns = [
   {
@@ -49,8 +71,7 @@ const columns = [
     align: "left",
     label: "Задача",
     field: "Задача",
-    headerStyle:
-      "font-family: 'Play'; font-weight: 400; font-size: 20px; padding-right: 260px;",
+    headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px",
   },
   {
     name: "Проект",
@@ -86,4 +107,12 @@ const columns = [
 ];
 </script>
 
-<style scoped></style>
+<style scoped>
+.q-table th {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.addNewTask:hover {
+  cursor: pointer;
+}
+</style>

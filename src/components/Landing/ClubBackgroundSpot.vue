@@ -1,7 +1,7 @@
 <template>
   <div style="z-index: -1">
     <q-img
-      src="src/assets/images/Vector.svg"
+      src="/assets/images/landing-background/main-page/bg-1.svg"
       style="
         width: 433px;
         z-index: 0;
@@ -15,7 +15,7 @@
     />
 
     <q-img
-      src="src/assets/images/Vector1.svg"
+      src="/assets/images/landing-background/main-page/bg-2.svg"
       style="
         position: absolute;
         width: 447.37px;
@@ -29,7 +29,7 @@
     />
 
     <q-img
-      src="src/assets/images/Vector4.svg"
+      src="/assets/images/landing-background/main-page/bg-3.svg"
       style="
         position: absolute;
         width: 362px;
@@ -43,7 +43,7 @@
     />
 
     <q-img
-      src="src/assets/images/Vector5.svg"
+      src="/assets/images/landing-background/main-page/bg-4.svg"
       style="
         position: absolute;
         width: 362px;
@@ -56,7 +56,7 @@
     />
 
     <q-img
-      src="src/assets/images/Ellipse76.svg"
+      src="/assets/images/landing-background/main-page/bg-5.svg"
       style="
         position: absolute;
         width: 495px;
@@ -70,7 +70,7 @@
     />
 
     <!-- <q-img
-      src="src/assets/images/Cl.svg"
+      src="/assets/images/landing-background/main-page/Cl.svg"
       style="
         position: absolute;
         width: 473px;
@@ -89,60 +89,32 @@
       "
     /> -->
     <img
-      src="src/assets/images/Vectorbg.svg"
-      style="
-        position: absolute;
-        left: -37.67vw;
-        top: 2008.31px;
-      "
+      src="/assets/images/landing-background/main-page/bg-6.svg"
+      style="position: absolute; left: -37.67vw; top: 2008.31px"
     />
     <img
-      src="src/assets/images/Vector-1bg.svg"
-      style="
-        position: absolute;
-        left: 51.46vw;
-        top: 2206px;
-      "
+      src="/assets/images/landing-background/main-page/bg-7.svg"
+      style="position: absolute; left: 51.46vw; top: 2206px"
     />
     <img
-      src="src/assets/images/Vector-2bg.svg"
-      style="
-        position: absolute;
-        left: -53.26vw;
-        top: 3017px;
-      "
+      src="/assets/images/landing-background/main-page/bg-8.svg"
+      style="position: absolute; left: -53.26vw; top: 3017px"
     />
     <img
-      src="src/assets/images/Vector-3bg.svg"
-      style="
-      position: absolute;
-      left: 43.4vw;
-      top: 3664px;
-      "
+      src="/assets/images/landing-background/main-page/bg-9.svg"
+      style="position: absolute; left: 43.4vw; top: 3664px"
     />
     <img
-      src="src/assets/images/Vector-4bg.svg"
-      style="
-      position: absolute;
-      left: -52.64vw;
-      top: 4302.91px;
-      "
+      src="/assets/images/landing-background/main-page/bg-10.svg"
+      style="position: absolute; left: -52.64vw; top: 4302.91px"
     />
     <img
-      src="src/assets/images/Vector-5bg.svg"
-      style="
-      position: absolute;
-      left: 45.76vw;
-      top: 6054px;
-      "
+      src="/assets/images/landing-background/main-page/bg-11.svg"
+      style="position: absolute; left: 45.76vw; top: 6054px"
     />
     <img
-      src="src/assets/images/Vector-6bg.svg"
-      style="
-      position: absolute;
-      left: 42.08vw;
-      top: 8160px;
-      "
+      src="/assets/images/landing-background/main-page/bg-12.svg"
+      style="position: absolute; left: 42.08vw; top: 8160px"
     />
   </div>
 </template>

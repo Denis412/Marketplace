@@ -15,8 +15,8 @@ import userApi from "src/sdk/user";
 const store = useUserStore();
 const storeFile = useFileStore();
 
-onMounted(() => {
+onMounted(async () => {
   storeFile.SET_FILES();
-  userApi.isAuth() ? store.SET_CURRENT_USER() : null;
+  userApi.isAuth() ? await store.FETCH_CURRENT_USER() : null;
 });
 </script>

@@ -1,18 +1,20 @@
 <template>
   <div class="row q-my-lg">
     <input readonly class="q-py-sm q-pt-sm col-6" :placeholder="path" />
+
     <input
       readonly
       class="q-py-sm col-6"
       style="direction: rtl"
       :placeholder="'Дата создания: ' + day + ' ' + month + ' ' + year"
     />
+
     <input
       autocomplete="off"
       class="text-h3 q-mb-sm col-12"
       id="id"
       placeholder="Придумайте название документа"
-      v-model="vModelTitleDocument"
+      v-model="title"
     />
   </div>
 </template>
@@ -23,20 +25,31 @@ import { ref, watch, computed } from "vue";
 import { useFileStore } from "src/stores/file";
 const storeFile = useFileStore();
 
+//****************************************************************************** */
+// Хлебные крошки надо будут отдельным компонентом, это не просто плейсхолдер
+
 const path = "Главная/Сайт с каталогом/Без названия"; //Placeholder
+
+//****************************************************************************** */
+
 const date = new Date();
 const day = date.getDate();
 const month = data.monthNames[date.getMonth()];
 const year = date.getFullYear();
 const titleDocument = computed(() => storeFile.currentTitleDoc);
-const vModelTitleDocument = ref();
+const title = ref();
 
 watch(titleDocument, () => {
-  vModelTitleDocument.value = titleDocument.value;
+  title.value = titleDocument.value;
 });
 
-watch(vModelTitleDocument, () => {
-  storeFile.currentTitleDoc = vModelTitleDocument.value;
+watch(title, () => {
+  //****************************************************************************** */
+  // В рамках стора устанавливайте значения через методы actions
+
+  storeFile.currentTitleDoc = title.value;
+
+  //****************************************************************************** */
 });
 </script>
 
