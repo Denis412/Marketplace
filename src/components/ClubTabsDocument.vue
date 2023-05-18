@@ -25,7 +25,7 @@ import { filesApi } from "src/sdk/files/file";
 import pageApi from "src/sdk/page";
 
 const rootPage = ref();
-const data_tree = ref();
+const data_tree = ref([]);
 
 //Получение корневой страницы документов
 const getData = async () => {
