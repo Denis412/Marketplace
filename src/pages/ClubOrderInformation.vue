@@ -30,7 +30,7 @@
               class="image-block-control-response q-ml-xl q-mr-md flex center justify-center"
             >
               <img
-                src="src/assets/icons/person/person-white.svg"
+                src="assets/icons/person/person-white.svg"
                 alt="person-white"
               />
             </div>
@@ -52,27 +52,27 @@
           </div>
 
           <div class="flex items-center">
-            <div class="q-ml-xl">{{ dateOrderResponse }}</div>
+            <div class="q-ml-xl">11.11.2011</div>
 
             <c-button
               class="q-ml-xl"
               :label="'Перейти к профилю'"
               :textColor="'white'"
-              :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
+              :background="true"
             />
 
             <c-button
               class="q-ml-md"
               :label="'Утвердить исполнителя'"
               :textColor="'white'"
-              :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
+              :background="true"
             />
 
             <c-button
               class="q-ml-md"
               :label="'Отказаться'"
               :textColor="'white'"
-              :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
+              :background="true"
             />
           </div>
         </div>
@@ -91,7 +91,7 @@
         <div class="flex justify-start">
           <p
             v-for="todo in order.todos"
-            class="q-pa-sm"
+            class="q-pa-sm q-mr-sm"
             style="
               border-radius: 25px;
               color: white;
