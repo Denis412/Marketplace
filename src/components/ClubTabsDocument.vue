@@ -25,6 +25,8 @@ import { dragContext } from "@he-tree/vue";
 import "@he-tree/vue/style/default.css";
 import { filesApi } from "src/sdk/files/file";
 import pageApi from "src/sdk/page";
+import { dragContext } from "@he-tree/vue";
+import "@he-tree/vue/style/default.css";
 
 const rootPage = ref();
 const data_tree = ref([]);
@@ -35,7 +37,18 @@ const getData = async () => {
 };
 
 const contex = () => {
-  console.log(dragContext);
+  let parent_id =
+    dragContext.targetInfo.dragNode.parent?.data.page_id ||
+    "4440891212883535597";
+
+  pageApi.update({
+    input: {
+      parent_id: parent_id,
+    },
+
+    id: dragContext.startInfo.dragNode.data.page_id,
+    space_id: 13,
+  });
 };
 
 getData();
