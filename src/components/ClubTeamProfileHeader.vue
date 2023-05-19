@@ -30,17 +30,17 @@
           </p>
         </section>
 
-        <!-- <q-list
+        <q-list
           v-if="currentTeam?.directions"
-          class="c-mt-32 q-gutter-sm text-caption1"
+          class="row c-mt-32 q-gutter-sm text-caption1"
         >
-          <c-button
-            outline
+          <c-chip
             v-for="direction in currentTeam?.directions"
-            :key="direction.title"
-            :label="direction.title"
+            :key="direction.name"
+            gradient-outline
+            :label="direction"
           />
-        </q-list> -->
+        </q-list>
 
         <div class="flex items-center c-mt-32 header-controls">
           <c-button
@@ -89,6 +89,7 @@ import { useRouter } from "vue-router";
 import { useTeamApplication, useTeamUpdate } from "src/use/teams";
 
 import CButton from "src/components/ClubButton.vue";
+import CChip from "./ClubChip.vue";
 import CPopupTeamActions from "./ClubPopupTeamActions.vue";
 
 const { isProfile } = defineProps({

@@ -12,6 +12,11 @@
   max-width: 100%;
 }
 
+.h-100p {
+  height: 100%;
+  max-height: 100%;
+}
+
 .rel-index-0 {
   position: relative;
   z-index: 0;
@@ -25,6 +30,28 @@
 ::-webkit-scrollbar {
   width: 10px;
   background: #260e4b;
+}
+
+.gray-scrollbar {
+  $radius: 40px;
+
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    background: $gray-4;
+
+    border-radius: $radius;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $gray-7;
+    border-radius: $radius;
+  }
+}
+
+.direction-rtl {
+  direction: rtl;
 }
 
 .text-primary-gradient {
@@ -47,6 +74,10 @@
 
 .w-max-content {
   min-width: max-content !important;
+}
+
+.h-min-content {
+  height: min-content;
 }
 
 .link {
