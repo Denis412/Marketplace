@@ -2,19 +2,17 @@
   <div class="flex">
     <c-button
       background
-      size="lg"
       label="Сохранить"
       type="submit"
-      class="c-mr-32"
+      class="c-mr-32 text-body1"
       @click="$emit('updateTeamData')"
     />
 
     <c-button
       outline
-      size="lg"
       label="Отменить"
       @click="router.go(-1)"
-      class="page-background"
+      class="page-background text-body1"
     />
   </div>
 </template>

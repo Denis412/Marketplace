@@ -12,6 +12,10 @@ export const pageCreate = gql`
         content
         icon
         level
+        object {
+          id
+          type_id
+        }
         is_public
         position
         config

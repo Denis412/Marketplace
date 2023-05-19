@@ -78,6 +78,44 @@
   }
 }
 
+.c-tab-row {
+  min-height: min-content;
+  border-radius: 5px;
+  .q-tab__content {
+    flex-direction: row;
+
+    .q-tab__label {
+      margin-left: 12px;
+    }
+  }
+}
+
+.c-input-area-mc {
+  min-height: max-content !important;
+  height: max-content;
+
+  div {
+    .q-field__control {
+      min-height: max-content !important;
+      height: max-content;
+
+      &::after {
+        height: 100%;
+      }
+
+      div {
+        min-height: max-content !important;
+        height: max-content;
+
+        textarea {
+          min-height: max-content !important;
+          height: max-content;
+        }
+      }
+    }
+  }
+}
+
 .c-input-area-mh {
   min-height: 100%;
 
@@ -312,7 +350,7 @@
   height: 40px;
 
   padding-left: 16px;
-  padding-right: 8px;
+  padding-right: 16px;
 
   background: white;
   background-clip: padding-box;

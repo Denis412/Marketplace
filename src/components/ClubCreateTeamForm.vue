@@ -54,13 +54,12 @@
       </section>
     </main>
 
-    <footer class="flex justify-center q-mt-xl">
-      <c-button background size="lg" label="Создать" type="submit" />
+    <footer class="flex justify-center q-mt-xl rel-index-0">
+      <c-button background class="text-body1" label="Создать" type="submit" />
 
       <c-button
         outline
-        class="c-ml-32"
-        size="lg"
+        class="text-body1 c-ml-32"
         label="Отмена"
         to="/club/teams"
       />

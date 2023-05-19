@@ -95,9 +95,10 @@
             <q-input
               v-model="form.description"
               placeholder="Описание команды"
-              class="c-textarea-outline teamSettingForm-input"
+              class="c-input-outline c-input-area-mc teamSettingForm-input"
               outlined
               autogrow
+              type="textarea"
               :rules="[required, maxLength(1000)]"
             />
           </template>
@@ -174,6 +175,7 @@
             :key="direction"
             gradient-outline
             :label="direction"
+            removed
             @remove="deleteChip"
           />
         </section>
@@ -227,30 +229,13 @@ const addChip = async (label) => {
 
   form.value.current_work_type = "";
 
-  const previous = currentTeam.value.directions ?? [];
-  let added = [...form.value.work_types, label];
-
-  if (previous[0] === "  ") added = [label];
-
-  console.log(previous[0] === "  ", added);
-
-  await updateTeam(currentTeam.value.id, {
-    directions: added.length === 1 ? [...added] : [...previous, ...added],
-  });
-
-  if (!error.value) form.value.work_types = [...form.value.work_types, label];
+  form.value.work_types = [...form.value.work_types, label];
 };
 
 const deleteChip = async (label) => {
   const filtered = form.value.work_types.filter((type) => type !== label);
 
-  console.log("filter", filtered);
-
-  await updateTeam(currentTeam.value.id, {
-    directions: filtered.length ? [...filtered] : ["  "],
-  });
-
-  if (!error.value) form.value.work_types = filtered;
+  form.value.work_types = filtered;
 };
 
 const updateFile = () => {
@@ -272,7 +257,7 @@ const updateTeamData = async () => {
     name: form.value.name,
     description: form.value.description,
     telegram_chat_id: form.value.telegram_chat_id,
-    directions: [...currentTeam.value.directions, ...work_types.value],
+    directions: [...form.value.work_types],
   });
 
   router.push({

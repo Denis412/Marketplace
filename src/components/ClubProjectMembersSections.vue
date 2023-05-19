@@ -4,7 +4,7 @@
       <h4 class="text-h4">Лидер проекта</h4>
 
       <c-specialist-item
-        v-for="specialist in membersGroup('Команда')"
+        v-for="specialist in grouped['Команда']"
         :key="specialist.id"
         class="q-mt-lg bg-violet1"
         :specialist="specialist"
@@ -13,7 +13,7 @@
       <h4 class="text-h4 c-mt-40">Заказчик</h4>
 
       <c-specialist-item
-        v-for="specialist in membersGroup('Заказчики')"
+        v-for="specialist in grouped['Заказчик']"
         :key="specialist.id"
         class="q-mt-lg bg-violet1"
         :specialist="specialist"
@@ -35,42 +35,40 @@
         indicator-color="black"
         class="bg-transparent"
       >
-        <q-tab name="members" class="text-body1" label="Участники" />
+        <q-tab name="members" class="c-tab-text" label="Участники" />
 
         <q-tab
           name="applications"
-          class="text-body1"
+          class="c-tab-text"
           label="Исходящие заявки"
         />
       </q-tabs>
     </q-toolbar>
 
-    <c-team-members-list class="c-mt-40" :members="filteredSubjects" />
+    <c-team-members-list class="c-mt-40" :members="currentProject.members" />
   </section>
 </template>
 
 <script setup>
-import { inject, computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 
 import CSpecialistItem from "src/components/ClubSpecialistItem.vue";
 import CTeamMembersList from "src/components/ClubTeamMembersList.vue";
 
-const currentSubjects = inject("currentSubjects");
+const currentProject = inject("currentProject");
 
-const filteredSubjects = computed(() =>
-  currentSubjects.value?.reduce((filtered, group) => {
-    filtered.push(...group.subject);
-    return filtered;
-  }, [])
+const grouped = computed(() =>
+  currentProject.value?.members.reduce((groups, subject) => {
+    subject.group.forEach((group) => {
+      if (!groups[group.name]) groups[group.name] = [];
+      groups[group.name].push(subject);
+    });
+
+    return groups;
+  }, {})
 );
 
 const selectedList = ref("members");
-
-const membersGroup = (group_name) =>
-  currentSubjects.value?.reduce((filtered, group) => {
-    if (group.name === group_name) filtered.push(...group.subject);
-    return filtered;
-  }, []);
 </script>
 
 <style scoped lang="scss">

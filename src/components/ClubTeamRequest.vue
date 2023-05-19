@@ -1,5 +1,5 @@
 <template>
-  <section class="c-mb-32">
+  <section v-if="filteredApplications?.incoming.length" class="c-mb-32">
     <h4 class="text-h4 c-mb-16">Входящие заявки</h4>
 
     <c-applications-list
@@ -8,7 +8,7 @@
     />
   </section>
 
-  <section class="c-mb-32">
+  <section v-if="filteredApplications?.outgoing.length" class="c-mb-32">
     <h4 class="text-h4 c-mb-16">Исходящие заявки</h4>
 
     <c-applications-list :applications="filteredApplications?.outgoing" />

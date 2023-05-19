@@ -24,12 +24,14 @@
           <c-specialist-item current-user class="bg-gray2 q-mt-lg" />
         </section>
 
-        <footer class="flex justify-center q-gutter-x-lg c-mt-32 text-body1">
+        <footer
+          class="flex justify-center q-gutter-x-lg c-mt-32 text-body1 rel-index-0"
+        >
           <q-btn
             flat
             no-caps
             label="Создать"
-            class="club-button-background"
+            class="club-button-background text-body1"
             @click="projectCreate"
           />
 
@@ -37,7 +39,7 @@
             flat
             no-caps
             label="Отмена"
-            class="club-button-outline"
+            class="club-button-outline text-body1"
             v-close-popup
           />
         </footer>
@@ -60,12 +62,15 @@ const { result, loading, createProject } = useProjectCreate();
 const { required } = useValidators();
 
 const currentTeam = inject("currentTeam");
+const currentUser = inject("currentUser");
 
 const title = ref("");
 
 const projectCreate = async () => {
   await createProject({
     name: title.value,
+    team: currentTeam.value,
+    user: currentUser.value,
     space_id: currentTeam.value.space,
   });
 

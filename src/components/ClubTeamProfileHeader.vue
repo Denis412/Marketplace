@@ -1,41 +1,7 @@
 <template>
-  <q-card flat class="header-wrapper w-100p text-violet-6">
+  <q-card flat class="header-wrapper w-100p">
     <q-toolbar class="absolute flex justify-end">
-      <q-icon
-        class="cursor-pointer relative-position"
-        name="more_horiz"
-        size="40px"
-      >
-        <q-menu class="w-max-content">
-          <q-list separator>
-            <q-item
-              v-if="isOwner"
-              clickable
-              class="flex no-wrap items-center text-caption1 text-black"
-              @click="editProfile"
-            >
-              Редактировать
-            </q-item>
-
-            <q-item
-              v-else
-              clickable
-              v-ripple
-              class="flex no-wrap items-center text-caption1 text-black"
-            >
-              Покинуть команду
-            </q-item>
-
-            <q-item
-              clickable
-              v-ripple
-              class="flex no-wrap items-center text-caption1 text-black"
-            >
-              Поделиться
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-icon>
+      <c-popup-team-actions />
     </q-toolbar>
 
     <q-card-section class="flex no-wrap c-mx-64 c-mt-64 c-mb-40">
@@ -44,42 +10,43 @@
       </q-avatar>
 
       <section class="c-ml-32">
-        <h4 class="text-h4">{{ currentTeam.name }}</h4>
+        <h4 class="text-subtitle1 text-violet6">{{ currentTeam.name }}</h4>
 
         <section>
-          <p class="text-body2 q-mt-sm">
-            <span v-if="fullDes">
-              {{ currentTeam.description.substr(0, 121) }} ...
+          <p class="text-subtitle5 q-mt-sm">
+            <span v-if="fullDes && currentTeam.description.length > 121">
+              {{ currentTeam.description.substr(0, 121) }}...
             </span>
 
             <span v-else>{{ currentTeam.description }}</span>
           </p>
 
           <p
-            class="text-grey-8 text-body2 btn-text-align cursor-pointer"
+            class="text-violet4 text-body1 btn-text-align cursor-pointer"
             @click="fullDes = !fullDes"
+            v-if="currentTeam.description.length > 121"
           >
-            {{ !fullDes ? "Cкрыть" : "Показать" }}
+            {{ !fullDes ? "Cкрыть" : "Подробнее" }}
           </p>
         </section>
 
         <q-list
           v-if="currentTeam?.directions"
-          class="c-mt-32 q-gutter-sm text-caption1"
+          class="row c-mt-32 q-gutter-sm text-caption1"
         >
-          <c-button
-            outline
+          <c-chip
             v-for="direction in currentTeam?.directions"
-            :key="direction.title"
-            :label="direction.title"
+            :key="direction.name"
+            gradient-outline
+            :label="direction"
           />
         </q-list>
 
         <div class="flex items-center c-mt-32 header-controls">
           <c-button
-            v-if="!isMember && !isOwner"
+            v-if="!isMember && !isOwner && isProfile"
             background
-            label="Вступить в команду"
+            label="Подать заявку"
             class="text-body2"
             @click="applicationSend"
           />
@@ -88,23 +55,24 @@
 
           <q-checkbox
             dense
-            v-if="isOwner"
+            v-if="!isProfile && isOwner"
             v-model="isReady"
             @update:model-value="updateTeamStatus"
             left-label
             label="Готовность к заказам"
-            class="c-mr-32 c-checkbox-violet-6 text-body2 c-checkbox-label-pr-md c-checkbox-rounded"
+            class="c-mr-32 c-checkbox-violet-6 text-liner-button text-body1 c-checkbox-label-pr-md c-checkbox-rounded"
           />
 
           <a
             v-if="isMember || isOwner"
-            href="#"
-            class="text-violet-6 link text-body2"
+            :href="isProfile ? '#' : '#'"
+            class="text-liner-button link text-body1"
           >
-            Чат команды
+            <span v-if="isProfile">Лидер команды</span>
+            <span v-else>Чат команды</span>
 
             <q-icon
-              class="text-subtitle2"
+              class="text-subtitle4 q-ml-sm"
               name="img:/assets/icons/socials/telegram-gradient.svg"
             />
           </a>
@@ -121,6 +89,12 @@ import { useRouter } from "vue-router";
 import { useTeamApplication, useTeamUpdate } from "src/use/teams";
 
 import CButton from "src/components/ClubButton.vue";
+import CChip from "./ClubChip.vue";
+import CPopupTeamActions from "./ClubPopupTeamActions.vue";
+
+const { isProfile } = defineProps({
+  isProfile: Boolean,
+});
 
 const router = useRouter();
 const { updateTeam } = useTeamUpdate();
@@ -134,12 +108,12 @@ const isOwner = inject("isOwner");
 const isMember = inject("isMember");
 const fullDes = ref(true);
 
-const editProfile = async () => {
-  router.push({
-    name: "teamEdit",
-    params: { name: currentTeam.value.name },
-  });
-};
+// const editProfile = async () => {
+//   router.push({
+//     name: "teamEdit",
+//     params: { id: currentTeam.value.id },
+//   });
+// };
 
 const updateTeamStatus = async () => {
   await updateTeam(currentTeam.value.id, {

@@ -24,19 +24,31 @@ const routes = [
         component: () => import("pages/ClubAccountSettingsPage.vue"),
       },
       {
-        path: "team/:name",
+        path: "profile",
+        name: "profile",
+        component: () => import("pages/ClubUserProfilePage.vue"),
+      },
+      {
+        path: "team/:id",
         name: "team",
         component: () => import("pages/ClubTeamPage.vue"),
       },
       {
-        path: "team/:name/invite",
+        path: "team-space/:id",
+        name: "teamSpace",
+        meta: { isTeamMember: true },
+        component: () => import("pages/ClubTeamSpace.vue"),
+      },
+      {
+        path: "team/:id/invite",
         name: "teamInvite",
+        meta: { isTeamOwner: true },
         component: () => import("pages/ClubTeamInvitePage.vue"),
       },
       {
-        path: "team/:name/edit",
+        path: "team/:id/edit",
         name: "teamEdit",
-        props: true,
+        meta: { isTeamOwner: true },
         component: () => import("src/pages/ClubTeamSettingsPage.vue"),
       },
       {
@@ -60,8 +72,9 @@ const routes = [
         component: () => import("src/pages/ClubMyProjectsPage.vue"),
       },
       {
-        path: "project/:space/:id",
+        path: "project/:id",
         name: "project",
+        meta: { isTeamMember: true },
         component: () => import("src/pages/ClubProjectInformationPage.vue"),
       },
 

@@ -3,9 +3,11 @@
     <section class="flex no-wrap">
       <c-label-control label="Фамилия">
         <template #control>
-          <c-input
-            v-model.capitalize="form.last_name"
-            @update:model-value="changeUSerData('last_name', $event)"
+          <q-input
+            v-model="form.last_name"
+            outlined
+            class="c-input-outline"
+            @change="changeUSerData('last_name', $event)"
             :placeholder="currentUser?.last_name"
           />
         </template>
@@ -13,9 +15,11 @@
 
       <c-label-control label="Имя" class="c-ml-32">
         <template #control>
-          <c-input
-            v-model.capitalize="form.first_name"
-            @update:model-value="changeUSerData('first_name', $event)"
+          <q-input
+            v-model="form.first_name"
+            outlined
+            class="c-input-outline"
+            @change="changeUSerData('first_name', $event)"
             :placeholder="currentUser?.first_name"
           />
         </template>
@@ -25,9 +29,11 @@
     <section class="flex no-wrap">
       <c-label-control label="Отчество">
         <template #control>
-          <c-input
-            v-model.capitalize="form.middle_name"
-            @update:model-value="changeUSerData('middle_name', $event)"
+          <q-input
+            v-model="form.middle_name"
+            outlined
+            class="c-input-outline"
+            @change="changeUSerData('middle_name', $event)"
             :placeholder="currentUser?.middle_name"
           />
         </template>
@@ -37,6 +43,8 @@
         <template #control>
           <q-input
             v-model="form.birthday"
+            mask="##.##.####"
+            @change="changeUSerData('birthday', $event)"
             :placeholder="currentUser?.birthday || 'ДД.ММ.ГГГГ'"
             class="date-input c-input-outline"
             outlined
@@ -55,6 +63,7 @@
                     v-model="form.birthday"
                     @update:model-value="changeUSerData('birthday', $event)"
                     mask="DD.MM.YYYY"
+                    default-year-month="2000/01"
                     navigation-min-year-month="1901/01"
                     navigation-max-year-month="2009/01"
                     :options="optionsDateSelect"
@@ -70,22 +79,30 @@
     <section class="flex no-wrap">
       <c-label-control label="Город">
         <template #control>
-          <c-select
-            v-model="form.city"
+          <q-select
+            no-caps
+            borderless
+            class="club-dropdown"
             use-input
+            v-model="form.city"
             @update:model-value="changeUSerData('city', $event)"
             @filter="filterFn"
             :options="filteredCities"
+            dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
           />
         </template>
       </c-label-control>
 
       <c-label-control label="Пол" class="c-ml-32">
         <template #control>
-          <c-select
+          <q-select
+            no-caps
+            borderless
+            class="club-dropdown"
             v-model="form.gender"
             @update:model-value="changeUSerData('gender', $event)"
             :options="['Мужской', 'Женский']"
+            dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
           />
         </template>
       </c-label-control>
@@ -108,13 +125,15 @@
 <script setup>
 import { ref, inject } from "vue";
 
-import CInput from "./ClubInput.vue";
-import CSelect from "./ClubSelect.vue";
-import CLabelControl from "./ClubLabelControl.vue";
-import userApi from "src/sdk/user";
 import { useUserStore } from "src/stores/user";
 
+import CLabelControl from "./ClubLabelControl.vue";
+import userApi from "src/sdk/user";
+import { useQuasar } from "quasar";
+
 const emit = defineEmits(["form-submit"]);
+
+const $q = useQuasar();
 
 const userStore = useUserStore();
 
@@ -169,6 +188,13 @@ const changeUSerData = async (prop, value) => {
 
     userStore.SET_PROP(prop, value);
   } catch (error) {
+    if (prop === "birthday") {
+      $q.notify({
+        type: "warning",
+        position: "top",
+        message: "Неверное значение даты рождения!",
+      });
+    }
     console.log(error);
   }
 };

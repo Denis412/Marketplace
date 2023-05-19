@@ -2,11 +2,15 @@
   <q-header class="header-main flex flex-center bg-dark-purple c-px-32">
     <q-toolbar>
       <q-img class="logo" src="/assets/images/logo-white.svg" alt="logo" />
-      <q-toolbar-title class="text-h3"> Клуб </q-toolbar-title>
+      <q-toolbar-title class="flex items-center">
+        <span class="text-h3">Клуб</span>
+
+        <c-header-navigation class="navigation text-caption1" />
+      </q-toolbar-title>
 
       <div class="relative-position">
         <q-avatar
-          class="cursor-pointer relative-position avatar"
+          class="cursor-pointer relative-position header-avatar"
           @click="toggleShowIconMenu"
         >
           <q-img
@@ -32,6 +36,7 @@
 import { ref, inject } from "vue";
 
 import CRightPersonMenu from "./ClubRightPersonMenu.vue";
+import CHeaderNavigation from "./ClubHeaderNavigation.vue";
 
 const currentUser = inject("currentUser");
 
@@ -44,7 +49,7 @@ const toggleShowIconMenu = () => {
     ? document.body.addEventListener("click", (event) => {
         const clicked = event.target;
 
-        if (!clicked.closest(".avatar") && !clicked.closest(".dropdown"))
+        if (!clicked.closest(".header-avatar") && !clicked.closest(".dropdown"))
           showIconMenu.value = false;
       })
     : document.body.removeEventListener("click");
@@ -54,6 +59,15 @@ const toggleShowIconMenu = () => {
 <style scoped lang="scss">
 .logo {
   max-width: 40px;
+}
+
+.header-avatar {
+  width: 64px;
+  height: 64px;
+}
+
+.navigation {
+  margin-left: 132px;
 }
 
 .slide-enter-from,

@@ -128,6 +128,13 @@ export const useTeamCreate = () => {
             order: 2,
           },
           {
+            name: "team_name",
+            label: "Название команды",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 3,
+          },
+          {
             name: "description",
             label: "Описание проекта",
             data_type: "text",
@@ -139,9 +146,33 @@ export const useTeamCreate = () => {
             label: "Цель проекта",
             data_type: "text",
             type_id: projectTypeData.id,
-            order: 6,
+            order: 5,
           },
         ],
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          label: "Участники",
+          name: "members",
+          type_id: projectTypeData.id,
+          data_type: "object",
+          order: 6,
+          multiple: {
+            status: true,
+            max_number: 50,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
+                inverse_relation: true,
+                inverse_relation_label: "Проекты",
+              },
+            ],
+          },
+        },
         space_id: space.id,
       });
 
@@ -151,7 +182,7 @@ export const useTeamCreate = () => {
           label: "Дата сдачи",
           data_type: "datetime",
           type_id: projectTypeData.id,
-          order: 7,
+          order: 6,
           meta: {
             properties: [
               {

@@ -84,7 +84,7 @@ module.exports = configure(function (/* ctx */) {
         SUBJECT_TYPE_ID: "6410837257365292951",
         TEAM_TYPE_ID: "5546930648465563539",
         TASK_TYPE_ID: "3",
-        PROJECT_TYPE_ID: "4",
+        PROJECT_TYPE_ID: "2961807509853802219",
         FILE_TYPE_ID: "5",
         COMMENT_TYPE_ID: "6",
       },

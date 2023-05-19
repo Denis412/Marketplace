@@ -105,9 +105,9 @@ const { result: team, loading: loadingTeam } = teamApi.paginateTeams({
   page: 1,
   perPage: 1,
   where: {
-    column: "name",
+    column: "id",
     operator: "EQ",
-    value: route.params.name,
+    value: route.params.id,
   },
 });
 const { result: allSpecialities, loading } = specilalityApi.paginateSpeciality({

@@ -1,19 +1,13 @@
 <template>
-  <section>
-    <header class="q-pb-md">
-      <h3 class="text-h3">Профиль команды</h3>
-    </header>
+  <main v-if="currentTeam">
+    <section v-if="loading" class="loader loader-lg"></section>
 
-    <main v-if="currentTeam">
-      <section v-if="loading" class="loader loader-lg"></section>
-
-      <section v-else>
-        <c-team-profile-header />
-        <c-team-profile-projects class="c-pt-32" />
-        <c-team-profile-members />
-      </section>
-    </main>
-  </section>
+    <section v-else>
+      <c-team-profile-header :is-profile="isProfile" />
+      <c-team-profile-projects :is-profile="isProfile" class="c-pt-32" />
+      <c-team-profile-members :is-profile="isProfile" />
+    </section>
+  </main>
 </template>
 
 <script setup>
@@ -24,6 +18,10 @@ import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
 
 import { useTeamIsMember } from "src/use/teams";
+
+const { isProfile } = defineProps({
+  isProfile: Boolean,
+});
 
 const { result, loading, checkIsMember } = useTeamIsMember();
 

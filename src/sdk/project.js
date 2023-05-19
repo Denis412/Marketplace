@@ -9,7 +9,11 @@ import {
   projectDelete,
   projectUpdate,
 } from "src/graphql/project/mutations";
-import { getProjectById, paginateProjects } from "src/graphql/project/queries";
+import {
+  getProjectById,
+  projectsPaginate,
+  projectsPaginateInMainSpace,
+} from "src/graphql/project/queries";
 import { spaceHeader } from "src/utils/spaceHeader";
 
 provideApolloClient(apolloClient);
@@ -19,10 +23,12 @@ const { mutate: updatingProject } = useMutation(projectUpdate);
 const { mutate: deletingProject } = useMutation(projectDelete);
 
 const paginateProject = ({ page, perPage, where, space_id }) => {
+  const query = space_id ? projectsPaginate : projectsPaginateInMainSpace;
+
   return useQuery(
-    paginateProjects,
+    query,
     { page, perPage, where },
-    spaceHeader(space_id)
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 };
 
@@ -58,7 +64,7 @@ const refetchProjectById = async ({ id, space_id }) => {
 const create = async ({ input, space_id }) => {
   const { data: projectData } = await creatingProject(
     { input },
-    spaceHeader(space_id)
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
   console.log("create project", projectData);
@@ -70,7 +76,7 @@ const update = async ({ id, input, space_id }) => {
   console.log({ id, input, space_id });
   const { data: projectData } = await updatingProject(
     { id, input },
-    spaceHeader(space_id)
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
   console.log("update project", projectData);

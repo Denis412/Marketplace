@@ -4,10 +4,10 @@
 
     <section v-else>
       <header class="q-pb-md">
-        <h3 class="text-h3">Профиль команды</h3>
+        <h3 class="text-h3">Командное пространство</h3>
       </header>
 
-      <c-team-profile is-profile />
+      <c-team-profile />
     </section>
   </q-page>
 </template>

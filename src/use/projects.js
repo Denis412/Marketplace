@@ -1,11 +1,8 @@
 import { ref } from "vue";
 
 import projectApi from "src/sdk/project";
-import spaceApi from "src/sdk/space";
-import groupApi from "src/sdk/group";
 import pageApi from "src/sdk/page";
-import typeApi from "src/sdk/type";
-import propertyApi from "src/sdk/property";
+import teamApi from "src/sdk/team";
 import userApi from "src/sdk/user";
 
 export const useProjectsQuery = () => {
@@ -91,12 +88,65 @@ export const useProjectCreate = () => {
   const loading = ref(false);
   const error = ref(null);
 
-  async function createProject({ name, space_id }) {
+  async function createProject({ name, team, user, space_id }) {
     try {
       loading.value = true;
 
+      const projectInMainSpace = await projectApi.create({
+        input: {
+          name,
+          team: {
+            [process.env.TEAM_TYPE_ID]: team.id,
+          },
+        },
+      });
+
+      const subject = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "user_id",
+          operator: "EQ",
+          value: user.user_id,
+        },
+        is_team: true,
+        space_id,
+      });
+
+      const subjectInMainSpace = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "user_id",
+          operator: "EQ",
+          value: user.user_id,
+        },
+      });
+
+      console.log("hi", [
+        ...subjectInMainSpace[0].projects,
+        projectInMainSpace.id,
+      ]);
+
+      await userApi.update(subjectInMainSpace[0].id, {
+        projects: {
+          [process.env.PROJECT_TYPE_ID]: [
+            ...subjectInMainSpace[0].projects.map((project) => project.id),
+            projectInMainSpace.id,
+          ],
+        },
+      });
+
+      console.log("subject", subject);
+
       const projectData = await projectApi.create({
-        input: { name },
+        input: {
+          name,
+          team_name: team.name,
+          members: {
+            [subject[0].type_id]: [subject[0].id],
+          },
+        },
         space_id,
       });
 
@@ -137,6 +187,16 @@ export const useProjectCreate = () => {
         })
         .refetch({});
 
+      await teamApi.refetchPaginateTeams({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "id",
+          operator: "EQ",
+          value: team.id,
+        },
+      });
+
       result.value = projectData;
 
       loading.value = false;
@@ -163,6 +223,12 @@ export const useProjectUpdate = () => {
       console.log("space", { id, input, space_id });
 
       result.value = await projectApi.update({ id, input, space_id });
+
+      await projectApi.refetchPaginateProjects({
+        page: 1,
+        perPage: 100,
+        space_id,
+      });
 
       await useProjectsQuery()
         .getWithWere({
