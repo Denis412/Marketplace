@@ -3,7 +3,7 @@
   <q-table
     class="q-mx-lg no-shadow flat"
     :rows="tasks"
-    :columns="columns"
+    :columns="data.columns"
     :rows-per-page-options="[5, 10, 20]"
   >
     <template v-slot:body="props">
@@ -18,6 +18,7 @@
         </q-td>
         <q-td v-else>{{ props.row.name }}</q-td>
         <q-td v-if="!props.row.first">-</q-td>
+        <q-td v-else></q-td>
         <q-td>{{ props.row.dateStart?.date }}</q-td>
         <q-td>{{ props.row.dateEnd?.date }}</q-td>
         <q-td
@@ -46,14 +47,26 @@
 </template>
 
 <script setup>
-import { taskResult } from "src/sdk/tasks";
+import { useQuery } from "@vue/apollo-composable";
+import { getTasks } from "src/graphql/tasks/queries";
+import { data } from "src/utils/taskData";
 import { ref } from "vue";
+import { Quasar } from "quasar";
+import quasarIconSet from "quasar/icon-set/svg-material-icons";
+
+const { onResult: taskResult, refetch: taskRefetch } = useQuery(getTasks);
 
 const tasks = ref([
   {
     first: true,
   },
 ]);
+
+// Добавляем свою иконку в набор иконок Quasar
+quasarIconSet.table.mySortIcon = "прив";
+
+Quasar.iconSet.set(quasarIconSet); // устанавливаем набор иконок Quasar для Quasar
+quasarIconSet.table.arrowUp = "img:..\\icons\\SortableArrow.svg"; // используем свою иконку как иконку стрелки сортировки
 
 taskResult((queryResult) => {
   queryResult.data.paginate_task.data.forEach((element) => {
@@ -64,47 +77,6 @@ taskResult((queryResult) => {
 const addNewTask = () => {
   console.log("add");
 };
-
-const columns = [
-  {
-    name: "Задача",
-    align: "left",
-    label: "Задача",
-    field: "Задача",
-    headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px",
-  },
-  {
-    name: "Проект",
-    align: "left",
-    label: "Проект",
-    field: "Проект",
-    headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
-  },
-  {
-    name: "Дата начала",
-    align: "left",
-    label: "Дата начала",
-    field: "Дата начала",
-    headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
-  },
-  {
-    name: "Дата окончания",
-    align: "left",
-    label: "Дата окончания",
-    field: "Дата окончания",
-    headerStyle:
-      "font-family: 'Play', Regular; font-weight: 400; font-size: 20px;",
-  },
-  {
-    name: "Статус",
-    align: "left",
-    label: "Статус",
-    field: "Статус",
-    headerStyle: "font-family: 'Play'; font-weight: 400; font-size: 20px;",
-  },
-];
 </script>
 
 <style scoped>

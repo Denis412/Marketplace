@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 
 export const pagesPaginate = gql`
   query pagesPaginate(
@@ -35,7 +35,7 @@ export const pagesPaginate = gql`
       }
     }
   }
-`;
+`
 
 export const getPageById = gql`
   query getPageById($id: String!) {
@@ -53,6 +53,16 @@ export const getPageById = gql`
       is_block
       created_at
       updated_at
+      object {
+        id
+        type_id
+      }
+      children {
+        data {
+          id
+          title
+        }
+      }
     }
   }
-`;
+`
