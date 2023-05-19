@@ -13,7 +13,6 @@ const props = defineProps({
 
 const addDocument = () => {
   filesApi.createHtmlFile({ space_id: 13, parent_id: props.node.page_id });
-  console.log(props.node);
 };
 </script>
 
