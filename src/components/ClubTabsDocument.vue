@@ -18,14 +18,11 @@
 </template>
 
 <script setup>
-import { computed, watch, ref } from "vue";
+import { ref } from "vue";
 import CTabsItem from "./ClubTabsItemComponent.vue";
-import { Draggable } from "@he-tree/vue";
-import { dragContext } from "@he-tree/vue";
-import "@he-tree/vue/style/default.css";
+import { Draggable, dragContext } from "@he-tree/vue";
 import { filesApi } from "src/sdk/files/file";
 import pageApi from "src/sdk/page";
-import { dragContext } from "@he-tree/vue";
 import "@he-tree/vue/style/default.css";
 
 const rootPage = ref();
