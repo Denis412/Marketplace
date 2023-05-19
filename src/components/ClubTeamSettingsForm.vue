@@ -94,7 +94,7 @@
             <q-input
               v-model="form.description"
               placeholder="Описание команды"
-              class="c-textarea-outline teamSettingForm-input"
+              class="c-input-outline teamSettingForm-input"
               outlined
               autogrow
               :rules="[required, maxLength(1000)]"

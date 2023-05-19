@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
+  <div class="c-mt-24">
     <q-tree
       :nodes="pages"
       node-key="id"
@@ -7,6 +7,7 @@
       v-model:selected="selected"
       @update:selected="log"
       no-selection-unset
+      class="c-tree"
     />
 
     <!-- <pre>{{ pages }}</pre> -->
@@ -55,6 +56,7 @@ const pages = computed(() => {
     let treeElem = {
       id: page.id,
       label: page.title,
+      icon: "img: /assets/icons/tree/default-tree-icon.svg",
       children: [],
     };
 
@@ -73,4 +75,5 @@ const pages = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
