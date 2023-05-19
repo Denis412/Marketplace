@@ -598,3 +598,49 @@
     }
   }
 }
+
+.c-p {
+  &t- {
+    &96 {
+      padding-top: 96px;
+    }
+  }
+
+  &b- {
+    &96 {
+      padding-bottom: 96px;
+    }
+  }
+
+  &l- {
+    &96 {
+      padding-left: 96px;
+    }
+  }
+
+  &r- {
+    &96 {
+      padding-right: 96px;
+    }
+  }
+
+  &x- {
+    &96 {
+      padding-left: 96px;
+      padding-right: 96px;
+    }
+  }
+
+  &y- {
+    &96 {
+      padding-top: 96px;
+      padding-bottom: 96px;
+    }
+  }
+
+  &a- {
+    &96 {
+      padding: 96px;
+    }
+  }
+}

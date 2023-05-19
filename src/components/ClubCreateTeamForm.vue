@@ -54,7 +54,7 @@
       </section>
     </main>
 
-    <footer class="flex justify-center q-mt-xl">
+    <footer class="flex justify-center q-mt-xl rel-index-0">
       <c-button background class="text-body1" label="Создать" type="submit" />
 
       <c-button

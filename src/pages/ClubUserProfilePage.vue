@@ -5,7 +5,7 @@
     <div class="c-mt-32 separator" />
 
     <section class="main-information">
-      <div class="main-information__top">
+      <section class="main-information__top">
         <div class="main-information__top-container">
           <div class="main-information__top-container__absolute">
             <div
@@ -23,40 +23,130 @@
                 </q-avatar>
               </div>
 
-              <div class="main-information__nick-container">
-                <div class="main-information__nick-container__half">
-                  <span class="main-information__nick-label">ТехноНиндзя</span>
+              <div class="main-information__text-container">
+                <div class="main-information__text-container__half">
+                  <span class="main-information__text-label">
+                    ТехноНиндзя
+                  </span>
+
+                  <div
+                    class="main-information__text-label q-gutter-x-sm cursor-pointer q-ml-md"
+                  >
+                    <q-icon
+                      :size="baseIconSize"
+                      name="img:/assets/icons/pen/edit-white.svg"
+                    />
+                    <span class="text-caption2"> Редактировать профиль </span>
+                  </div>
                 </div>
 
-                <div class="main-information__nick-container__status">
-                  <span class="">Статус: Активно ищу команду</span>
+                <div class="main-information__text-container__status">
+                  <span> Статус: Активно ищу команду </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="main-information__top-label q-gutter-x-sm cursor-pointer">
-          <q-icon name="img:/assets/icons/pen/edit-white.svg" />
-          <span>Редактировать профиль</span>
-        </div>
-      </div>
-
-      <div class="main-information__bottom">
+      <section class="main-information__bottom">
         <div class="main-information__bottom-container">
-          <div class="main-information__bottom-container__absolute">
-            <h4 class="text-h4">Забирова Анна Александровна</h4>
+          <div
+            class="main-information__bottom-container__absolute text-body1 q-gutter-y-md"
+          >
+            <h4 class="text-h4">
+              {{ currentUser.last_name }}
+              {{ currentUser.first_name }}
+              {{ currentUser.middle_name }}
+            </h4>
+
+            <div class="q-gutter-x-sm">
+              <q-icon
+                :size="baseIconSize"
+                name="img:/assets/icons/geodata/geodata-violet-7.svg"
+              />
+
+              <span class="text-gray6"
+                >{{ currentUser.city }}, Российская Федерация</span
+              >
+            </div>
+
+            <div class="row text-gray7">
+              <div class="col flex items-center q-gutter-x-sm">
+                <q-icon
+                  :size="baseIconSize"
+                  name="img:/assets/icons/calendar/calendar-violet-7.svg"
+                />
+
+                <span>{{ currentUser.birthday }}</span>
+              </div>
+
+              <div class="col flex items-center q-gutter-x-sm">
+                <q-icon
+                  v-if="currentUser.gender === 'Женский'"
+                  :size="baseIconSize"
+                  name="img:/assets/icons/sex/woman-sex-violet-7.svg"
+                />
+
+                <q-icon
+                  v-else
+                  :size="baseIconSize"
+                  name="img:/assets/icons/sex/woman-sex-violet-7.svg"
+                />
+
+                <span>{{ currentUser.gender }}</span>
+              </div>
+            </div>
+
+            <div class="row text-gray7">
+              <div class="col flex items-center q-gutter-x-sm">
+                <q-icon
+                  :size="baseIconSize"
+                  name="img:/assets/icons/person/person-violet-7.svg"
+                />
+
+                <span>{{ currentUser.major }}</span>
+              </div>
+
+              <div class="col flex items-center q-gutter-x-sm">
+                <q-icon
+                  :size="baseIconSize"
+                  name="img:/assets/icons/socials/telegram-violet-7.svg"
+                />
+
+                <span>{{ currentUser.telegram }}</span>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
+    </section>
+
+    <section class="c-mt-32 c-py-32 c-px-96 competencies-section">
+      <div class="text-subtitle4">Компетенции</div>
+
+      <div class="q-mt-lg">
+        <q-list class="row q-gutter-x-sm q-gutter-y-md">
+          <c-chip
+            v-for="n in 10"
+            :key="n"
+            gradient-outline
+            label="Программирование"
+          />
+        </q-list>
       </div>
     </section>
   </q-page>
 </template>
 
 <script setup>
-import { inject } from "vue";
+import { inject, ref } from "vue";
+
+import CChip from "src/components/ClubChip.vue";
 
 const currentUser = inject("currentUser");
+
+const baseIconSize = ref("24px");
 </script>
 
 <style scoped lang="scss">
@@ -80,14 +170,24 @@ const currentUser = inject("currentUser");
 
   height: 505px;
 
-  &__nick {
+  &__text {
     &-container {
       position: relative;
+
       margin-left: 32px;
+      margin-right: 5%;
+
+      width: 100%;
+
+      &__absolute {
+        position: absolute;
+      }
 
       &__half {
         position: relative;
+
         display: flex;
+        justify-content: space-between;
         align-items: end;
 
         width: 100%;
@@ -109,6 +209,9 @@ const currentUser = inject("currentUser");
 
     &-label {
       margin-bottom: 12px;
+
+      &__right-side {
+      }
     }
   }
 
@@ -125,7 +228,7 @@ const currentUser = inject("currentUser");
 
     &-container {
       height: $avatar_size;
-      width: $avatar_size;
+      min-width: $avatar_size;
     }
 
     &-img {
@@ -156,22 +259,22 @@ const currentUser = inject("currentUser");
 
       &__absolute {
         position: absolute;
+        width: 100%;
 
         bottom: -80px;
       }
     }
 
     &-label {
-      position: absolute;
+      position: relative;
 
-      @extend .text-caption2;
+      &__absolute {
+        position: absolute;
 
-      right: 5%;
-      bottom: 12px;
+        @extend .text-caption2;
 
-      span {
-        width: 24px;
-        height: 24px;
+        right: 5%;
+        bottom: 12px;
       }
     }
   }
@@ -200,5 +303,13 @@ const currentUser = inject("currentUser");
       }
     }
   }
+}
+
+.competencies-section {
+  min-height: 280px;
+
+  background: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
 }
 </style>

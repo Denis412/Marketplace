@@ -24,7 +24,9 @@
           <c-specialist-item current-user class="bg-gray2 q-mt-lg" />
         </section>
 
-        <footer class="flex justify-center q-gutter-x-lg c-mt-32 text-body1">
+        <footer
+          class="flex justify-center q-gutter-x-lg c-mt-32 text-body1 rel-index-0"
+        >
           <q-btn
             flat
             no-caps
