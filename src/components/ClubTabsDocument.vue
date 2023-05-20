@@ -1,9 +1,16 @@
 <template>
   <div>
     <div>
-      <Draggable v-model="data" ref="tree" virtualization style="height: 500px">
-        <template #default="{ node }">
-          <c-tabs-item :node="node" :doc="FILES[node.index]" />
+      <Draggable
+        v-model="data_tree"
+        ref="tree"
+        virtualization
+        style="height: 500px"
+        @after-drop="contex()"
+      >
+        <template #default="{ node, stat }">
+          <c-tabs-item :stat="stat" :node="node" />
+          <!-- <c-tabs-item :stat="stat" :node="node" :doc="FILES[node.index]" /> -->
         </template>
       </Draggable>
     </div>
@@ -11,35 +18,37 @@
 </template>
 
 <script setup>
-import { computed, watch, ref } from "vue";
-import { useFileStore } from "src/stores/file";
-
+import { ref } from "vue";
 import CTabsItem from "./ClubTabsItemComponent.vue";
-
-import { Draggable } from "@he-tree/vue";
+import { Draggable, dragContext } from "@he-tree/vue";
+import { filesApi } from "src/sdk/files/file";
+import pageApi from "src/sdk/page";
 import "@he-tree/vue/style/default.css";
 
-const data = ref([]);
+const rootPage = ref();
+const data_tree = ref([]);
 
-const storeFile = useFileStore();
-const FILES = computed(() => storeFile.GET_FILES);
+//Получение корневой страницы документов
+const getData = async () => {
+  data_tree.value = await filesApi.getRootPage("4440891212883535597", 13);
+};
 
-let index = 0;
+const contex = () => {
+  let parent_id =
+    dragContext.targetInfo.dragNode.parent?.data.page_id ||
+    "4440891212883535597";
 
-watch(FILES, () => {
-  index = 0;
+  pageApi.update({
+    input: {
+      parent_id: parent_id,
+    },
 
-  data.value = FILES.value.map((file) => {
-    return { text: file.name.replace(".html", ""), index: index++ };
+    id: dragContext.startInfo.dragNode.data.page_id,
+    space_id: 13,
   });
+};
 
-  console.log(FILES.value);
-  console.log(data.value);
-});
-
-data.value = FILES.value.map((file) => {
-  return { text: file.name.replace(".html", ""), index: index++ };
-});
+getData();
 </script>
 
 <style scoped lang="scss">

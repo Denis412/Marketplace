@@ -1,7 +1,7 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 
 export const pageCreate = gql`
-  mutation ($input: PageCreateInput!) {
+  mutation($input: PageCreateInput!) {
     pageCreate(input: $input) {
       status
       record {
@@ -20,10 +20,10 @@ export const pageCreate = gql`
       }
     }
   }
-`;
+`
 
 export const pageUpdate = gql`
-  mutation ($id: String!, $input: PageUpdateInput!) {
+  mutation($id: String!, $input: PageUpdateInput!) {
     pageUpdate(id: $id, input: $input) {
       record {
         id
@@ -43,13 +43,13 @@ export const pageUpdate = gql`
       status
     }
   }
-`;
+`
 
 export const pageDelete = gql`
-  mutation ($id: String!) {
+  mutation($id: String!) {
     pageDelete(id: $id) {
       status
       recordId
     }
   }
-`;
+`
