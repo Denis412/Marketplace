@@ -14,6 +14,7 @@
         </div>
       </q-card-section>
     </q-card>
+
     <q-card
       v-for="row in tasks"
       :key="row.name"
@@ -25,17 +26,21 @@
         <div class="col-2 text-subtitle3">-</div>
         <div class="col-2 text-subtitle3">{{ row.dateStart?.date }}</div>
         <div class="col-2 text-subtitle3">{{ row.dateEnd?.date }}</div>
+
         <div class="col-2 text-subtitle3">
           <template v-if="getStatusText(row.taskStatus) === 'надо сделать'">
             <q-icon name="error" class="text-red" />
-            <span class="my-text-blue">{{
-              getStatusText(row.taskStatus)
-            }}</span>
+
+            <span class="my-text-blue">
+              {{ getStatusText(row.taskStatus) }}
+            </span>
           </template>
+
           <template v-else-if="getStatusText(row.taskStatus) === 'в процессе'">
             <q-icon name="autorenew" class="text-orange" />
             <span class="text-orange">{{ getStatusText(row.taskStatus) }}</span>
           </template>
+
           <template v-else-if="getStatusText(row.taskStatus) === 'выполнено'">
             <q-icon name="check_circle" class="text-green" />
             <span class="text-green">{{ getStatusText(row.taskStatus) }}</span>
@@ -53,8 +58,13 @@ import { data } from "src/utils/taskData";
 import { ref } from "vue";
 import { Quasar } from "quasar";
 import quasarIconSet from "quasar/icon-set/svg-material-icons";
+import { spaceHeader } from "src/utils/spaceHeader";
 
-const { onResult: taskResult, refetch: taskRefetch } = useQuery(getTasks);
+const { onResult: taskResult, refetch: taskRefetch } = useQuery(
+  getTasks,
+  {},
+  spaceHeader(process.env.MAIN_SPACE_ID)
+);
 
 const tasks = ref([]);
 
