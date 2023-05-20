@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+.separator {
+  height: 0;
+  border: 3px solid $violet-2;
+}
+
 .w-100p {
   width: 100%;
   max-width: 100%;

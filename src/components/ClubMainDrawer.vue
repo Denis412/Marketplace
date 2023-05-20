@@ -10,6 +10,7 @@
   >
     <c-tree-teams v-if="route.path.includes('teams')" />
     <c-tree-my-team v-else-if="route.path.includes('team')" />
+
     <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
         v-for="item in mainTreeItems"
