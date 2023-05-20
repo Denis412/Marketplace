@@ -31,6 +31,7 @@ const routes = [
       {
         path: "team/:id",
         name: "team",
+        props: true,
         component: () => import("pages/ClubTeamPage.vue"),
       },
       {

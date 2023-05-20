@@ -1,4 +1,3 @@
-<!-- Компонент формы редактирования командного пространства -->
 <template>
   <q-form @submit="updateTeamData" class="teamSettingForm c-mb-32">
     <div class="flex teamSettingForm-section c-mb-40 c-pb-32">

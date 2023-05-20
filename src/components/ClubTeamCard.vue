@@ -61,7 +61,7 @@ const to = async () => {
   router.push({
     name: "team",
     params: { id: team.id },
-    query: { space: team.space },
+    query: { name: team.name, space: team.space },
   });
 };
 

@@ -1,4 +1,3 @@
-<!-- Компонент редактирования команды -->
 <template>
   <section>
     <header class="c-mb-32">
