@@ -15,7 +15,7 @@
 
             <div class="main-information__text-container">
               <div class="main-information__text-container__half">
-                <span class="main-information__text-label"> ТехноНиндзя </span>
+                <span class="main-information__text-label">{{ currentUser.nickname }}</span>
 
                 <div
                   class="main-information__text-label q-gutter-x-sm cursor-pointer q-ml-md"
@@ -27,7 +27,7 @@
               </div>
 
               <div class="main-information__text-container__status">
-                <span> Статус: Активно ищу команду </span>
+                <span> Статус: {{ currentUser.status }} </span>
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@
             <div class="col flex items-center q-gutter-x-sm">
               <q-icon :size="baseIconSize" name="img:/assets/icons/person/person-violet-7.svg" />
 
-              <span>{{ currentUser.major }}</span>
+              <span>{{ currentUser.speciality1 }}</span>
             </div>
 
             <div class="col flex items-center q-gutter-x-sm">

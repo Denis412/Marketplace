@@ -21,13 +21,7 @@ module.exports = configure(function (/* ctx */) {
     boot: [],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
-    css: [
-      "app.scss",
-      "fonts.scss",
-      "controls.scss",
-      "spaces.scss",
-      "colors.scss",
-    ],
+    css: ["app.scss", "fonts.scss", "controls.scss", "spaces.scss", "colors.scss"],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -81,6 +75,8 @@ module.exports = configure(function (/* ctx */) {
         APPLICATION_TEAM_PROPERTY: "3278596465340119929",
         APPLICATION_SUBJECT_PROPERTY: "8095962102739461791",
 
+        SPECIALITY_TYPE_ID: "1054792999490113487",
+        USER_STATUS_TYPE_ID: "1676382032638755233",
         SUBJECT_TYPE_ID: "6410837257365292951",
         TEAM_TYPE_ID: "5546930648465563539",
         TASK_TYPE_ID: "3",

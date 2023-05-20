@@ -59,11 +59,7 @@ export const getSubjectById = gql`
 `;
 
 export const paginateSubjectInAnotherSpace = gql`
-  query getOtherSpaceSubjectPaginate(
-    $page: Int!
-    $perPage: Int!
-    $where: ObjectPaginatorWhere
-  ) {
+  query getOtherSpaceSubjectPaginate($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
     paginate_subject(page: $page, perPage: $perPage, where: $where) {
       data {
         id
@@ -130,6 +126,16 @@ export const paginateSubjectsInMainSpace = gql`
         birthday {
           date
         }
+        nickname
+        telegram_chat_id
+        about
+        resume_link
+        status {
+          name
+        }
+        speciality1 {
+          name
+        }
         major
         teams {
           id
@@ -153,11 +159,7 @@ export const paginateSubjectsInMainSpace = gql`
 `;
 
 export const paginateSubjectsForInvite = gql`
-  query paginateSubjectsForInvite(
-    $page: Int!
-    $perPage: Int!
-    $where: ObjectPaginatorWhere
-  ) {
+  query paginateSubjectsForInvite($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
     paginate_subject(page: $page, perPage: $perPage, where: $where) {
       data {
         id

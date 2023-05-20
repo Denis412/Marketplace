@@ -1,5 +1,5 @@
 <template>
-  <q-page class="c-px-32 c-pt-64">
+  <q-page class="c-px-32 c-py-64">
     <h3 class="text-h3">Профиль пользователя</h3>
 
     <div class="c-mt-32 separator" />
