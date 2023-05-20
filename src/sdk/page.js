@@ -5,7 +5,7 @@ import {
 } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import { pageCreate, pageDelete, pageUpdate } from "src/graphql/page/mutations";
-import { pagesPaginate } from "src/graphql/page/queries";
+import { pagesPaginate, rootPagesPaginate } from "src/graphql/page/queries";
 import { spaceHeader } from "src/utils/spaceHeader";
 
 provideApolloClient(apolloClient);
@@ -44,6 +44,14 @@ const refetchPaginatePages = async ({
   return pagesData.pages.data;
 };
 
+const paginateRootPages = ({ page, perPage, where, orderBy, space_id }) => {
+  return useQuery(
+    rootPagesPaginate,
+    { page, perPage, where, orderBy },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+  );
+};
+
 const create = async ({ input, space_id }) => {
   const { data: pageData } = await creatingPage(
     { input },
@@ -79,6 +87,7 @@ const deleteById = async (id, space_id) => {
 
 const pageApi = {
   paginatePages,
+  paginateRootPages,
   refetchPaginatePages,
   create,
   update,

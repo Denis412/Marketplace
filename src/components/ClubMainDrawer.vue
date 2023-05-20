@@ -9,6 +9,7 @@
     :mini-width="64"
   >
     <c-tree-teams v-if="route.path.includes('teams')" />
+    <c-tree-my-team v-else-if="route.path.includes('team')" />
     <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
         v-for="item in mainTreeItems"
@@ -57,6 +58,7 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
 import CTreeTeams from "src/components/ClubTreeTeams.vue";
+import CTreeMyTeam from "src/components/ClubTreeMyTeam.vue";
 import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
@@ -83,11 +85,6 @@ const mainTreeItems = ref([
   },
   {
     title: "Команды",
-    img: "HomeIconDemo.svg",
-    path: "teams",
-  },
-  {
-    title: "Мои команды",
     img: "HomeIconDemo.svg",
     path: "my-teams",
   },

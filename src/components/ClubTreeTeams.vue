@@ -5,26 +5,46 @@
       node-key="id"
       no-connectors
       v-model:selected="selected"
-      @update:selected="log"
+      @update:selected="go"
       no-selection-unset
       class="c-tree"
     />
-
-    <!-- <pre>{{ pages }}</pre> -->
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted, watch, inject } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "src/stores/user";
 import pageApi from "src/sdk/page";
 import userApi from "src/sdk/user";
 
+const router = useRouter();
 const pagesTree = ref([]);
-const selected = ref("");
+const selected = ref(process.env.MY_TEAMS_PAGE_ID);
+const userStore = useUserStore();
+const currentUser = inject("currentUser");
 
-const log = () => {
-  //функция для навигации
-  console.log(selected.value);
+const go = () => {
+  if (selected.value === process.env.MY_TEAMS_PAGE_ID) {
+    router.push({
+      name: "my-teams",
+    });
+  } else if (selected.value === process.env.ALL_TEAMS_PAGE_ID) {
+    router.push({
+      name: "teams",
+    });
+  } else {
+    let team = currentUser.value.teams.find((elem) => {
+      if (elem.id === selected.value) {
+        return elem;
+      }
+    });
+    router.push({
+      name: "team",
+      params: { name: team.name },
+    });
+  }
 };
 
 const { result: pagesTeams } = pageApi.paginatePages({
@@ -36,6 +56,7 @@ const { result: pagesTeams } = pageApi.paginatePages({
     value: process.env.TEAMS_PAGE_ID,
   },
 });
+
 
 const { result: myTeams } = userApi.paginateSubjects({
   page: 1,
