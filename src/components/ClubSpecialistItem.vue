@@ -6,18 +6,11 @@
         :src="user.avatar || '/assets/images/preloaders/default-avatar.svg'"
       />
 
-      <q-img
-        v-else
-        :src="
-          specialist.avatar || '/assets/images/preloaders/default-avatar.svg'
-        "
-      />
+      <q-img v-else :src="specialist.avatar || '/assets/images/preloaders/default-avatar.svg'" />
     </q-avatar>
 
     <div v-if="currentUser" class="q-ml-md">
-      <div class="text-body2 text-violet-6">
-        {{ user.first_name }} {{ user.last_name }}
-      </div>
+      <div class="text-body2 text-violet-6">{{ user.first_name }} {{ user.last_name }}</div>
 
       <div class="text-caption1 q-mt-sm text-violet-6">
         {{ user.major }}

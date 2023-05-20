@@ -7,13 +7,8 @@ export const useApplications = (object, is_team = false) => {
     return object.value?.applications.reduce(
       (acc, application) => {
         if (is_team)
-          acc[application.sender == "subject" ? "incoming" : "outgoing"].push(
-            application
-          );
-        else
-          acc[application.sender == "team" ? "incoming" : "outgoing"].push(
-            application
-          );
+          acc[application.sender == "subject" ? "incoming" : "outgoing"].push(application);
+        else acc[application.sender == "team" ? "incoming" : "outgoing"].push(application);
 
         return acc;
       },

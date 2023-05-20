@@ -19,9 +19,7 @@
             v-model="form.firstNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="
-              inputCode($event, 1), focusInput($event, $refs.firstInput)
-            "
+            @update:modelValue="inputCode($event, 1), focusInput($event, $refs.firstInput)"
           />
 
           <q-input
@@ -29,9 +27,7 @@
             flat
             outlined
             ref="secondInput"
-            @update:modelValue="
-              inputCode($event, 2), focusInput($event, $refs.firstInput)
-            "
+            @update:modelValue="inputCode($event, 2), focusInput($event, $refs.firstInput)"
             v-model="form.secondNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
@@ -42,9 +38,7 @@
             flat
             outlined
             ref="thirdInput"
-            @update:modelValue="
-              inputCode($event, 3), focusInput($event, $refs.secondInput)
-            "
+            @update:modelValue="inputCode($event, 3), focusInput($event, $refs.secondInput)"
             v-model="form.thirdNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
@@ -55,9 +49,7 @@
             flat
             outlined
             ref="fourthInput"
-            @update:modelValue="
-              inputCode($event, 4), focusInput($event, $refs.thirdInput)
-            "
+            @update:modelValue="inputCode($event, 4), focusInput($event, $refs.thirdInput)"
             v-model="form.fourthNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
@@ -68,9 +60,7 @@
             flat
             outlined
             ref="fifthInput"
-            @update:modelValue="
-              inputCode($event, 5), focusInput($event, $refs.fourthInput)
-            "
+            @update:modelValue="inputCode($event, 5), focusInput($event, $refs.fourthInput)"
             v-model="form.fifthNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
@@ -84,16 +74,11 @@
             v-model="form.sixthNumber"
             class="dialog-input c-input-outline c-input-number"
             maxlength="1"
-            @update:modelValue="
-              inputCode($event, 6), focusInput($event, $refs.fifthInput)
-            "
+            @update:modelValue="inputCode($event, 6), focusInput($event, $refs.fifthInput)"
           />
         </section>
 
-        <section
-          v-if="timer.timer.value"
-          class="text-caption1 q-mt-md text-center"
-        >
+        <section v-if="timer.timer.value" class="text-caption1 q-mt-md text-center">
           Отправить код повторно ({{ timer.timer }} секунд)
         </section>
 
@@ -151,13 +136,7 @@ const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
   console.log(authInfo);
 
-  console.log(
-    "hello",
-    value,
-    inputNumber,
-    fullCode.value,
-    fullCode.value.length
-  );
+  console.log("hello", value, inputNumber, fullCode.value, fullCode.value.length);
 
   if (inputNumber === 1) secondInput.value.focus();
   else if (inputNumber === 2) thirdInput.value.focus();

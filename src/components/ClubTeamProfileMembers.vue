@@ -10,13 +10,7 @@
           class="bg-transparent c-tab-text"
         >
           <q-tab no-caps name="members" label="Участники" />
-
-          <q-tab
-            v-if="!isProfile && isOwner"
-            no-caps
-            name="applications"
-            label="Заявки"
-          />
+          <q-tab v-if="!isProfile && isOwner" no-caps name="applications" label="Заявки" />
         </q-tabs>
 
         <q-space />
@@ -31,34 +25,21 @@
       </q-toolbar>
     </div>
 
-    <c-team-members-list
-      v-if="selectMembersList === 'members'"
-      :members="currentTeam.members"
-    />
+    <c-team-members-list v-if="selectMembersList === 'members'" :members="currentTeam.members" />
 
     <section v-else>
       <section v-if="!currentTeam.applications.length">
-        <h3 class="text-h3 text-center text-liner-button">
-          На данный момент нет заявок!
-        </h3>
+        <h3 class="text-h3 text-center text-liner-button">На данный момент нет заявок!</h3>
       </section>
 
       <section v-if="filteredApplications.outgoing.length">
-        <div class="text-body1 text-liner-button w-min-content q-mb-md">
-          Исходящие
-        </div>
+        <div class="text-body1 text-liner-button w-min-content q-mb-md">Исходящие</div>
 
-        <c-applications-list
-          :applications="filteredApplications.outgoing"
-          subjects
-          is_team
-        />
+        <c-applications-list :applications="filteredApplications.outgoing" subjects is_team />
       </section>
 
       <section v-if="filteredApplications.incoming.length" class="q-mt-md">
-        <div class="text-body1 text-liner-button w-min-content q-mb-md">
-          Входящие
-        </div>
+        <div class="text-body1 text-liner-button w-min-content q-mb-md">Входящие</div>
 
         <c-applications-list
           :applications="filteredApplications.incoming"

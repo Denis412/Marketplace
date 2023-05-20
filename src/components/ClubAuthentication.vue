@@ -20,11 +20,7 @@
           visibility
         />
 
-        <p
-          href=""
-          class="c-mb-50 q-mt-md link-grey cursor-pointer"
-          @click="resetPassword"
-        >
+        <p href="" class="c-mb-50 q-mt-md link-grey cursor-pointer" @click="resetPassword">
           Забыли пароль?
         </p>
 
@@ -39,15 +35,9 @@
 
     <section class="col-5 bg-auth relative-position flex flex-center">
       <div class="absolute c-width c-at-0 c-ar-20 c-z--1">
-        <q-img
-          class="c-img-120"
-          src="/assets/images/authentication/envelope.svg"
-        />
+        <q-img class="c-img-120" src="/assets/images/authentication/envelope.svg" />
 
-        <q-img
-          class="c-img-120 c-at--3"
-          src="/assets/images/authentication/speech-bubble.svg"
-        />
+        <q-img class="c-img-120 c-at--3" src="/assets/images/authentication/speech-bubble.svg" />
       </div>
 
       <div class="flex column flex-center">
@@ -57,19 +47,11 @@
           Зарегистрируйтесь в нашем клубе прямо сейчас
         </p>
 
-        <c-button
-          to="/registration"
-          outline
-          label="Регистрация"
-          class="text-body1"
-        />
+        <c-button to="/registration" outline label="Регистрация" class="text-body1" />
       </div>
     </section>
 
-    <c-password-recovery-dialog
-      v-model="forgotPassword"
-      :auth-info="authInfo"
-    />
+    <c-password-recovery-dialog v-model="forgotPassword" :auth-info="authInfo" />
   </div>
 </template>
 

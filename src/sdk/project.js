@@ -1,14 +1,6 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
-import {
-  projectCreate,
-  projectDelete,
-  projectUpdate,
-} from "src/graphql/project/mutations";
+import { projectCreate, projectDelete, projectUpdate } from "src/graphql/project/mutations";
 import {
   getProjectById,
   projectsPaginate,

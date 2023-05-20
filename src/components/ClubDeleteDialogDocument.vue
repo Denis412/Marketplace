@@ -6,15 +6,11 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        Вы уверены, что хотите удалить этот файл? Отменить это действие будет
-        невозможно
+        Вы уверены, что хотите удалить этот файл? Отменить это действие будет невозможно
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn
-          label="Да"
-          @click="filesApi.deleteDoc(prop_doc_id), (showDialog = false)"
-        />
+        <q-btn label="Да" @click="filesApi.deleteDoc(prop_doc_id), (showDialog = false)" />
         <q-btn label="Нет" @click="showDialog = false" />
       </q-card-actions>
     </q-card>

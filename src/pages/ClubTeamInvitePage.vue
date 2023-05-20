@@ -14,10 +14,7 @@
           v-model="filter"
         >
           <template #prepend>
-            <q-icon
-              name="img:/assets/icons/search/search-grey.svg"
-              class="cursor-pointer"
-            />
+            <q-icon name="img:/assets/icons/search/search-grey.svg" class="cursor-pointer" />
           </template>
         </q-input>
 
@@ -67,12 +64,7 @@
             </section>
 
             <div class="text-body1">
-              <c-button
-                background
-                label="Сбросить"
-                class="q-mt-md"
-                @click="resetSubjects"
-              />
+              <c-button background label="Сбросить" class="q-mt-md" @click="resetSubjects" />
             </div>
           </div>
         </section>
@@ -114,8 +106,11 @@ const { result: allSpecialities, loading } = specilalityApi.paginateSpeciality({
   page: 1,
   perPage: 100,
 });
-const { result: allSubjects, loading: loadingSubjects } =
-  userApi.paginateSubjects({ page: 1, perPage: 100, is_invite: true });
+const { result: allSubjects, loading: loadingSubjects } = userApi.paginateSubjects({
+  page: 1,
+  perPage: 100,
+  is_invite: true,
+});
 
 const selectedSubjects = ref([]);
 const filter = ref([]);
@@ -153,8 +148,7 @@ const inviteSubjects = async () => {
 
     $q.notify({
       type: "negative",
-      message:
-        "Какие-то из пользователей уже были приглашены или состоят в команде!",
+      message: "Какие-то из пользователей уже были приглашены или состоят в команде!",
     });
   }
 };

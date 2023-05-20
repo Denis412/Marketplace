@@ -6,13 +6,8 @@
           <q-img :src="form.avatar" />
         </q-avatar>
 
-        <div
-          class="absolute flex flex-center create-form-avatar-create cursor-pointer"
-        >
-          <q-img
-            src="/assets/icons/pen/edit-white.svg"
-            class="create-form-icon"
-          >
+        <div class="absolute flex flex-center create-form-avatar-create cursor-pointer">
+          <q-img src="/assets/icons/pen/edit-white.svg" class="create-form-icon">
             <q-menu class="w-max-content">
               <q-list separator>
                 <q-item
@@ -208,8 +203,7 @@ const uploadFile = ref();
 const router = useRouter();
 
 const form = ref({
-  avatar:
-    currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
+  avatar: currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
   name: currentTeam.value?.name,
   description: currentTeam.value?.description,
   telegram_chat_id: currentTeam.value?.telegram_chat_id,
@@ -247,8 +241,7 @@ const updateFile = () => {
 
 const addAvatar = () => uploadFile.value.pickFiles();
 
-const deleteAvatar = () =>
-  (form.value.avatar = "/assets/images/preloaders/default-avatar.svg");
+const deleteAvatar = () => (form.value.avatar = "/assets/images/preloaders/default-avatar.svg");
 
 const updateTeamData = async () => {
   await updateTeam(currentTeam.value.id, {

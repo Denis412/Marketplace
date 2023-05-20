@@ -1,8 +1,5 @@
 <template>
-  <q-form
-    class="create-form c-pa-32 bg-grey-12 rounded-borders-15"
-    @submit.prevent="teamCreate"
-  >
+  <q-form class="create-form c-pa-32 bg-grey-12 rounded-borders-15" @submit.prevent="teamCreate">
     <header>
       <h3 class="text-h3 text-center">Создание команды</h3>
 
@@ -56,13 +53,7 @@
 
     <footer class="flex justify-center q-mt-xl rel-index-0">
       <c-button background class="text-body1" label="Создать" type="submit" />
-
-      <c-button
-        outline
-        class="text-body1 c-ml-32"
-        label="Отмена"
-        to="/club/teams"
-      />
+      <c-button outline class="text-body1 c-ml-32" label="Отмена" to="/club/teams" />
     </footer>
   </q-form>
 </template>
@@ -85,8 +76,7 @@ const currentUser = inject("currentUser");
 const { required, maxLength } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
-const { createTeamResult, creatingTeam, createTeamError, createTeam } =
-  useTeamCreate();
+const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
 
 const form = ref({
   name: "",

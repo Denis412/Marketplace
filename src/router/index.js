@@ -60,15 +60,11 @@ export default route(function (/* { store, ssrContext } */) {
       if (team[0].author_id !== subject.id)
         next(`/club/team/${to.params.id}?space=${to.query?.space}`);
     } else if (teamMember || to.name === "team") {
-      const result = await userStore.FETCH_CURRENT_SPACE_SUBJECT(
-        to.query.space,
-        true
-      );
+      const result = await userStore.FETCH_CURRENT_SPACE_SUBJECT(to.query.space, true);
 
       console.log("subject", result);
 
-      if (teamMember && !result)
-        next(`/club/team/${from.params.id}?space=${from.query?.space}`);
+      if (teamMember && !result) next(`/club/team/${from.params.id}?space=${from.query?.space}`);
     } else userStore.RESET_CURRENT_SPACE_SUBJECT();
 
     const isAuthenticated = localStorage.getItem("user-data");

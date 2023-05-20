@@ -9,11 +9,7 @@
   >
     <template #default>
       <span>
-        <q-icon
-          v-if="iconLeft && !disable"
-          :name="iconLeft"
-          style="margin-right: 12px"
-        />
+        <q-icon v-if="iconLeft && !disable" :name="iconLeft" style="margin-right: 12px" />
 
         <q-icon
           v-else-if="iconLeft && disable"
@@ -23,11 +19,7 @@
 
         {{ label }}
 
-        <q-icon
-          v-if="iconRight && !disable"
-          :name="iconRight"
-          style="margin-left: 12px"
-        />
+        <q-icon v-if="iconRight && !disable" :name="iconRight" style="margin-left: 12px" />
 
         <q-icon
           v-else-if="iconRight && disable"

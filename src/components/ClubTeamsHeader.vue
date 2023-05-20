@@ -12,10 +12,7 @@
         v-model="search_team_name"
       >
         <template #prepend>
-          <q-icon
-            name="img:/assets/icons/search/search-grey.svg"
-            class="cursor-pointer"
-          />
+          <q-icon name="img:/assets/icons/search/search-grey.svg" class="cursor-pointer" />
         </template>
       </q-input>
 

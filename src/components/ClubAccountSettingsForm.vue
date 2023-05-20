@@ -50,15 +50,8 @@
             outlined
           >
             <template #append>
-              <q-icon
-                name="img:/assets/icons/calendar/calendar-grey.svg"
-                class="cursor-pointer"
-              >
-                <q-popup-proxy
-                  cover
-                  transition-show="scale"
-                  transition-hide="scale"
-                >
+              <q-icon name="img:/assets/icons/calendar/calendar-grey.svg" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date
                     v-model="form.birthday"
                     @update:model-value="changeUSerData('birthday', $event)"
@@ -155,9 +148,7 @@ const optionsDateSelect = (date) => new Date(date).getTime() < Date.now();
 
 const filterFn = (val, update) => {
   update(() => {
-    filteredCities.value = cities.filter((v) =>
-      v.toLowerCase().includes(val.toLowerCase())
-    );
+    filteredCities.value = cities.filter((v) => v.toLowerCase().includes(val.toLowerCase()));
   });
 };
 
@@ -169,11 +160,7 @@ const changeUSerData = async (prop, value) => {
           date: value,
         },
       });
-    else if (
-      prop === "first_name" ||
-      prop === "middle_name" ||
-      prop === "last_name"
-    )
+    else if (prop === "first_name" || prop === "middle_name" || prop === "last_name")
       await userApi.update(currentUser.value.subject_id, {
         fullname: {
           first_name: form.value.first_name,

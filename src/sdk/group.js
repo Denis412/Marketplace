@@ -1,14 +1,6 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
-
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 import { createGroup, inviteUser } from "src/graphql/group/mutations";
-import {
-  getGroupsWithWhere,
-  paginateGroupsSubjects,
-} from "src/graphql/group/queries";
+import { getGroupsWithWhere, paginateGroupsSubjects } from "src/graphql/group/queries";
 
 import apolloClient from "src/apollo/apollo-client";
 import { spaceHeader } from "src/utils/spaceHeader";
@@ -39,10 +31,7 @@ const refetchPaginateGroups = async ({ page, perPage, where, space_id }) => {
 };
 
 const create = async (space_id, data) => {
-  const { data: groupData } = await creatingGroup(
-    { input: data },
-    spaceHeader(space_id)
-  );
+  const { data: groupData } = await creatingGroup({ input: data }, spaceHeader(space_id));
 
   console.log("group create", groupData);
 
@@ -50,10 +39,7 @@ const create = async (space_id, data) => {
 };
 
 const invite = async (space_id, data) => {
-  const { data: inviteData } = await invitingUser(
-    { input: data },
-    spaceHeader(space_id)
-  );
+  const { data: inviteData } = await invitingUser({ input: data }, spaceHeader(space_id));
 
   console.log("invite group", inviteData);
 

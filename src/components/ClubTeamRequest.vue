@@ -1,16 +1,11 @@
 <template>
   <section v-if="filteredApplications?.incoming.length" class="c-mb-32">
     <h4 class="text-h4 c-mb-16">Входящие заявки</h4>
-
-    <c-applications-list
-      :applications="filteredApplications?.incoming"
-      incoming
-    />
+    <c-applications-list :applications="filteredApplications?.incoming" incoming />
   </section>
 
   <section v-if="filteredApplications?.outgoing.length" class="c-mb-32">
     <h4 class="text-h4 c-mb-16">Исходящие заявки</h4>
-
     <c-applications-list :applications="filteredApplications?.outgoing" />
   </section>
 </template>
@@ -23,9 +18,7 @@ import userApi from "src/sdk/user";
 
 const currentUser = inject("currentUser");
 
-const { result: subjectData } = userApi.queryGetSubjectById(
-  currentUser.value?.subject_id
-);
+const { result: subjectData } = userApi.queryGetSubjectById(currentUser.value?.subject_id);
 
 const currentSubject = computed(() => subjectData.value?.get_subject);
 

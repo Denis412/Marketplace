@@ -13,19 +13,11 @@
           class="cursor-pointer relative-position header-avatar"
           @click="toggleShowIconMenu"
         >
-          <q-img
-            :src="
-              currentUser?.avatar ||
-              '/assets/images/preloaders/default-avatar.svg'
-            "
-          />
+          <q-img :src="currentUser?.avatar || '/assets/images/preloaders/default-avatar.svg'" />
         </q-avatar>
 
         <transition name="slide">
-          <c-right-person-menu
-            v-if="showIconMenu"
-            :current-user="currentUser"
-          />
+          <c-right-person-menu v-if="showIconMenu" :current-user="currentUser" />
         </transition>
       </div>
     </q-toolbar>

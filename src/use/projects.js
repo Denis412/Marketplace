@@ -123,11 +123,6 @@ export const useProjectCreate = () => {
         },
       });
 
-      console.log("hi", [
-        ...subjectInMainSpace[0].projects,
-        projectInMainSpace.id,
-      ]);
-
       await userApi.update(subjectInMainSpace[0].id, {
         projects: {
           [process.env.PROJECT_TYPE_ID]: [

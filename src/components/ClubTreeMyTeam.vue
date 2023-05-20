@@ -31,15 +31,13 @@ const { result: pagesTree } = pageApi.paginateRootPages({
 });
 
 const pages = computed(() =>
-  pagesTree.value?.rootPages.data.map((page) => {
-    return {
-      label: page.title,
-      children: page.children.data.map((children) => ({
-        id: children.id,
-        label: children.title,
-      })),
-    };
-  })
+  pagesTree.value?.rootPages.data.map((page) => ({
+    label: page.title,
+    children: page.children.data.map((children) => ({
+      id: children.id,
+      label: children.title,
+    })),
+  }))
 );
 </script>
 

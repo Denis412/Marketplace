@@ -55,10 +55,7 @@ const pages = computed(() =>
 );
 
 const redirect = (page_id) => {
-  if (
-    page_id === process.env.MY_TEAMS_PAGE_ID ||
-    page_id === process.env.ALL_TEAMS_PAGE_ID
-  ) {
+  if (page_id === process.env.MY_TEAMS_PAGE_ID || page_id === process.env.ALL_TEAMS_PAGE_ID) {
     router.push({
       name: page_id === process.env.MY_TEAMS_PAGE_ID ? "my-teams" : "teams",
     });

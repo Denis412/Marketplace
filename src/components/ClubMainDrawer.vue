@@ -17,14 +17,8 @@
         :class="{ active: isActive(item.path) }"
         class="drawer-wrapper"
       >
-        <router-link
-          :to="{ name: item.path }"
-          class="row no-wrap c-pl-16 drawer-item"
-        >
-          <div
-            class="flex flex-center bg-primary"
-            style="border-radius: 6px; padding: 4px"
-          >
+        <router-link :to="{ name: item.path }" class="row no-wrap c-pl-16 drawer-item">
+          <div class="flex flex-center bg-primary" style="border-radius: 6px; padding: 4px">
             <img src="/assets/icons/home/home-white.svg" alt="" />
           </div>
 
@@ -43,11 +37,7 @@
       </q-item>
     </q-list>
 
-    <button
-      ref="btn"
-      class="bg-violet-6 drawer-btn absolute"
-      @click="toggleDrawer()"
-    >
+    <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
       <img src="/assets/icons/arrow/drawer-arrow.svg" />
     </button>
   </q-drawer>

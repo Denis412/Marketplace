@@ -1,12 +1,6 @@
 <template>
   <div class="flex">
-    <c-button
-      background
-      size="lg"
-      label="Найти команду"
-      @click="to"
-      class="c-mr-32"
-    />
+    <c-button background size="lg" label="Найти команду" @click="to" class="c-mr-32" />
 
     <c-button
       outline

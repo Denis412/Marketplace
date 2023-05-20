@@ -20,28 +20,16 @@
       />
     </div>
 
-    <q-img
-      src="/assets/images/about-project-page/leader-customer.svg"
-      class="leaders-image"
-    />
+    <q-img src="/assets/images/about-project-page/leader-customer.svg" class="leaders-image" />
   </section>
 
   <section class="c-mt-72">
     <h4 class="text-h4">Проектная команда</h4>
 
     <q-toolbar class="q-pa-none q-mt-lg">
-      <q-tabs
-        v-model="selectedList"
-        indicator-color="black"
-        class="bg-transparent"
-      >
+      <q-tabs v-model="selectedList" indicator-color="black" class="bg-transparent">
         <q-tab name="members" class="c-tab-text" label="Участники" />
-
-        <q-tab
-          name="applications"
-          class="c-tab-text"
-          label="Исходящие заявки"
-        />
+        <q-tab name="applications" class="c-tab-text" label="Исходящие заявки" />
       </q-tabs>
     </q-toolbar>
 

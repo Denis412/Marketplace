@@ -1,8 +1,4 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import { createSpace, deleteSpace } from "src/graphql/space/mutations";
 import { getSpaceById, paginateSpaces } from "src/graphql/space/queries";

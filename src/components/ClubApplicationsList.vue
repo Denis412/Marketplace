@@ -1,15 +1,7 @@
 <template>
   <q-list class="row">
-    <section
-      v-for="application in applications"
-      :key="application.id"
-      class="col-6 q-pa-sm"
-    >
-      <q-card
-        v-if="subjects"
-        flat
-        class="bg-gray4 q-pa-md applications-item rounded-borders-10"
-      >
+    <section v-for="application in applications" :key="application.id" class="col-6 q-pa-sm">
+      <q-card v-if="subjects" flat class="bg-gray4 q-pa-md applications-item rounded-borders-10">
         <c-specialist-item :specialist="application.subject" />
 
         <c-application-controls

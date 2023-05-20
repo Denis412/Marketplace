@@ -18,11 +18,7 @@
       </q-toolbar>
 
       <q-list class="row c-mt-40">
-        <section
-          v-for="project in projects"
-          :key="project.id"
-          class="col-4 q-pa-md"
-        >
+        <section v-for="project in projects" :key="project.id" class="col-4 q-pa-md">
           <c-card-project :current-project="project" />
         </section>
       </q-list>
@@ -58,9 +54,7 @@ onMounted(async () => {
         space_id: team.space,
       });
 
-      projects.value.push(
-        ...pr.map((p) => Object.assign({}, p, { space: team.space }))
-      );
+      projects.value.push(...pr.map((p) => Object.assign({}, p, { space: team.space })));
     } catch (error) {}
   }
 

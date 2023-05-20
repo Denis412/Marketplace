@@ -8,6 +8,7 @@ import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
 import propertyApi from "src/sdk/property";
 import pageApi from "src/sdk/page";
+import permissionApi from "src/sdk/permission";
 
 export const useTeamCreate = () => {
   const createTeamResult = ref(null);
@@ -452,9 +453,7 @@ export const useTeamIsMember = () => {
         is_team: true,
       });
 
-      result.value = subjectData[0].group.find(
-        (group) => group.id === groupData[0].id
-      );
+      result.value = subjectData[0].group.find((group) => group.id === groupData[0].id);
 
       loading.value = false;
     } catch (e) {
@@ -496,6 +495,62 @@ export const useTeamAcceptUser = () => {
         surname: data.surname,
         email: data.email,
         group_id: groupData[0].id,
+      });
+
+      const rootPage = await pageApi.refetchPaginateRootPages({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "title",
+          operator: "EQ",
+          value: data.team_name,
+        },
+        space_id,
+      });
+
+      const newSubjectData = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "email",
+          operator: "FTS",
+          value: data.email,
+        },
+        is_team: true,
+        space_id,
+      });
+
+      await permissionApi.create({
+        input: {
+          model_type: "page",
+          model_id: rootPage[0].id,
+          owner_type: "subject",
+          owner_id: newSubjectData[0].id,
+          level: 4,
+        },
+        space_id,
+      });
+
+      await permissionApi.create({
+        input: {
+          model_type: "page",
+          model_id: rootPage[0].children.data[0].id,
+          owner_type: "subject",
+          owner_id: newSubjectData[0].id,
+          level: 4,
+        },
+        space_id,
+      });
+
+      await permissionApi.create({
+        input: {
+          model_type: "page",
+          model_id: rootPage[0].children.data[1].id,
+          owner_type: "subject",
+          owner_id: newSubjectData[0].id,
+          level: 4,
+        },
+        space_id,
       });
 
       const teamData = await teamApi.refetchPaginateTeams({
@@ -543,10 +598,7 @@ export const useTeamApplication = () => {
       const [property_id, type_id] =
         data.sender === "team"
           ? [process.env.APPLICATION_TEAM_PROPERTY, process.env.TEAM_TYPE_ID]
-          : [
-              process.env.APPLICATION_SUBJECT_PROPERTY,
-              process.env.SUBJECT_TYPE_ID,
-            ];
+          : [process.env.APPLICATION_SUBJECT_PROPERTY, process.env.SUBJECT_TYPE_ID];
 
       const target_str = data.sender === "team" ? "subject" : "team";
 
@@ -560,11 +612,7 @@ export const useTeamApplication = () => {
         },
       });
 
-      if (
-        applications.find(
-          (application) => application[target_str].id === data.target.id
-        )
-      )
+      if (applications.find((application) => application[target_str].id === data.target.id))
         throw new Error("Уже есть заявка!");
 
       result.value = await applicationApi.create(data);
@@ -604,6 +652,7 @@ export const useTeamApplication = () => {
             surname: application.subject.fullname.last_name,
             email: application.subject.email.email,
             id: application.subject.id,
+            team_name: application.team.name,
             application_id: application.id,
           },
         });

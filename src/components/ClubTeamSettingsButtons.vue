@@ -8,12 +8,7 @@
       @click="$emit('updateTeamData')"
     />
 
-    <c-button
-      outline
-      label="Отменить"
-      @click="router.go(-1)"
-      class="page-background text-body1"
-    />
+    <c-button outline label="Отменить" @click="router.go(-1)" class="page-background text-body1" />
   </div>
 </template>
 

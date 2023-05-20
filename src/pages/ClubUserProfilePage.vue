@@ -8,34 +8,22 @@
       <section class="main-information__top">
         <div class="main-information__top-container">
           <div class="main-information__top-container__absolute">
-            <div
-              class="main-information__avatar-container main-information__top-container-avatar"
-            >
+            <div class="main-information__avatar-container main-information__top-container-avatar">
               <div class="main-information__avatar-container">
                 <q-avatar class="main-information__avatar">
                   <q-img
                     class="main-information__avatar-img"
-                    :src="
-                      currentUser.avatar ??
-                      '/assets/images/preloaders/default-avatar.svg'
-                    "
+                    :src="currentUser.avatar ?? '/assets/images/preloaders/default-avatar.svg'"
                   />
                 </q-avatar>
               </div>
 
               <div class="main-information__text-container">
                 <div class="main-information__text-container__half">
-                  <span class="main-information__text-label">
-                    ТехноНиндзя
-                  </span>
+                  <span class="main-information__text-label"> ТехноНиндзя </span>
 
-                  <div
-                    class="main-information__text-label q-gutter-x-sm cursor-pointer q-ml-md"
-                  >
-                    <q-icon
-                      :size="baseIconSize"
-                      name="img:/assets/icons/pen/edit-white.svg"
-                    />
+                  <div class="main-information__text-label q-gutter-x-sm cursor-pointer q-ml-md">
+                    <q-icon :size="baseIconSize" name="img:/assets/icons/pen/edit-white.svg" />
                     <span class="text-caption2"> Редактировать профиль </span>
                   </div>
                 </div>
@@ -51,9 +39,7 @@
 
       <section class="main-information__bottom">
         <div class="main-information__bottom-container">
-          <div
-            class="main-information__bottom-container__absolute text-body1 q-gutter-y-md"
-          >
+          <div class="main-information__bottom-container__absolute text-body1 q-gutter-y-md">
             <h4 class="text-h4">
               {{ currentUser.last_name }}
               {{ currentUser.first_name }}
@@ -61,14 +47,9 @@
             </h4>
 
             <div class="q-gutter-x-sm">
-              <q-icon
-                :size="baseIconSize"
-                name="img:/assets/icons/geodata/geodata-violet-7.svg"
-              />
+              <q-icon :size="baseIconSize" name="img:/assets/icons/geodata/geodata-violet-7.svg" />
 
-              <span class="text-gray6"
-                >{{ currentUser.city }}, Российская Федерация</span
-              >
+              <span class="text-gray6">{{ currentUser.city }}, Российская Федерация</span>
             </div>
 
             <div class="row text-gray7">
@@ -100,10 +81,7 @@
 
             <div class="row text-gray7">
               <div class="col flex items-center q-gutter-x-sm">
-                <q-icon
-                  :size="baseIconSize"
-                  name="img:/assets/icons/person/person-violet-7.svg"
-                />
+                <q-icon :size="baseIconSize" name="img:/assets/icons/person/person-violet-7.svg" />
 
                 <span>{{ currentUser.major }}</span>
               </div>
@@ -127,12 +105,7 @@
 
       <div class="q-mt-lg">
         <q-list class="row q-gutter-x-sm q-gutter-y-md">
-          <c-chip
-            v-for="n in 10"
-            :key="n"
-            gradient-outline
-            label="Программирование"
-          />
+          <c-chip v-for="n in 10" :key="n" gradient-outline label="Программирование" />
         </q-list>
       </div>
     </section>
@@ -145,18 +118,15 @@
               <div class="text-subtitle4">О себе</div>
 
               <div class="text-body2 text-gray6">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi a
-                qui maxime autem omnis tempore quibusdam porro adipisci corporis
-                quod non id sapiente voluptatibus, ut nihil vero! Incidunt
-                tenetur repellat dolor, atque quisquam at illo amet vero quasi!
-                Modi, rem. Nostrum, deleniti. Quisquam, soluta beatae aliquid
-                obcaecati inventore suscipit nisi vitae, quod non itaque
-                repellendus similique perferendis iste, ducimus provident
-                aperiam amet aut nemo iusto repellat cumque veritatis distinctio
-                dolore. Beatae illum magni facilis qui! Soluta eveniet
-                reiciendis magni minima eius corporis accusantium hic incidunt
-                odit eum! Voluptates corrupti nobis cumque nam aspernatur totam
-                debitis doloribus, culpa odio, dolorum unde.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi a qui maxime autem
+                omnis tempore quibusdam porro adipisci corporis quod non id sapiente voluptatibus,
+                ut nihil vero! Incidunt tenetur repellat dolor, atque quisquam at illo amet vero
+                quasi! Modi, rem. Nostrum, deleniti. Quisquam, soluta beatae aliquid obcaecati
+                inventore suscipit nisi vitae, quod non itaque repellendus similique perferendis
+                iste, ducimus provident aperiam amet aut nemo iusto repellat cumque veritatis
+                distinctio dolore. Beatae illum magni facilis qui! Soluta eveniet reiciendis magni
+                minima eius corporis accusantium hic incidunt odit eum! Voluptates corrupti nobis
+                cumque nam aspernatur totam debitis doloribus, culpa odio, dolorum unde.
               </div>
             </div>
           </div>
@@ -166,9 +136,7 @@
           <div class="q-gutter-y-lg">
             <div class="text-subtitle4">Резюме</div>
 
-            <div class="text-body2 text-gray6">
-              С резюме можно ознакомиться здесь:
-            </div>
+            <div class="text-body2 text-gray6">С резюме можно ознакомиться здесь:</div>
 
             <div>
               <a href="#" class="text-body2">
@@ -180,10 +148,7 @@
       </div>
 
       <div class="col flex flex-center">
-        <q-img
-          class="about-image"
-          src="/assets/images/account-settings-page/about-profile.svg"
-        />
+        <q-img class="about-image" src="/assets/images/account-settings-page/about-profile.svg" />
       </div>
     </section>
 

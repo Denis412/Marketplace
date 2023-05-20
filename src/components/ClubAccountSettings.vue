@@ -5,9 +5,7 @@
     </header>
 
     <main class="c-mt-64">
-      <section
-        class="flex justify-between no-wrap c-pb-64 border-section-bottom"
-      >
+      <section class="flex justify-between no-wrap c-pb-64 border-section-bottom">
         <div class="w-100p">
           <div class="row">
             <div class="flex items-center col">
@@ -23,11 +21,7 @@
               </q-avatar>
 
               <div class="flex column flex-center c-ml-32">
-                <c-button
-                  background
-                  label="Загрузить фото"
-                  @click="pickFiles"
-                />
+                <c-button background label="Загрузить фото" @click="pickFiles" />
 
                 <q-file
                   style="display: none"
@@ -64,16 +58,11 @@
           <h3 class="text-h3">Изменение пароля</h3>
 
           <p class="text-body2 password-subtitle c-mt-32">
-            Если Вы не уверены в безопасности пароля или заметили подозрительную
-            активность, можете изменить его
+            Если Вы не уверены в безопасности пароля или заметили подозрительную активность, можете
+            изменить его
           </p>
 
-          <c-button
-            background
-            label="Изменить пароль"
-            class="c-mt-32"
-            @click="changePassword"
-          />
+          <c-button background label="Изменить пароль" class="c-mt-32" @click="changePassword" />
         </div>
 
         <q-img
@@ -94,11 +83,7 @@
 
     <footer></footer>
 
-    <c-edit-password-dialog
-      v-model="isChanging"
-      :auth-info="authInfo"
-      recovery
-    />
+    <c-edit-password-dialog v-model="isChanging" :auth-info="authInfo" recovery />
   </section>
 </template>
 
@@ -126,8 +111,7 @@ const selectAvatar = ref(null);
 const newAvatar = ref(null);
 
 const pickFiles = () => uploader.value.pickFiles();
-const updateAvatar = () =>
-  (newAvatar.value = URL.createObjectURL(selectAvatar.value));
+const updateAvatar = () => (newAvatar.value = URL.createObjectURL(selectAvatar.value));
 
 const toggleIsDeletePhoto = () => {
   isDeletePhoto.value = !isDeletePhoto.value;

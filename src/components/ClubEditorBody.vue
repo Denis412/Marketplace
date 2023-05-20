@@ -95,9 +95,7 @@ watch(route, async () => {
   }
 
   if (route.params.id && FILES.value.length) {
-    storeFile.SET_CURRENT_TITLE_DOC(
-      FILES.value[route.params.id].name.slice(0, -5)
-    );
+    storeFile.SET_CURRENT_TITLE_DOC(FILES.value[route.params.id].name.slice(0, -5));
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,
@@ -116,9 +114,7 @@ watch(route, async () => {
 
 onMounted(async () => {
   if (route.params.id && FILES.value.length) {
-    storeFile.SET_CURRENT_TITLE_DOC(
-      FILES.value[route.params.id].name.slice(0, -5)
-    );
+    storeFile.SET_CURRENT_TITLE_DOC(FILES.value[route.params.id].name.slice(0, -5));
     editor.value = await filesApi.getFileHtmlByUrl(
       FILES.value[route.params.id].path,
       FILES.value[route.params.id].id,

@@ -1,8 +1,4 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import {
   propertyCreate,
@@ -21,11 +17,7 @@ const { mutate: updatingProperty } = useMutation(propertyUpdate);
 const { mutate: deletingProperty } = useMutation(propertyDelete);
 
 const queryPropertyById = ({ id, space_id }) => {
-  return useQuery(
-    getPropertyById,
-    { id },
-    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
-  );
+  return useQuery(getPropertyById, { id }, spaceHeader(space_id || process.env.MAIN_SPACE_ID));
 };
 
 const refetchPropertyById = async ({ id, space_id }) => {

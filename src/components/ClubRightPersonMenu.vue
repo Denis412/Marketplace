@@ -2,12 +2,7 @@
   <q-card class="dropdown">
     <q-card-section class="dropdown-top-section flex column items-center">
       <q-avatar class="dropdown-avatar">
-        <q-img
-          :src="
-            currentUser?.avatar ||
-            '/assets/images/preloaders/default-avatar.svg'
-          "
-        />
+        <q-img :src="currentUser?.avatar || '/assets/images/preloaders/default-avatar.svg'" />
       </q-avatar>
 
       <div class="text-body2 text-violet-6 q-mt-md">
@@ -21,40 +16,22 @@
     </q-card-section>
 
     <q-card-section class="c-mt-20">
-      <q-card
-        flat
-        class="text-body2 cursor-pointer"
-        @click="redirect('account')"
-      >
+      <q-card flat class="text-body2 cursor-pointer" @click="redirect('account')">
         <q-icon name="img:/assets/icons/pen/pen-grey.svg" class="q-mr-sm" />
         Учетная запись
       </q-card>
 
-      <q-card
-        flat
-        class="text-body2 cursor-pointer q-mt-md"
-        @click="redirect('profile')"
-      >
-        <q-icon
-          name="img:/assets/icons/person/person-grey.svg"
-          class="q-mr-sm"
-        />
+      <q-card flat class="text-body2 cursor-pointer q-mt-md" @click="redirect('profile')">
+        <q-icon name="img:/assets/icons/person/person-grey.svg" class="q-mr-sm" />
         Профиль
       </q-card>
 
-      <q-card
-        flat
-        class="text-body2 cursor-pointer q-mt-md"
-        @click="toggleIsExit"
-      >
+      <q-card flat class="text-body2 cursor-pointer q-mt-md" @click="toggleIsExit">
         <q-icon name="img:/assets/icons/exit/exit-grey.svg" class="q-mr-sm" />
         Выход
       </q-card>
 
-      <q-img
-        class="dropdown-image"
-        src="/assets/images/account-settings-page/settings.svg"
-      />
+      <q-img class="dropdown-image" src="/assets/images/account-settings-page/settings.svg" />
     </q-card-section>
 
     <c-confirm-dialog

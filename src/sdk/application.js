@@ -1,8 +1,4 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 
 import apolloClient from "src/apollo/apollo-client";
 import {
@@ -39,12 +35,7 @@ const paginateApplication = ({ page, perPage, where, space_id }) => {
   );
 };
 
-const refetchPaginateApplications = async ({
-  page,
-  perPage,
-  where,
-  space_id,
-}) => {
+const refetchPaginateApplications = async ({ page, perPage, where, space_id }) => {
   const { refetch } = paginateApplication({ page, perPage, where, space_id });
 
   const { data: applicationsData } = await refetch();

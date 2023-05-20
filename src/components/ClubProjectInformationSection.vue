@@ -4,10 +4,7 @@
 
     <div class="c-mt-40">
       <div class="flex no-wrap justify-between q-gutter-x-md">
-        <c-label-control
-          label="Название проекта"
-          class="information-section-left"
-        >
+        <c-label-control label="Название проекта" class="information-section-left">
           <template #control>
             <q-input
               outlined
@@ -19,10 +16,7 @@
           </template>
         </c-label-control>
 
-        <c-label-control
-          label="Дата создания проекта"
-          class="information-section-right"
-        >
+        <c-label-control label="Дата создания проекта" class="information-section-right">
           <template #control>
             <q-input
               :placeholder="created_at || 'ДД.ММ.ГГГГ'"
@@ -48,17 +42,12 @@
               v-model="form.team_name"
               class="c-input-outline"
               @change="updateProp('team_name', $event)"
-              :placeholder="
-                currentProject?.team_name || 'Напишите название команды'
-              "
+              :placeholder="currentProject?.team_name || 'Напишите название команды'"
             />
           </template>
         </c-label-control>
 
-        <c-label-control
-          label="Дата сдачи проекта"
-          class="information-section-right"
-        >
+        <c-label-control label="Дата сдачи проекта" class="information-section-right">
           <template #control>
             <q-input
               v-model="form.delivery_date"
@@ -68,15 +57,8 @@
               outlined
             >
               <template #append>
-                <q-icon
-                  name="img:/assets/icons/calendar/calendar-grey.svg"
-                  class="cursor-pointer"
-                >
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
+                <q-icon name="img:/assets/icons/calendar/calendar-grey.svg" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                     <q-date
                       v-model="form.delivery_date"
                       @update:model-value="updateProp('delivery_date', $event)"
@@ -107,9 +89,7 @@ const { result, loading, updateProject } = useProjectUpdate();
 const currentProject = inject("currentProject");
 const space_id = inject("spaceId");
 
-const created_at = computed(() =>
-  new Date(currentProject.value?.created_at).toLocaleDateString()
-);
+const created_at = computed(() => new Date(currentProject.value?.created_at).toLocaleDateString());
 const delivery_date = computed(() => currentProject.value?.delivery_date?.date);
 
 const form = ref({
