@@ -2,7 +2,7 @@
   <section class="q-ml-sm flex">
     <q-icon
       class="q-ml-xs"
-      style="width: 24px; height: 24px"
+      style="width: 18px; height: 18px"
       :name="`img:${status.icon}`"
     >
     </q-icon>
