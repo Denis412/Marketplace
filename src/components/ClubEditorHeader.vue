@@ -1,21 +1,13 @@
 <template>
   <div class="row q-my-lg">
-    <input readonly class="q-py-sm q-pt-sm col-6" :placeholder="path" />
+    <!-- <input readonly class="q-py-sm q-pt-sm col-6" :placeholder="path" /> -->
+    <p class="q-py-sm q-pt-sm col-6"> Главная/Сайт с каталогом/{{ title }} </p>
 
-    <input
-      readonly
-      class="q-py-sm col-6"
-      style="direction: rtl"
-      :placeholder="'Дата создания: ' + day + ' ' + month + ' ' + year"
-    />
+    <input readonly class="q-py-sm col-6" style="direction: rtl"
+      :placeholder="'Дата создания: ' + day + ' ' + month + ' ' + year" />
 
-    <input
-      autocomplete="off"
-      class="text-h3 q-mb-sm col-12"
-      id="id"
-      placeholder="Придумайте название документа"
-      v-model="title"
-    />
+    <input autocomplete="off" class="text-h3 q-mb-sm col-12" id="id" placeholder="Придумайте название документа"
+      v-model="title" />
   </div>
 </template>
 
