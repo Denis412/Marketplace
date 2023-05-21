@@ -46,13 +46,13 @@ switch (props.status.order) {
     status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_4.svg";
     break;
   case 5:
-    status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_5_6.svg";
+    status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_5.svg";
     break;
   case 6:
-    status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_5_6.svg";
+    status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_6_7.svg";
     break;
   case 7:
-    status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_7.svg";
+    status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_6_7.svg";
     break;
   case 8:
     status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_8.svg";
