@@ -8,8 +8,8 @@
     :width="256"
     :mini-width="64"
   >
-    <c-tree-teams v-if="route.path.includes('teams')" />
-    <c-tree-my-team v-else-if="route.path.includes('team')" />
+    <c-tree-teams v-if="route.path.includes('teams')" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-my-team v-else-if="route.path.includes('team')" :class="{ 'c-tree-mini': miniState }" />
 
     <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item

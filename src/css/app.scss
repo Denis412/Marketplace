@@ -399,3 +399,28 @@
     }
   }
 }
+
+.c-tree-mini {
+  div {
+    & .q-tree__arrow {
+      width: 12px;
+      visibility: hidden;
+    }
+
+    & .q-tree__node-header-content {
+      div{
+        visibility: hidden;
+    }
+  }
+
+  &.q-tree__node--child {
+    & .q-tree__node-header {
+      & .q-tree__node-header-content::before {
+        width: 12px;
+       visibility: hidden;
+      }
+    }
+  }
+      
+  }
+}

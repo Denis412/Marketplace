@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md q-gutter-sm" v-if="pages">
+  <div class="c-mt-24" v-if="pages">
     <q-tree
       :nodes="pages"
       node-key="id"

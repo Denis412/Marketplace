@@ -33,9 +33,11 @@ const { result: pagesTree } = pageApi.paginateRootPages({
 const pages = computed(() =>
   pagesTree.value?.rootPages.data.map((page) => ({
     label: page.title,
+    icon: "img:/assets/icons/tree/default-tree-icon.svg",
     children: page.children.data.map((children) => ({
       id: children.id,
       label: children.title,
+      icon: "img:/assets/icons/tree/default-tree-icon.svg",
     })),
   }))
 );
