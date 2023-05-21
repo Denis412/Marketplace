@@ -1,16 +1,10 @@
 <template>
   <section>
     <section class="q-mx-auto q-mt-md wrapper-page-order-info">
-      <section class="flex items-end">
+      <section class="flex items-center">
         <h4 class="text-h4 q-mb-sm">просмотр заказа {{ props.order.id }}</h4>
 
-        <section class="q-ml-sm flex items-baseline">
-          <div
-            class="color-type-status"
-            :style="`background-color: ${colorStatus}`"
-          ></div>
-          <h6 class="text-h6 q-mx-sm q-mb-sm">Есть кандидат</h6>
-        </section>
+        <c-order-status :status="props.order.status" />
       </section>
 
       <section>
@@ -170,7 +164,7 @@
 <script setup>
 import { ref, defineProps } from "vue";
 import CButton from "../components/ClubButton.vue";
-import personWhite from "/assets/icons/person/person-white.svg";
+import COrderStatus from "../components/ClubOrderStatus.vue";
 
 const props = defineProps({
   order: {
@@ -178,6 +172,13 @@ const props = defineProps({
     required: true,
   },
 });
+
+// const order_test = ref({
+//   id: "7718095163914291112",
+//   label: "Поиск исполнителя",
+//   order: 0,
+//   color: "#FF9646",
+// });
 
 console.log(props.order);
 
