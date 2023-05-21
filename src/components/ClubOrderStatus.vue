@@ -54,5 +54,8 @@ switch (props.status.order) {
   case 7:
     status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_7.svg";
     break;
+  case 8:
+    status.value.icon = "/assets/icons/orderIcons/ordersStatus/status_8.svg";
+    break;
 }
 </script>
