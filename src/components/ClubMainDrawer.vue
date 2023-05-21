@@ -118,7 +118,7 @@ const toggleDrawer = () => {
 };
 
 const addDocument = () => {
-  filesApi.createHtmlFile();
+  filesApi.createHtmlFile({ space_id: 13 });
 };
 
 const isActive = (path) => {
