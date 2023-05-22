@@ -17,9 +17,17 @@
         </q-tabs>
       </q-toolbar>
 
-      <q-list class="row c-mt-40">
+      <q-list v-if="selectedProjectsType === 'active'" class="row c-mt-40">
         <section v-for="project in projects" :key="project.id" class="col-4 q-pa-md">
           <c-card-project :current-project="project" />
+        </section>
+      </q-list>
+
+      <q-list v-else class="row c-mt-40">
+        <section v-for="project in projects" :key="project.id" class="col-4 q-pa-md">
+          <div v-for="application in project.applications" :key="application.key">
+            <c-card-project :current-project="project" :application="application" />
+          </div>
         </section>
       </q-list>
     </div>
@@ -54,7 +62,20 @@ onMounted(async () => {
         space_id: team.space,
       });
 
-      projects.value.push(...pr.map((p) => Object.assign({}, p, { space: team.space })));
+      projects.value.push(
+        ...pr.map((p) =>
+          Object.assign(
+            {},
+            p,
+            {
+              applications: p.applications.filter(
+                (application) => application.subject.email.email === currentUser.value.email
+              ),
+            },
+            { space: team.space }
+          )
+        )
+      );
     } catch (error) {}
   }
 

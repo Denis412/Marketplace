@@ -4,6 +4,9 @@ import projectApi from "src/sdk/project";
 import pageApi from "src/sdk/page";
 import teamApi from "src/sdk/team";
 import userApi from "src/sdk/user";
+import applicationApi from "src/sdk/application";
+import typeApi from "src/sdk/type";
+import propertyApi from "src/sdk/property";
 
 export const useProjectsQuery = () => {
   const result = ref(null);
@@ -138,6 +141,7 @@ export const useProjectCreate = () => {
         input: {
           name,
           team_name: team.name,
+          space: space_id,
           members: {
             [subject[0].type_id]: [subject[0].id],
           },
@@ -249,4 +253,289 @@ export const useProjectUpdate = () => {
   }
 
   return { result, loading, error, updateProject };
+};
+
+export const useProjectApplication = () => {
+  const result = ref(null);
+  const loading = ref(false);
+  const error = ref(null);
+
+  async function sendApplication({ project_id, project_name, subject, space_id }) {
+    try {
+      loading.value = true;
+
+      const subjectType = await typeApi.refetchPaginateType({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "subject",
+        },
+        space_id,
+      });
+
+      const applicationType = await typeApi.refetchPaginateType({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "application",
+        },
+        space_id,
+      });
+
+      const projectType = await typeApi.refetchPaginateType({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "project",
+        },
+        space_id,
+      });
+
+      console.log("types", subjectType[0].id, applicationType[0].id, projectType[0].id);
+
+      const subjectProperty = await propertyApi.refetchPaginateProperties({
+        page: 1,
+        perPage: 1,
+        where: {
+          and: [
+            {
+              column: "name",
+              operator: "EQ",
+              value: "subject",
+            },
+            {
+              column: "type_id",
+              operator: "EQ",
+              value: applicationType[0].id,
+            },
+          ],
+        },
+        space_id,
+      });
+
+      const statusProperty = await propertyApi.refetchPaginateProperties({
+        page: 1,
+        perPage: 1,
+        where: {
+          and: [
+            {
+              column: "name",
+              operator: "EQ",
+              value: "status",
+            },
+            {
+              column: "type_id",
+              operator: "EQ",
+              value: applicationType[0].id,
+            },
+          ],
+        },
+        space_id,
+      });
+
+      const statusPropertyWithMeta = await propertyApi.refetchPropertyById({
+        id: statusProperty[0].id,
+        space_id,
+      });
+
+      const applications = await applicationApi.refetchPaginateApplications({
+        page: 1,
+        perPage: 100,
+        where: {
+          column: `${subjectProperty[0].id}->${subjectType[0].id}`,
+          operator: "EQ",
+          value: subject.id,
+        },
+      });
+
+      if (applications.find((application) => application.project.id === project_id))
+        throw new Error("Уже есть заявка!");
+
+      result.value = await applicationApi.create({
+        name: project_name,
+        subject: {
+          [subjectType[0].id]: subject.id,
+        },
+        project: {
+          [projectType[0].id]: project_id,
+        },
+        status: statusPropertyWithMeta.meta.options[0].id,
+        space_id,
+      });
+
+      loading.value = false;
+    } catch (e) {
+      error.value = e;
+      loading.value = false;
+
+      console.log(e);
+    }
+  }
+
+  async function acceptApplication({ application, is_project, space_id }) {
+    try {
+      loading.value = true;
+
+      console.log("accept", { application, is_project, space_id });
+
+      if (is_project) {
+        const subjectType = await typeApi.refetchPaginateType({
+          page: 1,
+          perPage: 1,
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: "subject",
+          },
+          space_id,
+        });
+
+        const project = await projectApi.refetchPaginateProjects({
+          page: 1,
+          perPage: 1,
+          where: {
+            column: "id",
+            operator: "EQ",
+            value: application.project.id,
+          },
+          space_id,
+        });
+
+        await useProjectUpdate().updateProject({
+          id: application.project.id,
+          input: {
+            name: application.name,
+            members: {
+              [subjectType[0].id]: [
+                ...project[0].members.map((member) => member.id),
+                application.subject.id,
+              ],
+            },
+          },
+          space_id: application.project.space,
+        });
+
+        await applicationApi.deleteById(application.id, application.project.space);
+      } else {
+        const applicationType = await typeApi.refetchPaginateType({
+          page: 1,
+          perPage: 1,
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: "application",
+          },
+          space_id,
+        });
+
+        const statusProperty = await propertyApi.refetchPaginateProperties({
+          page: 1,
+          perPage: 1,
+          where: {
+            and: [
+              {
+                column: "name",
+                operator: "EQ",
+                value: "status",
+              },
+              {
+                column: "type_id",
+                operator: "EQ",
+                value: applicationType[0].id,
+              },
+            ],
+          },
+          space_id,
+        });
+
+        const statusPropertyWithMeta = await propertyApi.refetchPropertyById({
+          id: statusProperty[0].id,
+          space_id,
+        });
+
+        await applicationApi.update(
+          application.id,
+          {
+            name: application.name,
+            status: statusPropertyWithMeta.meta.options[2].id,
+          },
+          space_id
+        );
+      }
+
+      loading.value = false;
+    } catch (e) {
+      error.value = e;
+      loading.value = false;
+
+      console.log(e);
+    }
+  }
+
+  async function cancelApplication({ application, is_project, space_id }) {
+    try {
+      loading.value = true;
+
+      if (is_project) await applicationApi.deleteById(application.id, space_id);
+      else {
+        console.log(application, is_project, space_id);
+
+        const statusProperty = await propertyApi.refetchPaginateProperties({
+          page: 1,
+          perPage: 1,
+          where: {
+            and: [
+              {
+                column: "name",
+                operator: "EQ",
+                value: "status",
+              },
+              {
+                column: "type_id",
+                operator: "EQ",
+                value: application.type_id,
+              },
+            ],
+          },
+          space_id,
+        });
+
+        const statusPropertyWithMeta = await propertyApi.refetchPropertyById({
+          id: statusProperty[0].id,
+          space_id,
+        });
+
+        await applicationApi.update(
+          application.id,
+          {
+            name: application.name,
+            status: statusPropertyWithMeta.meta.options[1].id,
+          },
+          space_id
+        );
+      }
+
+      loading.value = false;
+    } catch (e) {
+      error.value = e;
+      loading.value = false;
+
+      console.log(e);
+    }
+  }
+
+  return {
+    result,
+    loading,
+    error,
+    sendApplication,
+    acceptApplication,
+    cancelApplication,
+  };
 };

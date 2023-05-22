@@ -10,8 +10,8 @@
       <div>
         <div class="text-h3 text-dark">У вас нет команды?</div>
 
-        <div class="text-subtitle3 q-mt-md c-mb-24">
-          Создай сам или найди, чтобы приступить к работе!
+        <div class="text-subtitle3 q-mt-md c-mb-24" style="max-width: inherit">
+          Создайте сами или найдите, чтобы приступить к работе!
         </div>
 
         <c-add-buttons />

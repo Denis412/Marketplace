@@ -52,6 +52,11 @@ const routes = [
         component: () => import("pages/ClubTeamInvitePage.vue"),
       },
       {
+        path: "project/:id/invite",
+        name: "projectInvite",
+        component: () => import("pages/ClubTeamInvitePage.vue"),
+      },
+      {
         path: "team/:id/edit",
         name: "teamEdit",
         meta: { isTeamOwner: true },
@@ -80,7 +85,7 @@ const routes = [
       {
         path: "project/:id",
         name: "project",
-        meta: { isTeamMember: true },
+        // meta: { isTeamMember: true },
         component: () => import("src/pages/ClubProjectInformationPage.vue"),
       },
 

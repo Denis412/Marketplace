@@ -78,7 +78,7 @@ const selectMembersList = ref("members");
 const inviteUser = async () => {
   router.push({
     name: "teamInvite",
-    params: { name: currentTeam.value.name },
+    params: { id: currentTeam.value.id },
   });
 };
 </script>
