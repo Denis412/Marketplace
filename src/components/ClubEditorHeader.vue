@@ -6,7 +6,7 @@
       readonly
       class="q-py-sm col-6"
       style="direction: rtl"
-      :placeholder="'Дата создания: ' + day + ' ' + month + ' ' + year"
+      :placeholder="'Дата создания: ' + date"
     />
 
     <input
@@ -32,15 +32,18 @@ const path = "Главная/Сайт с каталогом/Без назван�
 
 //****************************************************************************** */
 
-const date = new Date();
-const day = date.getDate();
-const month = data.monthNames[date.getMonth()];
-const year = date.getFullYear();
+const date = ref("");
 const titleDocument = computed(() => storeFile.currentTitleDoc);
+const dateDocument = computed(() => storeFile.currentDateDoc);
 const title = ref();
 
 watch(titleDocument, () => {
   title.value = titleDocument.value;
+});
+
+watch(dateDocument, () => {
+  date.value = dateDocument.value;
+  date.value = date.value.slice(0, 10);
 });
 
 watch(title, () => {

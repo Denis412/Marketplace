@@ -109,13 +109,13 @@ watch(route, async () => {
 
   if (route.params.id && FILES.value.length) {
     storeFile.SET_CURRENT_TITLE_DOC(currentFile.name.slice(0, -5));
+    storeFile.SET_CURRENT_DATE_DOC(currentFile.created_at);
     editor.value = await filesApi.getFileHtmlByUrl(
       currentFile.path,
       currentFile.id,
       currentFile.name,
       currentFile.extension
     );
-
     storeFile.SET_CURRENT_EDITOR_VALUE(editor.value);
   } else {
     editor.value = "";

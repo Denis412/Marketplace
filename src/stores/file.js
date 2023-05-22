@@ -7,6 +7,7 @@ export const useFileStore = defineStore('file', {
     files: [],
     refetchFiles: {},
     currentTitleDoc: '',
+    currentDateDoc: '',
     currentEditorValue: '',
   }),
 
@@ -26,6 +27,10 @@ export const useFileStore = defineStore('file', {
 
     SET_CURRENT_TITLE_DOC(value) {
       this.currentTitleDoc = value
+    },
+
+    SET_CURRENT_DATE_DOC(value){
+      this.currentDateDoc = value
     },
 
     SET_CURRENT_EDITOR_VALUE(value) {
