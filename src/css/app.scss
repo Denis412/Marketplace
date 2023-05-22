@@ -1,4 +1,5 @@
 // app global css in SCSS form
+@import "fonts.scss";
 
 * {
   padding: 0;
@@ -120,4 +121,56 @@
 
 .border-section-bottom {
   border-bottom: 1px solid #dcdcdc;
+}
+
+.c-notification-btn {
+  min-width: 18px;
+  min-height: 18px;
+
+  & .q-icon > img {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  & .q-badge {
+    padding: 3px 3px;
+    min-height: 3px;
+  }
+
+  & .q-badge--floating {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+}
+
+.c-notification-popup {
+  top: 78px !important;
+  padding: 16px 32px 28px 32px;
+  max-width: 615px;
+  width: 100%;
+
+  .notification-link {
+    @extend .text-caption1;
+  }
+
+  .c-notification-item {
+    @extend .text-caption2;
+    min-height: 0;
+    padding: 16px 0;
+    border-bottom: 1px solid #e4e4e7;
+
+    .q-btn {
+      margin-right: 32px;
+
+      img {
+        width: 18px;
+        height: 12px;
+      }
+    }
+
+    .item-light {
+      color: #71717a;
+    }
+  }
 }
