@@ -9,6 +9,7 @@ export const useFileStore = defineStore('file', {
     currentTitleDoc: '',
     currentDateDoc: '',
     currentEditorValue: '',
+    currentBreadcrumps: ''
   }),
 
   getters: {
@@ -32,7 +33,9 @@ export const useFileStore = defineStore('file', {
     SET_CURRENT_DATE_DOC(value){
       this.currentDateDoc = value
     },
-
+    SET_BREADCRUMPS_FOR_DOC(value){
+      this.currentBreadcrumps = value
+    },
     SET_CURRENT_EDITOR_VALUE(value) {
       this.currentEditorValue = value
     },

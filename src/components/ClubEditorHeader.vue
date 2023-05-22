@@ -1,17 +1,17 @@
 <template>
   <div class="row q-my-lg">
-    <input readonly class="q-py-sm q-pt-sm col-6" :placeholder="path" />
+    <c-breadcrumbs class="col-6 my-input" />
 
     <input
       readonly
-      class="q-py-sm col-6"
+      class="q-py-sm col-6 my-input"
       style="direction: rtl"
       :placeholder="'Дата создания: ' + date"
     />
 
     <input
       autocomplete="off"
-      class="text-h3 q-mb-sm col-12"
+      class="text-h3 q-mb-sm col-12 my-input"
       id="id"
       placeholder="Придумайте название документа"
       v-model="title"
@@ -20,18 +20,10 @@
 </template>
 
 <script setup>
-import { data } from "src/utils/documentData";
+import CBreadcrumbs from "./ClubВreadcrumbs.vue";
 import { ref, watch, computed } from "vue";
 import { useFileStore } from "src/stores/file";
 const storeFile = useFileStore();
-
-//****************************************************************************** */
-// Хлебные крошки надо будут отдельным компонентом, это не просто плейсхолдер
-
-const path = "Главная/Сайт с каталогом/Без названия"; //Placeholder
-
-//****************************************************************************** */
-
 const date = ref("");
 const titleDocument = computed(() => storeFile.currentTitleDoc);
 const dateDocument = computed(() => storeFile.currentDateDoc);
@@ -57,7 +49,7 @@ watch(title, () => {
 </script>
 
 <style lang="scss" scoped>
-input {
+.my-input {
   color: grey;
   outline: none;
   border: none;
