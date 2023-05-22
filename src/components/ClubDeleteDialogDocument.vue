@@ -11,12 +11,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn
-          label="Да"
-          @click="
-            filesApi.deleteDoc(prop_doc_id, prop_page_id), (showDialog = false)
-          "
-        />
+        <q-btn label="Да" @click="deleteDocument" />
         <q-btn label="Нет" @click="showDialog = false" />
       </q-card-actions>
     </q-card>
@@ -24,12 +19,22 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { filesApi } from "src/sdk/files/file";
+import EventBus from "../sdk/files/eventBus";
+
+let showDialog = ref(true);
 
 const props = defineProps({
   prop_doc_id: String,
   prop_page_id: String,
 });
+
+const deleteDocument = () => {
+  filesApi.deleteDoc(props.prop_doc_id, props.prop_page_id);
+  showDialog = false;
+  EventBus.emit("document-deleted");
+};
 </script>
 
 <style lang="scss" scoped></style>
