@@ -1,5 +1,5 @@
 <template>
-  <q-form @submit="$emit('submit-form', form)" style="width: min-content">
+  <q-form @submit="$emit('submit-form', form)" class="c-gutter-y-32">
     <section class="flex no-wrap">
       <c-label-control label="Фамилия">
         <template #control>

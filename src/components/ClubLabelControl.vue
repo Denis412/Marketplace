@@ -1,8 +1,12 @@
 <template>
-  <label>
-    <p class="text-body2 c-mt-32 q-mb-sm">{{ label }}</p>
-    <slot name="control"></slot>
-  </label>
+  <div>
+    <label>
+      <div class="q-mb-md">
+        <span class="text-body2">{{ label }}</span>
+      </div>
+      <slot name="control"></slot>
+    </label>
+  </div>
 </template>
 
 <script setup>

@@ -12,7 +12,8 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary: #eee8f3;
+// #eee8f3
+$primary: #76459d;
 $secondary: #26a69a;
 $accent: #9c27b0;
 
@@ -31,12 +32,7 @@ $warning: #f2c037;
 
 $primary-gradient: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
 $primary-gradient-disaled: linear-gradient(99.53deg, #351d59 0%, #531d59 100%);
-$secondary-gradient: linear-gradient(
-  135deg,
-  #c800c8 0%,
-  #9600ff 100%,
-  #9600ff 100%
-);
+$secondary-gradient: linear-gradient(135deg, #c800c8 0%, #9600ff 100%, #9600ff 100%);
 $bg-dark-purple: #0f0421;
 
 $input-height-md: 60px;

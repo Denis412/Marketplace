@@ -82,7 +82,7 @@
       </section>
     </div>
 
-    <div class="flex teamSettingForm-section c-pb-32">
+    <div class="flex teamSettingForm-section c-pt-32 c-pb-32">
       <section class="flex no-wrap">
         <c-label-control label="Описание">
           <template #control>
@@ -100,7 +100,7 @@
       </section>
     </div>
 
-    <div class="flex teamSettingForm-section c-pb-32">
+    <div class="flex teamSettingForm-section c-pt-32 c-pb-32">
       <section class="flex no-wrap">
         <c-label-control label="Ссылка на Telegram лидера">
           <template #control>
@@ -124,7 +124,7 @@
       </section>
     </div>
 
-    <div class="flex teamSettingForm-section c-pb-32 c-mb-40">
+    <div class="flex teamSettingForm-section c-pt-32 c-pb-32 c-mb-40">
       <q-form class="flex" @submit.prevent="">
         <c-label-control label="Виды работ">
           <template #control>

@@ -41,6 +41,10 @@ const get = async (file_id) => {
   return fileData.paginate_file.data;
 };
 
-const filesApi = { uploadFiles, get };
+const getUrl = (file) => {
+  return `${process.env.FILE_STORAGE_URI}/${file.path}/${file.id}.${file.extension}?n=${file.name}`;
+};
+
+const filesApi = { uploadFiles, get, getUrl };
 
 export default filesApi;
