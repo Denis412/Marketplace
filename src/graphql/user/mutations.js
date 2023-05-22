@@ -70,3 +70,45 @@ export const userGroupInviteUser = gql`
     }
   }
 `;
+
+export const updateSubject = gql`
+  mutation subjectUpdate($id: String!, $input: update_subject_input!) {
+    update_subject(id: $id, input: $input) {
+      recordId
+      record {
+        fullname {
+          first_name
+          middle_name
+          last_name
+        }
+        gender
+        city
+        birthday {
+          date
+        }
+        email {
+          email
+        }
+      }
+    }
+  }
+`;
+
+export const updateSubjectInTeam = gql`
+  mutation updateSubjectInTeam($id: String!, $input: update_subject_input!) {
+    update_subject(id: $id, input: $input) {
+      recordId
+      record {
+        fullname {
+          first_name
+          middle_name
+          last_name
+        }
+        major
+        email {
+          email
+        }
+      }
+    }
+  }
+`;

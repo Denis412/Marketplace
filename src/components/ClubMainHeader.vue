@@ -1,29 +1,27 @@
 <template>
-  <q-header class="header-main flex flex-center bg-dark-purple">
+  <q-header class="header-main flex flex-center bg-dark-purple c-px-32">
     <q-toolbar>
-      <q-toolbar-title> 1Т Клуб </q-toolbar-title>
+      <q-img class="logo" src="/assets/images/logo-white.svg" alt="logo" />
+      <q-toolbar-title class="text-h3"> Клуб </q-toolbar-title>
 
       <div class="relative-position">
         <q-avatar
           class="cursor-pointer relative-position avatar"
           @click="toggleShowIconMenu"
         >
-          <q-img src="/src/assets/images/Ellipse55.svg" />
+          <q-img
+            :src="
+              currentUser?.avatar ||
+              '/assets/images/preloaders/default-avatar.svg'
+            "
+          />
         </q-avatar>
 
         <transition name="slide">
-          <q-list v-if="showIconMenu" class="dropdown">
-            <q-item
-              clickable
-              class="flex flex-center no-wrap rounded-borders-10 itemDropdown"
-              v-for="menuItem in menuIcon"
-              :class="menuItem.textColor"
-              :key="menuItem.title"
-              @click="menuItem.callback"
-            >
-              {{ menuItem.title }}
-            </q-item>
-          </q-list>
+          <c-right-person-menu
+            v-if="showIconMenu"
+            :current-user="currentUser"
+          />
         </transition>
       </div>
     </q-toolbar>
@@ -31,32 +29,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import userApi from "src/sdk/user";
-import { useRouter } from "vue-router";
-import { useUserStore } from "src/stores/user";
+import { ref, inject } from "vue";
 
-const router = useRouter();
-const userStore = useUserStore();
+import CRightPersonMenu from "./ClubRightPersonMenu.vue";
+
+const currentUser = inject("currentUser");
 
 const showIconMenu = ref(false);
-
-const menuIcon = ref([
-  { title: "Учетная запись", textColor: "text-black" },
-  { title: "Профиль", textColor: "text-black" },
-  {
-    title: "Выход",
-    textColor: "text-negative",
-    callback: () => {
-      userApi.logout();
-      userStore.LOGOUT_CURRENT_USER();
-
-      router.push({
-        name: "auth",
-      });
-    },
-  },
-]);
 
 const toggleShowIconMenu = () => {
   showIconMenu.value = !showIconMenu.value;
@@ -65,7 +44,7 @@ const toggleShowIconMenu = () => {
     ? document.body.addEventListener("click", (event) => {
         const clicked = event.target;
 
-        if (!clicked.closest(".itemDropdown") && !clicked.closest(".avatar"))
+        if (!clicked.closest(".avatar") && !clicked.closest(".dropdown"))
           showIconMenu.value = false;
       })
     : document.body.removeEventListener("click");
@@ -73,14 +52,8 @@ const toggleShowIconMenu = () => {
 </script>
 
 <style scoped lang="scss">
-.dropdown {
-  position: absolute;
-  width: max-content;
-  top: calc(100% + 8px);
-  right: 0;
-
-  background: lightgray;
-  border-radius: 12px;
+.logo {
+  max-width: 40px;
 }
 
 .slide-enter-from,

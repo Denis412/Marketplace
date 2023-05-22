@@ -1,23 +1,52 @@
 <template>
-  <q-drawer show-if-above bordered :side="side" :mini="miniState" v-model="drawer" :width="256" :mini-width="64">
+  <q-drawer
+    show-if-above
+    bordered
+    :side="side"
+    :mini="miniState"
+    v-model="drawer"
+    :width="256"
+    :mini-width="64"
+  >
     <q-list class="c-pr-8 c-pt-12 no-scroll">
-      <q-item v-for="item in mainTreeItems" :key="item.title" :class="{ active: isActive(item.path) }"
-        class="drawer-wrapper">
-        <router-link :to="{ name: item.path }" class="row no-wrap c-pl-16 drawer-item">
-          <img :src="`/src/assets/icons/${item.img}`" alt="" />
+      <q-item
+        v-for="item in mainTreeItems"
+        :key="item.title"
+        :class="{ active: isActive(item.path) }"
+        class="drawer-wrapper"
+      >
+        <router-link
+          :to="{ name: item.path }"
+          class="row no-wrap c-pl-16 drawer-item"
+        >
+          <div
+            class="flex flex-center bg-primary"
+            style="border-radius: 6px; padding: 4px"
+          >
+            <img src="/assets/icons/home/home-white.svg" alt="" />
+          </div>
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
-            <q-icon @click="addDocument" v-if="item.title == 'Документы'" name="add" class="addDoc" />
+            <q-icon
+              @click="addDocument"
+              v-if="item.title == 'Документы'"
+              name="add"
+              class="addDoc"
+            />
           </div>
         </router-link>
 
-        <c-qtabs-document v-if="item.title == 'Документы'" />
+        <c-tabs-document v-if="item.title == 'Документы'" />
       </q-item>
     </q-list>
 
-    <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
-      <img src="/src/assets/icons/DrawerArrow.svg" />
+    <button
+      ref="btn"
+      class="bg-violet-6 drawer-btn absolute"
+      @click="toggleDrawer()"
+    >
+      <img src="/assets/icons/arrow/drawer-arrow.svg" />
     </button>
   </q-drawer>
 </template>
@@ -25,7 +54,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
+import CTabsDocument from "src/components/ClubTabsDocument.vue";
 import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
@@ -56,9 +85,14 @@ const mainTreeItems = ref([
     path: "teams",
   },
   {
+    title: "Мои команды",
+    img: "HomeIconDemo.svg",
+    path: "my-teams",
+  },
+  {
     title: "Мои проекты",
     img: "HomeIconDemo.svg",
-    path: "projects",
+    path: "my-projects",
   },
   {
     title: "Мое пространство",
@@ -66,15 +100,15 @@ const mainTreeItems = ref([
     path: "space",
   },
   {
+    title: "Задачи",
+    img: "HomeIconDemo.svg",
+    path: "taskPage",
+  },
+  {
     title: "Документы",
     img: "HomeIconDemo.svg",
     path: "addDocument",
     content: "+",
-  },
-  {
-    title: "Задачи",
-    img: "HomeIconDemo.svg",
-    path: "taskPage",
   },
 ]);
 

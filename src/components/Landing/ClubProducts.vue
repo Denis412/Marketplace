@@ -20,17 +20,17 @@ const products = ref([
   {
     id: 1,
     title: "Акселератор 1Т Клуб",
-    imageUrl: "src/assets/images/Ellipse68.svg",
+    imageUrl: "/assets/images/landing/product-arrow.svg",
   },
   {
     id: 2,
     title: "Радио 1Т Клуб",
-    imageUrl: "src/assets/images/Ellipse68.svg",
+    imageUrl: "/assets/images/landing/product-arrow.svg",
   },
   {
     id: 3,
     title: "Мероприятия 1Т Клуб",
-    imageUrl: "src/assets/images/Ellipse68.svg",
+    imageUrl: "/assets/images/landing/product-arrow.svg",
   },
 ]);
 </script>

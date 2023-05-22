@@ -28,7 +28,7 @@
             color="positive"
             icon="check_circle"
             @click.stop.prevent="
-              filesApi.updateFile(scope.value, props.prop_doc)
+              filesApi.updateFile(scope.value, props.prop_doc, prop_page_id)
             "
             :disable="
               scope.validate(scope.value) === false ||
@@ -47,6 +47,7 @@ import { ref } from "vue";
 
 const props = defineProps({
   prop_doc: Object,
+  prop_page_id: String,
 });
 
 const cur_name = ref(props.prop_doc.name.slice(0, -5));
