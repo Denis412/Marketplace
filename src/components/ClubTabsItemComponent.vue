@@ -9,6 +9,7 @@
 
       <router-link
         class="name_doc link"
+        @click="set_breadcumps"
         :to="{ name: 'Document', params: { id: `${props.node.object_id}` } }"
       >
         {{ node.title_page.replace(".html", "") }}
@@ -41,6 +42,9 @@ import CMenuDocument from "src/components/ClubMenuDocument.vue";
 import { ref } from "vue";
 import { filesApi } from "src/sdk/files/file";
 import CAddDocument from "src/components/ClubAddDocument.vue";
+import { useFileStore } from "src/stores/file";
+
+const storeFile = useFileStore();
 
 const showMenu = ref(false);
 const doc = ref();
@@ -62,6 +66,24 @@ const getFile = async () => {
   ).get_file;
 };
 
+const set_breadcumps = () => {
+  let path = "Главная/";
+  if (props.stat.parent) {
+    console.log(props.stat.parent);
+    console.log(1);
+    if (props.stat.parent.parent?.parent) {
+      path += props.stat.parent.parent.parent.data.title_page + "/";
+    }
+    if (props.stat.parent.parent) {
+      path += props.stat.parent.parent.data.title_page + "/";
+    }
+    path += props.stat.parent.data.title_page + "/";
+    path += props.stat.data.title_page;
+  } else {
+    path += props.stat.data.title_page;
+  }
+  storeFile.SET_BREADCRUMPS_FOR_DOC(path);
+};
 getFile();
 </script>
 

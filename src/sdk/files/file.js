@@ -101,7 +101,7 @@ const setTimeoutFunc = ({ minutes, func }) => {
   setTimeout(func, minutes * 60)
 }
 
-const updateFile = (name, doc, page_id, parent_id) => {
+const updateFile = (name, doc, page_id, parent_id = '') => {
   const { mutate } = useMutation(fileUpdate, () => ({
     variables: {
       input: {
@@ -117,14 +117,13 @@ const updateFile = (name, doc, page_id, parent_id) => {
     },
   }))
 
-  pageApi.update(
-    {
-      input: {
-        title: name,
-      },
-      id: page_id,
-      space_id: 13
-    })
+  pageApi.update({
+    input: {
+      title: name,
+    },
+    id: page_id,
+    space_id: 13,
+  })
 
   response('Файл обновлен', 'Ошибка', mutate, fileStore.refetchFiles)
 }
@@ -198,11 +197,11 @@ const getChildrenPages = async (children, parent, space_id) => {
       id: child.id,
       space_id: space_id,
     })
-
     const childData = {
       title_page: page.page.title,
       object_id: page.page.object.id,
       page_id: page.page.id,
+      page_parent_id: page.page.parent_id,
       children: [],
       page_parent_id: page.page.parent_id,
       created_at: page.page.created_at

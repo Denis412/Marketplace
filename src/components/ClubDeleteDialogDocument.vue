@@ -20,13 +20,23 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { filesApi } from "src/sdk/files/file";
+import EventBus from "../sdk/files/eventBus";
+
+let showDialog = ref(true);
 
 
 const props = defineProps({
   prop_doc_id: String,
   prop_page_id: String,
 });
+
+const deleteDocument = () => {
+  filesApi.deleteDoc(props.prop_doc_id, props.prop_page_id);
+  showDialog = false;
+  EventBus.emit("document-deleted");
+};
 </script>
 
 <style lang="scss" scoped>

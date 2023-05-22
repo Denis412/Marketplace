@@ -18,27 +18,43 @@
 </template>
 
 <script setup>
-import { computed, watch, ref } from "vue";
+import { ref, onMounted } from "vue";
 import CTabsItem from "./ClubTabsItemComponent.vue";
-import { Draggable } from "@he-tree/vue";
-import { dragContext } from "@he-tree/vue";
-import "@he-tree/vue/style/default.css";
+import { Draggable, dragContext } from "@he-tree/vue";
 import { filesApi } from "src/sdk/files/file";
 import pageApi from "src/sdk/page";
+import "@he-tree/vue/style/default.css";
+import EventBus from "../sdk/files/eventBus";
 
 const rootPage = ref();
 const data_tree = ref([]);
 
 //Получение корневой страницы документов
 const getData = async () => {
+  console.log("getting data");
   data_tree.value = await filesApi.getRootPage("4440891212883535597", 13);
 };
 
 const contex = () => {
-  console.log(dragContext);
+  let parent_id =
+    dragContext.targetInfo.dragNode.parent?.data.page_id ||
+    "4440891212883535597";
+
+  pageApi.update({
+    input: {
+      parent_id: parent_id,
+    },
+
+    id: dragContext.startInfo.dragNode.data.page_id,
+    space_id: 13,
+  });
 };
 
-getData();
+onMounted(() => {
+  getData();
+  EventBus.on("document-added", getData);
+  EventBus.on("document-deleted", getData);
+});
 </script>
 
 <style scoped lang="scss">
