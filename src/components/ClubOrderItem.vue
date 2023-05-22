@@ -5,39 +5,25 @@
         :to="{ name: 'order-info', params: { id: orderId } }"
         class="link-style"
       >
-        <q-card class="oItem">
-          <q-card-section class="oNum">
-            {{ order?.id }}
+        <q-card class="oItem row q-py-md">
+          <q-card-section class="oName col-3 text-center">
+            Статус
           </q-card-section>
 
-          <q-card-section class="oName">
+          <q-card-section class="oName col-3 text-center">
             {{ order?.name }}
           </q-card-section>
 
-          <q-card-section class="oState">
-            <div
-              class="oStateIndicator"
-              :style="{ backgroundColor: item?.color }"
-            ></div>
-            {{ order?.status }}
+          <q-card-section class="oDateUpdate col-3 text-center">
+            {{ order?.updated_at.slice(0, 10) }}
           </q-card-section>
 
-          <q-card-section class="oDateUpdate">
-            {{ order?.updated_at }}
+          <q-card-section class="oResponse col-2 text-center">
+            Иконка
           </q-card-section>
 
-          <q-card-section class="oResponse">
-            <img src="/assets/icons/orderIcons/deal.png" alt="img" />
-          </q-card-section>
-
-          <q-card-section class="oDeal">
-            <img src="/assets/icons/orderIcons/wait.png" alt="img" />
-          </q-card-section>
-
-          <q-card-section class="oEdit">
-            <router-link :to="{ name: 'order-edit', params: { id: orderId } }">
-              <img src="/assets/icons/orderIcons/tripleDot.png" alt="img" />
-            </router-link>
+          <q-card-section class="oEdit col-1 text-center">
+            <q-icon class="my-icon" name="more_vert"></q-icon>
           </q-card-section>
         </q-card>
       </router-link>
@@ -46,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 
 const { order } = defineProps({
   order: {
@@ -55,57 +41,6 @@ const { order } = defineProps({
   },
 });
 
-// массив чисто для цветов, кот. я потом уберу
-const item = ref([
-  {
-    id: "4177279091517509819",
-    number: "1260",
-    name: "Лендинг чайного магазина",
-    state: "Поиск исполнителя",
-    date: "24.05.2023",
-    color: "#FF9646",
-  },
-  {
-    id: "4448913352824608273",
-    number: "1257",
-    name: "Создание платформы для начинающих мастеров",
-    state: "Есть кандидат",
-    date: "20.05.2023",
-    color: "#521E96",
-  },
-  {
-    id: "5232639843776863759",
-    number: "1255",
-    name: "Поддержка программного обеспечения фитнесс центра ",
-    state: "Выполняется",
-    date: "19.05.2023",
-    color: "#0019FF",
-  },
-  {
-    id: "3846408024338198032",
-    number: "1250",
-    name: "Обеспечение сохранности и безопасности данных агенства недвижимости",
-    state: "Завершен",
-    date: "18.05.2023",
-    color: "#0A821E",
-  },
-  {
-    id: "1153382417057413174",
-    number: "1249",
-    name: "Оптимизация ИТ-инфраструктуры для банка «Яблоко банк»",
-    state: "Отменен заказчиком",
-    date: "17.05.2023",
-    color: "#DC283C",
-  },
-  {
-    id: "1876099520891424160",
-    number: "1247",
-    name: "Миграция на новые годные ИТ-решения нашей строительной компании «Кирпич»",
-    state: "Черновик",
-    date: "16.05.2023",
-    color: "#C3C3C5",
-  },
-]);
 const orderId = computed(() => {
   return order.id ? order.id : null;
 });
@@ -114,6 +49,8 @@ const orderId = computed(() => {
 <style scoped>
 .item {
   padding: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
 }
 .link-style {
   text-decoration: none;
@@ -123,12 +60,9 @@ const orderId = computed(() => {
 .qPage {
   min-height: 70px !important;
 }
-
-.oItem {
-  width: 1109px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
+.my-icon {
+  font-size: 20px;
+  color: #581c87;
 }
 
 .oNum,
@@ -138,16 +72,13 @@ const orderId = computed(() => {
 .oResponse,
 .oDeal,
 .oEdit {
-  padding: 20px;
   font-family: "Montserrat";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
-  line-height: 17px;
-}
-
-.oName {
-  max-width: 165px;
+  line-height: 20px;
+  hyphens: auto;
+  word-break: break-all;
 }
 
 .oStateIndicator {

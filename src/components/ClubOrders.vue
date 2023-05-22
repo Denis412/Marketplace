@@ -19,25 +19,25 @@
       </div>
     </div>
 
-    <div class="cOrderItemHeading">
-      <p class="orderNumP">Номер заказа</p>
-      <p class="orderNameP">Название заказа</p>
-      <p class="orderStateP">Статус</p>
-      <p class="orderDateP">Дата обновления</p>
-      <p class="orderRespP">Отклик</p>
-      <p class="orderDealP">Сделка</p>
-      <p class="orderEditP">Редактирование</p>
-    </div>
+    <q-card class="no-shadow">
+      <q-card-section class="row">
+        <div class="col-12 border-bottom">
+          <div class="row">
+            <div class="col-3 text-subtitle3 text-center">Статус</div>
+            <div class="col-3 text-subtitle3 text-center">Название заказа</div>
+            <div class="col-3 text-subtitle3 text-center">Дата обновления</div>
+            <div class="col-2"></div>
+            <div class="col-1"></div>
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
 
     <c-orders-item
-      v-for="(order, index) in orders"
+      class="orderItemLightPink"
+      v-for="order in orders"
       :order="order"
       :key="order?.id"
-      :class="{
-        orderItemColorPink: index % 2 !== 0,
-        orderItemLightPink: index === 0,
-        theVeryFirstLightPink: index % 2 === 0 && index !== 0,
-      }"
     />
 
     <div v-if="loadingOrder">Загрузка...</div>
@@ -59,6 +59,7 @@ const orders = ref([]);
 
 watch(ordersResult, () => {
   orders.value = ordersResult.value?.paginate_order?.data;
+  console.log(orders.value);
 });
 
 onMounted(() => {
@@ -70,21 +71,14 @@ onActivated(() => {
 </script>
 
 <style>
-.orderItemColorPink .oItem {
-  background-color: #c0a2ed;
-}
-
 .orderItemLightPink .oItem {
-  background-color: #dfd1f6;
+  background-color: #eee8f3;
+  border-radius: 5px;
+  box-shadow: none;
 }
 
-.theVeryFirstLightPink .oItem {
-  background-color: #dfd1f6;
-}
 .orderHeadTitle {
   padding: 70px 40px 40px 40px;
-  /*width: 246px;*/
-  /*height: 40px;*/
   font-family: "Furore";
   font-style: normal;
   font-weight: 400;
@@ -116,26 +110,5 @@ onActivated(() => {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-}
-.orderNumP {
-  padding: 0 0 0 10px;
-}
-.orderNameP {
-  padding: 0 0 0 80px;
-}
-.orderStateP {
-  padding: 0 0 0 150px;
-}
-.orderDateP {
-  padding: 0 0 0 150px;
-}
-.orderRespP {
-  padding: 0 0 0 150px;
-}
-.orderDealP {
-  padding: 0 10px 0 70px;
-}
-.orderEditP {
-  padding: 0 20px 0 0;
 }
 </style>
