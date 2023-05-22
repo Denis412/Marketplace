@@ -174,3 +174,12 @@
     }
   }
 }
+
+.c-notification-card {
+  background-color: #eee8f3;
+  min-height: 98px;
+
+  .q-card__section {
+    @extend .text-caption1;
+  }
+}
