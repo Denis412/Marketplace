@@ -22,8 +22,9 @@ import _ from "lodash";
 
 import CSpecialistsList from "./ClubSpecialistsList.vue";
 
-const { members } = defineProps({
+const { members, team_space } = defineProps({
   members: Array,
+  team_space: Boolean,
 });
 
 const specialtiesList = ref([
@@ -39,7 +40,9 @@ const specialtiesList = ref([
   { filterName: "Аналитик", displayName: "Аналитики", value: "analitics" },
 ]);
 
-const groupByMembers = computed(() => _.groupBy(members, "major"));
+const groupByMembers = computed(() =>
+  _.groupBy(members, team_space ? "speciality1" : "speciality1.name")
+);
 </script>
 
 <style scoped lang="scss"></style>

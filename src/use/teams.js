@@ -42,7 +42,7 @@ export const useTeamCreate = () => {
       await propertyApi.createMany({
         input: [
           {
-            name: "major",
+            name: "speciality1",
             label: "Специальность",
             data_type: "text",
             type_id: subjectType[0].id,
@@ -397,7 +397,7 @@ export const useTeamCreate = () => {
       await userApi.update(
         projectTypeData.author_id,
         {
-          major: mainSpaceSubject[0].major,
+          speciality1: mainSpaceSubject[0].speciality1.name,
           avatar: mainSpaceSubject[0].avatar,
         },
         true,
@@ -747,7 +747,7 @@ export const useTeamApplication = () => {
         await userApi.update(
           subject.id,
           {
-            major: application.subject.major,
+            speciality1: application.subject.speciality1.name,
           },
           true,
           application.team.space

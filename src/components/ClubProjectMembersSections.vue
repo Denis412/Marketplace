@@ -38,7 +38,7 @@
     </q-toolbar>
 
     <div v-if="selectedList === 'members'">
-      <c-team-members-list class="c-mt-40" :members="currentProject.members" />
+      <c-team-members-list class="c-mt-40" team_space :members="currentProject.members" />
     </div>
 
     <div v-else>

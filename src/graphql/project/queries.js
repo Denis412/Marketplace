@@ -17,7 +17,10 @@ export const projectsPaginate = gql`
             first_name
             last_name
           }
-          major
+          speciality1 {
+            id
+            name
+          }
           group {
             id
             name
@@ -48,7 +51,7 @@ export const projectsPaginateInTeamSpace = gql`
             first_name
             last_name
           }
-          major
+          speciality1
           group {
             id
             name

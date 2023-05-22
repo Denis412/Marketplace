@@ -6,7 +6,10 @@ import {
   deleteApplication,
   updateApplication,
 } from "src/graphql/application/mutations";
-import { paginateApplications } from "src/graphql/application/queries";
+import {
+  paginateApplicationsInMainSpace,
+  paginateApplicationsInTeamSpace,
+} from "src/graphql/application/queries";
 
 import { spaceHeader } from "src/utils/spaceHeader";
 
@@ -28,8 +31,10 @@ const { mutate: deletingApplication } = useMutation(
 );
 
 const paginateApplication = ({ page, perPage, where, space_id }) => {
+  const query = space_id ? paginateApplicationsInTeamSpace : paginateApplicationsInMainSpace;
+
   return useQuery(
-    paginateApplications,
+    query,
     { page, perPage, where },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );

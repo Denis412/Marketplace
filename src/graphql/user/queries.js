@@ -90,7 +90,7 @@ export const paginateSubjectInAnotherSpace = gql`
         email {
           email
         }
-        major
+        speciality1
         group {
           id
           name
@@ -152,7 +152,10 @@ export const paginateSubjectsInMainSpace = gql`
         speciality1 {
           name
         }
-        major
+        speciality1 {
+          id
+          name
+        }
         teams {
           id
           avatar
