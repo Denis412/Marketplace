@@ -7,6 +7,7 @@ import userApi from "src/sdk/user";
 import applicationApi from "src/sdk/application";
 import typeApi from "src/sdk/type";
 import propertyApi from "src/sdk/property";
+import permissionApi from "src/sdk/permission";
 
 export const useProjectsQuery = () => {
   const result = ref(null);

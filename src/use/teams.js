@@ -596,6 +596,28 @@ export const useTeamAcceptUser = () => {
         space_id,
       });
 
+      const applicationType = await typeApi.refetchPaginateType({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "application",
+        },
+        space_id,
+      });
+
+      await permissionApi.create({
+        input: {
+          model_type: "type",
+          model_id: applicationType[0].id,
+          owner_type: "subject",
+          owner_id: newSubjectData[0].id,
+          level: 5,
+        },
+        space_id,
+      });
+
       await permissionApi.create({
         input: {
           model_type: "page",
