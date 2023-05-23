@@ -25,7 +25,7 @@
       </q-toolbar>
     </div>
 
-    <c-team-members-list v-if="selectMembersList === 'members'" :members="currentTeam.members" />
+    <c-team-members-list v-if="selectMembersList === 'members'" team_space />
 
     <section v-else>
       <section v-if="!currentTeam.applications.length">

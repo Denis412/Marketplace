@@ -45,6 +45,9 @@ export const getTeamsWithWhere = gql`
             first_name
             last_name
           }
+          group {
+            name
+          }
           avatar
           speciality1 {
             id

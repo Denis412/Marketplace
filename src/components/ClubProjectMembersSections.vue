@@ -38,7 +38,7 @@
     </q-toolbar>
 
     <div v-if="selectedList === 'members'">
-      <c-team-members-list class="c-mt-40" team_space :members="currentProject.members" />
+      <c-team-members-list class="c-mt-40" team_space roles />
     </div>
 
     <div v-else>
@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { computed, inject, ref } from "vue";
+import { computed, inject, provide, ref } from "vue";
 
 import CSpecialistItem from "src/components/ClubSpecialistItem.vue";
 import CTeamMembersList from "src/components/ClubTeamMembersList.vue";
@@ -75,6 +75,9 @@ const grouped = computed(() =>
     return groups;
   }, {})
 );
+
+const currentMembers = computed(() => currentProject.value.members);
+provide("currentMembers", currentMembers);
 
 const selectedList = ref("members");
 

@@ -20,6 +20,16 @@ export const createGroup = gql`
   }
 `;
 
+export const updateGroup = gql`
+  mutation updateGroup($id: String!, $input: update_group_input!) {
+    update_group(id: $id, input: $input) {
+      record {
+        id
+      }
+    }
+  }
+`;
+
 export const inviteUser = gql`
   mutation userGroupInviteUser($input: UserGroupInviteUserInput!) {
     userGroupInviteUser(input: $input) {

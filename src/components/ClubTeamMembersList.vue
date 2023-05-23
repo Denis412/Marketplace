@@ -8,6 +8,7 @@
 
         <c-specialists-list
           class="flex q-mt-md q-gutter-x-md"
+          roles
           :specialists="groupByMembers[specialty.filterName]"
         />
       </section>
@@ -16,14 +17,15 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, inject } from "vue";
 
 import _ from "lodash";
 
 import CSpecialistsList from "./ClubSpecialistsList.vue";
 
-const { members, team_space } = defineProps({
-  members: Array,
+const members = inject("currentMembers");
+
+const { team_space } = defineProps({
   team_space: Boolean,
 });
 
@@ -41,7 +43,7 @@ const specialtiesList = ref([
 ]);
 
 const groupByMembers = computed(() =>
-  _.groupBy(members, team_space ? "speciality1" : "speciality1.name")
+  _.groupBy(members?.value, team_space ? "speciality1" : "speciality1.name")
 );
 </script>
 

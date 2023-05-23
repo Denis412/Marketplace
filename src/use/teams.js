@@ -53,7 +53,7 @@ export const useTeamCreate = () => {
             label: "Аватар",
             data_type: "text",
             type_id: subjectType[0].id,
-            order: 3,
+            order: 4,
           },
         ],
         space_id: space.id,
@@ -72,14 +72,29 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
+      await groupApi.update({
+        id: teamGroup[0].id,
+        input: {
+          name: "Лидер",
+          description: "Группа лидеров",
+        },
+        space_id: space.id,
+      });
+
       await groupApi.create(space.id, {
-        name: "Участники",
+        name: "Участник",
         description: "Группа участников",
         parent_group_id: teamGroup[0].id,
       });
 
       await groupApi.create(space.id, {
-        name: "Приглашенные",
+        name: "Заказчик",
+        description: "Группа заказчиков",
+        parent_group_id: teamGroup[0].id,
+      });
+
+      await groupApi.create(space.id, {
+        name: "Приглашенный",
         description: "Группа приглашенных",
         parent_group_id: teamGroup[0].id,
       });
@@ -561,7 +576,7 @@ export const useTeamAcceptUser = () => {
         where: {
           column: "name",
           operator: "EQ",
-          value: "Участники",
+          value: "Участник",
         },
         space_id,
       });

@@ -7,7 +7,7 @@
         <h3 class="text-h3">Профиль команды</h3>
       </header>
 
-      <c-team-profile is-profile />
+      <c-team-profile is-profile v-if="!loading" />
     </section>
   </q-page>
 </template>
@@ -15,6 +15,7 @@
 <script setup>
 import CTeamProfile from "src/components/ClubTeamProfile.vue";
 import teamApi from "src/sdk/team";
+import userApi from "src/sdk/user";
 import { computed, provide } from "vue";
 import { useRoute } from "vue-router";
 
@@ -30,9 +31,18 @@ const { result: currentTeam } = teamApi.paginateTeams({
   },
 });
 
+const { result: members, loading } = userApi.paginateSubjects({
+  page: 1,
+  perPage: 100,
+  is_team: true,
+  space_id: route.query.space,
+});
+
 const team = computed(() => currentTeam.value?.paginate_team.data[0]);
+const currentMembers = computed(() => members.value?.paginate_subject.data);
 
 provide("currentTeam", team);
+provide("currentMembers", currentMembers);
 </script>
 
 <style scoped lang="scss"></style>
