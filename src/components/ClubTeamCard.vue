@@ -11,13 +11,13 @@
       </q-card-section>
 
       <q-card-section class="c-ml-24">
-        <h4 class="text-h4">
+        <h4 class="text-subtitle3">
           {{ team.name }}
         </h4>
 
         <pre>{{ team.space }}</pre>
 
-        <p class="text-body2 q-mt-md">
+        <p class="text-body2 q-mt-sm">
           {{ team.description }}
         </p>
 

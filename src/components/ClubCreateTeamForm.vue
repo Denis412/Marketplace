@@ -33,7 +33,7 @@
       <section class="w-100p q-mt-md q-gutter-y-md">
         <c-input
           bg-color="white"
-          placeholder="Название"
+          placeholder="Введите название"
           class="text-body2"
           v-model="form.name"
           :rules="[required, maxLength(20)]"
@@ -41,7 +41,7 @@
 
         <c-input
           bg-color="white"
-          placeholder="Описание"
+          placeholder="Введите описание"
           class="club-textarea-mh-150 text-body2"
           autogrow
           style="max-height: 100px"
@@ -53,7 +53,7 @@
 
     <footer class="flex justify-center q-mt-xl rel-index-0">
       <c-button background class="text-body1" label="Создать" type="submit" />
-      <c-button outline class="text-body1 c-ml-32" label="Отмена" to="/club/teams" />
+      <c-button outline class="text-body1 c-ml-32" label="Отменить" to="/club/teams" />
     </footer>
   </q-form>
 </template>
@@ -133,8 +133,8 @@ const triggerInput = () => {
     &-create {
       bottom: 15px;
       right: -8px;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
     }
   }
 }

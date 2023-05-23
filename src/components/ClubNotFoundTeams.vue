@@ -8,9 +8,9 @@
 
     <div class="flex items-center c-ml-32">
       <div>
-        <div class="text-h3 text-dark">У вас нет команды?</div>
+        <div class="text-subtitle3 text-dark">У вас нет команды?</div>
 
-        <div class="text-subtitle3 q-mt-md c-mb-24" style="max-width: inherit">
+        <div class="text-subtitle5 q-mt-md c-mb-24" style="max-width: inherit">
           Создайте сами или найдите, чтобы приступить к работе!
         </div>
 
