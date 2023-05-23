@@ -9,14 +9,6 @@
           /></a>
         </div>
       </div>
-
-      <div class="orderIconsCartOuter">
-        <img
-          class="orderIconsCart"
-          src="/assets/icons/orderIcons/orderIconsCart.png"
-          alt=""
-        />
-      </div>
     </div>
 
     <q-card class="no-shadow">
