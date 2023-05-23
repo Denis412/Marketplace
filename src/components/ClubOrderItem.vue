@@ -3,7 +3,7 @@
     <q-page class="qPage">
       <q-card class="oItem row q-py-md flex">
         <q-card-section class="col-3 text-center">
-          <div class="flex items-center">
+          <div class="flex items-center oStatus">
             <img :src="cur_status.icon" class="q-mr-sm q-ml-xl" />
             <span :style="'color:' + cur_status.color">{{
               cur_status.label
@@ -20,7 +20,7 @@
         </q-card-section>
 
         <q-card-section class="oResponse col-2 text-center">
-          <div v-if="!order.deal" class="flex items-center">
+          <div v-if="!order.deal" class="flex items-center oDeal">
             <img
               src="/assets/icons/orders/document_orders.svg"
               class="q-mr-sm"
@@ -92,6 +92,7 @@ statuses.forEach((element) => {
 .oState,
 .oDateUpdate,
 .oResponse,
+.oStatus,
 .oDeal,
 .oEdit {
   font-family: "Montserrat";
@@ -100,6 +101,7 @@ statuses.forEach((element) => {
   font-size: 14px;
   line-height: 20px;
   hyphens: auto;
+  color: #3f3f46;
   word-break: break-all;
 }
 .oStateIndicator {
