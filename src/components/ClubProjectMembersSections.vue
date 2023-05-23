@@ -12,6 +12,14 @@
 
       <h4 class="text-h4 c-mt-40">Заказчик</h4>
 
+      <q-btn
+        flat
+        no-caps
+        class="club-button-background text-body1 q-mt-lg"
+        label="Пригласить"
+        @click="redirectInvite(true)"
+      />
+
       <c-specialist-item
         v-for="specialist in grouped['Заказчик']"
         :key="specialist.id"
@@ -34,7 +42,12 @@
 
       <q-space />
 
-      <q-btn flat class="club-button-background" label="Пригласить" @click="redirectInvite" />
+      <q-btn
+        flat
+        class="club-button-background"
+        label="Пригласить"
+        @click="redirectInvite(false)"
+      />
     </q-toolbar>
 
     <div v-if="selectedList === 'members'">
@@ -81,11 +94,13 @@ provide("currentMembers", currentMembers);
 
 const selectedList = ref("members");
 
-const redirectInvite = () => {
+const redirectInvite = (is_customer = false) => {
+  const query = is_customer ? { ...route.query, customer: true } : { ...route.query };
+
   router.push({
     name: "projectInvite",
     params: { ...route.params },
-    query: { ...route.query },
+    query,
   });
 };
 </script>

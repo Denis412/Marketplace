@@ -44,12 +44,15 @@
 import { useRouter } from "vue-router";
 import { truncate } from "src/utils/truncateString";
 import CApplicationControls from "./ClubApplicationControls.vue";
+// import {  inject } from "vue";
 
 const { currentProject, application, is_invite } = defineProps({
   currentProject: Object,
   application: Object,
   is_invite: Boolean,
 });
+
+// const currentUser = inject("currentUser");
 
 const router = useRouter();
 
@@ -61,6 +64,13 @@ const redirectProjectPage = () => {
     query: { name: currentProject.name, space: currentProject.space },
   });
 };
+
+// const rolesProject = computed(() =>
+//   currentProject.members
+//     .find((subject) => subject.email.email === currentUser.value.email)
+//     .group.map((group) => group.name)
+//     .join(", ")
+// );
 </script>
 
 <style scoped lang="scss">

@@ -96,7 +96,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -205,6 +205,8 @@ const sendCode = async () => {
 const focusInput = (value, object) => {
   if (value === " " || value === "") object.focus();
 };
+
+onMounted(() => firstInput.value?.focus());
 </script>
 
 <style scoped lang="scss">

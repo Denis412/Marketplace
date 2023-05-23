@@ -1,7 +1,8 @@
 <template>
   <q-page class="c-pa-32 page-background">
     <header>
-      <h3 class="text-h3">Пригласить участника</h3>
+      <h3 class="text-h3" v-if="!route.query.customer">Пригласить участника</h3>
+      <h3 class="text-h3" v-else>Пригласить заказчика</h3>
     </header>
 
     <main class="q-mt-md">

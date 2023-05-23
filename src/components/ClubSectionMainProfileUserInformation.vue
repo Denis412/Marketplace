@@ -51,7 +51,7 @@
           </div>
 
           <div class="row text-gray7">
-            <div class="col flex items-center q-gutter-x-sm">
+            <div class="col flex no-wrap items-center q-gutter-x-sm">
               <q-icon
                 :size="baseIconSize"
                 name="img:/assets/icons/calendar/calendar-violet-7.svg"
@@ -60,7 +60,7 @@
               <span>{{ currentUser.birthday }}</span>
             </div>
 
-            <div class="col flex items-center q-gutter-x-sm">
+            <div class="col flex no-wrap items-center q-gutter-x-sm">
               <q-icon
                 v-if="currentUser.gender === 'Женский'"
                 :size="baseIconSize"
@@ -78,13 +78,13 @@
           </div>
 
           <div class="row text-gray7">
-            <div class="col flex items-center q-gutter-x-sm">
+            <div class="col flex no-wrap items-center q-gutter-x-sm">
               <q-icon :size="baseIconSize" name="img:/assets/icons/person/person-violet-7.svg" />
 
               <span>{{ currentUser.speciality1 }}</span>
             </div>
 
-            <div class="col flex items-center q-gutter-x-sm">
+            <div class="col flex no-wrap items-center q-gutter-x-sm">
               <q-icon :size="baseIconSize" name="img:/assets/icons/socials/telegram-violet-7.svg" />
 
               <span>{{ currentUser.telegram_chat_id }}</span>
