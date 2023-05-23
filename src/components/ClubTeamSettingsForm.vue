@@ -160,8 +160,6 @@
         </c-label-control>
       </q-form>
 
-      <!-- <pre>{{ currentTeam }}</pre> -->
-
       <div class="q-mt-md">
         <section class="flex q-gutter-sm">
           <c-chip
@@ -183,7 +181,7 @@
 <script setup>
 import { ref, inject } from "vue";
 import { useValidators } from "src/use/validators";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useTeamUpdate } from "src/use/teams";
 
 import CLabelControl from "./ClubLabelControl.vue";
@@ -194,13 +192,14 @@ import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
-const { required, maxLength, minLength } = useValidators();
+const { required, maxLength, minLength, telegramm } = useValidators();
 const { result: teamData, error, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
 const upload_img = ref();
 const uploadFile = ref();
 const router = useRouter();
+const route = useRoute();
 
 const form = ref({
   avatar: currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
@@ -254,7 +253,8 @@ const updateTeamData = async () => {
 
   router.push({
     name: "team",
-    params: { name: teamData.value.name },
+    params: { id: route.params.id },
+    query: { name: teamData.value.name, space: route.query.space },
   });
 };
 </script>

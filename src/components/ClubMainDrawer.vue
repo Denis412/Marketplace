@@ -8,8 +8,14 @@
     :width="256"
     :mini-width="64"
   >
-    <c-tree-teams v-if="route.path.includes('teams')" :class="{ 'c-tree-mini': miniState }" />
-    <c-tree-my-team v-else-if="route.path.includes('team')" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-teams
+      v-if="route.path.includes('teams') || (route.path.includes('team') && !isMyteam())"
+      :class="{ 'c-tree-mini': miniState }"
+    />
+    <c-tree-my-team
+      v-else-if="route.path.includes('team') && isMyteam()"
+      :class="{ 'c-tree-mini': miniState }"
+    />
 
     <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
@@ -45,11 +51,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
 import CTreeTeams from "src/components/ClubTreeTeams.vue";
 import CTreeMyTeam from "src/components/ClubTreeMyTeam.vue";
+
 import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
@@ -57,11 +64,16 @@ const { side } = defineProps({
 });
 
 const route = useRoute();
+const currentUser = inject("currentUser");
 
 const drawer = ref(false);
 const miniState = ref(false);
 
 const btn = ref();
+
+const isMyteam = () => {
+  return currentUser.value?.teams.some((team) => team.space === route.query.space);
+};
 
 const mainTreeItems = ref([
   {

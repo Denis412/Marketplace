@@ -14,12 +14,15 @@
 
 <script setup>
 import { ref, computed, inject } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 import pageApi from "src/sdk/page";
 
 const router = useRouter();
-const selected = ref(process.env.MY_TEAMS_PAGE_ID);
+const route = useRoute();
+const selected = ref(
+  route.path.includes("my-teams") ? process.env.MY_TEAMS_PAGE_ID : process.env.ALL_TEAMS_PAGE_ID
+);
 const currentUser = inject("currentUser");
 
 const { result: pagesTeams } = pageApi.paginatePages({

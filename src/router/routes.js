@@ -63,6 +63,12 @@ const routes = [
         component: () => import("src/pages/ClubTeamSettingsPage.vue"),
       },
       {
+        path: "team-space/:id/edit",
+        name: "teamSpaceEdit",
+        meta: { isTeamOwner: true },
+        component: () => import("src/pages/ClubTeamSettingsPage.vue"),
+      },
+      {
         path: "teams",
         name: "teams",
         component: () => import("pages/ClubTeamsPage.vue"),
