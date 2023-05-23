@@ -4,7 +4,7 @@
       <h4 class="text-h4">Лидер проекта</h4>
 
       <c-specialist-item
-        v-for="specialist in grouped['Команда']"
+        v-for="specialist in grouped['Лидер']"
         :key="specialist.id"
         class="q-mt-lg bg-violet1"
         :specialist="specialist"

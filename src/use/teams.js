@@ -441,6 +441,8 @@ export const useTeamUpdate = () => {
     try {
       loading.value = true;
 
+      console.log("team update", id, data);
+
       const teamData = await teamApi.update(id, data);
 
       await teamApi.refetchPaginateTeams({

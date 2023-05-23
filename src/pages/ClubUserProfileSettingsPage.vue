@@ -25,9 +25,10 @@
                 <q-input
                   outlined
                   v-model="form.telegram"
+                  placeholder="https://t.me/"
                   @change="updateInfo('telegram_chat_id', $event)"
+                  :rules="[isTelegramUrl]"
                   class="c-input-outline"
-                  placeholder="Придумайте никнейм"
                 />
               </template>
             </c-label-control>
@@ -121,62 +122,16 @@
     <div class="c-my-64 separator" />
 
     <section class="row">
-      <div class="col">
+      <div class="col q-gutter-y-lg">
         <h4 class="text-h4">Резюме</h4>
-
-        <div class="flex no-wrap items-center c-mt-40 q-gutter-x-lg" v-if="currentUser.resume_link">
-          <q-input
-            outlined
-            label="Резюме"
-            readonly
-            class="c-input-outline w-max-content"
-            placeholder="Введите URL-адрес или прикрепите файл"
-          >
-            <template v-slot:prepend>
-              <q-icon
-                class="cursor-pointer"
-                :size="iconsSize"
-                name="img:/assets/icons/document/document-gray-6.svg"
-                @click="pickFile"
-              />
-            </template>
-
-            <template v-slot:append>
-              <span>{{ getFileSize(form.resume) }}</span>
-            </template>
-          </q-input>
-
-          <q-icon
-            :size="iconsSize"
-            class="cursor-pointer"
-            name="img:/assets/icons/delete/delete-violet-4.svg"
-            @click="updateInfo('resume_link', null)"
-          />
-        </div>
 
         <q-input
           outlined
-          v-else
           v-model="form.resume"
-          class="c-input-outline c-mt-40"
-          placeholder="Введите URL-адрес или прикрепите файл"
-        >
-          <template v-slot:append>
-            <q-icon
-              class="cursor-pointer"
-              :size="iconsSize"
-              name="img:/assets/icons/clip/clip-violet-3.svg"
-              @click="pickFile"
-            />
-          </template>
-        </q-input>
-
-        <q-file
-          style="display: none"
-          v-model="selectResume"
-          accept=".pdf,.doc,.docx"
-          ref="uploader"
-          @update:model-value="updateInfo('resume_link', $event)"
+          @change="updateInfo('resume_link', $event)"
+          class="c-input-outline w-100p"
+          placeholder="Введите URL-адрес резюме"
+          :rules="[isUrl]"
         />
       </div>
 
@@ -230,6 +185,9 @@ import userStatusApi from "src/sdk/user-status";
 
 import CLabelControl from "src/components/ClubLabelControl.vue";
 import CItemPortfolio from "src/components/ClubItemPortfolio.vue";
+import { useValidators } from "src/use/validators";
+
+const { isTelegramUrl, isUrl } = useValidators();
 
 const currentUser = inject("currentUser");
 
@@ -250,10 +208,10 @@ const currentUserStatuses = computed(() =>
   }))
 );
 
-const selectResume = ref(null);
-const uploader = ref(null);
+// const selectResume = ref(null);
+// const uploader = ref(null);
 
-const iconsSize = ref("24px");
+// const iconsSize = ref("24px");
 const form = ref({
   nickname: currentUser.value.nickname,
   status: currentUser.value.status,
@@ -261,7 +219,7 @@ const form = ref({
   speciality: currentUser.value.speciality1,
   competencies: currentUser.value.competencies,
   about: currentUser.value.about,
-  resume: getFileName(currentUser.value.resume_link),
+  resume: currentUser.value.resume_link,
   artefacts: currentUser.value.artefacts,
 });
 
@@ -282,27 +240,28 @@ const items = ref([
   },
 ]);
 
-const pickFile = () => uploader.value.pickFiles();
+// const pickFile = () => uploader.value.pickFiles();
 
 const updateInfo = async (property_name, value) => {
   let input;
 
-  console.log("updated prop", property_name, value);
+  // console.log("updated prop", property_name, value);
 
-  if (property_name === "resume_link") {
-    if (value === null) input = { [property_name]: null };
-    else {
-      const fileId = await filesApi.uploadFiles(value);
+  // if (property_name === "resume_link") {
+  //   if (value === null) input = { [property_name]: null };
+  //   else {
+  //     const fileId = await filesApi.uploadFiles(value);
 
-      const resumeFile = await filesApi.get(fileId);
+  //     const resumeFile = await filesApi.get(fileId);
 
-      input = {
-        resume_link: filesApi.getUrl(resumeFile[0]),
-      };
+  //     input = {
+  //       resume_link: filesApi.getUrl(resumeFile[0]),
+  //     };
 
-      useUserStore().SET_PROP(property_name, value);
-    }
-  } else if (property_name === "status") {
+  //     useUserStore().SET_PROP(property_name, value);
+  //   }
+  // }
+  if (property_name === "status") {
     input = {
       status: {
         [process.env.USER_STATUS_TYPE_ID]: value.value,

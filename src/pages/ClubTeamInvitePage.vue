@@ -5,7 +5,7 @@
     </header>
 
     <main class="q-mt-md">
-      <section class="flex items-center">
+      <section class="flex items-center c-gutter-x-32">
         <q-input
           class="search-input c-input-outline"
           outlined
@@ -22,32 +22,16 @@
           no-caps
           borderless
           clearable
-          class="club-dropdown text-caption1"
+          class="club-dropdown text-caption1 text-black"
           v-model="filters.speciality"
           @update:model-value="filteringSubjects('speciality')"
           :options="selectSpecialitites"
           dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
-        />
-
-        <!-- <q-btn-dropdown
-          no-caps
-          class="text-caption1"
-          :loading="loading"
-          v-model="filters.speciality"
-          label="Специальность"
         >
-          <q-list separator>
-            <q-item
-              clickable
-              class="flex items-center"
-              v-for="speciality in allSpecialities?.paginate_speciality.data"
-              :key="speciality.id"
-              @click="filteringSubjects('speciality', speciality.name)"
-            >
-              <span class="text-caption1">{{ speciality.name }}</span>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown> -->
+          <template #prepend v-if="!filters.speciality">
+            <span class="text-caption1 text-black">Специальность</span>
+          </template>
+        </q-select>
       </section>
 
       <section class="row c-mt-24">
@@ -106,7 +90,7 @@ import CButton from "src/components/ClubButton.vue";
 import CInviteSubjectItem from "src/components/ClubInviteSubjectItem.vue";
 import CSelectedSubjectChip from "src/components/ClubSelectedSubjectChip.vue";
 import CDropdown from "src/components/ClubDropdown.vue";
-import { computed, provide, ref } from "vue";
+import { computed, provide, ref, watch } from "vue";
 
 import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";

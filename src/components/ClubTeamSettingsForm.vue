@@ -109,7 +109,7 @@
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
-              :rules="[minLength(18), maxLength(45), telegramm]"
+              :rules="[minLength(18), maxLength(45), isTelegramUrl]"
             >
               <template #append>
                 <q-icon
@@ -194,7 +194,7 @@ import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
-const { required, maxLength, minLength } = useValidators();
+const { required, maxLength, minLength, isTelegramUrl } = useValidators();
 const { result: teamData, error, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
@@ -249,7 +249,7 @@ const updateTeamData = async () => {
     name: form.value.name,
     description: form.value.description,
     telegram_chat_id: form.value.telegram_chat_id,
-    directions: [...form.value.work_types],
+    directions: form.value.work_types.length ? [...form.value.work_types] : null,
   });
 
   router.push({

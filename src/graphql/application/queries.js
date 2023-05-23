@@ -38,6 +38,7 @@ export const paginateApplicationsInTeamSpace = gql`
     paginate_application(page: $page, perPage: $perPage, where: $where) {
       data {
         id
+        type_id
         name
         subject {
           id
@@ -51,10 +52,11 @@ export const paginateApplicationsInTeamSpace = gql`
           speciality1
         }
         status
-        sender
-        team {
+        project {
           id
           name
+          team_name
+          space
           description
           avatar
         }

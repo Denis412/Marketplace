@@ -2,7 +2,7 @@
   <c-closing-dialog title="Создание проекта" title-position="center">
     <template #main-content>
       <q-form class="form">
-        <c-label-control label="Название проекта">
+        <c-label-control label="Название проекта" class="c-mt-32">
           <template #control>
             <q-input
               outlined

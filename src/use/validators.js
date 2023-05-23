@@ -18,10 +18,8 @@ export function useValidators() {
 
     notEqual: (val1) => (val) => val1 !== val || "Новый пароль не может быть равен старому!",
 
-    telegramm: (val) =>
-      !val ||
-      val.slice(0, 13) === "https://t.me/" ||
-      val.slice(0, 12) === "http://t.me/" ||
-      "Неверный формат ссылки",
+    isUrl: (val) => val.includes("https://") || val.includes("http://") || "Введите ссылку.",
+
+    isTelegramUrl: (val) => val.includes("https://t.me/") || "Неверный формат ссылки",
   };
 }
