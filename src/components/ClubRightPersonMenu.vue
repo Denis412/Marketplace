@@ -1,5 +1,5 @@
 <template>
-  <q-card class="dropdown">
+  <q-card class="dropdown" v-show="isMenuOpen">
     <q-card-section class="dropdown-top-section flex column items-center">
       <q-avatar class="dropdown-avatar">
         <q-img :src="currentUser?.avatar || '/assets/images/preloaders/default-avatar.svg'" />
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, ref} from "vue";
 import { useUserStore } from "src/stores/user";
 import { useRouter } from "vue-router";
 
@@ -60,8 +60,10 @@ const userStore = useUserStore();
 const currentUser = inject("currentUser");
 
 const isExit = ref(false);
+const isMenuOpen = ref(true);
 
 const redirect = (route_name) => {
+  isMenuOpen.value = false
   router.push({
     name: route_name,
   });

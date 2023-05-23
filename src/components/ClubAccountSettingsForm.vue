@@ -24,10 +24,8 @@
           />
         </template>
       </c-label-control>
-    </section>
 
-    <section class="flex no-wrap">
-      <c-label-control label="Отчество">
+      <c-label-control label="Отчество" class="c-ml-32">
         <template #control>
           <q-input
             v-model="form.middle_name"
@@ -38,7 +36,23 @@
           />
         </template>
       </c-label-control>
+    </section>
 
+    <section class="flex no-wrap">
+      <c-label-control label="Пол">
+        <template #control>
+          <q-select
+            no-caps
+            borderless
+            class="club-dropdown"
+            v-model="form.gender"
+            @update:model-value="changeUSerData('gender', $event)"
+            :options="['Не выбран','Мужской', 'Женский']"
+            dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
+          />
+        </template>
+      </c-label-control>
+      
       <c-label-control label="Дата рождения" class="c-ml-32">
         <template #control>
           <q-input
@@ -67,6 +81,7 @@
           </q-input>
         </template>
       </c-label-control>
+
     </section>
 
     <section class="flex no-wrap">
@@ -86,19 +101,9 @@
         </template>
       </c-label-control>
 
-      <c-label-control label="Пол" class="c-ml-32">
-        <template #control>
-          <q-select
-            no-caps
-            borderless
-            class="club-dropdown"
-            v-model="form.gender"
-            @update:model-value="changeUSerData('gender', $event)"
-            :options="['Мужской', 'Женский']"
-            dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
-          />
-        </template>
-      </c-label-control>
+      <!-- Тут должен быть регион и населенный пункт -->
+
+      
     </section>
 
     <c-label-control label="Адрес электронной почты">
