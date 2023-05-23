@@ -1,4 +1,61 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
+
+export const pagesPaginateNew = gql`
+  query paginate($where: PaginatorWhere) {
+    rootPages(page: 1, perPage: 10, where: $where) {
+      data {
+        id
+        title
+        page_type
+        parent_id
+        created_at
+        object {
+          id
+          type_id
+        }
+        children {
+          data {
+            id
+            title
+            page_type
+            parent_id
+            created_at
+            object {
+              id
+              type_id
+            }
+            children {
+              data {
+                id
+                title
+                page_type
+                parent_id
+                created_at
+                object {
+                  id
+                  type_id
+                }
+                children {
+                  data {
+                    id
+                    page_type
+                    parent_id
+                    created_at
+                    title
+                    object {
+                      id
+                      type_id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export const pagesPaginate = gql`
   query pagesPaginate(
@@ -35,7 +92,7 @@ export const pagesPaginate = gql`
       }
     }
   }
-`
+`;
 
 export const getPageById = gql`
   query getPageById($id: String!) {
@@ -65,4 +122,4 @@ export const getPageById = gql`
       }
     }
   }
-`
+`;
