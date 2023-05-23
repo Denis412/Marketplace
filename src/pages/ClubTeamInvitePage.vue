@@ -86,8 +86,14 @@ import teamApi from "src/sdk/team";
 import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import { useTeamApplication } from "src/use/teams";
+import { useProjectApplication } from "src/use/projects";
 
 const { result, loading: sending, sendApplication } = useTeamApplication();
+const {
+  result: sendedProjectApplication,
+  loading: sendingProjectAppliaction,
+  sendApplication: sendProjectApplication,
+} = useProjectApplication();
 
 const router = useRouter();
 const route = useRoute();
@@ -102,14 +108,17 @@ const { result: team, loading: loadingTeam } = teamApi.paginateTeams({
     value: route.params.id,
   },
 });
+
 const { result: allSpecialities, loading } = specilalityApi.paginateSpeciality({
   page: 1,
   perPage: 100,
 });
+
 const { result: allSubjects, loading: loadingSubjects } = userApi.paginateSubjects({
   page: 1,
   perPage: 100,
   is_invite: true,
+  space_id: route.query.space,
 });
 
 const selectedSubjects = ref([]);
@@ -121,21 +130,31 @@ const inviteSubjects = async () => {
   if (!selectedSubjects.value.length) return;
 
   try {
-    for (let subject of selectedSubjects.value) {
-      await sendApplication({
-        name: team.value.paginate_team.data[0].name,
-        subject: {
-          [process.env.SUBJECT_TYPE_ID]: subject.id,
-        },
-        team: {
-          [process.env.TEAM_TYPE_ID]: team.value.paginate_team.data[0].id,
-        },
-        status: process.env.APPLICATION_STATUS_PENDING,
-        sender: "team",
-        sender_id: team.value.paginate_team.data[0].id,
-        target: subject,
-      });
-    }
+    if (route.query.space) {
+      for (let subject of selectedSubjects.value) {
+        await sendProjectApplication({
+          subject: subject,
+          project_name: route.query.name,
+          project_id: route.params.id,
+          space_id: route.query.space,
+        });
+      }
+    } else
+      for (let subject of selectedSubjects.value) {
+        await sendApplication({
+          name: team.value.paginate_team.data[0].name,
+          subject: {
+            [process.env.SUBJECT_TYPE_ID]: subject.id,
+          },
+          team: {
+            [process.env.TEAM_TYPE_ID]: team.value.paginate_team.data[0].id,
+          },
+          status: process.env.APPLICATION_STATUS_PENDING,
+          sender: "team",
+          sender_id: team.value.paginate_team.data[0].id,
+          target: subject,
+        });
+      }
 
     selectedSubjects.value = [];
 

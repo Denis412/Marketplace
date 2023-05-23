@@ -1,6 +1,6 @@
 <template>
   <footer class="flex justify-between items-center c-mt-32">
-    <section class="text-body2">{{ statusObject.updated_at }}</section>
+    <section v-if="!project" class="text-body2">{{ statusObject.updated_at }}</section>
 
     <section class="flex items-center q-gutter-x-md text-body1">
       <div :style="{ color: statusObject.property?.color }">
@@ -18,7 +18,7 @@
         <c-button v-else outline label="Отклонить" @click.stop="cancel" />
       </div>
 
-      <div v-else class="flex q-gutter-x-md">
+      <div v-else class="flex q-gutter-x-md rel-index-0">
         <c-button background label="Принять" @click.stop="accept" />
         <c-button outline label="Отклонить" @click.stop="cancel" />
       </div>
@@ -27,23 +27,60 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useQuasar } from "quasar";
 
 import CButton from "./ClubButton.vue";
 
 import propertyApi from "src/sdk/property";
 import { useTeamApplication } from "src/use/teams";
+import { useProjectApplication } from "src/use/projects";
 
 const { acceptApplication, cancelApplication } = useTeamApplication();
+const { acceptApplication: acceptProjectApplication, cancelApplication: cancelProjectApplication } =
+  useProjectApplication();
 
 const $q = useQuasar();
 
-const { application, incoming, is_team, team_id } = defineProps({
+const { application, incoming, is_team, project, is_project, team_id } = defineProps({
   application: Object,
   incoming: Boolean,
   is_team: Boolean,
+  project: Boolean,
+  is_project: Boolean,
   team_id: String,
+});
+
+const { result: statusProperty1 } = propertyApi.paginateProperties({
+  page: 1,
+  perPage: 1,
+  where: {
+    and: [
+      {
+        column: "name",
+        operator: "EQ",
+        value: "status",
+      },
+      {
+        column: "type_id",
+        operator: "EQ",
+        value: application.type_id,
+      },
+    ],
+  },
+  space_id: application?.project?.space,
+});
+
+const reft = ref(null);
+
+// Убрать после исправления на беке с meta полем свойств из пагинатора
+watch(statusProperty1, async (value) => {
+  if (!value) return;
+
+  reft.value = await propertyApi.refetchPropertyById({
+    id: statusProperty1.value?.properties.data[0].id,
+    space_id: application?.project?.space,
+  });
 });
 
 const { result: statusProperty } = propertyApi.queryPropertyById({
@@ -51,9 +88,11 @@ const { result: statusProperty } = propertyApi.queryPropertyById({
 });
 
 const statusObject = computed(() => {
-  let property = statusProperty.value?.property.meta.options.find(
-    (option) => option.id === application.status
-  );
+  let property = project
+    ? reft.value?.meta.options.find((option) => option.id === application.status)
+    : statusProperty.value?.property.meta.options.find(
+        (option) => option.id === application.status
+      );
 
   const lastTimeUpdated = new Date(statusProperty.value?.property.updated_at);
 
@@ -64,7 +103,13 @@ const accept = async () => {
   console.log(application, incoming);
 
   try {
-    await acceptApplication({ application, is_team });
+    if (!project) await acceptApplication({ application, is_team });
+    else
+      await acceptProjectApplication({
+        application,
+        is_project,
+        space_id: application.project.space,
+      });
   } catch (error) {
     if (!incoming) {
       console.log(error);
@@ -77,7 +122,15 @@ const accept = async () => {
   }
 };
 
-const cancel = async () => await cancelApplication({ application, is_team });
+const cancel = async () => {
+  if (!project) await cancelApplication({ application, is_team });
+  else
+    await cancelProjectApplication({
+      application,
+      is_project,
+      space_id: application.project.space,
+    });
+};
 </script>
 
 <style scoped lang="scss"></style>

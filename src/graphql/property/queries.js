@@ -11,3 +11,16 @@ export const getPropertyById = gql`
     }
   }
 `;
+
+export const propertiesPaginate = gql`
+  query properties($page: Int!, $perPage: Int!, $where: PaginatorWhere) {
+    properties(page: $page, perPage: $perPage, where: $where) {
+      data {
+        id
+        name
+        created_at
+        updated_at
+      }
+    }
+  }
+`;

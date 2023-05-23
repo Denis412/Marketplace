@@ -71,10 +71,26 @@ export const paginateSubjectInAnotherSpace = gql`
           middle_name
           last_name
         }
+        applications {
+          id
+          name
+          subject {
+            fullname {
+              first_name
+              last_name
+            }
+          }
+          project {
+            id
+            name
+            description
+            avatar
+          }
+        }
         email {
           email
         }
-        major
+        speciality1
         group {
           id
           name
@@ -136,7 +152,10 @@ export const paginateSubjectsInMainSpace = gql`
         speciality1 {
           name
         }
-        major
+        speciality1 {
+          id
+          name
+        }
         teams {
           id
           avatar

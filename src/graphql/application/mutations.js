@@ -11,10 +11,6 @@ export const createApplication = gql`
         subject {
           id
         }
-        team {
-          id
-        }
-        sender
         status
       }
     }
@@ -24,7 +20,6 @@ export const createApplication = gql`
 export const updateApplication = gql`
   mutation updateApplication($id: String!, $input: update_application_input!) {
     update_application(id: $id, input: $input) {
-      status
       recordId
       record {
         id
@@ -32,10 +27,6 @@ export const updateApplication = gql`
         subject {
           id
         }
-        team {
-          id
-        }
-        sender
         status
       }
     }

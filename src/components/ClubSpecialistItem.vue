@@ -13,7 +13,7 @@
       <div class="text-body2 text-violet-6">{{ user.first_name }} {{ user.last_name }}</div>
 
       <div class="text-caption1 q-mt-sm text-violet-6">
-        {{ user.major }}
+        {{ user.speciality1?.name || user.speciality1 }}
       </div>
     </div>
 
@@ -23,7 +23,7 @@
       </div>
 
       <div class="text-caption1 q-mt-sm text-violet-6">
-        {{ specialist.major }}
+        {{ specialist.speciality1?.name || specialist.speciality1 }}
       </div>
     </div>
   </q-item>

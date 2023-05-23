@@ -19,7 +19,7 @@
         <q-img class="bg-violet4 cursor-pointer project-card-image" @click="redirectProjectPage" />
       </q-card-section>
 
-      <q-card-section class="absolute">
+      <q-card-section>
         <div class="column text-caption1 text-gray7 q-gutter-y-md">
           <span v-if="currentProject.description">
             {{ truncate(currentProject.description, 78) }}
@@ -32,6 +32,10 @@
           <span>Роль в проекте: Участник</span>
         </div>
       </q-card-section>
+
+      <q-card-section class="flex justify-center" v-if="application">
+        <c-application-controls :application="application" project incoming />
+      </q-card-section>
     </main>
   </q-card>
 </template>
@@ -39,14 +43,18 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { truncate } from "src/utils/truncateString";
+import CApplicationControls from "./ClubApplicationControls.vue";
 
-const { currentProject } = defineProps({
+const { currentProject, application, is_invite } = defineProps({
   currentProject: Object,
+  application: Object,
+  is_invite: Boolean,
 });
 
 const router = useRouter();
 
 const redirectProjectPage = () => {
+  console.log("gdlfkjhgjkhsf");
   router.push({
     name: "project",
     params: { id: currentProject.id },

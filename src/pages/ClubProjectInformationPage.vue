@@ -5,6 +5,8 @@
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
 
+      <!-- <pre>{{ currentProject }}</pre> -->
+
       <section>
         <q-img
           :src="currentProject?.avatar || ''"
@@ -19,6 +21,15 @@
             icon-right="img:/assets/icons/plus/plus-gradient.svg"
             class="club-button-outline"
             label="Загрузить картинку"
+            @click="pickFiles"
+          />
+
+          <q-file
+            style="display: none"
+            v-model="selectFile"
+            accept=".png,.jpg"
+            ref="uploader"
+            @update:model-value="uploadImage"
           />
         </div>
       </section>
@@ -54,15 +65,18 @@
 </template>
 
 <script setup>
-import { computed, provide } from "vue";
+import { computed, provide, ref } from "vue";
 import { useRoute } from "vue-router";
 
 import CProjectInformationSection from "src/components/ClubProjectInformationSection.vue";
 import CProjectTargetDescriptionSections from "src/components/ClubProjectTargetDescriptionSections.vue";
 import CProjectMembersSections from "src/components/ClubProjectMembersSections.vue";
 import projectApi from "src/sdk/project";
+import { useProjectUpdate } from "src/use/projects";
+import filesApi from "src/sdk/file";
 
 const route = useRoute();
+const { result, loading, updateProject } = useProjectUpdate();
 
 const { result: projects } = projectApi.paginateProject({
   page: 1,
@@ -76,6 +90,25 @@ const { result: projects } = projectApi.paginateProject({
 });
 
 const currentProject = computed(() => projects.value?.paginate_project.data[0]);
+
+const uploader = ref(null);
+const selectFile = ref(null);
+
+const pickFiles = () => uploader.value.pickFiles();
+
+const uploadImage = async () => {
+  const fileId = await filesApi.uploadFiles(selectFile.value);
+  const avatar = await filesApi.get(fileId);
+
+  await updateProject({
+    id: currentProject.value.id,
+    input: {
+      name: currentProject.value.name,
+      avatar: filesApi.getUrl(avatar[0]),
+    },
+    space_id: route.query.space,
+  });
+};
 
 provide("spaceId", route.query.space);
 provide("currentProject", currentProject);

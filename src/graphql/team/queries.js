@@ -1,11 +1,7 @@
 import gql from "graphql-tag";
 
 export const getTeamsWithWhere = gql`
-  query getTeamsWithWhere(
-    $page: Int!
-    $perPage: Int!
-    $where: ObjectPaginatorWhere
-  ) {
+  query getTeamsWithWhere($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
     paginate_team(page: $page, perPage: $perPage, where: $where) {
       data {
         id
@@ -30,7 +26,10 @@ export const getTeamsWithWhere = gql`
               email
             }
             avatar
-            major
+            speciality1 {
+              id
+              name
+            }
           }
           team {
             id
@@ -47,7 +46,10 @@ export const getTeamsWithWhere = gql`
             last_name
           }
           avatar
-          major
+          speciality1 {
+            id
+            name
+          }
         }
         space
         level

@@ -31,9 +31,24 @@
         <q-tab name="members" class="c-tab-text" label="Участники" />
         <q-tab name="applications" class="c-tab-text" label="Исходящие заявки" />
       </q-tabs>
+
+      <q-space />
+
+      <q-btn flat class="club-button-background" label="Пригласить" @click="redirectInvite" />
     </q-toolbar>
 
-    <c-team-members-list class="c-mt-40" :members="currentProject.members" />
+    <div v-if="selectedList === 'members'">
+      <c-team-members-list class="c-mt-40" team_space :members="currentProject.members" />
+    </div>
+
+    <div v-else>
+      <c-applications-list
+        subjects
+        project
+        is_project
+        :applications="currentProject.applications"
+      />
+    </div>
   </section>
 </template>
 
@@ -42,6 +57,11 @@ import { computed, inject, ref } from "vue";
 
 import CSpecialistItem from "src/components/ClubSpecialistItem.vue";
 import CTeamMembersList from "src/components/ClubTeamMembersList.vue";
+import CApplicationsList from "./ClubApplicationsList.vue";
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
 
 const currentProject = inject("currentProject");
 
@@ -57,6 +77,14 @@ const grouped = computed(() =>
 );
 
 const selectedList = ref("members");
+
+const redirectInvite = () => {
+  router.push({
+    name: "projectInvite",
+    params: { ...route.params },
+    query: { ...route.query },
+  });
+};
 </script>
 
 <style scoped lang="scss">

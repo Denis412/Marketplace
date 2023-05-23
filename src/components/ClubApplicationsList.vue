@@ -8,6 +8,8 @@
           :application="application"
           :incoming="incoming"
           :is_team="is_team"
+          :is_project="is_project"
+          :project="project"
         />
       </q-card>
 
@@ -29,11 +31,13 @@ import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
-const { applications, incoming, subjects, is_team } = defineProps({
+const { applications, incoming, subjects, project, is_project, is_team } = defineProps({
   applications: Array,
   incoming: Boolean,
   subjects: Boolean,
   is_team: Boolean,
+  project: Boolean,
+  is_project: Boolean,
 });
 </script>
 
