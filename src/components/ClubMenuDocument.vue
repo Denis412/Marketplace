@@ -1,16 +1,16 @@
 <template>
   <q-list class="popup">
     <q-item @click="openDoc" class="popup-component" clickable>
-      <q-img class="popup-png" src="/src/assets/icons/doc_popup/link.png" />
+      <q-img class="popup-png" src="/assets/icons/doc_popup/link.png" />
       <q-item-section>Открыть</q-item-section>
     </q-item>
     <q-item @click="duplicateDocument()" class="popup-component" clickable>
-      <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
+      <q-img class="popup-png" src="/assets/icons/doc_popup/file.png" />
       <q-item-section>Дублировать</q-item-section>
     </q-item>
 
     <q-item class="popup-component" clickable>
-      <q-img class="popup-png2" src="/src/assets/icons/doc_popup/trash.png" />
+      <q-img class="popup-png2" src="/assets/icons/doc_popup/trash.png" />
       <q-item-section @click="showDialog = true">Удалить </q-item-section>
     </q-item>
 
@@ -18,7 +18,7 @@
       v-model="showDialog" />
 
     <q-item class="popup-component" clickable>
-      <q-img class="popup-png" src="/src/assets/icons/doc_popup/lock.png" />
+      <q-img class="popup-png" src="/assets/icons/doc_popup/lock.png" />
       <q-item-section>Права доступа</q-item-section>
       <q-item-section side>
         <q-icon name="keyboard_arrow_right" />

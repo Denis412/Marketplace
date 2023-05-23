@@ -2,33 +2,26 @@
   <div class="row no-wrap q-pl-lg drawer-item">
     <div class="item_doc" @contextmenu.prevent="showMenu = true">
       <span v-if="stat.children.length" @click="stat.open = !stat.open">
-        {{ stat.open ? "-" : "+" }}
+        <q-item-section v-if="stat.open">
+          <q-icon name="keyboard_arrow_right" />
+        </q-item-section>
+        <q-item-section v-else>
+          <q-icon name="keyboard_arrow_up" />
+        </q-item-section>
       </span>
 
       <img :src="`/icons/file-grey.svg`" alt="" class="q-pr-md" />
 
-      <router-link
-        class="name_doc link"
-        @click="set_breadcumps"
-        :to="{ name: 'Document', params: { id: `${props.node.object_id}` } }"
-      >
+      <router-link class="name_doc link" @click="set_breadcumps"
+        :to="{ name: 'Document', params: { id: `${props.node.object_id}` } }">
         {{ node.title_page.replace(".html", "") }}
       </router-link>
 
       <c-add-document :node="props.node" class="addDoc q-px-md" />
 
       <div class="menu-wrapper" clickable>
-        <q-btn-dropdown
-          no-icon-animation
-          dropdown-icon="more_vert"
-          size="sm"
-          no-caps
-          unelevated
-          no-wrap
-          label=""
-          class="btn-dropdown-doc"
-          v-model="showMenu"
-        >
+        <q-btn-dropdown no-icon-animation dropdown-icon="more_vert" size="sm" no-caps unelevated no-wrap label=""
+          class="btn-dropdown-doc" v-model="showMenu">
           <c-menu-document :prop_doc="doc" :prop_data="props.node" />
           <!-- <c-menu-document :prop_clicked_index_doc="index" :prop_doc="doc" /> -->
         </q-btn-dropdown>
@@ -91,12 +84,14 @@ getFile();
 .menu-wrapper {
   width: 40px;
 }
+
 .name_doc {
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
 }
+
 .item_doc {
   width: 190px;
   display: flex;
