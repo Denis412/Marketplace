@@ -54,7 +54,6 @@ const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
       },
       space_id: space_id,
     });
-    console.log("privet");
     EventBus.emit("document-added");
   });
 };
@@ -128,7 +127,11 @@ const updateFile = (name, doc, page_id, parent_id = "") => {
     space_id: 13,
   });
 
-  response("Файл обновлен", "Ошибка", mutate, fileStore.refetchFiles);
+  let data = mutate()
+  data.then(()=>{
+    EventBus.emit("document-update");
+  }) 
+  response("Файл обновлен", "Ошибка", ()=>{}, fileStore.refetchFiles);
 };
 
 const deleteDoc = function (id, page_id) {
@@ -142,8 +145,12 @@ const deleteDoc = function (id, page_id) {
       id: id,
     },
   }));
-  response("Документ удален", "Ошибка", mutate, fileStore.refetchFiles);
-  EventBus.emit("document-deleted");
+  let data = mutate()
+  data.then(()=>{
+    EventBus.emit("document-deleted");
+  })
+  response("Документ удален", "Ошибка", ()=>{}, fileStore.refetchFiles);
+  
 };
 
 const updateRouteId = (id_route, routeParamsId) => {

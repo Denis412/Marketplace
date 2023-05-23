@@ -53,6 +53,7 @@ const contex = () => {
 onMounted(() => {
   getData();
   EventBus.on("document-added", getData);
+  EventBus.on("document-update", getData);
   EventBus.on("document-deleted", getData);
 });
 </script>
