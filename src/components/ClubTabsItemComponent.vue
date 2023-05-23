@@ -93,7 +93,7 @@ getFile();
 }
 
 .item_doc {
-  width: 190px;
+  width: 210px;
   display: flex;
   justify-content: space-between;
   align-items: center;
