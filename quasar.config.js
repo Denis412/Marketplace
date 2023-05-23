@@ -56,6 +56,7 @@ module.exports = configure(function (/* ctx */) {
       env: {
         GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphql",
         USERS_GROUP_ID: "1319554634306561363",
+        PROPERTY_STATUS_ID: "6803516740521580313",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

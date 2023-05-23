@@ -100,7 +100,7 @@
         <div class="flex justify-start">
           <div class="flex wrap">
             <div
-              v-for="todo in props.order.todos"
+              v-for="todo in props.order.type.id"
               class="flex column justify-start c-mr-24"
             >
               <p
@@ -110,7 +110,7 @@
               </p>
               <div
                 class="text-content-component c-mb-12"
-                v-for="fun in props.order.functions"
+                v-for="fun in props.order.type.id"
               >
                 <ul>
                   <li
@@ -208,7 +208,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from "vue";
+import { defineProps } from "vue";
 import CButton from "../components/ClubButton.vue";
 import COrderStatus from "../components/ClubOrderStatus.vue";
 
@@ -218,17 +218,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-// const order_test = ref({
-//   id: "7718095163914291112",
-//   label: "Поиск исполнителя",
-//   order: 0,
-//   color: "#FF9646",
-// });
-
-console.log(props.order);
-
-const colorStatus = ref("#9236DA");
 </script>
 
 <style scoped lang="scss">

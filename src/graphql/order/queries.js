@@ -15,8 +15,9 @@ export const getOrderById = gql`
       description
       consultation
       files
-      todos
-      functions
+      type {
+      id
+      }
       price_end
       price_start
       date_complete
@@ -26,7 +27,6 @@ export const getOrderById = gql`
       date_approve
       deal
       rejection
-      date_update
     }
   }
 `;
@@ -45,9 +45,9 @@ export const getOrders = gql`
     customer
     description
     consultation
-    files
-    todos
-    functions
+    type {
+    id
+    }
     price_end
     price_start
     date_complete
@@ -57,7 +57,6 @@ export const getOrders = gql`
     date_approve
     deal
     rejection
-    date_update
   }
   paginatorInfo {
     perPage
@@ -72,3 +71,10 @@ export const getOrders = gql`
 }
 }
 `;
+
+export const getStatus =  gql`
+query getStatus($id: String!) {
+  property (id: $id) {
+    meta
+  }
+}`
