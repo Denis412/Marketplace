@@ -25,26 +25,37 @@
       </q-item-section>
 
       <q-menu anchor="bottom right" self="center left">
-        <q-item class="popup-component" clickable>
+        <q-item class="popup-component" clickable @click="close = !close">
+          <q-icon name="check" v-if="close"></q-icon>
+          <q-icon v-else></q-icon>
           <q-item-section>Закрытый</q-item-section>
         </q-item>
 
-        <q-item class="popup-component" clickable>
+        <q-item class="popup-component" clickable @click="redact = !redact">
+          <q-icon name="check" v-if="redact"></q-icon>
+          <q-icon v-else></q-icon>
           <q-item-section>Редактирование</q-item-section>
         </q-item>
 
         <q-item class="popup-component" clickable>
+          <q-icon name="check" v-if="nocustomer"></q-icon>
+          <q-icon name="check" v-else-if="customer"></q-icon>
+          <q-icon v-else></q-icon>
           <q-item-section>Только просмотр</q-item-section>
           <q-item-section side>
-            <q-icon name="keyboard_arrow_right" />
+            <q-icon name="keyboard_arrow_down" />
           </q-item-section>
-          <q-menu anchor="bottom right" self="center left">
-            <q-item class="popup-component" clickable>
-              <q-item-section>Закрытый</q-item-section>
+          <q-menu>
+            <q-item class="sub-popup-component" clickable @click="nocustomer = !nocustomer">
+              <q-icon name="check" v-if="nocustomer"></q-icon>
+              <q-icon v-else></q-icon>
+              <q-item-section>Без заказчика</q-item-section>
             </q-item>
 
-            <q-item class="popup-component" clickable>
-              <q-item-section>Редактирование</q-item-section>
+            <q-item class="sub-popup-component" clickable @click="customer = !customer">
+              <q-icon name="check" v-if="customer"></q-icon>
+              <q-icon v-else></q-icon>
+              <q-item-section>С заказчиком</q-item-section>
             </q-item>
           </q-menu>
         </q-item>
@@ -97,6 +108,10 @@ const openDoc = () => {
 };
 
 let showDialog = ref(false);
+let close = ref(false)
+let redact = ref(false)
+let customer = ref(false)
+let nocustomer = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -127,6 +142,22 @@ let showDialog = ref(false);
   flex-direction: row;
   align-items: center;
   padding: 10px 29px 10px 20px;
+  gap: 18px;
+  width: 290px;
+  height: 40px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #666666;
+}
+
+.sub-popup-component {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 29px 10px 39px;
   gap: 18px;
   width: 290px;
   height: 40px;
