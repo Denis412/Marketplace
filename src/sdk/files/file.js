@@ -28,7 +28,7 @@ const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
   console.log("upload", files);
 
   //Если вместо files использовать file, то работать не будет (?!)
-  let data = mutate(
+  let data = await mutate(
     {
       files,
     },
@@ -39,23 +39,21 @@ const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
     }
   );
 
-  await response("Файл добавлен", "Ошибка", () => {}, fileStore.refetchFiles);
-  data.then(async (result) => {
-    await pageApi.create({
-      input: {
-        // title: createdFile[0].name.slice(0, -5),
-        title: fileName,
-        page_type: "node",
-        parent_id: parent_id || "4440891212883535597",
-        object: {
-          id: BigInt(result.data.filesUpload.ids[0]).toString(),
-          type_id: "6923351168454209144", //id типа файла
-        },
+  console.log(data);
+  await pageApi.create({
+    input: {
+      // title: createdFile[0].name.slice(0, -5),
+      title: fileName,
+      page_type: "node",
+      parent_id: parent_id || "4440891212883535597",
+      object: {
+        id: data.data.filesUpload.ids[0],
+        type_id: "6923351168454209144", //id типа файла
       },
-      space_id: space_id,
-    });
-    EventBus.emit("document-added");
+    },
+    space_id: space_id,
   });
+  EventBus.emit("document-added");
 };
 
 const getFileHtmlByUrl = async (path, id, name, extension) => {
@@ -95,6 +93,7 @@ const createHtmlFile = async function ({
   formData.append("files", blob, `${fileName}.html`);
 
   const file = formData.getAll("files");
+ 
 
   await uploadFiles({ files: file, parent_id, space_id, fileName });
 };
@@ -127,11 +126,11 @@ const updateFile = (name, doc, page_id, parent_id = "") => {
     space_id: 13,
   });
 
-  let data = mutate()
-  data.then(()=>{
+  let data = mutate();
+  data.then(() => {
     EventBus.emit("document-update");
-  }) 
-  response("Файл обновлен", "Ошибка", ()=>{}, fileStore.refetchFiles);
+  });
+  response("Файл обновлен", "Ошибка", () => {}, fileStore.refetchFiles);
 };
 
 const deleteDoc = function (id, page_id) {
@@ -145,12 +144,11 @@ const deleteDoc = function (id, page_id) {
       id: id,
     },
   }));
-  let data = mutate()
-  data.then(()=>{
+  let data = mutate();
+  data.then(() => {
     EventBus.emit("document-deleted");
-  })
-  response("Документ удален", "Ошибка", ()=>{}, fileStore.refetchFiles);
-  
+  });
+  response("Документ удален", "Ошибка", () => {}, fileStore.refetchFiles);
 };
 
 const updateRouteId = (id_route, routeParamsId) => {
