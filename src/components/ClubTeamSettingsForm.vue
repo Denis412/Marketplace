@@ -248,7 +248,7 @@ const updateTeamData = async () => {
     name: form.value.name,
     description: form.value.description,
     telegram_chat_id: form.value.telegram_chat_id,
-    directions: [...form.value.work_types],
+    directions: form.value.work_types.length ? [...form.value.work_types] : null,
   });
 
   router.push({
