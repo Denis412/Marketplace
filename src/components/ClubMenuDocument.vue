@@ -1,27 +1,24 @@
 <template>
   <q-list class="popup">
     <q-item @click="openDoc" class="popup-component" clickable>
-      <q-img class="popup-png" src="/src/assets/icons/doc_popup/link.png" />
+      <q-img class="popup-png" src="/assets/icons/doc_popup/link.png" />
       <q-item-section>Открыть</q-item-section>
     </q-item>
     <q-item @click="duplicateDocument()" class="popup-component" clickable>
-      <q-img class="popup-png" src="/src/assets/icons/doc_popup/file.png" />
+      <q-img class="popup-png" src="/assets/icons/doc_popup/file.png" />
       <q-item-section>Дублировать</q-item-section>
     </q-item>
 
     <q-item class="popup-component" clickable>
-      <q-img class="popup-png2" src="/src/assets/icons/doc_popup/trash.png" />
+      <q-img class="popup-png2" src="/assets/icons/doc_popup/trash.png" />
       <q-item-section @click="showDialog = true">Удалить </q-item-section>
     </q-item>
 
-    <c-delete-dialog-document
-      :prop_doc_id="props.prop_data.object_id"
-      :prop_page_id="props.prop_data.page_id"
-      v-model="showDialog"
-    />
+    <c-delete-dialog-document :prop_doc_id="props.prop_data.object_id" :prop_page_id="props.prop_data.page_id"
+      v-model="showDialog" />
 
     <q-item class="popup-component" clickable>
-      <q-img class="popup-png" src="/src/assets/icons/doc_popup/lock.png" />
+      <q-img class="popup-png" src="/assets/icons/doc_popup/lock.png" />
       <q-item-section>Права доступа</q-item-section>
       <q-item-section side>
         <q-icon name="keyboard_arrow_right" />
@@ -37,25 +34,24 @@
         </q-item>
 
         <q-item class="popup-component" clickable>
-          <q-item-section>Комментирование</q-item-section>
-          <q-item-section side>
-            <q-icon name="keyboard_arrow_down" />
-          </q-item-section>
-        </q-item>
-
-        <q-item class="popup-component" clickable>
           <q-item-section>Только просмотр</q-item-section>
           <q-item-section side>
-            <q-icon name="keyboard_arrow_down" />
+            <q-icon name="keyboard_arrow_right" />
           </q-item-section>
+          <q-menu anchor="bottom right" self="center left">
+            <q-item class="popup-component" clickable>
+              <q-item-section>Закрытый</q-item-section>
+            </q-item>
+
+            <q-item class="popup-component" clickable>
+              <q-item-section>Редактирование</q-item-section>
+            </q-item>
+          </q-menu>
         </q-item>
       </q-menu>
     </q-item>
 
-    <c-rename-item-document
-      :prop_doc="prop_doc"
-      :prop_page_id="props.prop_data.page_id"
-    />
+    <c-rename-item-document :prop_doc="prop_doc" :prop_page_id="props.prop_data.page_id" />
   </q-list>
 </template>
 

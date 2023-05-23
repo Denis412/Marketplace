@@ -15,12 +15,8 @@
       </q-card-section>
     </q-card>
 
-    <q-card
-      v-for="row in tasks"
-      :key="row.name"
-      class="no-shadow q-ma-md bg-color q-pa-lg"
-      :class="{ 'my-color': getStatusText(row.taskStatus) === 'надо сделать' }"
-    >
+    <q-card v-for="row in tasks" :key="row.name" class="no-shadow q-ma-md bg-color q-pa-lg"
+      :class="{ 'my-color': getStatusText(row.taskStatus) === 'надо сделать' }">
       <q-card-section class="row">
         <div class="col-4 text-subtitle3">{{ row.name }}</div>
         <div class="col-2 text-subtitle3">-</div>
@@ -99,18 +95,23 @@ const addNewTask = () => {
 .my-text-green {
   color: #15803d;
 }
+
 .my-text-orange {
   color: #c2410c;
 }
+
 .my-text-blue {
   color: #1d4ed8;
 }
+
 .my-color {
   background-color: #d7c9e2 !important;
 }
+
 .border-bottom {
   border-bottom: 1px solid #9c9c9c !important;
 }
+
 .bg-color {
   background-color: #eee8f3;
 }
@@ -130,6 +131,7 @@ const addNewTask = () => {
   width: 139px;
   height: 20px;
 }
+
 .accomplished {
   background: #7dd3fc;
   border-radius: 12px;
@@ -137,11 +139,11 @@ const addNewTask = () => {
   width: 139px;
   height: 20px;
 }
+
 .completed {
   background: #86efac;
   border-radius: 12px;
   text-align: center;
   width: 139px;
   height: 20px;
-}
-</style>
+}</style>

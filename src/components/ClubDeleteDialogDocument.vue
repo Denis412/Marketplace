@@ -1,18 +1,19 @@
 <template>
   <q-dialog>
-    <q-card>
-      <q-card-section>
-        <div class="text-h6">Удаление файла</div>
+    <q-card class="delete-popup">
+      <q-card-section class="name-delete-popup">
+        <div>Удаление файла</div>
       </q-card-section>
 
-      <q-card-section class="q-pt-none">
+      <q-card-section class="text-delete-popup">
         Вы уверены, что хотите удалить этот файл? Отменить это действие будет
         невозможно
       </q-card-section>
 
-      <q-card-actions align="right">
-        <q-btn label="Да" @click="deleteDocument" />
-        <q-btn label="Нет" @click="showDialog = false" />
+      <q-card-actions class="actions-delete-popup">
+        <q-btn class="yes-actions-delete-popup" label="Удалить" @click="filesApi.deleteDoc(prop_doc_id, prop_page_id), (showDialog = false)
+          " />
+        <q-btn class="no-actions-delete-popup" label="отмена" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -25,6 +26,7 @@ import EventBus from "../sdk/files/eventBus";
 
 let showDialog = ref(true);
 
+
 const props = defineProps({
   prop_doc_id: String,
   prop_page_id: String,
@@ -36,4 +38,79 @@ const deleteDocument = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.delete-popup {
+  width: 463px;
+  height: 204px;
+
+  border: 1px solid #BBBBBB;
+  box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+}
+
+.name-delete-popup {
+  width: 214px;
+  height: 29px;
+  margin-top: 15px;
+  margin-left: 24px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+
+  color: #282828;
+}
+
+.text-delete-popup {
+  width: 407px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 24px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+
+  color: #444444;
+}
+
+.actions-delete-popup {
+  margin-top: 41px;
+  margin-left: 238px;
+}
+
+.yes-actions-delete-popup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 16px;
+  gap: 16px;
+  width: 95px;
+  height: 36px;
+
+  color: white;
+  background: linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);
+  border-radius: 4px;
+}
+
+.no-actions-delete-popup {
+  width: 56px;
+  height: 15px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+
+}
+</style>
