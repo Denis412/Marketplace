@@ -46,7 +46,7 @@
           autogrow
           style="max-height: 100px"
           v-model="form.description"
-          :rules="[required, maxLength(1000)]"
+          :rules="[required, maxLengthForTeamForm(1000)]"
         />
       </section>
     </main>
@@ -73,7 +73,7 @@ import filesApi from "src/sdk/file";
 
 const currentUser = inject("currentUser");
 
-const { required, maxLength } = useValidators();
+const { required, maxLength, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
 const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
