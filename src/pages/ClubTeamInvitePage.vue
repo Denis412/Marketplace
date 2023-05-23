@@ -67,7 +67,7 @@
             </div>
           </div>
 
-          <div class="q-mt-md q-gutter-x-md text-body1">
+          <div class="q-mt-md q-gutter-x-md text-body1 rel-index-0">
             <c-button
               :disable="!selectedSubjects.length"
               background
@@ -91,8 +91,8 @@
               </q-list>
             </section>
 
-            <div class="text-body1">
-              <c-button background label="Сбросить" class="q-mt-md" @click="resetSubjects" />
+            <div class="text-body1 rel-index-0">
+              <c-button outline label="Сбросить" class="q-mt-md" @click="resetSubjects" />
             </div>
           </div>
         </section>

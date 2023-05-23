@@ -29,6 +29,7 @@ const exclude = ref([
   "ClubTeamSettingsPage",
   "ClubProjectInformationPage",
   "ClubTeamProfileProjects",
+  "ClubTeamInvitePage",
   // "ClubMyProjectsPage",
 ]);
 
