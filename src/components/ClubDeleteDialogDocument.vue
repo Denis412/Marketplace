@@ -33,7 +33,6 @@ const props = defineProps({
 const deleteDocument = () => {
   filesApi.deleteDoc(props.prop_doc_id, props.prop_page_id);
   showDialog = false;
-  EventBus.emit("document-deleted");
 };
 </script>
 
