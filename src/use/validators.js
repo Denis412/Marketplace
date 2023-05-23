@@ -3,7 +3,10 @@ export function useValidators() {
     required: (val) => (val && val.length > 0) || "Поле обязательно для заполнения!",
 
     maxLength: (length) => (val) =>
-      val.length <= length || `Максимльно возможное количество символов ${length}!`,
+      val.length <= length || `Максимально возможное количество символов ${length}!`,
+
+    maxLengthForTeamForm: (length) => (val) =>
+      val.length <= length || `Количество символов в описании команды не должно превышать ${length} символов!`,
 
     minLength: (length) => (val) =>
       !val || val.length >= length || `Минимально возможное количество символов ${length}`,
