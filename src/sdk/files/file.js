@@ -38,7 +38,7 @@ const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
       },
     }
   );
-
+  await response("Файл добавлен", "Ошибка", () => {}, fileStore.refetchFiles);
   console.log(data);
   await pageApi.create({
     input: {
@@ -93,7 +93,6 @@ const createHtmlFile = async function ({
   formData.append("files", blob, `${fileName}.html`);
 
   const file = formData.getAll("files");
- 
 
   await uploadFiles({ files: file, parent_id, space_id, fileName });
 };
@@ -218,10 +217,10 @@ const getRootPage = async (rootPageId, space_id) => {
       children: [],
     };
 
-    data_tree.push(rootData);
+    // data_tree.push(rootData);
 
     if (rootPage.children.data.length > 0) {
-      await getChildrenPages(rootPage.children.data, rootData);
+      await getChildrenPages(rootPage.children.data, rootData, data_tree);
     }
   }
 
@@ -229,7 +228,12 @@ const getRootPage = async (rootPageId, space_id) => {
   return data_tree;
 };
 
-const getChildrenPages = async (children, parent) => {
+const getChildrenPages = async (
+  children,
+  parent,
+  data_tree,
+  isTopLevel = true
+) => {
   for (const child of children) {
     const childData = {
       title_page: child.title,
@@ -246,12 +250,15 @@ const getChildrenPages = async (children, parent) => {
     } else {
       // Если свойство children определено, добавляем данные текущего дочернего элемента в массив children родительского элемента
       parent.children.push(childData);
+      if (isTopLevel) {
+        data_tree.push(childData);
+      }
     }
 
     // Проверяем, имеет ли текущий дочерний элемент свойство children и имеет ли оно дочерние элементы
     if (child.children && child.children.data.length > 0) {
       // Если текущий дочерний элемент имеет дочерние элементы, вызываем функцию getChildrenPages для обработки его дочерних элементов
-      await getChildrenPages(child.children.data, childData);
+      await getChildrenPages(child.children.data, childData, data_tree, false);
     }
   }
 };
