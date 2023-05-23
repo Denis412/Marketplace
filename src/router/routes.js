@@ -1,5 +1,3 @@
-import userApi from "src/sdk/user";
-
 const routes = [
   {
     path: "/",

@@ -10,33 +10,61 @@
           class="search-input c-input-outline"
           outlined
           placeholder="Поиск участника"
-          @update:model-value="filteredSubjects"
-          v-model="filter"
+          @change="filteringSubjects('name')"
+          v-model="filters.name"
         >
           <template #prepend>
             <q-icon name="img:/assets/icons/search/search-grey.svg" class="cursor-pointer" />
           </template>
         </q-input>
 
-        <c-dropdown
-          :loading="loading"
-          label="Специальность"
-          class="c-ml-32"
-          :list="allSpecialities?.paginate_speciality.data"
+        <q-select
+          no-caps
+          borderless
+          clearable
+          class="club-dropdown text-caption1"
+          v-model="filters.speciality"
+          @update:model-value="filteringSubjects('speciality')"
+          :options="selectSpecialitites"
+          dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
         />
+
+        <!-- <q-btn-dropdown
+          no-caps
+          class="text-caption1"
+          :loading="loading"
+          v-model="filters.speciality"
+          label="Специальность"
+        >
+          <q-list separator>
+            <q-item
+              clickable
+              class="flex items-center"
+              v-for="speciality in allSpecialities?.paginate_speciality.data"
+              :key="speciality.id"
+              @click="filteringSubjects('speciality', speciality.name)"
+            >
+              <span class="text-caption1">{{ speciality.name }}</span>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown> -->
       </section>
 
       <section class="row c-mt-24">
         <section class="col">
           <div class="subjects-wrapper">
-            <q-list class="q-gutter-y-md">
+            <q-list class="q-gutter-y-md" v-if="showSubjects?.length">
               <c-invite-subject-item
-                v-for="subject in allSubjects?.paginate_subject.data"
+                v-for="subject in showSubjects"
                 :key="subject.id"
                 class="rounded-borders-10 flex justify-between"
                 :subject="subject"
               />
             </q-list>
+
+            <div class="flex flex-center" v-else>
+              <span class="text-body2">Пользователи не найдены!</span>
+            </div>
           </div>
 
           <div class="q-mt-md q-gutter-x-md text-body1">
@@ -78,7 +106,7 @@ import CButton from "src/components/ClubButton.vue";
 import CInviteSubjectItem from "src/components/ClubInviteSubjectItem.vue";
 import CSelectedSubjectChip from "src/components/ClubSelectedSubjectChip.vue";
 import CDropdown from "src/components/ClubDropdown.vue";
-import { provide, ref } from "vue";
+import { computed, provide, ref } from "vue";
 
 import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";
@@ -95,9 +123,15 @@ const {
   sendApplication: sendProjectApplication,
 } = useProjectApplication();
 
-const router = useRouter();
 const route = useRoute();
 const $q = useQuasar();
+
+const selectedSubjects = ref([]);
+const filteredSubjects = ref(null);
+const filters = ref({
+  name: "",
+  speciality: "",
+});
 
 const { result: team, loading: loadingTeam } = teamApi.paginateTeams({
   page: 1,
@@ -117,12 +151,20 @@ const { result: allSpecialities, loading } = specilalityApi.paginateSpeciality({
 const { result: allSubjects, loading: loadingSubjects } = userApi.paginateSubjects({
   page: 1,
   perPage: 100,
-  is_invite: true,
+  is_invite: !route.query.space,
+  is_team: route.query.space,
   space_id: route.query.space,
 });
 
-const selectedSubjects = ref([]);
-const filter = ref([]);
+const selectSpecialitites = computed(() =>
+  allSpecialities.value?.paginate_speciality.data.map((speciality) => ({
+    label: speciality.name,
+    value: speciality.id,
+  }))
+);
+const showSubjects = computed(
+  () => filteredSubjects.value ?? allSubjects.value?.paginate_subject.data
+);
 
 provide("selectedSubjects", selectedSubjects);
 
@@ -171,7 +213,32 @@ const inviteSubjects = async () => {
     });
   }
 };
-const filteredSubjects = () => {};
+
+const filteringSubjects = async (filter) => {
+  if (filter === "name" && (filters.value.name === "" || !filters.value.name.trim())) {
+    filteredSubjects.value = null;
+    return;
+  }
+
+  filteredSubjects.value = await userApi.refetchPaginateSubjects({
+    page: 1,
+    perPage: 100,
+    where: filters.value.name
+      ? { column: "fullname", operator: "FTS", value: filters.value.name }
+      : null,
+    is_invite: !route.query.space,
+    is_team: route.query.space,
+    space_id: route.query.space,
+  });
+
+  if (filters.value.speciality)
+    filteredSubjects.value = filteredSubjects.value.filter(
+      (subject) =>
+        subject.speciality1?.name === filters.value.speciality.label ||
+        subject.speciality1 === filters.value.speciality.label
+    );
+};
+
 const resetSubjects = () => (selectedSubjects.value = []);
 </script>
 
