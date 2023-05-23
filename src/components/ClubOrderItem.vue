@@ -16,7 +16,7 @@
         </q-card-section>
 
         <q-card-section class="oDateUpdate col-3 text-center">
-          {{ order?.updated_at.slice(0, 10) }}
+          {{ date }}
         </q-card-section>
 
         <q-card-section class="oResponse col-2 text-center">
@@ -43,6 +43,7 @@
 
 <script setup>
 import { statuses } from "src/use/order";
+import { prettyDate } from "src/use/date";
 import { computed } from "vue";
 
 const { order } = defineProps({
@@ -52,9 +53,13 @@ const { order } = defineProps({
   },
 });
 
+let date = prettyDate(order.updated_at);
+console.log(date);
+
 const orderId = computed(() => {
   return order.id ? order.id : null;
 });
+
 let cur_status;
 statuses.forEach((element) => {
   if (element.id == order.status) {
