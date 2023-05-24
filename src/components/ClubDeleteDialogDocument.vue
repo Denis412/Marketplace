@@ -11,8 +11,13 @@
       </q-card-section>
 
       <q-card-actions class="actions-delete-popup">
-        <q-btn class="yes-actions-delete-popup" label="Удалить" @click="filesApi.deleteDoc(prop_doc_id, prop_page_id), (showDialog = false)
-          " />
+        <q-btn
+          class="yes-actions-delete-popup"
+          label="Удалить"
+          @click="
+            filesFunc.deleteDoc(prop_doc_id, prop_page_id), (showDialog = false)
+          "
+        />
         <q-btn class="no-actions-delete-popup" label="отмена" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -21,11 +26,9 @@
 
 <script setup>
 import { ref } from "vue";
-import { filesApi } from "src/sdk/files/file";
-import EventBus from "../sdk/files/eventBus";
+import { filesFunc } from "src/use/fileFunctions";
 
 let showDialog = ref(true);
-
 
 const props = defineProps({
   prop_doc_id: String,
@@ -33,7 +36,7 @@ const props = defineProps({
 });
 
 const deleteDocument = () => {
-  filesApi.deleteDoc(props.prop_doc_id, props.prop_page_id);
+  filesFunc.deleteDoc(props.prop_doc_id, props.prop_page_id);
   showDialog = false;
 };
 </script>
@@ -43,7 +46,7 @@ const deleteDocument = () => {
   width: 463px;
   height: 204px;
 
-  border: 1px solid #BBBBBB;
+  border: 1px solid #bbbbbb;
   box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.06);
   border-radius: 16px;
 }
@@ -54,7 +57,7 @@ const deleteDocument = () => {
   margin-top: 15px;
   margin-left: 24px;
 
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -69,7 +72,7 @@ const deleteDocument = () => {
   margin-top: 20px;
   margin-left: 24px;
 
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -93,7 +96,7 @@ const deleteDocument = () => {
   height: 36px;
 
   color: white;
-  background: linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);
+  background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
   border-radius: 4px;
 }
 
@@ -101,7 +104,7 @@ const deleteDocument = () => {
   width: 56px;
   height: 15px;
 
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -111,6 +114,5 @@ const deleteDocument = () => {
   align-items: center;
   text-align: center;
   text-transform: uppercase;
-
 }
 </style>
