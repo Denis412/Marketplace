@@ -7,6 +7,7 @@ export const getTeamsWithWhere = gql`
         id
         type_id
         author_id
+        leader_telegram_chat_id
         telegram_chat_id
         directions
         projects {

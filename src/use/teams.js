@@ -15,7 +15,7 @@ export const useTeamCreate = () => {
   const creatingTeam = ref(false);
   const createTeamError = ref("");
 
-  async function createTeam({ name, description }) {
+  async function createTeam({ name, description, author }) {
     let team, space;
 
     try {
@@ -429,7 +429,12 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
-      team = await teamApi.create({ name, description, space: space.id });
+      team = await teamApi.create({
+        name,
+        description,
+        leader_telegram_chat_id: author.telegram_chat_id,
+        space: space.id,
+      });
 
       await teamApi.update(team.id, {
         members: {

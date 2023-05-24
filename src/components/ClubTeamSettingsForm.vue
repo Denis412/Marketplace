@@ -105,7 +105,7 @@
         <c-label-control label="Ссылка на Telegram лидера">
           <template #control>
             <q-input
-              v-model="form.telegram_chat_id"
+              v-model="form.leader_telegram_chat_id"
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
@@ -206,7 +206,7 @@ const form = ref({
   avatar: currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
   name: currentTeam.value?.name,
   description: currentTeam.value?.description,
-  telegram_chat_id: currentTeam.value?.telegram_chat_id,
+  leader_telegram_chat_id: currentTeam.value?.leader_telegram_chat_id,
   current_work_type: "",
   work_types: currentTeam.value?.directions ?? [],
 });

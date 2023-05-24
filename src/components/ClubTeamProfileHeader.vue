@@ -65,8 +65,8 @@
             :href="isProfile ? '#' : '#'"
             class="text-liner-button link text-body1"
           >
-            <span v-if="isProfile">Лидер команды</span>
-            <span v-else>Чат команды</span>
+            <a :href="currentTeam.leader_telegram_chat_id" v-if="isProfile">Лидер команды</a>
+            <a :href="currentTeam.telegram_chat_id" v-else>Чат команды</a>
 
             <q-icon
               class="text-subtitle4 q-ml-sm"

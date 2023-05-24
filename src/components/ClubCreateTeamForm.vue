@@ -89,7 +89,7 @@ const uploadFile = ref(null);
 
 const teamCreate = async () => {
   try {
-    await createTeam(form.value);
+    await createTeam({ ...form.value, author: currentUser.value });
 
     router.push({
       name: "my-teams",
