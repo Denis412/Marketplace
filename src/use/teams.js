@@ -590,6 +590,8 @@ export const useTeamIsMember = () => {
     try {
       loading.value = true;
 
+      console.log("team", team);
+
       const groupData = await groupApi.refetchPaginateGroups({
         page: 1,
         perPage: 1,
