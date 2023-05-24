@@ -69,6 +69,8 @@ module.exports = configure(function (/* ctx */) {
         ORDER_STATUS_6: "2375299492231411693", // Оспаривается
         ORDER_STATUS_7: "1725305287553643069", // Отменен заказчиком
         ORDER_STATUS_8: "6243889424355631278", // Отменен исполнителем
+
+        PROPERTY_STATUS_ID: "6803516740521580313",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
