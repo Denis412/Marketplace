@@ -11,7 +11,7 @@
       </span>
 
       <span v-else>
-        <img :src="`/icons/dote.svg`" alt="" class="q-pr-md" />
+        <img :src="`/icons/dote.svg`" alt="" />
       </span>
 
       <img :src="`/icons/file-grey.svg`" alt="" class="q-pr-md" />
@@ -22,7 +22,7 @@
       </router-link>
 
       <div class="items-wrapper">
-        <c-add-document :node="props.node" class="addDoc q-px-md" />
+        <c-add-document :node="props.node" class="addDoc " />
 
         <q-btn-dropdown no-icon-animation dropdown-icon="more_vert" size="sm" no-caps unelevated no-wrap padding="none"
           class="btn-dropdown-doc" v-model="showMenu">
@@ -90,10 +90,10 @@ getFile();
 }
 
 .name_doc {
+  white-space: nowrap;
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: left;
 }
 
 .item_doc {
@@ -109,6 +109,10 @@ getFile();
 
 .addDoc {
   visibility: hidden;
+}
+
+.addDoc:hover {
+  background: #eaeaea;
 }
 
 .item_doc:hover .addDoc {

@@ -1,5 +1,5 @@
 <template>
-  <q-drawer show-if-above bordered :side="side" :mini="miniState" v-model="drawer" :width="256" :mini-width="64">
+  <q-drawer show-if-above bordered :side="side" :mini="miniState" v-model="drawer" :mini-width="64">
     <q-list class="c-pr-8 c-pt-12 no-scroll">
       <q-item v-for="item in mainTreeItems" :key="item.title" :class="{ active: isActive(item.path) }"
         class="drawer-wrapper">
