@@ -2,10 +2,21 @@
   <div class="row q-my-lg">
     <c-breadcrumbs class="col-6 my-input" />
 
-    <input readonly class="q-py-sm col-6 my-input" style="direction: rtl" :placeholder="'Дата создания: ' + date" />
+    <input
+      readonly
+      class="q-py-sm col-6 my-input"
+      style="direction: rtl"
+      :placeholder="'Дата создания: ' + date"
+      v-if="date"
+    />
 
-    <input autocomplete="off" class="text-h3 q-mb-sm col-12 my-input" id="id" placeholder="Придумайте название документа"
-      v-model="title" />
+    <input
+      autocomplete="off"
+      class="text-h3 q-mb-sm col-12 my-input"
+      id="id"
+      placeholder="Придумайте название документа"
+      v-model="title"
+    />
   </div>
 </template>
 

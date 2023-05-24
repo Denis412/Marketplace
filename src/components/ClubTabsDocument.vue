@@ -5,7 +5,7 @@
         v-model="data_tree"
         ref="tree"
         virtualization
-        style="height: 500px"
+        :max-level="4"
         @after-drop="contex()"
       >
         <template #default="{ node, stat }">
