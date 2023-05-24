@@ -1,29 +1,38 @@
 <template>
   <section>
-    <section class="q-mx-auto q-mt-md wrapper-page-order-info">
-      <section class="flex items-end">
-        <h4 class="text-h4 q-mb-sm">просмотр заказа {{ props.order.id }}</h4>
+    <section class="wrapper-page-order-info">
+      <section class="flex items-baseline c-mb-24">
+        <h4 class="c-f-f-f c-f-w-400 c-f-s-32 c-f-h-40 c-mr-32">
+          просмотр заказа {{ props.order.id }}
+        </h4>
 
-        <section class="q-ml-sm flex items-baseline">
-          <div
-            class="color-type-status"
-            :style="`background-color: ${colorStatus}`"
-          ></div>
-          <h6 class="text-h6 q-mx-sm q-mb-sm">Есть кандидат</h6>
-        </section>
+        <c-order-status :status="props.order.status" />
       </section>
 
-      <section>
-        <p class="text-from-order-info q-mb-xl">{{ props.order.name }}</p>
+      <section class="c-mb-24">
+        <p class="c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-mb-24">
+          {{ props.order.name }}
+        </p>
       </section>
 
-      <section>
-        <h4 class="text-h4">Отклик</h4>
+      <section class="q-mb-xl flex justify-start items-baseline c-mb-68">
+        <h5 class="q-mb-xs q-mr-sm c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28">
+          Заказчик
+        </h5>
+        <p class="c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24" style="color: #581c87">
+          {{ props.order.customer }}
+        </p>
+      </section>
 
-        <q-item-section class="block-control-response">
-          <section class="q-mt-lg q-mb-md flex justify-start no-wrap">
+      <section class="c-mb-64">
+        <h4 class="c-f-f-p c-f-w-400 c-f-s-32 c-f-h-40 c-mb-24">Отклик</h4>
+
+        <q-item-section
+          class="block-control-response flex column justify-around"
+        >
+          <section class="flex justify-start no-wrap">
             <div
-              class="image-block-control-response q-ml-xl q-mr-md flex items-center justify-center"
+              class="image-block-control-response c-ml-32 c-mt-32 c-mr-24 flex items-center justify-center"
             >
               <q-icon
                 size="45px"
@@ -33,40 +42,49 @@
             </div>
 
             <div class="flex column wrap content-block-control-response">
-              <h5 class="q-mb-md text-h5 text-weight-medium">
+              <h4
+                class="c-mt-40 c-mb-12 c-f-f-p c-f-w-700 c-f-s-28 c-f-h-32"
+                style="color: #4b1873"
+              >
                 Lorem ipsum dolor sit.
-              </h5>
-              <h6 class="q-mb-xl text-h6 text-weight-regular">
+              </h4>
+              <h6
+                class="c-mb-16 c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2"
+              >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Numquam, incidunt similique quisquam esse quaerat quibusdam.
               </h6>
-              <h6 class="text-h6 text-weight-regular">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Exercitationem iusto quos blanditiis repellendus praesentium
-                fuga?
+              <h6
+                class="c-f-f-m c-f-w-400 c-f-s-12 c-f-h-16"
+                style="color: #581c87"
+              >
+                Ознакомьтесь с командой-кандидатом, утвердите или откажитесь от
+                неё, чтобы ИИ нашёл вам другого исполнителя.
               </h6>
             </div>
           </section>
 
-          <section class="flex items-center">
-            <div class="q-ml-xl">11.11.2011</div>
+          <section class="flex items-end c-mb-32">
+            <div class="c-ml-32 c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2">
+              11.11.2011
+            </div>
 
             <c-button
-              class="q-ml-xl"
+              class="c-ml-32"
               :label="'Перейти к профилю'"
               :textColor="'white'"
               :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
             />
 
             <c-button
-              class="q-ml-md"
+              class="c-ml-32"
               :label="'Утвердить исполнителя'"
               :textColor="'white'"
               :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
             />
 
             <c-button
-              class="q-ml-md"
+              class="c-ml-32"
               :label="'Отказаться'"
               :textColor="'white'"
               :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
@@ -75,92 +93,114 @@
         </q-item-section>
       </section>
 
-      <section>
-        <h5 class="q-mt-md q-mb-xs text-h5">Заказчик</h5>
-        <!-- <div>Тут будут ссылки на заказчиков =)</div>   -->
-        <p class="text-content-component">
-          {{ props.order.customer }}
-        </p>
-      </section>
-
-      <section class="q-mt-lg">
-        <h5 class="q-mt-sm q-mb-sm text-h5">Что требуется</h5>
+      <section class="c-mb-64">
+        <h5 class="c-mb-24 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">
+          Что требуется сделать
+        </h5>
         <div class="flex justify-start">
-          <p
-            v-for="todo in props.order.todos"
-            class="q-pa-sm q-mr-sm"
-            style="
-              border-radius: 25px;
-              color: white;
-              background: linear-gradient(
-                101.75deg,
-                #4c1d95 4.25%,
-                #881d95 96.95%
-              );
-            "
-          >
-            {{ todo }}
-          </p>
+          <div class="flex wrap">
+            <div
+              v-for="todo in props.order.todos"
+              class="flex column justify-start c-mr-24"
+            >
+              <p
+                class="text-content-component-todo c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-mb-24"
+              >
+                {{ todo }}
+              </p>
+              <div
+                class="text-content-component c-mb-12"
+                v-for="fun in props.order.functions"
+              >
+                <ul>
+                  <li
+                    class="q-ml-md c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-c-grey-2 c-mb-12"
+                  >
+                    {{ fun }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="q-mt-lg">
-        <h5 class="q-mt-sm q-mb-sm text-h5">Функции, блоки, разделы сайта</h5>
-
-        <section class="flex justify-start">
-          <div>
-            <div
-              v-for="todo in props.order.todos"
-              class="text-content-component-todo"
-            >
-              {{ todo }}
-            </div>
-            <div
-              class="text-content-component"
-              v-for="fun in props.order.functions"
-            >
-              {{ fun }}
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <section class="q-mt-lg">
-        <div class="q-mt-sm q-mb-sm flex justify-start items-center">
-          <h5 class="text-h5" style="margin: 0">Описание заказа</h5>
+      <section class="c-mb-64">
+        <div class="flex justify-start items-baseline c-mb-16">
+          <h5 class="c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1 c-mr-32">
+            Описание заказа
+          </h5>
 
           <div
             v-if="order.consultation"
             class="flex justify-start items-center"
           >
-            <p class="text-content-component-cons">Мне нужна консультация</p>
+            <p
+              class="c-f-f-m c-f-w-400 c-f-s-12 c-f-h-16"
+              style="margin: 0; color: #581c87"
+            >
+              Мне нужна консультация
+            </p>
           </div>
         </div>
 
-        <p class="text-content-component">
+        <p
+          class="c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2 style-information-block"
+        >
           {{ order.description }}
         </p>
       </section>
 
-      <section class="q-mt-lg">
-        <h5 class="q-mt-sm q-mb-sm text-h5">Файлы и документы</h5>
-
-        {{ props.order.files }}
+      <section class="c-mb-64">
+        <h5 class="c-mb-32 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">
+          Файлы и документы
+        </h5>
+        <div
+          v-if="props.order.files === null"
+          class="c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2"
+        >
+          Файлов нет
+        </div>
+        <div v-else>{{ props.order.files }}</div>
       </section>
 
-      <section class="q-mt-lg">
-        <h5 class="q-mt-sm q-mb-sm text-h5">Желаемая стоимость</h5>
+      <section class="flex justify-start items-baseline">
+        <div class="c-mr-172">
+          <h5 class="c-mb-24 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">
+            Желаемая стоимость
+          </h5>
+          <div class="flex">
+            <p
+              class="c-f-f-m c-f-w-500 c-f-s-16 c-f-h-20 c-c-grey-2 c-mr-76 flex items-center"
+            >
+              от {{ props.order.price_start }}
+              <q-icon
+                class="q-ml-sm"
+                size="20px"
+                name="img:/assets/icons/orderIcons/ruble.svg"
+              ></q-icon>
+            </p>
+            <p
+              class="c-f-f-m c-f-w-500 c-f-s-16 c-f-h-20 c-c-grey-2 flex items-center"
+            >
+              до {{ props.order.price_end }}
+              <q-icon
+                class="q-ml-sm"
+                size="20px"
+                name="img:/assets/icons/orderIcons/ruble.svg"
+              ></q-icon>
+            </p>
+          </div>
+        </div>
 
-        <p class="text-content-component">
-          от {{ props.order.price_start }} ₽ до {{ props.order.price_end }} ₽
-        </p>
-      </section>
+        <div>
+          <h5 class="c-mb-24 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">
+            Желаемый срок готовности
+          </h5>
 
-      <section class="q-mt-lg">
-        <h5 class="q-mt-sm q-mb-sm text-h5">Желаемый срок готовности</h5>
-
-        <div class="text-content-component">
-          {{ props.order.date_complete }}
+          <div class="c-f-f-m c-f-w-500 c-f-s-16 c-f-h-20 c-c-grey-2">
+            {{ props.order.date_complete }}
+          </div>
         </div>
       </section>
     </section>
@@ -170,7 +210,7 @@
 <script setup>
 import { ref, defineProps } from "vue";
 import CButton from "../components/ClubButton.vue";
-import personWhite from "/assets/icons/person/person-white.svg";
+import COrderStatus from "../components/ClubOrderStatus.vue";
 
 const props = defineProps({
   order: {
@@ -179,35 +219,41 @@ const props = defineProps({
   },
 });
 
+// const order_test = ref({
+//   id: "7718095163914291112",
+//   label: "Поиск исполнителя",
+//   order: 0,
+//   color: "#FF9646",
+// });
+
 console.log(props.order);
 
 const colorStatus = ref("#9236DA");
 </script>
 
 <style scoped lang="scss">
+.style-information-block {
+  border: 2px solid #d4d4d8;
+  border-radius: 10px;
+  padding: 6px 7px 6px 7px;
+}
 .wrapper-page-order-info {
-  max-width: 846px;
-  padding-bottom: 171px;
+  max-width: 1024px;
+  padding: 64px 0 200px 32px;
 }
 .color-type-status {
   width: 12px;
   height: 12px;
   border-radius: 25px;
 }
-.text-from-order-info {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-}
 .block-control-response {
-  border: 1px solid #4f1e96;
+  max-width: 820px;
+  background: #ffffff;
   box-shadow: 0px 38px 15px rgba(0, 0, 0, 0.01),
     0px 21px 13px rgba(0, 0, 0, 0.03), 0px 10px 10px rgba(0, 0, 0, 0.04),
     0px 2px 5px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
-  min-height: 289px;
+  min-height: 285px;
 }
 .image-block-control-response {
   min-width: 108px;
@@ -218,32 +264,145 @@ const colorStatus = ref("#9236DA");
 .content-block-control-response {
   max-width: 612px;
 }
-.text-content-component {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  margin: 0;
-  color: #000000;
-}
+
 .text-content-component-todo {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 130%;
-  color: #000000;
-  margin: 24px 0 24px 0;
+  border-radius: 100px;
+  color: white;
+  background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
+  padding: 10px 16px 10px 16px;
 }
-.text-content-component-cons {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  padding-left: 32px;
-  margin: 0;
-  color: #77479d;
+
+.c-f-f {
+  &-m {
+    font-family: "Montserrat";
+    font-style: normal;
+  }
+
+  &-p {
+    font-family: "Play";
+    font-style: normal;
+  }
+
+  &-f {
+    font-family: "Furore";
+    font-style: normal;
+  }
+}
+
+.c-f-w {
+  &-700 {
+    font-weight: 700;
+  }
+  &-500 {
+    font-weight: 500;
+  }
+  &-400 {
+    font-weight: 400;
+  }
+}
+.c-f-s {
+  &-12 {
+    font-size: 12px;
+  }
+  &-14 {
+    font-size: 14px;
+  }
+  &-16 {
+    font-size: 16px;
+  }
+  &-20 {
+    font-size: 20px;
+  }
+  &-28 {
+    font-size: 28px;
+  }
+  &-32 {
+    font-size: 32px;
+  }
+}
+.c-f-h {
+  &-16 {
+    line-height: 16px;
+  }
+  &-20 {
+    line-height: 20px;
+  }
+  &-24 {
+    line-height: 24px;
+  }
+  &-28 {
+    line-height: 28px;
+  }
+  &-32 {
+    line-height: 32px;
+  }
+  &-40 {
+    line-height: 40px;
+  }
+}
+
+.c-c {
+  &-grey-1 {
+    color: #27272a;
+  }
+  &-grey-2 {
+    color: #3f3f46;
+  }
+}
+
+.c {
+  &-mt {
+    &-32 {
+      margin-top: 32px;
+    }
+    &-40 {
+      margin-top: 40px;
+    }
+    &-64 {
+      margin-top: 64px;
+    }
+  }
+  &-mb {
+    &-24 {
+      margin-bottom: 24px;
+    }
+    &-26 {
+      margin-bottom: 26px;
+    }
+    &-32 {
+      margin-bottom: 32px;
+    }
+    &-12 {
+      margin-bottom: 12px;
+    }
+    &-16 {
+      margin-bottom: 16px;
+    }
+    &-68 {
+      margin-bottom: 68px;
+    }
+    &-64 {
+      margin-bottom: 64px;
+    }
+  }
+  &-ml {
+    &-32 {
+      margin-left: 32px;
+    }
+  }
+  &-mr {
+    &-32 {
+      margin-right: 32px;
+    }
+    &-24 {
+      margin-right: 24px;
+    }
+    &-76 {
+      margin-right: 76px;
+    }
+    &-172 {
+      margin-right: 172px;
+    }
+  }
 }
 </style>

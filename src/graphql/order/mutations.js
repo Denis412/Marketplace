@@ -15,9 +15,16 @@ export const createOrder = gql`
         updated_at
         name
         customer
-        todos
-        functions
+        type {
+          id
+          name
+        }
+        functions {
+          id
+          name
+        }
         description
+        status
         consultation
         price_start
         price_end
