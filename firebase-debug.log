@@ -1,0 +1,14 @@
+[debug] [2023-05-24T15:49:48.908Z] ----------------------------------------------------------------------
+[debug] [2023-05-24T15:49:48.910Z] Command:       D:\Soft\NodeJS\node.exe C:\Users\d-a-m\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2023-05-24T15:49:48.911Z] CLI Version:   12.0.0
+[debug] [2023-05-24T15:49:48.911Z] Platform:      win32
+[debug] [2023-05-24T15:49:48.911Z] Node Version:  v18.12.1
+[debug] [2023-05-24T15:49:48.912Z] Time:          Wed May 24 2023 18:49:48 GMT+0300 (Москва, стандартное время)
+[debug] [2023-05-24T15:49:48.912Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-05-24T15:49:49.028Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-05-24T15:49:49.029Z] > authorizing via signed-in user (d.a.malyshev22@gmail.com)
+[debug] [2023-05-24T15:49:49.029Z] [iam] checking project club2-9ab81 for permissions ["firebase.projects.get"]
+[debug] [2023-05-24T15:49:49.031Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/club2-9ab81:testIamPermissions [none]
+[debug] [2023-05-24T15:49:49.031Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/club2-9ab81:testIamPermissions x-goog-quota-user=projects/club2-9ab81
+[debug] [2023-05-24T15:49:49.031Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/club2-9ab81:testIamPermissions {"permissions":["firebase.projects.get"]}

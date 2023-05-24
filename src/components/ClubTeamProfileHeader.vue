@@ -50,6 +50,8 @@
 
           <div v-if="sending" class="text-body2">Отправляем заявку...</div>
 
+          <pre>{{ isMember }} {{ isOwner }}</pre>
+
           <q-checkbox
             dense
             v-if="!isProfile && isOwner"
