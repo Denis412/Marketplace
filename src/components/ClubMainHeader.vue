@@ -26,6 +26,7 @@
           </q-list>
         </transition>
       </div>
+      <c-notification />
     </q-toolbar>
   </q-header>
 </template>
@@ -35,6 +36,7 @@ import { ref } from "vue";
 import userApi from "src/sdk/user";
 import { useRouter } from "vue-router";
 import { useUserStore } from "src/stores/user";
+import CNotification from "src/components/ClubNotification.vue";
 
 const router = useRouter();
 const userStore = useUserStore();

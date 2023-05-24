@@ -86,6 +86,11 @@ const routes = [
         name: "order-created",
         component: () => import("pages/ClubOrderCreated.vue"),
       },
+      {
+        path: "notifications",
+        name: "notifications",
+        component: () => import("pages/ClubNotificationPage.vue"),
+      },
     ],
   },
 
