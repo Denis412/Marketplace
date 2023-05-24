@@ -99,24 +99,21 @@
         </h5>
         <div class="flex justify-start">
           <div class="flex wrap">
-            <div
-              v-for="todo in props.order.type.id"
-              class="flex column justify-start c-mr-24"
-            >
-              <p
+            <div class="flex column justify-start c-mr-24">
+              <div
                 class="text-content-component-todo c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-mb-24"
               >
-                {{ todo }}
-              </p>
+                {{ props.order.type.name }}
+              </div>
               <div
                 class="text-content-component c-mb-12"
-                v-for="fun in props.order.type.id"
+                v-for="fun in props.order.functions"
               >
                 <ul>
                   <li
                     class="q-ml-md c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-c-grey-2 c-mb-12"
                   >
-                    {{ fun }}
+                    {{ fun.name }}
                   </li>
                 </ul>
               </div>

@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch } from "vue";
+import { defineProps, ref, watch, onActivated, onMounted } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getStatus } from "src/graphql/order/queries";
 
@@ -25,8 +25,25 @@ const props = defineProps({
   },
 });
 
-const { result: getStatuses, loading: loadingStatus } = useQuery(getStatus, {
-  id: process.env.PROPERTY_STATUS_ID,
+const {
+  result: getStatuses,
+  loading: loadingStatus,
+  refetch,
+} = useQuery(
+  getStatus,
+  {
+    id: process.env.PROPERTY_STATUS_ID,
+  },
+  {
+    fetchPolicy: "no-cache",
+  }
+);
+
+onMounted(() => {
+  refetch();
+});
+onActivated(() => {
+  refetch();
 });
 
 const status = ref();
