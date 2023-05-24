@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { ref, computed, inject } from "vue";
+import { ref, watch, computed, inject } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 import pageApi from "src/sdk/page";

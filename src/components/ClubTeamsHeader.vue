@@ -9,7 +9,7 @@
         class="search-input c-input-outline col"
         outlined
         @update:model-value="emit('filterTeamName', $event)"
-        v-model="search_team_name"
+        v-model="search_team_name"        
       >
         <template #prepend>
           <q-icon name="img:/assets/icons/search/search-grey.svg" class="cursor-pointer" />
