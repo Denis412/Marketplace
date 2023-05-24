@@ -7,7 +7,7 @@
         <h3 class="text-h3">Командное пространство</h3>
       </header>
 
-      <c-team-profile />
+      <c-team-profile v-if="team" />
     </section>
   </q-page>
 </template>

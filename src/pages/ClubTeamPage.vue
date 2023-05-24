@@ -7,7 +7,7 @@
         <h3 class="text-h3">Профиль команды</h3>
       </header>
 
-      <c-team-profile is-profile v-if="!loading" />
+      <c-team-profile is-profile v-if="!loading && team" />
     </section>
   </q-page>
 </template>

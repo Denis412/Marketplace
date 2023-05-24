@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { computed, inject, provide, watch } from "vue";
+import { computed, inject, onMounted, provide, watch } from "vue";
 
 import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
@@ -33,11 +33,7 @@ const isOwner = computed(() => currentUser.value.subject_id === currentTeam?.val
 provide("isOwner", isOwner);
 provide("isMember", result);
 
-watch(currentTeam, async (value) => {
-  if (!value) return;
-
-  await checkIsMember(currentTeam?.value);
-});
+onMounted(async () => await checkIsMember(currentTeam?.value));
 </script>
 
 <style scoped lang="scss"></style>
