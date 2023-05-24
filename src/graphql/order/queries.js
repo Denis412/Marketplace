@@ -31,7 +31,7 @@ export const getOrderById = gql`
   }
 `;
 export const getOrders = gql`
-  query {
+query paginateOrder {
   paginate_order( page: 1, perPage: 100) {
   data {
     id
@@ -43,11 +43,17 @@ export const getOrders = gql`
     updated_at
     name
     customer
+    type {
+      id
+      name
+    }
+    functions {
+      id
+      name
+    }
     description
     consultation
     files
-    todos
-    functions
     price_end
     price_start
     date_complete
@@ -57,7 +63,6 @@ export const getOrders = gql`
     date_approve
     deal
     rejection
-    date_update
   }
   paginatorInfo {
     perPage
