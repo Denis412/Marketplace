@@ -8,6 +8,7 @@
             ><img src="/assets/icons/orderIcons/buttons.png" alt="img"
           /></a>
         </div>
+        <c-button :background="true" label="Добавить заказ" to="order-create" />
       </div>
 
       <div class="orderIconsCartOuter">
@@ -45,6 +46,7 @@
 </template>
 
 <script setup>
+import CButton from "src/components/ClubButton.vue";
 import COrdersItem from "src/components/ClubOrderItem.vue";
 import { onActivated, onMounted, ref, watch } from "vue";
 import { useQuery } from "@vue/apollo-composable";

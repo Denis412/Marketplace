@@ -3,20 +3,20 @@ import orderApi from "src/sdk/order";
 export const addTodo = (id, form, order) => {
   if (!order?.draft && order) return;
 
-  if (!form.hasOwnProperty("todos") && order) {
-    form.todos = [];
-    Object.assign(form.todos, order.todos);
+  if (!form.hasOwnProperty("order_type") && order) {
+    form.order_type = [];
+    Object.assign(form.order_type, order.order_type);
   }
 
   if (
-    form.todos.includes(id) &&
-    (order?.todos.length > 1 || form.todos.length > 1)
+    form.order_type.includes(id) &&
+    (order?.order_type.length > 1 || form.order_type.length > 1)
   )
-    form.todos.splice(form.todos.indexOf(id), 1);
-  else if (!form.todos.includes(id)) form.todos.push(id);
+    form.order_type.splice(form.order_type.indexOf(id), 1);
+  else if (!form.order_type.includes(id)) form.order_type = id;
 
   if (!order) return;
-  else order.todos = form.todos;
+  else order.order_type = form.order_type;
 };
 
 export const setValue = (value, form, order) => {
