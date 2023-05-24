@@ -16,7 +16,11 @@
 
     <main class="q-mt-md">
       <section v-if="!chunkedProjects?.length" class="row ptojects-wrapper q-gutter-x-md">
-        <c-card-add-project v-if="isOwner" flat class="flex flex-center project-card col-4" />
+        <c-card-add-project
+          v-if="isOwner && !isProfile"
+          flat
+          class="flex flex-center project-card add-card col-4"
+        />
 
         <q-card flat class="flex flex-center project-card col">
           <q-img class="no-projects-img" src="/assets/images/team-page/no-projects.svg" />
@@ -45,7 +49,7 @@
               class="row q-col-gutter-x-md"
             >
               <section v-if="isOwner && !isProfile" class="col-4">
-                <c-card-add-project flat class="flex flex-center project-card" />
+                <c-card-add-project flat class="flex flex-center project-card add-card" />
               </section>
 
               <section v-for="project in projects" :key="project.id" class="col-4">
@@ -142,6 +146,10 @@ const switchSlide = (direction = "", position = -1) => {
 
 .ptojects-wrapper {
   min-height: 256px;
+}
+
+.add-card {
+  max-width: 400px;
 }
 
 .project-card {

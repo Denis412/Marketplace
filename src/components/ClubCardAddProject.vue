@@ -18,14 +18,11 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { ref } from "vue";
 import CButton from "./ClubButton.vue";
 import CProjectCreateForm from "./ClubProjectCreateForm.vue";
 
 const showForm = ref(false);
-
-const currentTeam = inject("currentTeam");
-const currentUser = inject("currentUser");
 </script>
 
 <style scoped lang="scss"></style>
