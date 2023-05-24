@@ -35,14 +35,14 @@ export const editOrder = (form, order) => {
 
 export const statuses = [
   {
-    id: "2363916507227203881",
+    id: process.env.ORDER_STATUS_1,
     label: "Поиск исполнителя",
     color: "#C2410C",
     editable: true,
     icon: "/assets/icons/orders/magnifier.svg",
   },
   {
-    id: "3814249250560291482",
+    id: process.env.ORDER_STATUS_2,
     label: "Есть кандидат",
     color: "#166534",
     editable: true,
@@ -50,21 +50,21 @@ export const statuses = [
   },
   {
     //Нет макета в фигме
-    id: "4837591619999500045",
+    id: process.env.ORDER_STATUS_3,
     label: "Заключается сделка",
     color: "",
     editable: true,
     icon: "",
   },
   {
-    id: "3133592897321301481",
+    id: process.env.ORDER_STATUS_4,
     label: "Выполняется",
     color: "#C2410C",
     editable: false,
     icon: "/assets/icons/orders/clocks_orders.svg",
   },
   {
-    id: "7494949799001030133",
+    id: process.env.ORDER_STATUS_5,
     label: "Завершен",
     color: "#166534",
     editable: false,
@@ -72,14 +72,14 @@ export const statuses = [
   },
   {
     //Нет макета в фигме
-    id: "2375299492231411693",
+    id: process.env.ORDER_STATUS_6,
     label: "Оспаривается",
     color: "",
     editable: false,
     icon: "",
   },
   {
-    id: "1725305287553643069",
+    id: process.env.ORDER_STATUS_7,
     label: "Отменен заказчиком",
     color: "#B91C1C",
     editable: false,
@@ -87,14 +87,14 @@ export const statuses = [
   },
   {
     //Нет макета в фигме
-    id: "6243889424355631278",
+    id: process.env.ORDER_STATUS_8,
     label: "Отменен исполнителем",
     color: "",
     editable: false,
     icon: "",
   },
   {
-    id: "1744362893253691369",
+    id: process.env.ORDER_STATUS_0,
     label: "Черновик",
     color: "#1D4ED8",
     editable: true,
