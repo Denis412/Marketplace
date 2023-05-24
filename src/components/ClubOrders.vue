@@ -2,13 +2,13 @@
   <div>
     <div v-if="!loadingOrder" class="orderHeadingOuter">
       <div>
-        <h3 class="orderHeadTitle">МОИ ЗАКАЗЫ</h3>
-        <div class="addOrderButton">
-          <a href="#"
-            ><img src="/assets/icons/orderIcons/buttons.png" alt="img"
-          /></a>
-        </div>
-        <c-button :background="true" label="Добавить заказ" to="order-create" />
+        <h3 class="q-ml-xl q-mt-xl q-mb-md orderHeadTitle">МОИ ЗАКАЗЫ</h3>
+        <c-button
+          :background="true"
+          label="Добавить заказ"
+          class="q-ml-xl q-mb-xl"
+          to="order-create"
+        />
       </div>
     </div>
 
@@ -72,7 +72,6 @@ onActivated(() => {
 }
 
 .orderHeadTitle {
-  padding: 70px 40px 40px 40px;
   font-family: "Furore";
   font-style: normal;
   font-weight: 400;
