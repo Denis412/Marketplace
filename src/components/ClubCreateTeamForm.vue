@@ -36,7 +36,7 @@
           placeholder="Введите название"
           class="text-body2"
           v-model="form.name"
-          :rules="[required, maxLength(20)]"
+          :rules="[required, maxLength(30)]"
         />
 
         <c-input
@@ -53,7 +53,13 @@
 
     <footer class="flex justify-center q-mt-xl rel-index-0">
       <c-button background class="text-body1" label="Создать" type="submit" />
-      <c-button outline class="text-body1 c-ml-32" label="Отменить" to="/club/teams" />
+      <c-button
+        outline
+        class="text-body1 c-ml-32"
+        label="Отмена"
+        type="reset"
+        to="/club/teams/my-teams"
+      />
     </footer>
   </q-form>
 </template>
@@ -89,7 +95,7 @@ const uploadFile = ref(null);
 
 const teamCreate = async () => {
   try {
-    await createTeam(form.value);
+    await createTeam({ ...form.value, author: currentUser.value });
 
     router.push({
       name: "my-teams",

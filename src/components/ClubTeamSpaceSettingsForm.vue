@@ -26,7 +26,7 @@
 
 <script setup>
 import { ref, inject } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 import { useValidators } from "src/use/validators";
 import { useTeamUpdate } from "src/use/teams";
@@ -40,6 +40,7 @@ const { result: teamData, updateTeam } = useTeamUpdate();
 const currentTeam = inject("currentTeam");
 const telegram_chat_id = ref(currentTeam.value.telegram_chat_id);
 const router = useRouter();
+const route = useRoute();
 
 const updateTeamData = async () => {
   await updateTeam(currentTeam.value.id, {
@@ -47,8 +48,9 @@ const updateTeamData = async () => {
   });
 
   router.push({
-    name: "team",
-    params: { name: teamData.value.name },
+    name: "teamSpace",
+    params: { id: route.params.id },
+    query: { name: teamData.value.name, space: route.query.space },
   });
 };
 </script>

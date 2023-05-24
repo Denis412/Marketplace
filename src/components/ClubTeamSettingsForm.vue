@@ -64,6 +64,7 @@
           <template #control>
             <q-input
               v-model="form.name"
+              @change="updateTeamData('name', $event)"
               placeholder="Название команды"
               class="c-input-outline teamSettingForm-input-small"
               outlined
@@ -88,6 +89,7 @@
           <template #control>
             <q-input
               v-model="form.description"
+              @change="updateTeamData('description', $event)"
               placeholder="Описание команды"
               class="c-input-outline c-input-area-mc teamSettingForm-input"
               outlined
@@ -105,7 +107,8 @@
         <c-label-control label="Ссылка на Telegram лидера">
           <template #control>
             <q-input
-              v-model="form.telegram_chat_id"
+              v-model="form.leader_telegram_chat_id"
+              @change="updateTeamData('leader_telegram_chat_id', $event)"
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
@@ -160,8 +163,6 @@
         </c-label-control>
       </q-form>
 
-      <!-- <pre>{{ currentTeam }}</pre> -->
-
       <div class="q-mt-md">
         <section class="flex q-gutter-sm">
           <c-chip
@@ -175,44 +176,41 @@
         </section>
       </div>
     </div>
-
-    <c-team-settings-buttons />
   </q-form>
 </template>
 
 <script setup>
 import { ref, inject } from "vue";
 import { useValidators } from "src/use/validators";
-import { useRouter } from "vue-router";
 import { useTeamUpdate } from "src/use/teams";
 
 import CLabelControl from "./ClubLabelControl.vue";
 import CButton from "src/components/ClubButton.vue";
-import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
 import CChip from "./ClubChip.vue";
 import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
 const { required, maxLength, minLength, isTelegramUrl } = useValidators();
-const { result: teamData, error, updateTeam } = useTeamUpdate();
+const { updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
 const upload_img = ref();
 const uploadFile = ref();
-const router = useRouter();
 
 const form = ref({
   avatar: currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
   name: currentTeam.value?.name,
   description: currentTeam.value?.description,
-  telegram_chat_id: currentTeam.value?.telegram_chat_id,
+  leader_telegram_chat_id: currentTeam.value?.leader_telegram_chat_id,
   current_work_type: "",
   work_types: currentTeam.value?.directions ?? [],
 });
 
 const addChip = async (label) => {
-  if (form.value.work_types.find((type) => type === label)) {
+  if (!label || !label.trim()) return;
+
+  if (form.value.work_types?.find((type) => type === label)) {
     $q.notify({
       type: "warning",
       message: "Такой вид работ уже есть в списке!",
@@ -221,14 +219,17 @@ const addChip = async (label) => {
   }
 
   form.value.current_work_type = "";
+  form.value.work_types = [...(form.value.work_types ?? []), label];
 
-  form.value.work_types = [...form.value.work_types, label];
+  await updateTeamData("directions", form.value.work_types);
 };
 
 const deleteChip = async (label) => {
   const filtered = form.value.work_types.filter((type) => type !== label);
 
-  form.value.work_types = filtered;
+  form.value.work_types = filtered.length ? filtered : null;
+
+  await updateTeamData("directions", form.value.work_types);
 };
 
 const updateFile = () => {
@@ -240,21 +241,11 @@ const updateFile = () => {
 };
 
 const addAvatar = () => uploadFile.value.pickFiles();
-
 const deleteAvatar = () => (form.value.avatar = "/assets/images/preloaders/default-avatar.svg");
 
-const updateTeamData = async () => {
+const updateTeamData = async (prop_name, value) => {
   await updateTeam(currentTeam.value.id, {
-    avatar: form.value.avatar,
-    name: form.value.name,
-    description: form.value.description,
-    telegram_chat_id: form.value.telegram_chat_id,
-    directions: form.value.work_types.length ? [...form.value.work_types] : null,
-  });
-
-  router.push({
-    name: "team",
-    params: { name: teamData.value.name },
+    [prop_name]: value,
   });
 };
 </script>
