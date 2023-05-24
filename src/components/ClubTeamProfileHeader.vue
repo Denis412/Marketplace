@@ -30,10 +30,7 @@
           </p>
         </section>
 
-        <q-list
-          v-if="currentTeam?.directions"
-          class="row c-mt-32 q-gutter-sm text-caption1"
-        >
+        <q-list v-if="currentTeam?.directions" class="row c-mt-32 q-gutter-sm text-caption1">
           <c-chip
             v-for="direction in currentTeam?.directions"
             :key="direction.name"

@@ -2,7 +2,7 @@
   <c-closing-dialog title="Создание проекта" title-position="center">
     <template #main-content>
       <q-form class="form">
-        <c-label-control label="Название проекта">
+        <c-label-control label="Название проекта" class="c-mt-32">
           <template #control>
             <q-input
               outlined
@@ -24,9 +24,7 @@
           <c-specialist-item current-user class="bg-gray2 q-mt-lg" />
         </section>
 
-        <footer
-          class="flex justify-center q-gutter-x-lg c-mt-32 text-body1 rel-index-0"
-        >
+        <footer class="flex justify-center q-gutter-x-lg c-mt-32 text-body1 rel-index-0">
           <q-btn
             flat
             no-caps
@@ -35,13 +33,7 @@
             @click="projectCreate"
           />
 
-          <q-btn
-            flat
-            no-caps
-            label="Отмена"
-            class="club-button-outline text-body1"
-            v-close-popup
-          />
+          <q-btn flat no-caps label="Отмена" class="club-button-outline text-body1" v-close-popup />
         </footer>
       </q-form>
     </template>

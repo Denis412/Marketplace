@@ -28,9 +28,7 @@ const { result, loading, checkIsMember } = useTeamIsMember();
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
 
-const isOwner = computed(
-  () => currentUser.value.subject_id === currentTeam?.value.author_id
-);
+const isOwner = computed(() => currentUser.value.subject_id === currentTeam?.value.author_id);
 
 provide("isOwner", isOwner);
 provide("isMember", result);

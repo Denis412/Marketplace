@@ -59,11 +59,7 @@ export const getSubjectById = gql`
 `;
 
 export const paginateSubjectInAnotherSpace = gql`
-  query getOtherSpaceSubjectPaginate(
-    $page: Int!
-    $perPage: Int!
-    $where: ObjectPaginatorWhere
-  ) {
+  query getOtherSpaceSubjectPaginate($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
     paginate_subject(page: $page, perPage: $perPage, where: $where) {
       data {
         id
@@ -75,10 +71,26 @@ export const paginateSubjectInAnotherSpace = gql`
           middle_name
           last_name
         }
+        applications {
+          id
+          name
+          subject {
+            fullname {
+              first_name
+              last_name
+            }
+          }
+          project {
+            id
+            name
+            description
+            avatar
+          }
+        }
         email {
           email
         }
-        major
+        speciality1
         group {
           id
           name
@@ -130,7 +142,20 @@ export const paginateSubjectsInMainSpace = gql`
         birthday {
           date
         }
-        major
+        nickname
+        telegram_chat_id
+        about
+        resume_link
+        status {
+          name
+        }
+        speciality1 {
+          name
+        }
+        speciality1 {
+          id
+          name
+        }
         teams {
           id
           avatar
@@ -153,11 +178,7 @@ export const paginateSubjectsInMainSpace = gql`
 `;
 
 export const paginateSubjectsForInvite = gql`
-  query paginateSubjectsForInvite(
-    $page: Int!
-    $perPage: Int!
-    $where: ObjectPaginatorWhere
-  ) {
+  query paginateSubjectsForInvite($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
     paginate_subject(page: $page, perPage: $perPage, where: $where) {
       data {
         id
@@ -167,6 +188,9 @@ export const paginateSubjectsForInvite = gql`
           first_name
           middle_name
           last_name
+        }
+        speciality1 {
+          name
         }
         email {
           email

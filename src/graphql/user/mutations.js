@@ -104,7 +104,7 @@ export const updateSubjectInTeam = gql`
           middle_name
           last_name
         }
-        major
+        speciality1
         email {
           email
         }

@@ -20,10 +20,7 @@
       <q-item-section @click="showDialog = true">Удалить </q-item-section>
     </q-item>
 
-    <c-delete-dialog-document
-      :prop_doc_id="props.prop_doc.id"
-      v-model="showDialog"
-    />
+    <c-delete-dialog-document :prop_doc_id="props.prop_doc.id" v-model="showDialog" />
 
     <q-item class="popup-component" clickable>
       <q-img class="popup-png" src="/src/assets/icons/doc_popup/lock.png" />

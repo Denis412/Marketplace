@@ -7,12 +7,7 @@
     :type="calcType"
   >
     <template v-slot:append>
-      <q-icon
-        v-if="visibility"
-        class="cursor-pointer"
-        :name="iconName"
-        @click="toggleShowText"
-      />
+      <q-icon v-if="visibility" class="cursor-pointer" :name="iconName" @click="toggleShowText" />
 
       <slot name="icon"></slot>
     </template>
@@ -23,17 +18,16 @@
 import { computed, ref } from "vue";
 import capitalizeWord from "src/utils/capitalizeWord";
 
-const { type, visibility, modelValue, modelModifiers, countInput, iconLeft } =
-  defineProps({
-    type: String,
-    visibility: Boolean,
-    countInput: String,
-    iconLeft: String,
-    modelValue: String,
-    modelModifiers: {
-      default: () => ({}),
-    },
-  });
+const { type, visibility, modelValue, modelModifiers, countInput, iconLeft } = defineProps({
+  type: String,
+  visibility: Boolean,
+  countInput: String,
+  iconLeft: String,
+  modelValue: String,
+  modelModifiers: {
+    default: () => ({}),
+  },
+});
 const emit = defineEmits(["update:modelValue"]);
 
 const showText = ref(visibility);

@@ -1,4 +1,3 @@
-<!-- Компонент редактирования команды -->
 <template>
   <section>
     <header class="c-mb-32">
@@ -20,12 +19,7 @@
         class="editableItems c-tabs bg-primary c-pa-16 c-ml-32"
       >
         <q-tab class="editableItem" name="profile" label="Профиль команды" />
-
-        <q-tab
-          class="editableItem"
-          name="space"
-          label="Командное пространство"
-        />
+        <q-tab class="editableItem" name="space" label="Командное пространство" />
       </q-tabs>
     </main>
   </section>

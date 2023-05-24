@@ -6,11 +6,7 @@
 
     <div :class="paddingSide">
       <div class="row c-gutter-x-32">
-        <q-img
-          v-if="rightSide"
-          class="portfolio-item-image"
-          style="background-color: red"
-        />
+        <q-img v-if="rightSide" class="portfolio-item-image" style="background-color: red" />
 
         <div class="col portfolio-item-content q-pt-lg" :class="textPosition">
           <div class="h-100p gray-scrollbar" :class="scrollDirection">

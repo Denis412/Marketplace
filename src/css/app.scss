@@ -7,8 +7,13 @@
   box-sizing: border-box;
 }
 
+.separator {
+  height: 0;
+  border: 3px solid $violet-2;
+}
+
 .w-100p {
-  width: 100%;
+  width: 100% !important;
   max-width: 100%;
 }
 
@@ -50,6 +55,56 @@
   }
 }
 
+.c-input-area-mh {
+  min-height: 100%;
+
+  div {
+    .q-field__control {
+      min-height: 100%;
+
+      &::after {
+        min-height: 100%;
+      }
+
+      div {
+        min-height: 100%;
+
+        textarea {
+          min-height: 100%;
+        }
+      }
+    }
+  }
+}
+
+.gray-scrollbar-input {
+  $radius: 40px;
+
+  div {
+    .q-field__control {
+      padding-right: 8px !important;
+      div {
+        textarea {
+          overflow-y: auto !important;
+          height: 100% !important;
+
+          &::-webkit-scrollbar {
+            width: 4px;
+            background: $gray-4;
+
+            border-radius: $radius;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background: $gray-7;
+            border-radius: $radius;
+          }
+        }
+      }
+    }
+  }
+}
+
 .direction-rtl {
   direction: rtl;
 }
@@ -69,11 +124,11 @@
 }
 
 .w-min-content {
-  width: min-content !important;
+  width: min-content;
 }
 
 .w-max-content {
-  min-width: max-content !important;
+  width: max-content;
 }
 
 .h-min-content {
@@ -336,5 +391,61 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+.c-tree {
+  div {
+    &.q-tree__node,
+    &.q-tree__children {
+      padding: 0 !important;
+    }
+    & .q-tree__node-header {
+      padding: 8px 4px 8px 0 !important;
+      margin: 0 4px 4px 0;
+    }
+
+    &.q-tree__node--child {
+      & .q-tree__node-header {
+        & .q-tree__node-header-content::before {
+          width: 24px;
+          height: 24px;
+          content: url(/assets/icons/tree/dot.svg);
+        }
+      }
+    }
+
+    & .q-tree__node-header-content {
+      @extend .text-caption1;
+
+      color: #515151 !important;
+    }
+
+    &.q-tree__children .q-tree__node-header {
+      padding-left: 12px !important;
+    }
+
+    & .q-tree__node--selected {
+      background-color: $violet-1;
+    }
+
+    & .q-icon {
+      font-size: 32px !important;
+    }
+
+    & .q-icon > svg,
+    & .q-icon > img {
+      width: 32px;
+      height: 32px;
+      margin-left: 4px;
+    }
+
+    & .q-tree__arrow {
+      width: 24px;
+      height: 24px;
+      color: transparent;
+      background-image: url(/assets/icons/tree/arrow.svg) !important;
+      margin-right: 0;
+    }
   }
 }

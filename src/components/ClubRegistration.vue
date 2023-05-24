@@ -2,38 +2,19 @@
   <div class="fullscreen text-center flex row">
     <section class="col-5 bg-auth relative-position flex flex-center">
       <div class="absolute c-width c-at-0 c-ar-20 c-z--1">
-        <q-img
-          class="c-img-120"
-          src="/assets/images/authentication/envelope.svg"
-        />
-
-        <q-img
-          class="c-img-120 c-at--3"
-          src="/assets/images/authentication/speech-bubble.svg"
-        />
+        <q-img class="c-img-120" src="/assets/images/authentication/envelope.svg" />
+        <q-img class="c-img-120 c-at--3" src="/assets/images/authentication/speech-bubble.svg" />
       </div>
 
       <div class="flex column flex-center">
         <h3 class="text-bold c-mb-15 text-h3">Уже заходили?</h3>
-
-        <p class="c-mb-115 fs-16 text-body2 c-maxw-250">
-          Будем рады видеть вас снова
-        </p>
-
-        <c-button
-          to="/authentication"
-          outline
-          label="Войти"
-          class="text-body1"
-        />
+        <p class="c-mb-115 fs-16 text-body2 c-maxw-250">Будем рады видеть вас снова</p>
+        <c-button to="/authentication" outline label="Войти" class="text-body1" />
       </div>
     </section>
 
     <section class="col relative-position flex flex-center">
-      <q-form
-        class="flex column items-center c-maxw-400"
-        @submit="registration"
-      >
+      <q-form class="flex column items-center c-maxw-400" @submit="registration">
         <h3 class="text-bold c-mb-25 text-h3">Регистрация</h3>
 
         <p class="c-mb-30 fs-16 text-body2">Зарегистрируйтесь в нашем клубе</p>
@@ -68,13 +49,7 @@
           type="password"
           placeholder="Введите пароль"
           visibility
-          :rules="[
-            required,
-            onlyLatin,
-            minLength(8),
-            maxLength(30),
-            passwordValid,
-          ]"
+          :rules="[required, onlyLatin, minLength(8), maxLength(30), passwordValid]"
           lazy-rules
         />
 
@@ -137,8 +112,7 @@ import userApi from "src/sdk/user";
 
 const $q = useQuasar();
 const timer = useTimer(90);
-const { required, minLength, maxLength, passwordValid, equal, onlyLatin } =
-  useValidators();
+const { required, minLength, maxLength, passwordValid, equal, onlyLatin } = useValidators();
 
 const authUserInfo = ref({});
 const agreement = ref(false);

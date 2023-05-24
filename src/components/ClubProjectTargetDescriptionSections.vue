@@ -13,10 +13,7 @@
       />
     </div>
 
-    <q-img
-      src="/assets/images/about-project-page/target.svg"
-      class="project-target-image"
-    />
+    <q-img src="/assets/images/about-project-page/target.svg" class="project-target-image" />
   </section>
 
   <section class="c-mt-72 description-project flex no-wrap justify-between">

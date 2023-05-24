@@ -1,17 +1,12 @@
 <template>
   <q-tab>
     <div class="item_doc" @contextmenu.prevent="showMenu = true">
-      <img
-        :src="`/src/assets/icons/file/file-grey.svg`"
-        alt=""
-        class="q-pr-md"
-      />
-      <router-link
-        class="name_doc link"
-        :to="{ name: 'Document', params: { id: `${index}` } }"
-      >
+      <img :src="`/src/assets/icons/file/file-grey.svg`" alt="" class="q-pr-md" />
+
+      <router-link class="name_doc link" :to="{ name: 'Document', params: { id: `${index}` } }">
         {{ doc.name.replace(".html", "") }}
       </router-link>
+
       <div class="menu-wrapper" clickable>
         <q-btn-dropdown
           no-icon-animation

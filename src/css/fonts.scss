@@ -5,14 +5,12 @@
 
 @font-face {
   font-family: "Montserrat-Regular";
-  src: local("Montserrat-Regular"),
-    url("src/assets/fonts/Montserrat/Montserrat-Regular.ttf");
+  src: local("Montserrat-Regular"), url("src/assets/fonts/Montserrat/Montserrat-Regular.ttf");
 }
 
 @font-face {
   font-family: "Montserrat-SemiBold";
-  src: local("Montserrat-SemiBold"),
-    url("src/assets/fonts/Montserrat/Montserrat-SemiBold.ttf");
+  src: local("Montserrat-SemiBold"), url("src/assets/fonts/Montserrat/Montserrat-SemiBold.ttf");
 }
 
 @font-face {
@@ -57,7 +55,10 @@
 }
 
 .text-subtitle1,
-.text-subtitle3 {
+.text-subtitle2,
+.text-subtitle3,
+.text-subtitle4,
+.text-subtitle5 {
   font-family: "Play-Regular" !important;
 }
 
@@ -68,7 +69,6 @@
 }
 
 .text-subtitle2 {
-  font-family: "Play-Regular" !important;
   font-size: 32px !important;
   font-weight: 400 !important;
   line-height: 40px !important;

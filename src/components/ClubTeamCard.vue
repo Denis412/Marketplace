@@ -6,20 +6,18 @@
     <section class="flex no-wrap">
       <q-card-section class="flex flex-center">
         <q-avatar class="avatar-108">
-          <q-img
-            :src="team.avatar || '/assets/images/preloaders/default-avatar.svg'"
-          />
+          <q-img :src="team.avatar || '/assets/images/preloaders/default-avatar.svg'" />
         </q-avatar>
       </q-card-section>
 
       <q-card-section class="c-ml-24">
-        <h4 class="text-h4">
+        <h4 class="text-subtitle3 text-violet7">
           {{ team.name }}
         </h4>
 
         <pre>{{ team.space }}</pre>
 
-        <p class="text-body2 q-mt-md">
+        <p class="text-body2 c-mt-12 text-gray7">
           {{ team.description }}
         </p>
 
@@ -61,19 +59,18 @@ const to = async () => {
   router.push({
     name: "team",
     params: { id: team.id },
-    query: { space: team.space },
+    query: { name: team.name, space: team.space },
   });
 };
 
-const teamDelete = async () =>
-  await deleteTeam(team, currentUser.value.subject_id);
+const teamDelete = async () => await deleteTeam(team, currentUser.value.subject_id);
 </script>
 
 <style lang="scss" scoped>
 .team {
-  box-shadow: 0px 38px 15px rgba(0, 0, 0, 0.01),
-    0px 21px 13px rgba(0, 0, 0, 0.03), 0px 10px 10px rgba(0, 0, 0, 0.04),
-    0px 2px 5px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 38px 15px rgba(0, 0, 0, 0.01), 0px 21px 13px rgba(0, 0, 0, 0.03),
+    0px 10px 10px rgba(0, 0, 0, 0.04), 0px 2px 5px rgba(0, 0, 0, 0.05),
+    0px 0px 0px rgba(0, 0, 0, 0.05);
   max-height: 275px;
   height: 275px;
 

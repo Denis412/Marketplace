@@ -9,6 +9,7 @@
     :mini-width="64"
   >
     <c-tree-teams v-if="route.path.includes('teams')" />
+    <c-tree-my-team v-else-if="route.path.includes('team')" />
 
     <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
@@ -17,14 +18,8 @@
         :class="{ active: isActive(item.path) }"
         class="drawer-wrapper"
       >
-        <router-link
-          :to="{ name: item.path }"
-          class="row no-wrap c-pl-16 drawer-item"
-        >
-          <div
-            class="flex flex-center bg-primary"
-            style="border-radius: 6px; padding: 4px"
-          >
+        <router-link :to="{ name: item.path }" class="row no-wrap c-pl-16 drawer-item">
+          <div class="flex flex-center bg-primary" style="border-radius: 6px; padding: 4px">
             <img src="/assets/icons/home/home-white.svg" alt="" />
           </div>
 
@@ -43,11 +38,7 @@
       </q-item>
     </q-list>
 
-    <button
-      ref="btn"
-      class="bg-violet-6 drawer-btn absolute"
-      @click="toggleDrawer()"
-    >
+    <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
       <img src="/assets/icons/arrow/drawer-arrow.svg" />
     </button>
   </q-drawer>
@@ -58,6 +49,7 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
 import CTreeTeams from "src/components/ClubTreeTeams.vue";
+import CTreeMyTeam from "src/components/ClubTreeMyTeam.vue";
 import { filesApi } from "src/sdk/files/file";
 
 const { side } = defineProps({
@@ -78,7 +70,12 @@ const mainTreeItems = ref([
     path: "club",
   },
   {
-    title: "Мои команды",
+    title: "Магазин",
+    img: "HomeIconDemo.svg",
+    path: "market",
+  },
+  {
+    title: "Команды",
     img: "HomeIconDemo.svg",
     path: "my-teams",
   },

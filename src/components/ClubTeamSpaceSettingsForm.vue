@@ -1,4 +1,3 @@
-<!-- Компонент формы редактирования командного пространства -->
 <template>
   <q-form @submit="updateTeamData" class="teamSettingForm c-mb-32">
     <div class="flex teamSettingForm-section c-mb-40 c-pb-32">
@@ -13,11 +12,7 @@
               :rules="[minLength(18), maxLength(45), telegramm]"
             >
               <template #append>
-                <q-icon
-                  name="img:/icons/editBlack.svg"
-                  class="create-form-icon cursor-pointer"
-                >
-                </q-icon>
+                <q-icon name="img:/icons/editBlack.svg" class="create-form-icon cursor-pointer" />
               </template>
             </q-input>
           </template>

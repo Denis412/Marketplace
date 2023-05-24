@@ -8,26 +8,28 @@
       <q-input
         class="search-input c-input-outline col"
         outlined
-        @update:model-value="emit('filterTeamName', $event)"
+        @change="emit('filterTeamName', 'name', $event)"
         v-model="search_team_name"
       >
         <template #prepend>
-          <q-icon
-            name="img:/assets/icons/search/search-grey.svg"
-            class="cursor-pointer"
-          />
+          <q-icon name="img:/assets/icons/search/search-grey.svg" class="cursor-pointer" />
         </template>
       </q-input>
 
       <q-select
         no-caps
         borderless
+        clearable
+        class="club-dropdown text-caption1 text-black col"
         v-model="team_status"
-        @update:model-value="emit('filterTeamStatus', $event)"
+        @update:model-value="emit('filterTeamStatus', 'ready_for_orders', $event)"
         :options="filterOptions"
-        class="club-dropdown col"
         dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
-      />
+      >
+        <template #prepend v-if="!team_status">
+          <span class="text-caption1 text-black">Фильтрация</span>
+        </template>
+      </q-select>
     </section>
   </section>
 </template>

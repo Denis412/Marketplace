@@ -21,12 +21,7 @@
             type="password"
             placeholder="Введите новый пароль"
             visibility
-            :rules="[
-              required,
-              minLength(8),
-              passwordValid,
-              notEqual(form.oldPassword),
-            ]"
+            :rules="[required, minLength(8), passwordValid, notEqual(form.oldPassword)]"
             lazy-rules
           />
 

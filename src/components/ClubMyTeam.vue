@@ -40,9 +40,9 @@ const to = () => {
 <style lang="scss" scoped>
 .team {
   height: 278px;
-  box-shadow: 0px 38px 15px rgba(0, 0, 0, 0.01),
-    0px 21px 13px rgba(0, 0, 0, 0.03), 0px 10px 10px rgba(0, 0, 0, 0.04),
-    0px 2px 5px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 38px 15px rgba(0, 0, 0, 0.01), 0px 21px 13px rgba(0, 0, 0, 0.03),
+    0px 10px 10px rgba(0, 0, 0, 0.04), 0px 2px 5px rgba(0, 0, 0, 0.05),
+    0px 0px 0px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
   max-width: 544px;
   box-sizing: border-box;

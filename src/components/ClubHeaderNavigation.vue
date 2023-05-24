@@ -36,7 +36,7 @@ const navigation_items = ref([
   },
   {
     label: "Команды",
-    name: "teams",
+    name: "my-teams",
     icon: "img:/assets/icons/teams/teams-white.svg",
     active_icon: "",
   },

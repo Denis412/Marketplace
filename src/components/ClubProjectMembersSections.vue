@@ -4,7 +4,7 @@
       <h4 class="text-h4">Лидер проекта</h4>
 
       <c-specialist-item
-        v-for="specialist in grouped['Команда']"
+        v-for="specialist in grouped['Лидер']"
         :key="specialist.id"
         class="q-mt-lg bg-violet1"
         :specialist="specialist"
@@ -12,48 +12,69 @@
 
       <h4 class="text-h4 c-mt-40">Заказчик</h4>
 
+      <q-btn
+        flat
+        no-caps
+        class="club-button-background text-body1 q-mt-lg"
+        label="Пригласить"
+        @click="redirectInvite(true)"
+      />
+
       <c-specialist-item
-        v-for="specialist in grouped['Заказчик']"
+        v-for="specialist in currentProject.customers"
         :key="specialist.id"
         class="q-mt-lg bg-violet1"
         :specialist="specialist"
       />
     </div>
 
-    <q-img
-      src="/assets/images/about-project-page/leader-customer.svg"
-      class="leaders-image"
-    />
+    <q-img src="/assets/images/about-project-page/leader-customer.svg" class="leaders-image" />
   </section>
 
   <section class="c-mt-72">
     <h4 class="text-h4">Проектная команда</h4>
 
     <q-toolbar class="q-pa-none q-mt-lg">
-      <q-tabs
-        v-model="selectedList"
-        indicator-color="black"
-        class="bg-transparent"
-      >
+      <q-tabs v-model="selectedList" indicator-color="black" class="bg-transparent">
         <q-tab name="members" class="c-tab-text" label="Участники" />
-
-        <q-tab
-          name="applications"
-          class="c-tab-text"
-          label="Исходящие заявки"
-        />
+        <q-tab name="applications" class="c-tab-text" label="Исходящие заявки" />
       </q-tabs>
+
+      <q-space />
+
+      <q-btn
+        flat
+        class="club-button-background"
+        label="Пригласить"
+        @click="redirectInvite(false)"
+      />
     </q-toolbar>
 
-    <c-team-members-list class="c-mt-40" :members="currentProject.members" />
+    <div v-if="selectedList === 'members'">
+      <c-team-members-list class="c-mt-40" team_space roles />
+    </div>
+
+    <div v-else>
+      <c-applications-list
+        subjects
+        project
+        is_project
+        :applications="currentProject.applications"
+      />
+    </div>
   </section>
 </template>
 
 <script setup>
-import { computed, inject, ref } from "vue";
+import { computed, inject, provide, ref } from "vue";
 
 import CSpecialistItem from "src/components/ClubSpecialistItem.vue";
 import CTeamMembersList from "src/components/ClubTeamMembersList.vue";
+import CApplicationsList from "./ClubApplicationsList.vue";
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
 
 const currentProject = inject("currentProject");
 
@@ -68,7 +89,20 @@ const grouped = computed(() =>
   }, {})
 );
 
+const currentMembers = computed(() => currentProject.value.members);
+provide("currentMembers", currentMembers);
+
 const selectedList = ref("members");
+
+const redirectInvite = (is_customer = false) => {
+  const query = is_customer ? { ...route.query, customer: true } : { ...route.query };
+
+  router.push({
+    name: "projectInvite",
+    params: { ...route.params },
+    query,
+  });
+};
 </script>
 
 <style scoped lang="scss">

@@ -20,9 +20,7 @@ const { subject } = defineProps({
 const selectedSubjects = inject("selectedSubjects");
 
 const deleteSubject = (subject_id) => {
-  const subjectIndex = selectedSubjects.value.findIndex(
-    (subject) => subject.id === subject_id
-  );
+  const subjectIndex = selectedSubjects.value.findIndex((subject) => subject.id === subject_id);
 
   selectedSubjects.value = [
     ...selectedSubjects.value.slice(0, subjectIndex),

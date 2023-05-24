@@ -21,12 +21,15 @@ import CMainHeader from "src/components/ClubMainHeader.vue";
 import CMainDrawer from "src/components/ClubMainDrawer.vue";
 import CMainFooter from "src/components/Landing/ClubMainFooter.vue";
 import { useUserStore } from "src/stores/user";
+import stompApi from "src/sdk/stomp";
+import { Cookies } from "quasar";
 
 const exclude = ref([
   "ClubTeamPage",
   "ClubTeamSettingsPage",
   "ClubProjectInformationPage",
   "ClubTeamProfileProjects",
+  "ClubTeamInvitePage",
   // "ClubMyProjectsPage",
 ]);
 

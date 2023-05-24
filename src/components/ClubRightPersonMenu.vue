@@ -1,13 +1,8 @@
 <template>
-  <q-card class="dropdown">
+  <q-card class="dropdown" v-show="isMenuOpen">
     <q-card-section class="dropdown-top-section flex column items-center">
       <q-avatar class="dropdown-avatar">
-        <q-img
-          :src="
-            currentUser?.avatar ||
-            '/assets/images/preloaders/default-avatar.svg'
-          "
-        />
+        <q-img :src="currentUser?.avatar || '/assets/images/preloaders/default-avatar.svg'" />
       </q-avatar>
 
       <div class="text-body2 text-violet-6 q-mt-md">
@@ -21,40 +16,22 @@
     </q-card-section>
 
     <q-card-section class="c-mt-20">
-      <q-card
-        flat
-        class="text-body2 cursor-pointer"
-        @click="redirect('account')"
-      >
+      <q-card flat class="text-body2 cursor-pointer" @click="redirect('account')">
         <q-icon name="img:/assets/icons/pen/pen-grey.svg" class="q-mr-sm" />
         Учетная запись
       </q-card>
 
-      <q-card
-        flat
-        class="text-body2 cursor-pointer q-mt-md"
-        @click="redirect('profile')"
-      >
-        <q-icon
-          name="img:/assets/icons/person/person-grey.svg"
-          class="q-mr-sm"
-        />
+      <q-card flat class="text-body2 cursor-pointer q-mt-md" @click="redirect('profile')">
+        <q-icon name="img:/assets/icons/person/person-grey.svg" class="q-mr-sm" />
         Профиль
       </q-card>
 
-      <q-card
-        flat
-        class="text-body2 cursor-pointer q-mt-md"
-        @click="toggleIsExit"
-      >
+      <q-card flat class="text-body2 cursor-pointer q-mt-md" @click="toggleIsExit">
         <q-icon name="img:/assets/icons/exit/exit-grey.svg" class="q-mr-sm" />
         Выход
       </q-card>
 
-      <q-img
-        class="dropdown-image"
-        src="/assets/images/account-settings-page/settings.svg"
-      />
+      <q-img class="dropdown-image" src="/assets/images/account-settings-page/settings.svg" />
     </q-card-section>
 
     <c-confirm-dialog
@@ -69,7 +46,7 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, ref} from "vue";
 import { useUserStore } from "src/stores/user";
 import { useRouter } from "vue-router";
 
@@ -83,8 +60,10 @@ const userStore = useUserStore();
 const currentUser = inject("currentUser");
 
 const isExit = ref(false);
+const isMenuOpen = ref(true);
 
 const redirect = (route_name) => {
+  isMenuOpen.value = false
   router.push({
     name: route_name,
   });

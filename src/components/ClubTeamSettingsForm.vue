@@ -1,4 +1,3 @@
-<!-- Компонент формы редактирования команды -->
 <template>
   <q-form @submit="updateTeamData" class="teamSettingForm c-mb-32">
     <div class="flex no-wrap teamSettingForm-section c-pb-32">
@@ -7,13 +6,8 @@
           <q-img :src="form.avatar" />
         </q-avatar>
 
-        <div
-          class="absolute flex flex-center create-form-avatar-create cursor-pointer"
-        >
-          <q-img
-            src="/assets/icons/pen/edit-white.svg"
-            class="create-form-icon"
-          >
+        <div class="absolute flex flex-center create-form-avatar-create cursor-pointer">
+          <q-img src="/assets/icons/pen/edit-white.svg" class="create-form-icon">
             <q-menu class="w-max-content">
               <q-list separator>
                 <q-item
@@ -88,7 +82,7 @@
       </section>
     </div>
 
-    <div class="flex teamSettingForm-section c-pb-32">
+    <div class="flex teamSettingForm-section c-pt-32 c-pb-32">
       <section class="flex no-wrap">
         <c-label-control label="Описание">
           <template #control>
@@ -106,7 +100,7 @@
       </section>
     </div>
 
-    <div class="flex teamSettingForm-section c-pb-32">
+    <div class="flex teamSettingForm-section c-pt-32 c-pb-32">
       <section class="flex no-wrap">
         <c-label-control label="Ссылка на Telegram лидера">
           <template #control>
@@ -115,7 +109,7 @@
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
-              :rules="[minLength(18), maxLength(45), telegramm]"
+              :rules="[minLength(18), maxLength(45), isTelegramUrl]"
             >
               <template #append>
                 <q-icon
@@ -130,7 +124,7 @@
       </section>
     </div>
 
-    <div class="flex teamSettingForm-section c-pb-32 c-mb-40">
+    <div class="flex teamSettingForm-section c-pt-32 c-pb-32 c-mb-40">
       <q-form class="flex" @submit.prevent="">
         <c-label-control label="Виды работ">
           <template #control>
@@ -200,7 +194,7 @@ import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
-const { required, maxLength, minLength } = useValidators();
+const { required, maxLength, minLength, isTelegramUrl } = useValidators();
 const { result: teamData, error, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
@@ -209,8 +203,7 @@ const uploadFile = ref();
 const router = useRouter();
 
 const form = ref({
-  avatar:
-    currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
+  avatar: currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
   name: currentTeam.value?.name,
   description: currentTeam.value?.description,
   telegram_chat_id: currentTeam.value?.telegram_chat_id,
@@ -248,8 +241,7 @@ const updateFile = () => {
 
 const addAvatar = () => uploadFile.value.pickFiles();
 
-const deleteAvatar = () =>
-  (form.value.avatar = "/assets/images/preloaders/default-avatar.svg");
+const deleteAvatar = () => (form.value.avatar = "/assets/images/preloaders/default-avatar.svg");
 
 const updateTeamData = async () => {
   await updateTeam(currentTeam.value.id, {
@@ -257,7 +249,7 @@ const updateTeamData = async () => {
     name: form.value.name,
     description: form.value.description,
     telegram_chat_id: form.value.telegram_chat_id,
-    directions: [...form.value.work_types],
+    directions: form.value.work_types.length ? [...form.value.work_types] : null,
   });
 
   router.push({

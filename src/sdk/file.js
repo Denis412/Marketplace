@@ -1,8 +1,4 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import { filesUpload } from "src/graphql/files/mutations";
 import { getFiles } from "src/graphql/files/queries";
@@ -45,6 +41,10 @@ const get = async (file_id) => {
   return fileData.paginate_file.data;
 };
 
-const filesApi = { uploadFiles, get };
+const getUrl = (file) => {
+  return `${process.env.FILE_STORAGE_URI}/${file.path}/${file.id}.${file.extension}?n=${file.name}`;
+};
+
+const filesApi = { uploadFiles, get, getUrl };
 
 export default filesApi;

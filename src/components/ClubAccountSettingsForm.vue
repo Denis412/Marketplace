@@ -1,5 +1,5 @@
 <template>
-  <q-form @submit="$emit('submit-form', form)" style="width: min-content">
+  <q-form @submit="$emit('submit-form', form)" class="c-gutter-y-32">
     <section class="flex no-wrap">
       <c-label-control label="Фамилия">
         <template #control>
@@ -24,10 +24,8 @@
           />
         </template>
       </c-label-control>
-    </section>
 
-    <section class="flex no-wrap">
-      <c-label-control label="Отчество">
+      <c-label-control label="Отчество" class="c-ml-32">
         <template #control>
           <q-input
             v-model="form.middle_name"
@@ -38,7 +36,23 @@
           />
         </template>
       </c-label-control>
+    </section>
 
+    <section class="flex no-wrap">
+      <c-label-control label="Пол">
+        <template #control>
+          <q-select
+            no-caps
+            borderless
+            class="club-dropdown"
+            v-model="form.gender"
+            @update:model-value="changeUSerData('gender', $event)"
+            :options="['Не выбран','Мужской', 'Женский']"
+            dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
+          />
+        </template>
+      </c-label-control>
+      
       <c-label-control label="Дата рождения" class="c-ml-32">
         <template #control>
           <q-input
@@ -50,15 +64,8 @@
             outlined
           >
             <template #append>
-              <q-icon
-                name="img:/assets/icons/calendar/calendar-grey.svg"
-                class="cursor-pointer"
-              >
-                <q-popup-proxy
-                  cover
-                  transition-show="scale"
-                  transition-hide="scale"
-                >
+              <q-icon name="img:/assets/icons/calendar/calendar-grey.svg" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date
                     v-model="form.birthday"
                     @update:model-value="changeUSerData('birthday', $event)"
@@ -74,6 +81,7 @@
           </q-input>
         </template>
       </c-label-control>
+
     </section>
 
     <section class="flex no-wrap">
@@ -93,19 +101,9 @@
         </template>
       </c-label-control>
 
-      <c-label-control label="Пол" class="c-ml-32">
-        <template #control>
-          <q-select
-            no-caps
-            borderless
-            class="club-dropdown"
-            v-model="form.gender"
-            @update:model-value="changeUSerData('gender', $event)"
-            :options="['Мужской', 'Женский']"
-            dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
-          />
-        </template>
-      </c-label-control>
+      <!-- Тут должен быть регион и населенный пункт -->
+
+      
     </section>
 
     <c-label-control label="Адрес электронной почты">
@@ -155,9 +153,7 @@ const optionsDateSelect = (date) => new Date(date).getTime() < Date.now();
 
 const filterFn = (val, update) => {
   update(() => {
-    filteredCities.value = cities.filter((v) =>
-      v.toLowerCase().includes(val.toLowerCase())
-    );
+    filteredCities.value = cities.filter((v) => v.toLowerCase().includes(val.toLowerCase()));
   });
 };
 
@@ -169,11 +165,7 @@ const changeUSerData = async (prop, value) => {
           date: value,
         },
       });
-    else if (
-      prop === "first_name" ||
-      prop === "middle_name" ||
-      prop === "last_name"
-    )
+    else if (prop === "first_name" || prop === "middle_name" || prop === "last_name")
       await userApi.update(currentUser.value.subject_id, {
         fullname: {
           first_name: form.value.first_name,

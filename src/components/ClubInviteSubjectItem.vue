@@ -1,12 +1,7 @@
 <template>
   <q-item :class="{ 'bg-white': isSelect }">
     <c-specialist-item :specialist="subject" class="bg-transparent" />
-
-    <q-checkbox
-      v-model="selectedSubjects"
-      @update:model-value="checkSelect"
-      :val="subject"
-    />
+    <q-checkbox v-model="selectedSubjects" @update:model-value="checkSelect" :val="subject" />
   </q-item>
 </template>
 

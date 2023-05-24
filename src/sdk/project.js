@@ -1,18 +1,11 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
-import {
-  projectCreate,
-  projectDelete,
-  projectUpdate,
-} from "src/graphql/project/mutations";
+import { projectCreate, projectDelete, projectUpdate } from "src/graphql/project/mutations";
 import {
   getProjectById,
   projectsPaginate,
   projectsPaginateInMainSpace,
+  projectsPaginateInTeamSpace,
 } from "src/graphql/project/queries";
 import { spaceHeader } from "src/utils/spaceHeader";
 
@@ -23,7 +16,7 @@ const { mutate: updatingProject } = useMutation(projectUpdate);
 const { mutate: deletingProject } = useMutation(projectDelete);
 
 const paginateProject = ({ page, perPage, where, space_id }) => {
-  const query = space_id ? projectsPaginate : projectsPaginateInMainSpace;
+  const query = space_id ? projectsPaginateInTeamSpace : projectsPaginateInMainSpace;
 
   return useQuery(
     query,

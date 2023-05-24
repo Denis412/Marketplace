@@ -8,6 +8,7 @@ import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
 import propertyApi from "src/sdk/property";
 import pageApi from "src/sdk/page";
+import permissionApi from "src/sdk/permission";
 
 export const useTeamCreate = () => {
   const createTeamResult = ref(null);
@@ -25,6 +26,8 @@ export const useTeamCreate = () => {
         description,
       });
 
+      //**************************Свойства субъекта*********************************
+
       const subjectType = await typeApi.refetchPaginateType({
         page: 1,
         perPage: 1,
@@ -39,7 +42,7 @@ export const useTeamCreate = () => {
       await propertyApi.createMany({
         input: [
           {
-            name: "major",
+            name: "speciality1",
             label: "Специальность",
             data_type: "text",
             type_id: subjectType[0].id,
@@ -50,11 +53,13 @@ export const useTeamCreate = () => {
             label: "Аватар",
             data_type: "text",
             type_id: subjectType[0].id,
-            order: 3,
+            order: 4,
           },
         ],
         space_id: space.id,
       });
+
+      //*******************************************************************************
 
       const teamGroup = await groupApi.refetchPaginateGroups({
         page: 1,
@@ -67,53 +72,39 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
+      await groupApi.update({
+        id: teamGroup[0].id,
+        input: {
+          name: "Лидер",
+          description: "Группа лидеров",
+        },
+        space_id: space.id,
+      });
+
       await groupApi.create(space.id, {
-        name: "Участники",
+        name: "Участник",
         description: "Группа участников",
         parent_group_id: teamGroup[0].id,
       });
 
       await groupApi.create(space.id, {
-        name: "Приглашенные",
+        name: "Заказчик",
+        description: "Группа заказчиков",
+        parent_group_id: teamGroup[0].id,
+      });
+
+      await groupApi.create(space.id, {
+        name: "Приглашенный",
         description: "Группа приглашенных",
         parent_group_id: teamGroup[0].id,
       });
+
+      //**************************Свойства проекта*********************************
 
       const projectTypeData = await typeApi.create({
         input: {
           name: "project",
           label: "Проект",
-        },
-        space_id: space.id,
-      });
-
-      const applicationProjectType = await typeApi.create({
-        input: {
-          name: "application",
-          label: "Заявка",
-        },
-        space_id: space.id,
-      });
-
-      await propertyApi.create({
-        input: {
-          label: "Субъект",
-          name: "subject",
-          type_id: applicationProjectType.id,
-          data_type: "object",
-          order: 2,
-          multiple: {
-            status: false,
-          },
-          meta: {
-            related_types: [
-              {
-                type_id: subjectType[0].id,
-                inverse_relation: true,
-                inverse_relation_label: "Заявки",
-              },
-            ],
-          },
         },
         space_id: space.id,
       });
@@ -148,6 +139,13 @@ export const useTeamCreate = () => {
             type_id: projectTypeData.id,
             order: 5,
           },
+          {
+            name: "space",
+            label: "Пространство",
+            data_type: "text",
+            type_id: projectTypeData.id,
+            order: 6,
+          },
         ],
         space_id: space.id,
       });
@@ -158,10 +156,34 @@ export const useTeamCreate = () => {
           name: "members",
           type_id: projectTypeData.id,
           data_type: "object",
-          order: 6,
+          order: 7,
           multiple: {
             status: true,
             max_number: 50,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
+                inverse_relation: true,
+                inverse_relation_label: "Проекты",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          label: "Заказчики",
+          name: "customers",
+          type_id: projectTypeData.id,
+          data_type: "object",
+          order: 8,
+          multiple: {
+            status: true,
+            max_number: 3,
           },
           meta: {
             related_types: [
@@ -182,7 +204,7 @@ export const useTeamCreate = () => {
           label: "Дата сдачи",
           data_type: "datetime",
           type_id: projectTypeData.id,
-          order: 6,
+          order: 9,
           meta: {
             properties: [
               {
@@ -209,13 +231,44 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
+      //*******************************************************************************
+
+      //**************************Свойства заявки*********************************
+
+      const applicationProjectType = await typeApi.create({
+        input: {
+          name: "application",
+          label: "Заявка",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          data_type: "toggle",
+          name: "is_customer",
+          label: "Заказчик",
+          type_id: applicationProjectType.id,
+          default: {
+            value: false,
+          },
+          order: 10,
+          required: false,
+          multiple: {
+            status: false,
+            button_text: "Добавить",
+          },
+        },
+        space_id: space.id,
+      });
+
       await propertyApi.create({
         input: {
           label: "Проект",
           name: "project",
           type_id: applicationProjectType.id,
           data_type: "object",
-          order: 3,
+          order: 6,
           multiple: {
             status: false,
           },
@@ -223,6 +276,29 @@ export const useTeamCreate = () => {
             related_types: [
               {
                 type_id: projectTypeData.id,
+                inverse_relation: true,
+                inverse_relation_label: "Заявки",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          label: "Субъект",
+          name: "subject",
+          type_id: applicationProjectType.id,
+          data_type: "object",
+          order: 2,
+          multiple: {
+            status: false,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
                 inverse_relation: true,
                 inverse_relation_label: "Заявки",
               },
@@ -265,12 +341,90 @@ export const useTeamCreate = () => {
               id: 1,
             },
           },
-          order: 1,
+          order: 4,
           required: false,
           multiple: {
             status: false,
             button_text: "Добавить",
           },
+        },
+        space_id: space.id,
+      });
+
+      //*******************************************************************************
+
+      const applicationProperty1 = await propertyApi.refetchPaginateProperties({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "property1",
+        },
+        space_id: space.id,
+      });
+
+      const applicationProperty2 = await propertyApi.refetchPaginateProperties({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "property2",
+        },
+        space_id: space.id,
+      });
+
+      const applicationProperty3 = await propertyApi.refetchPaginateProperties({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "property3",
+        },
+        space_id: space.id,
+      });
+
+      const applicationProperty4 = await propertyApi.refetchPaginateProperties({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "property4",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.update({
+        id: applicationProperty1[0].id,
+        input: {
+          name: "projects_member",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.update({
+        id: applicationProperty2[0].id,
+        input: {
+          name: "projects_customer",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.update({
+        id: applicationProperty3[0].id,
+        input: {
+          name: "applications",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.update({
+        id: applicationProperty4[0].id,
+        input: {
+          name: "applications",
         },
         space_id: space.id,
       });
@@ -320,7 +474,7 @@ export const useTeamCreate = () => {
       await userApi.update(
         projectTypeData.author_id,
         {
-          major: mainSpaceSubject[0].major,
+          speciality1: mainSpaceSubject[0].speciality1.name,
           avatar: mainSpaceSubject[0].avatar,
         },
         true,
@@ -348,6 +502,8 @@ export const useTeamUpdate = () => {
   async function updateTeam(id, data) {
     try {
       loading.value = true;
+
+      console.log("team update", id, data);
 
       const teamData = await teamApi.update(id, data);
 
@@ -435,7 +591,7 @@ export const useTeamIsMember = () => {
         where: {
           column: "name",
           operator: "EQ",
-          value: "Участники",
+          value: "Участник",
         },
         space_id: team.space,
       });
@@ -452,9 +608,7 @@ export const useTeamIsMember = () => {
         is_team: true,
       });
 
-      result.value = subjectData[0].group.find(
-        (group) => group.id === groupData[0].id
-      );
+      result.value = subjectData[0].group.find((group) => group.id === groupData[0].id);
 
       loading.value = false;
     } catch (e) {
@@ -486,7 +640,7 @@ export const useTeamAcceptUser = () => {
         where: {
           column: "name",
           operator: "EQ",
-          value: "Участники",
+          value: "Участник",
         },
         space_id,
       });
@@ -496,6 +650,84 @@ export const useTeamAcceptUser = () => {
         surname: data.surname,
         email: data.email,
         group_id: groupData[0].id,
+      });
+
+      const rootPage = await pageApi.refetchPaginateRootPages({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "title",
+          operator: "EQ",
+          value: data.team_name,
+        },
+        space_id,
+      });
+
+      const newSubjectData = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "email",
+          operator: "FTS",
+          value: data.email,
+        },
+        is_team: true,
+        space_id,
+      });
+
+      const applicationType = await typeApi.refetchPaginateType({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "application",
+        },
+        space_id,
+      });
+
+      await permissionApi.create({
+        input: {
+          model_type: "type",
+          model_id: applicationType[0].id,
+          owner_type: "subject",
+          owner_id: newSubjectData[0].id,
+          level: 5,
+        },
+        space_id,
+      });
+
+      await permissionApi.create({
+        input: {
+          model_type: "page",
+          model_id: rootPage[0].id,
+          owner_type: "subject",
+          owner_id: newSubjectData[0].id,
+          level: 4,
+        },
+        space_id,
+      });
+
+      await permissionApi.create({
+        input: {
+          model_type: "page",
+          model_id: rootPage[0].children.data[0].id,
+          owner_type: "subject",
+          owner_id: newSubjectData[0].id,
+          level: 4,
+        },
+        space_id,
+      });
+
+      await permissionApi.create({
+        input: {
+          model_type: "page",
+          model_id: rootPage[0].children.data[1].id,
+          owner_type: "subject",
+          owner_id: newSubjectData[0].id,
+          level: 4,
+        },
+        space_id,
       });
 
       const teamData = await teamApi.refetchPaginateTeams({
@@ -543,10 +775,7 @@ export const useTeamApplication = () => {
       const [property_id, type_id] =
         data.sender === "team"
           ? [process.env.APPLICATION_TEAM_PROPERTY, process.env.TEAM_TYPE_ID]
-          : [
-              process.env.APPLICATION_SUBJECT_PROPERTY,
-              process.env.SUBJECT_TYPE_ID,
-            ];
+          : [process.env.APPLICATION_SUBJECT_PROPERTY, process.env.SUBJECT_TYPE_ID];
 
       const target_str = data.sender === "team" ? "subject" : "team";
 
@@ -560,11 +789,7 @@ export const useTeamApplication = () => {
         },
       });
 
-      if (
-        applications.find(
-          (application) => application[target_str].id === data.target.id
-        )
-      )
+      if (applications.find((application) => application[target_str].id === data.target.id))
         throw new Error("Уже есть заявка!");
 
       result.value = await applicationApi.create(data);
@@ -604,6 +829,7 @@ export const useTeamApplication = () => {
             surname: application.subject.fullname.last_name,
             email: application.subject.email.email,
             id: application.subject.id,
+            team_name: application.team.name,
             application_id: application.id,
           },
         });
@@ -622,7 +848,7 @@ export const useTeamApplication = () => {
         await userApi.update(
           subject.id,
           {
-            major: application.subject.major,
+            speciality1: application.subject.speciality1.name,
           },
           true,
           application.team.space

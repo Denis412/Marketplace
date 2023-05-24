@@ -1,14 +1,6 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
-
-import { createGroup, inviteUser } from "src/graphql/group/mutations";
-import {
-  getGroupsWithWhere,
-  paginateGroupsSubjects,
-} from "src/graphql/group/queries";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
+import { createGroup, inviteUser, updateGroup } from "src/graphql/group/mutations";
+import { getGroupsWithWhere, paginateGroupsSubjects } from "src/graphql/group/queries";
 
 import apolloClient from "src/apollo/apollo-client";
 import { spaceHeader } from "src/utils/spaceHeader";
@@ -16,6 +8,7 @@ import { spaceHeader } from "src/utils/spaceHeader";
 provideApolloClient(apolloClient);
 
 const { mutate: creatingGroup } = useMutation(createGroup);
+const { mutate: updatingGroup } = useMutation(updateGroup);
 const { mutate: invitingUser } = useMutation(inviteUser);
 
 const paginateGroups = ({ page, perPage, where, space_id, is_subjects }) => {
@@ -39,21 +32,23 @@ const refetchPaginateGroups = async ({ page, perPage, where, space_id }) => {
 };
 
 const create = async (space_id, data) => {
-  const { data: groupData } = await creatingGroup(
-    { input: data },
-    spaceHeader(space_id)
-  );
+  const { data: groupData } = await creatingGroup({ input: data }, spaceHeader(space_id));
 
   console.log("group create", groupData);
 
   return groupData.userGroupCreate;
 };
 
+const update = async ({ id, input, space_id }) => {
+  const { data: groupData } = await updatingGroup({ id, input }, spaceHeader(space_id));
+
+  console.log("group update", groupData);
+
+  return groupData.record;
+};
+
 const invite = async (space_id, data) => {
-  const { data: inviteData } = await invitingUser(
-    { input: data },
-    spaceHeader(space_id)
-  );
+  const { data: inviteData } = await invitingUser({ input: data }, spaceHeader(space_id));
 
   console.log("invite group", inviteData);
 
@@ -64,6 +59,7 @@ const deleteGroupBy = () => {};
 
 const groupApi = {
   create,
+  update,
   invite,
   deleteGroupBy,
   paginateGroups,

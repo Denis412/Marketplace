@@ -7,17 +7,11 @@
           class="dialog-image q-mt-md"
         />
 
-        <p class="text-body2 text-center c-mt-32">
-          Введите e-mail, привязанный к вашему аккаунту
-        </p>
+        <p class="text-body2 text-center c-mt-32">Введите e-mail, привязанный к вашему аккаунту</p>
       </section>
 
       <q-form class="flex no-wrap items-center c-mt-32">
-        <c-input
-          v-model="authInfo.email"
-          placeholder="mail@example.ru"
-          class="dialog-input"
-        />
+        <c-input v-model="authInfo.email" placeholder="mail@example.ru" class="dialog-input" />
 
         <q-icon
           name="img:/assets/icons/arrow/arrow-right-circle-purple.svg"

@@ -1,9 +1,5 @@
 <template>
-  <q-icon
-    class="cursor-pointer relative-position"
-    name="more_horiz"
-    size="40px"
-  >
+  <q-icon class="cursor-pointer relative-position" name="more_horiz" size="40px">
     <q-menu class="w-max-content">
       <q-list separator>
         <q-item
@@ -24,11 +20,7 @@
           Покинуть команду
         </q-item>
 
-        <q-item
-          clickable
-          v-ripple
-          class="flex no-wrap items-center text-caption1 text-black"
-        >
+        <q-item clickable v-ripple class="flex no-wrap items-center text-caption1 text-black">
           Поделиться
         </q-item>
       </q-list>

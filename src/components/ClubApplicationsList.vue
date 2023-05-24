@@ -1,21 +1,15 @@
 <template>
   <q-list class="row">
-    <section
-      v-for="application in applications"
-      :key="application.id"
-      class="col-6 q-pa-sm"
-    >
-      <q-card
-        v-if="subjects"
-        flat
-        class="bg-gray4 q-pa-md applications-item rounded-borders-10"
-      >
+    <section v-for="application in applications" :key="application.id" class="col-6 q-pa-sm">
+      <q-card v-if="subjects" flat class="bg-gray4 q-pa-md applications-item rounded-borders-10">
         <c-specialist-item :specialist="application.subject" />
 
         <c-application-controls
           :application="application"
           :incoming="incoming"
           :is_team="is_team"
+          :is_project="is_project"
+          :project="project"
         />
       </q-card>
 
@@ -37,11 +31,13 @@ import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
-const { applications, incoming, subjects, is_team } = defineProps({
+const { applications, incoming, subjects, project, is_project, is_team } = defineProps({
   applications: Array,
   incoming: Boolean,
   subjects: Boolean,
   is_team: Boolean,
+  project: Boolean,
+  is_project: Boolean,
 });
 </script>
 

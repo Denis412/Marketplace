@@ -1,8 +1,5 @@
 <template>
-  <q-form
-    class="create-form c-pa-32 bg-grey-12 rounded-borders-15"
-    @submit.prevent="teamCreate"
-  >
+  <q-form class="create-form c-pa-32 bg-grey-12 rounded-borders-15" @submit.prevent="teamCreate">
     <header>
       <h3 class="text-h3 text-center">Создание команды</h3>
 
@@ -36,7 +33,7 @@
       <section class="w-100p q-mt-md q-gutter-y-md">
         <c-input
           bg-color="white"
-          placeholder="Название"
+          placeholder="Введите название"
           class="text-body2"
           v-model="form.name"
           :rules="[required, maxLength(20)]"
@@ -44,25 +41,19 @@
 
         <c-input
           bg-color="white"
-          placeholder="Описание"
+          placeholder="Введите описание"
           class="club-textarea-mh-150 text-body2"
           autogrow
           style="max-height: 100px"
           v-model="form.description"
-          :rules="[required, maxLength(1000)]"
+          :rules="[required, maxLengthForTeamForm(1000)]"
         />
       </section>
     </main>
 
     <footer class="flex justify-center q-mt-xl rel-index-0">
       <c-button background class="text-body1" label="Создать" type="submit" />
-
-      <c-button
-        outline
-        class="text-body1 c-ml-32"
-        label="Отмена"
-        to="/club/teams"
-      />
+      <c-button outline class="text-body1 c-ml-32" label="Отменить" to="/club/teams" />
     </footer>
   </q-form>
 </template>
@@ -82,11 +73,10 @@ import filesApi from "src/sdk/file";
 
 const currentUser = inject("currentUser");
 
-const { required, maxLength } = useValidators();
+const { required, maxLength, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
-const { createTeamResult, creatingTeam, createTeamError, createTeam } =
-  useTeamCreate();
+const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
 
 const form = ref({
   name: "",
@@ -143,8 +133,8 @@ const triggerInput = () => {
     &-create {
       bottom: 15px;
       right: -8px;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
     }
   }
 }

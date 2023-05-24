@@ -1,5 +1,3 @@
-import userApi from "src/sdk/user";
-
 const routes = [
   {
     path: "/",
@@ -29,8 +27,14 @@ const routes = [
         component: () => import("pages/ClubUserProfilePage.vue"),
       },
       {
+        path: "profile/settings",
+        name: "profileSettings",
+        component: () => import("pages/ClubUserProfileSettingsPage.vue"),
+      },
+      {
         path: "team/:id",
         name: "team",
+        props: true,
         component: () => import("pages/ClubTeamPage.vue"),
       },
       {
@@ -43,6 +47,11 @@ const routes = [
         path: "team/:id/invite",
         name: "teamInvite",
         meta: { isTeamOwner: true },
+        component: () => import("pages/ClubTeamInvitePage.vue"),
+      },
+      {
+        path: "project/:id/invite",
+        name: "projectInvite",
         component: () => import("pages/ClubTeamInvitePage.vue"),
       },
       {
@@ -74,7 +83,7 @@ const routes = [
       {
         path: "project/:id",
         name: "project",
-        meta: { isTeamMember: true },
+        // meta: { isTeamMember: true },
         component: () => import("src/pages/ClubProjectInformationPage.vue"),
       },
 

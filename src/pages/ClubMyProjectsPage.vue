@@ -1,5 +1,10 @@
 <template>
   <q-page class="c-px-32 c-py-72">
+    <!-- <div class="flex justify-between">
+      <pre>{{ applications }}</pre>
+
+      <pre>{{ projects }}</pre>
+    </div> -->
     <div class="loader loader-lg" v-if="loading" />
 
     <div v-else>
@@ -17,13 +22,15 @@
         </q-tabs>
       </q-toolbar>
 
-      <q-list class="row c-mt-40">
-        <section
-          v-for="project in projects"
-          :key="project.id"
-          class="col-4 q-pa-md"
-        >
+      <q-list v-if="selectedProjectsType === 'active'" class="row c-mt-40">
+        <section v-for="project in projects" :key="project.id" class="col-4 q-pa-md">
           <c-card-project :current-project="project" />
+        </section>
+      </q-list>
+
+      <q-list v-else class="row c-mt-40">
+        <section v-for="application in applications" :key="application.id" class="col-4 q-pa-md">
+          <c-card-project :current-project="application.project" :application="application" />
         </section>
       </q-list>
     </div>
@@ -36,6 +43,8 @@ import { computed, onMounted, ref } from "vue";
 
 import CCardProject from "src/components/ClubCardProject.vue";
 import projectApi from "src/sdk/project";
+import userApi from "src/sdk/user";
+import applicationApi from "src/sdk/application";
 
 const userStore = useUserStore();
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
@@ -43,8 +52,11 @@ const currentUser = computed(() => userStore.GET_CURRENT_USER);
 // const currentProjects = computed(() => currentUser.value?)
 
 const projects = ref([]);
+const applications = ref([]);
 const loading = ref(true);
 const selectedProjectsType = ref("active");
+
+const subject = userApi.queryGetSubjectById(currentUser.value.subject_id);
 
 onMounted(async () => {
   let pr = [];
@@ -58,8 +70,27 @@ onMounted(async () => {
         space_id: team.space,
       });
 
+      const app = await applicationApi.refetchPaginateApplications({
+        page: 1,
+        perPage: 100,
+        space_id: team.space,
+      });
+
+      applications.value.push(...app);
+
       projects.value.push(
-        ...pr.map((p) => Object.assign({}, p, { space: team.space }))
+        ...pr.map((p) =>
+          Object.assign(
+            {},
+            p,
+            {
+              applications: p.applications.filter(
+                (application) => application.subject.email.email === currentUser.value.email
+              ),
+            },
+            { space: team.space }
+          )
+        )
       );
     } catch (error) {}
   }

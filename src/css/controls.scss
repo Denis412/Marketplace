@@ -22,7 +22,8 @@
     }
 
     & .q-field__control {
-      padding: 0 24px !important;
+      padding-left: 24px;
+      padding-right: 24px;
       height: $input-height-md;
 
       div {
@@ -37,6 +38,12 @@
           &::placeholder {
             color: #6d6d6d4d;
           }
+        }
+        .q-field__label {
+          top: 0;
+
+          display: flex;
+          align-items: center;
         }
       }
 

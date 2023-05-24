@@ -1,8 +1,4 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 import {
   userSignUp,
   userSignIn,
@@ -31,32 +27,14 @@ import { spaceHeader } from "src/utils/spaceHeader";
 provideApolloClient(apolloClient);
 
 const { mutate: signUp } = useMutation(userSignUp);
-const { mutate: signIn } = useMutation(
-  userSignIn,
-  spaceHeader(process.env.MAIN_SPACE_ID)
-);
+const { mutate: signIn } = useMutation(userSignIn, spaceHeader(process.env.MAIN_SPACE_ID));
 const { mutate: userSetPassword } = useMutation(userSignUpSetPassword);
-const { mutate: updatingUser } = useMutation(
-  updateSubject,
-  spaceHeader(process.env.MAIN_SPACE_ID)
-);
+const { mutate: updatingUser } = useMutation(updateSubject, spaceHeader(process.env.MAIN_SPACE_ID));
 const { mutate: updatingUserInTeamSpace } = useMutation(updateSubjectInTeam);
-const { mutate: resetPasswordSendCode } = useMutation(
-  userResetPasswordSendCode
-);
-const { mutate: resetPasswordConfirmCode } = useMutation(
-  userResetPasswordConfirmCodeSetPassword
-);
+const { mutate: resetPasswordSendCode } = useMutation(userResetPasswordSendCode);
+const { mutate: resetPasswordConfirmCode } = useMutation(userResetPasswordConfirmCodeSetPassword);
 
-const paginateSubjects = ({
-  where,
-  page,
-  perPage,
-  space_id,
-  is_invite,
-  is_team,
-  is_my_teams,
-}) => {
+const paginateSubjects = ({ where, page, perPage, space_id, is_invite, is_team, is_my_teams }) => {
   let query;
 
   if (is_invite) query = paginateSubjectsForInvite;
@@ -72,19 +50,11 @@ const paginateSubjects = ({
 };
 
 const queryGetSubjectById = (id, space_id = 0) => {
-  return useQuery(
-    getSubjectById,
-    { id },
-    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
-  );
+  return useQuery(getSubjectById, { id }, spaceHeader(space_id || process.env.MAIN_SPACE_ID));
 };
 
 const queryGetUserById = (id, space_id = 0) => {
-  return useQuery(
-    getUser,
-    { id },
-    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
-  );
+  return useQuery(getUser, { id }, spaceHeader(space_id || process.env.MAIN_SPACE_ID));
 };
 
 const refetchUserById = async (id, space_id = 0) => {
@@ -98,14 +68,8 @@ const refetchUserById = async (id, space_id = 0) => {
   return userData.user;
 };
 
-const refetchPaginateSubjects = async ({
-  where,
-  page,
-  perPage,
-  space_id,
-  is_invite,
-  is_team,
-}) => {
+const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invite, is_team }) => {
+  console.log("refetch params", { where, page, perPage, space_id, is_invite, is_team });
   const { refetch } = paginateSubjects({
     where,
     page,
@@ -199,11 +163,7 @@ const saveUserData = async (userInfo, first_entry = false) => {
   return userData;
 };
 
-const login = async (
-  { login, password },
-  first_entry = false,
-  recovery = false
-) => {
+const login = async ({ login, password }, first_entry = false, recovery = false) => {
   const { data: userInfo } = await signIn({
     input: {
       login,
@@ -243,8 +203,7 @@ const logout = () => {
   localStorage.removeItem("user-data");
 };
 
-const isAuth = () =>
-  localStorage.getItem("user-data") && localStorage.getItem("refreshToken");
+const isAuth = () => localStorage.getItem("user-data") && localStorage.getItem("refreshToken");
 
 const uploadAvatar = async (file) => {
   const filesIds = await filesApi.uploadFiles(file);

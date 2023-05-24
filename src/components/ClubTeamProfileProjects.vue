@@ -15,21 +15,11 @@
     </div>
 
     <main class="q-mt-md">
-      <section
-        v-if="!chunkedProjects?.length"
-        class="row ptojects-wrapper q-gutter-x-md"
-      >
-        <c-card-add-project
-          v-if="isOwner"
-          flat
-          class="flex flex-center project-card col-4"
-        />
+      <section v-if="!chunkedProjects?.length" class="row ptojects-wrapper q-gutter-x-md">
+        <c-card-add-project v-if="isOwner" flat class="flex flex-center project-card col-4" />
 
         <q-card flat class="flex flex-center project-card col">
-          <q-img
-            class="no-projects-img"
-            src="/assets/images/team-page/no-projects.svg"
-          />
+          <q-img class="no-projects-img" src="/assets/images/team-page/no-projects.svg" />
 
           <div class="text-body2 c-ml-64">У команды пока нет проектов...</div>
         </q-card>
@@ -55,17 +45,10 @@
               class="row q-col-gutter-x-md"
             >
               <section v-if="isOwner && !isProfile" class="col-4">
-                <c-card-add-project
-                  flat
-                  class="flex flex-center project-card"
-                />
+                <c-card-add-project flat class="flex flex-center project-card" />
               </section>
 
-              <section
-                v-for="project in projects"
-                :key="project.id"
-                class="col-4"
-              >
+              <section v-for="project in projects" :key="project.id" class="col-4">
                 <c-project-card
                   flat
                   class="flex flex-center project-card cursor-pointer"
@@ -144,12 +127,9 @@ const switchSlide = (direction = "", position = -1) => {
   let currentValue = slide.value;
 
   if (position !== -1) currentValue = position;
-  else if (direction === "prev")
-    currentValue - 1 < 0 ? null : (currentValue -= 1);
+  else if (direction === "prev") currentValue - 1 < 0 ? null : (currentValue -= 1);
   else if (direction === "next")
-    currentValue + 1 >= chunkedProjects.value.length
-      ? null
-      : (currentValue += 1);
+    currentValue + 1 >= chunkedProjects.value.length ? null : (currentValue += 1);
 
   slide.value = currentValue;
 };

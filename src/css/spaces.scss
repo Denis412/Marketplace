@@ -10,7 +10,7 @@
   &y-32 {
     margin-top: -32px;
 
-    * {
+    & > * {
       margin-top: 32px;
     }
   }
@@ -19,7 +19,7 @@
     margin-top: -32px;
     margin-left: -32px;
 
-    * {
+    & > * {
       margin-top: 32px;
       margin-left: 32px;
     }
@@ -50,6 +50,34 @@
     & > * {
       margin-top: 64px;
       margin-left: 64px;
+    }
+  }
+}
+
+.c-gutter- {
+  &x-96 {
+    margin-left: -96px;
+
+    & > * {
+      margin-left: 96px;
+    }
+  }
+
+  &y-96 {
+    margin-top: -96px;
+
+    & > * {
+      margin-top: 96px;
+    }
+  }
+
+  &-96 {
+    margin-top: -96px;
+    margin-left: -96px;
+
+    & > * {
+      margin-top: 96px;
+      margin-left: 96px;
     }
   }
 }
@@ -472,6 +500,52 @@
   }
 }
 
+.c-m {
+  &t- {
+    &124 {
+      margin-top: 124px !important;
+    }
+  }
+
+  &b- {
+    &124 {
+      margin-bottom: 124px !important;
+    }
+  }
+
+  &l- {
+    &124 {
+      margin-left: 124px !important;
+    }
+  }
+
+  &r- {
+    &124 {
+      margin-right: 124px !important;
+    }
+  }
+
+  &x- {
+    &124 {
+      margin-left: 124px;
+      margin-right: 124px;
+    }
+  }
+
+  &y- {
+    &124 {
+      margin-top: 124px;
+      margin-bottom: 124px;
+    }
+  }
+
+  &a- {
+    &124 {
+      margin: 124px;
+    }
+  }
+}
+
 .c-p {
   &t- {
     &32 {
@@ -697,6 +771,52 @@
   &a- {
     &96 {
       padding: 96px;
+    }
+  }
+}
+
+.c-p {
+  &t- {
+    &124 {
+      margin-top: 124px !important;
+    }
+  }
+
+  &b- {
+    &124 {
+      margin-bottom: 124px !important;
+    }
+  }
+
+  &l- {
+    &124 {
+      margin-left: 124px !important;
+    }
+  }
+
+  &r- {
+    &124 {
+      margin-right: 124px !important;
+    }
+  }
+
+  &x- {
+    &124 {
+      margin-left: 124px;
+      margin-right: 124px;
+    }
+  }
+
+  &y- {
+    &124 {
+      margin-top: 124px;
+      margin-bottom: 124px;
+    }
+  }
+
+  &a- {
+    &124 {
+      margin: 124px;
     }
   }
 }

@@ -1,8 +1,4 @@
-import {
-  provideApolloClient,
-  useMutation,
-  useQuery,
-} from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 
 import apolloClient from "src/apollo/apollo-client";
 import {
@@ -10,7 +6,10 @@ import {
   deleteApplication,
   updateApplication,
 } from "src/graphql/application/mutations";
-import { paginateApplications } from "src/graphql/application/queries";
+import {
+  paginateApplicationsInMainSpace,
+  paginateApplicationsInTeamSpace,
+} from "src/graphql/application/queries";
 
 import { spaceHeader } from "src/utils/spaceHeader";
 
@@ -32,19 +31,16 @@ const { mutate: deletingApplication } = useMutation(
 );
 
 const paginateApplication = ({ page, perPage, where, space_id }) => {
+  const query = space_id ? paginateApplicationsInTeamSpace : paginateApplicationsInMainSpace;
+
   return useQuery(
-    paginateApplications,
+    query,
     { page, perPage, where },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 };
 
-const refetchPaginateApplications = async ({
-  page,
-  perPage,
-  where,
-  space_id,
-}) => {
+const refetchPaginateApplications = async ({ page, perPage, where, space_id }) => {
   const { refetch } = paginateApplication({ page, perPage, where, space_id });
 
   const { data: applicationsData } = await refetch();
@@ -54,37 +50,42 @@ const refetchPaginateApplications = async ({
   return applicationsData.paginate_application.data;
 };
 
-const create = async ({ name, subject, team, status, sender }) => {
-  const { data: applicationData } = await creatingApplication({
-    input: {
-      name,
-      subject,
-      team,
-      status,
-      sender,
-    },
-  });
+const create = async ({ name, subject, team, project, status, sender, is_customer, space_id }) => {
+  console.log("trt", { name, subject, team, project, status, sender, space_id });
+  const input = team
+    ? { name, subject, team, status, sender }
+    : { name, subject, project, is_customer, status };
+
+  console.log(input);
+
+  const { data: applicationData } = await creatingApplication(
+    { input },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+  );
 
   console.log("create application", applicationData);
 
   return applicationData.create_application;
 };
 
-const update = async (id, data) => {
-  const { data: applicationData } = await updatingApplication({
-    id,
-    input: data,
-  });
+const update = async (id, data, space_id) => {
+  console.log("application", id, data, space_id);
+
+  const { data: applicationData } = await updatingApplication(
+    { id, input: data },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+  );
 
   console.log("update application", applicationData);
 
   return applicationData.update_application;
 };
 
-const deleteById = async (id) => {
-  const { data: applicationData } = await deletingApplication({
-    id: id,
-  });
+const deleteById = async (id, space_id) => {
+  const { data: applicationData } = await deletingApplication(
+    { id },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+  );
 
   console.log("delete application", applicationData);
 
