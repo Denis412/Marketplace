@@ -17,6 +17,11 @@ export const getOrderById = gql`
       files
       type {
         id
+        name
+      }
+      functions {
+        id
+        name
       }
       price_end
       price_start
