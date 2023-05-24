@@ -163,6 +163,7 @@ const inviteSubjects = async () => {
           subject: subject,
           project_name: route.query.name,
           project_id: route.params.id,
+          is_customer: route.query.customer,
           space_id: route.query.space,
         });
       }

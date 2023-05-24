@@ -30,7 +30,6 @@ const { team_space } = defineProps({
 });
 
 const specialtiesList = ref([
-  { filterName: "Заказчик", displayName: "Заказчики", value: "customers" },
   {
     filterName: "Разработчик",
     displayName: "Разработчики",

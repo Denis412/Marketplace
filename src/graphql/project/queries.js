@@ -60,6 +60,18 @@ export const projectsPaginateInTeamSpace = gql`
             name
           }
         }
+        customers {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+          speciality1
+          group {
+            id
+            name
+          }
+        }
         applications {
           id
           name
@@ -74,6 +86,7 @@ export const projectsPaginateInTeamSpace = gql`
               email
             }
           }
+          is_customer
           project {
             id
             name

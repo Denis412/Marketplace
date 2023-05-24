@@ -50,9 +50,11 @@ const refetchPaginateApplications = async ({ page, perPage, where, space_id }) =
   return applicationsData.paginate_application.data;
 };
 
-const create = async ({ name, subject, team, project, status, sender, space_id }) => {
+const create = async ({ name, subject, team, project, status, sender, is_customer, space_id }) => {
   console.log("trt", { name, subject, team, project, status, sender, space_id });
-  const input = team ? { name, subject, team, status, sender } : { name, subject, project, status };
+  const input = team
+    ? { name, subject, team, status, sender }
+    : { name, subject, project, is_customer, status };
 
   console.log(input);
 

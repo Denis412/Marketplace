@@ -176,11 +176,35 @@ export const useTeamCreate = () => {
 
       await propertyApi.create({
         input: {
+          label: "Заказчики",
+          name: "customers",
+          type_id: projectTypeData.id,
+          data_type: "object",
+          order: 8,
+          multiple: {
+            status: true,
+            max_number: 3,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
+                inverse_relation: true,
+                inverse_relation_label: "Проекты",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
           name: "delivery_date",
           label: "Дата сдачи",
           data_type: "datetime",
           type_id: projectTypeData.id,
-          order: 8,
+          order: 9,
           meta: {
             properties: [
               {
@@ -215,6 +239,25 @@ export const useTeamCreate = () => {
         input: {
           name: "application",
           label: "Заявка",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
+          data_type: "toggle",
+          name: "is_customer",
+          label: "Заказчик",
+          type_id: applicationProjectType.id,
+          default: {
+            value: false,
+          },
+          order: 10,
+          required: false,
+          multiple: {
+            status: false,
+            button_text: "Добавить",
+          },
         },
         space_id: space.id,
       });
@@ -343,10 +386,21 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
+      const applicationProperty4 = await propertyApi.refetchPaginateProperties({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: "property4",
+        },
+        space_id: space.id,
+      });
+
       await propertyApi.update({
         id: applicationProperty1[0].id,
         input: {
-          name: "projects",
+          name: "projects_member",
         },
         space_id: space.id,
       });
@@ -354,13 +408,21 @@ export const useTeamCreate = () => {
       await propertyApi.update({
         id: applicationProperty2[0].id,
         input: {
-          name: "applications",
+          name: "projects_customer",
         },
         space_id: space.id,
       });
 
       await propertyApi.update({
         id: applicationProperty3[0].id,
+        input: {
+          name: "applications",
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.update({
+        id: applicationProperty4[0].id,
         input: {
           name: "applications",
         },
@@ -529,7 +591,7 @@ export const useTeamIsMember = () => {
         where: {
           column: "name",
           operator: "EQ",
-          value: "Участники",
+          value: "Участник",
         },
         space_id: team.space,
       });
@@ -570,7 +632,7 @@ export const useTeamAcceptUser = () => {
   const loading = ref(false);
   const error = ref(null);
 
-  async function acceptUser({ team_id, is_customer, space_id, data }) {
+  async function acceptUser({ team_id, space_id, data }) {
     try {
       const groupData = await groupApi.refetchPaginateGroups({
         page: 1,
@@ -578,7 +640,7 @@ export const useTeamAcceptUser = () => {
         where: {
           column: "name",
           operator: "EQ",
-          value: is_customer ? "Заказчик" : "Участник",
+          value: "Участник",
         },
         space_id,
       });
@@ -620,17 +682,6 @@ export const useTeamAcceptUser = () => {
           column: "name",
           operator: "EQ",
           value: "application",
-        },
-        space_id,
-      });
-
-      await permissionApi.create({
-        input: {
-          model_type: "type",
-          model_id: applicationType[0].id,
-          owner_type: "subject",
-          owner_id: newSubjectData[0].id,
-          level: 5,
         },
         space_id,
       });

@@ -51,6 +51,7 @@ export const paginateApplicationsInTeamSpace = gql`
           }
           speciality1
         }
+        is_customer
         status
         project {
           id

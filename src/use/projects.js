@@ -261,9 +261,11 @@ export const useProjectApplication = () => {
   const loading = ref(false);
   const error = ref(null);
 
-  async function sendApplication({ project_id, project_name, subject, space_id }) {
+  async function sendApplication({ project_id, project_name, subject, is_customer, space_id }) {
     try {
       loading.value = true;
+
+      console.log({ project_id, project_name, subject, is_customer, space_id });
 
       const subjectType = await typeApi.refetchPaginateType({
         page: 1,
@@ -367,6 +369,7 @@ export const useProjectApplication = () => {
           [projectType[0].id]: project_id,
         },
         status: statusPropertyWithMeta.meta.options[0].id,
+        is_customer: is_customer === "false" || !is_customer ? false : true,
         space_id,
       });
 
@@ -408,16 +411,40 @@ export const useProjectApplication = () => {
           space_id,
         });
 
+        await permissionApi.create({
+          input: {
+            model_type: "object",
+            model_id: application.project.id,
+            owner_type: "subject",
+            owner_id: application.subject.id,
+            level: 4,
+          },
+          space_id,
+        });
+
+        const prop = application.is_customer
+          ? {
+              customers: {
+                [subjectType[0].id]: [
+                  ...project[0].customers.map((customer) => customer.id),
+                  application.subject.id,
+                ],
+              },
+            }
+          : {
+              members: {
+                [subjectType[0].id]: [
+                  ...project[0].members.map((member) => member.id),
+                  application.subject.id,
+                ],
+              },
+            };
+
         await useProjectUpdate().updateProject({
           id: application.project.id,
           input: {
             name: application.name,
-            members: {
-              [subjectType[0].id]: [
-                ...project[0].members.map((member) => member.id),
-                application.subject.id,
-              ],
-            },
+            ...prop,
           },
           space_id: application.project.space,
         });

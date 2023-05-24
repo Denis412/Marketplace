@@ -21,7 +21,7 @@
       />
 
       <c-specialist-item
-        v-for="specialist in grouped['Заказчик']"
+        v-for="specialist in currentProject.customers"
         :key="specialist.id"
         class="q-mt-lg bg-violet1"
         :specialist="specialist"
