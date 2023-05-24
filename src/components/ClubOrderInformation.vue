@@ -97,27 +97,24 @@
         <h5 class="c-mb-24 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">
           Что требуется сделать
         </h5>
-        <div class="flex justify-start">
-          <div class="flex wrap">
-            <div class="flex column justify-start c-mr-24">
-              <div
-                class="text-content-component-todo c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-mb-24"
+
+        <div class="c-mr-24">
+          <p
+            class="text-content-component-todo c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-mb-24"
+          >
+            {{ props.order.type.name }}
+          </p>
+          <div
+            class="text-content-component c-mb-12"
+            v-for="fun in props.order.functions"
+          >
+            <ul>
+              <li
+                class="q-ml-md c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-c-grey-2 c-mb-12"
               >
-                {{ props.order.type.name }}
-              </div>
-              <div
-                class="text-content-component c-mb-12"
-                v-for="fun in props.order.functions"
-              >
-                <ul>
-                  <li
-                    class="q-ml-md c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-c-grey-2 c-mb-12"
-                  >
-                    {{ fun.name }}
-                  </li>
-                </ul>
-              </div>
-            </div>
+                {{ fun.name }}
+              </li>
+            </ul>
           </div>
         </div>
       </section>
@@ -252,6 +249,7 @@ const props = defineProps({
 }
 
 .text-content-component-todo {
+  display: inline-block;
   border-radius: 100px;
   color: white;
   background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);

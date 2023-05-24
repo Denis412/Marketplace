@@ -35,8 +35,6 @@ onActivated(() => {
 
 const order = ref({});
 
-console.log(getOrder.value);
-
 watch(getOrder, () => {
   Object.assign(order.value, getOrder.value.get_order);
 });
