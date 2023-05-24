@@ -22,13 +22,14 @@ const fileStore = useFileStore();
 
 provideApolloClient(apolloClient);
 
-const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
-  const { mutate } = useMutation(filesUpload);
+const { mutate: uploadFile } = useMutation(filesUpload);
+const { mutate: updateFiles } = useMutation(fileUpdate);
+const { mutate: deleteFiles } = useMutation(fileDelete);
 
+const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
   console.log("upload", files);
 
-  //Если вместо files использовать file, то работать не будет (?!)
-  let data = await mutate(
+  let data = await uploadFile(
     {
       files,
     },
@@ -42,13 +43,12 @@ const uploadFiles = async ({ files, parent_id, space_id, fileName }) => {
   console.log(data);
   await pageApi.create({
     input: {
-      // title: createdFile[0].name.slice(0, -5),
       title: fileName,
       page_type: "node",
       parent_id: parent_id || "4440891212883535597",
       object: {
         id: data.data.filesUpload.ids[0],
-        type_id: "6923351168454209144", //id типа файла
+        type_id: "6923351168454209144",
       },
     },
     space_id: space_id,
@@ -101,9 +101,9 @@ const setTimeoutFunc = ({ minutes, func }) => {
   setTimeout(func, minutes * 60);
 };
 
-const updateFile = (name, doc, page_id, parent_id = "") => {
-  const { mutate } = useMutation(fileUpdate, () => ({
-    variables: {
+const updateFile = async (name, doc, page_id, parent_id = "") => {
+  await updateFiles(
+    {
       input: {
         path: doc.path,
         size: doc.size,
@@ -115,9 +115,23 @@ const updateFile = (name, doc, page_id, parent_id = "") => {
       },
       id: doc.id,
     },
-  }));
+    () => ({
+      variables: {
+        input: {
+          path: doc.path,
+          size: doc.size,
+          name: name + ".html",
+          short_link: doc.short_link,
+          extension: doc.extension,
+          disk: doc.disk,
+          hash: doc.hash,
+        },
+        id: doc.id,
+      },
+    })
+  );
 
-  pageApi.update({
+  await pageApi.update({
     input: {
       title: name,
     },
@@ -125,28 +139,21 @@ const updateFile = (name, doc, page_id, parent_id = "") => {
     space_id: 13,
   });
 
-  let data = mutate();
-  data.then(() => {
-    EventBus.emit("document-update");
-  });
+  EventBus.emit("document-update");
   response("Файл обновлен", "Ошибка", () => {}, fileStore.refetchFiles);
 };
 
-const deleteDoc = function (id, page_id) {
+const deleteDoc = async (id, page_id) => {
   const apolloClient = new ApolloClient(getClientOptions());
   provideApolloClient(apolloClient);
 
-  pageApi.deleteById(page_id, 13);
+  await pageApi.deleteById(page_id, 13);
 
-  const { mutate } = useMutation(fileDelete, () => ({
-    variables: {
-      id: id,
-    },
-  }));
-  let data = mutate();
-  data.then(() => {
-    EventBus.emit("document-deleted");
+  await deleteFiles({
+    id,
   });
+
+  EventBus.emit("document-deleted");
   response("Документ удален", "Ошибка", () => {}, fileStore.refetchFiles);
 };
 
@@ -181,21 +188,6 @@ const response = async function (
   }
 };
 
-// const getRootPage = async (rootPageId, space_id) => {
-//   let data_tree = []
-//   let rootPage = null
-//   rootPage = await pageApi.refetchQueryPageById({
-//     id: rootPageId,
-//     space_id: space_id,
-//   })
-
-//   if (rootPage.page.children.data.length > 0) {
-//     await getChildrenPages(rootPage.page.children.data, data_tree, space_id)
-//   }
-
-//   console.log('data_tree', data_tree)
-//   return data_tree
-// }
 
 const getRootPage = async (rootPageId, space_id) => {
   let data_tree = [];
@@ -263,31 +255,6 @@ const getChildrenPages = async (
   }
 };
 
-// const getChildrenPages = async (children, parent, space_id) => {
-//   let page = null
-//   for (const child of children) {
-//     page = await pageApi.refetchQueryPageById({
-//       id: child.id,
-//       space_id: space_id,
-//     })
-//     const childData = {
-//       title_page: page.page.title,
-//       object_id: page.page.object.id,
-//       page_id: page.page.id,
-//       page_parent_id: page.page.parent_id,
-//       children: [],
-//       page_parent_id: page.page.parent_id
-//     }
-//     if (parent.children == undefined) {
-//       parent.push(childData)
-//     } else {
-//       parent.children.push(childData)
-//     }
-//     if (page.page.children.data.length > 0) {
-//       await getChildrenPages(page.page.children.data, childData, space_id)
-//     }
-//   }
-// }
 
 const queryFileById = ({ id, space_id }) => {
   return useQuery(
