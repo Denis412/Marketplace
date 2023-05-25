@@ -47,12 +47,12 @@
             class="club-dropdown"
             v-model="form.gender"
             @update:model-value="changeUSerData('gender', $event)"
-            :options="['Не выбран','Мужской', 'Женский']"
+            :options="['Не выбран', 'Мужской', 'Женский']"
             dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
           />
         </template>
       </c-label-control>
-      
+
       <c-label-control label="Дата рождения" class="c-ml-32">
         <template #control>
           <q-input
@@ -81,7 +81,6 @@
           </q-input>
         </template>
       </c-label-control>
-
     </section>
 
     <section class="flex no-wrap">
@@ -102,8 +101,6 @@
       </c-label-control>
 
       <!-- Тут должен быть регион и населенный пункт -->
-
-      
     </section>
 
     <c-label-control label="Адрес электронной почты">
@@ -128,6 +125,7 @@ import { useUserStore } from "src/stores/user";
 import CLabelControl from "./ClubLabelControl.vue";
 import userApi from "src/sdk/user";
 import { useQuasar } from "quasar";
+import UserService from "src/sevices/UserService";
 
 const emit = defineEmits(["form-submit"]);
 
@@ -158,25 +156,38 @@ const filterFn = (val, update) => {
 };
 
 const changeUSerData = async (prop, value) => {
+  let input;
+
   try {
     if (prop === "birthday")
-      await userApi.update(currentUser.value.subject_id, {
+      input = {
         [prop]: {
           date: value,
         },
-      });
+      };
     else if (prop === "first_name" || prop === "middle_name" || prop === "last_name")
-      await userApi.update(currentUser.value.subject_id, {
+      input = {
         fullname: {
           first_name: form.value.first_name,
           middle_name: form.value.middle_name,
           last_name: form.value.last_name,
         },
-      });
+      };
     else
-      await userApi.update(currentUser.value.subject_id, {
+      input = {
         [prop]: value,
+      };
+
+    await UserService.subjectUpdate({ subject: currentUser.value, input });
+    for (let team of currentUser.value.teams) {
+      await UserService.subjectUpdate({
+        subject: currentUser.value,
+        input,
+        is_team: true,
+        space_id: team.space,
       });
+      // await userApi.update(currentUser.value.subject_id, input, true, team.space);
+    }
 
     userStore.SET_PROP(prop, value);
   } catch (error) {

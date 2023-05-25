@@ -1,5 +1,6 @@
 <template>
   <main v-if="currentTeam">
+    <pre>{{ mem }}</pre>
     <section v-if="loading" class="loader loader-lg"></section>
 
     <section v-else>
@@ -17,7 +18,10 @@ import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
 
+import userApi from "src/sdk/user";
+
 import { useTeamIsMember } from "src/use/teams";
+import BaseService from "src/sevices/BaseService";
 
 const { isProfile } = defineProps({
   isProfile: Boolean,
@@ -28,12 +32,36 @@ const { result, loading, checkIsMember } = useTeamIsMember();
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
 
+const { result: mem, refetch } = BaseService.fetchApiPaginate(userApi.paginateSubjects, "subject", {
+  where: {
+    column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
+    operator: "FTS",
+    value: currentTeam.value?.id,
+  },
+});
+
+const { result: mem1, refetch: refetch1 } = BaseService.fetchApiPaginate(
+  userApi.paginateSubjects,
+  "subject",
+  {
+    where: {
+      column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
+      operator: "FTS",
+      value: currentTeam.value?.id,
+    },
+  }
+);
+
 const isOwner = computed(() => currentUser.value.subject_id === currentTeam?.value.author_id);
 
 provide("isOwner", isOwner);
 provide("isMember", result);
 
-onMounted(async () => await checkIsMember(currentTeam?.value));
+onMounted(async () => {
+  await checkIsMember(currentTeam?.value);
+
+  setTimeout(async () => await refetch({}), 2000);
+});
 </script>
 
 <style scoped lang="scss"></style>
