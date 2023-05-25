@@ -46,6 +46,7 @@ const deleteDocument = () => {
   height: 210px;
 
   border: 1px solid #bbbbbb;
+  border: 1px solid #bbbbbb;
   box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.06);
   border-radius: 16px;
 }
@@ -56,6 +57,7 @@ const deleteDocument = () => {
   margin-top: 15px;
   margin-left: 24px;
 
+  font-family: "Montserrat";
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 600;
@@ -71,6 +73,7 @@ const deleteDocument = () => {
   margin-top: 20px;
   margin-left: 24px;
 
+  font-family: "Montserrat";
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 400;
@@ -97,6 +100,7 @@ const deleteDocument = () => {
 
   color: white;
   background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
+  background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
   border-radius: 4px;
 }
 
@@ -105,6 +109,7 @@ const deleteDocument = () => {
   height: 15px;
   margin-left: 13px;
 
+  font-family: "Montserrat";
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 540;
