@@ -1,5 +1,5 @@
 <template>
-  <section class="leaders flex no-wrap justify-between c-mt-72 c-ml-32">
+  <!-- <section class="leaders flex no-wrap justify-between c-mt-72 c-ml-32">
     <div class="leaders-info">
       <h4 class="text-h4">Лидер проекта</h4>
 
@@ -29,7 +29,7 @@
     </div>
 
     <q-img src="/assets/images/about-project-page/leader-customer.svg" class="leaders-image" />
-  </section>
+  </section> -->
 
   <section class="c-mt-72">
     <h4 class="text-h4">Проектная команда</h4>
@@ -51,7 +51,7 @@
     </q-toolbar>
 
     <div v-if="selectedList === 'members'">
-      <c-team-members-list class="c-mt-40" team_space roles />
+      <c-project-members-list class="c-mt-40" team_space roles />
     </div>
 
     <div v-else>
@@ -69,7 +69,7 @@
 import { computed, inject, provide, ref } from "vue";
 
 import CSpecialistItem from "src/components/ClubSpecialistItem.vue";
-import CTeamMembersList from "src/components/ClubTeamMembersList.vue";
+import CProjectMembersList from "src/components/ClubProjectMembersList.vue";
 import CApplicationsList from "./ClubApplicationsList.vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -77,14 +77,6 @@ const router = useRouter();
 const route = useRoute();
 
 const currentProject = inject("currentProject");
-
-// const { result: members } = BaseService.fetchApiPaginate(userApi.paginateSubjects, {
-//   where: {
-//     column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
-//     operator: "FTS",
-//     value: currentTeam.value?.id,
-//   },
-// });
 
 const grouped = computed(() =>
   currentProject.value?.members.reduce((groups, subject) => {

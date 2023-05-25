@@ -5,7 +5,8 @@
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
 
-      <!-- <pre>{{ currentProject }}</pre> -->
+      <pre>{{ currentProject }}</pre>
+      z
 
       <section>
         <q-img
