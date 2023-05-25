@@ -119,6 +119,37 @@ const routes = [
         name: "Document",
         component: () => import("pages/ClubAddNewDocument.vue"),
       },
+      {
+        path: "orders",
+        name: "orders",
+        component: () => import("pages/ClubOrdersPage.vue"),
+      },
+      //
+      {
+        path: "order-create",
+        name: "order-create",
+        component: () => import("pages/ClubOrderCreate.vue"),
+      },
+      {
+        path: "/order-info/:id",
+        name: "order-info",
+        component: () => import("src/pages/ClubOrderInformationPage.vue"),
+      },
+      {
+        path: "order-edit/:id",
+        name: "order-edit",
+        component: () => import("pages/ClubOrderEdit.vue"),
+      },
+      {
+        path: "order-created",
+        name: "order-created",
+        component: () => import("pages/ClubOrderCreated.vue"),
+      },
+      {
+        path: "notifications",
+        name: "notifications",
+        component: () => import("pages/ClubNotificationPage.vue"),
+      },
     ],
   },
 

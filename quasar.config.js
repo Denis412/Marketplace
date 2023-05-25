@@ -85,6 +85,22 @@ module.exports = configure(function (/* ctx */) {
         PROJECT_TYPE_ID: "2961807509853802219",
         FILE_TYPE_ID: "5",
         COMMENT_TYPE_ID: "6",
+        USERS_GROUP_ID: "1319554634306561363",
+
+        ORDER_TYPE_ID: "5117870577983195887",
+        ORDER_FUNCTION_ID: "7160658608500929189",
+
+        ORDER_STATUS_0: "1744362893253691369", // Черновик
+        ORDER_STATUS_1: "2363916507227203881", // Поиск исполнителя
+        ORDER_STATUS_2: "3814249250560291482", // Есть кандидат
+        ORDER_STATUS_3: "4837591619999500045", // Заключается сделка
+        ORDER_STATUS_4: "3133592897321301481", // Выполняется
+        ORDER_STATUS_5: "7494949799001030133", // Завершен
+        ORDER_STATUS_6: "2375299492231411693", // Оспаривается
+        ORDER_STATUS_7: "1725305287553643069", // Отменен заказчиком
+        ORDER_STATUS_8: "6243889424355631278", // Отменен исполнителем
+
+        PROPERTY_STATUS_ID: "6803516740521580313",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

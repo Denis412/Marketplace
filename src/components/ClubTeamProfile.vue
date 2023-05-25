@@ -1,6 +1,6 @@
 <template>
   <main v-if="currentTeam">
-    <pre>{{ mem }}</pre>
+    <!-- <pre>{{ mem }}</pre> -->
     <section v-if="loading" class="loader loader-lg"></section>
 
     <section v-else>

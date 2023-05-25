@@ -6,7 +6,8 @@ export function useValidators() {
       val.length <= length || `Максимально возможное количество символов ${length}!`,
 
     maxLengthForTeamForm: (length) => (val) =>
-      val.length <= length || `Количество символов в описании команды не должно превышать ${length} символов!`,
+      val.length <= length ||
+      `Количество символов в описании команды не должно превышать ${length} символов!`,
 
     minLength: (length) => (val) =>
       !val || val.length >= length || `Минимально возможное количество символов ${length}`,
@@ -24,5 +25,17 @@ export function useValidators() {
     isUrl: (val) => val.includes("https://") || val.includes("http://") || "Введите ссылку.",
 
     isTelegramUrl: (val) => val.includes("https://t.me/") || "Неверный формат ссылки",
+
+    requiredOneOf: (val1) => (val) =>
+      (val1 && val1.length > 0) || (val && val.length > 0) || "Заполните хотя бы одно из полей",
+
+    requiredOneOfNumber: (val1) => (val) =>
+      val1 > 0 || val > 0 || "Заполните хотя бы одно из полей",
+
+    positive: (val) => val >= 0 || "Введите неотрицательное значение",
+
+    biggerThan: (val1) => (val) => val >= val1 || `Введите значение больше ${val1}`,
+
+    lowerThan: (val1) => (val) => val <= val1 || val1 == "" || `Введите значение меньше ${val1}`,
   };
 }

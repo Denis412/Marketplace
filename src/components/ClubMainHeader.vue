@@ -20,12 +20,14 @@
           <c-right-person-menu v-if="showIconMenu" :current-user="currentUser" />
         </transition>
       </div>
+      <c-notification />
     </q-toolbar>
   </q-header>
 </template>
 
 <script setup>
 import { ref, inject } from "vue";
+import CNotification from "src/components/ClubNotification.vue";
 
 import CRightPersonMenu from "./ClubRightPersonMenu.vue";
 import CHeaderNavigation from "./ClubHeaderNavigation.vue";

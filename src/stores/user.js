@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { convertSubject } from "src/utils/convertSubject";
 
 import UserService from "src/sevices/UserService";
+import userApi from "src/sdk/user";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -35,10 +36,13 @@ export const useUserStore = defineStore("user", {
           space_id,
         });
 
+        console.log("data", subjectsData);
+
         this.currentSpaceSubject = subjectsData[0];
 
         return subjectsData[0];
       } catch (e) {
+        console.log(e);
         return null;
       }
     },
