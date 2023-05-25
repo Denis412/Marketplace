@@ -36,7 +36,7 @@ const props = defineProps({
 
 const deleteDocument = () => {
   props.tree.remove(props.prop_stat);
-  filesApi.deleteDoc(props.prop_doc_id, props.prop_page_id);
+  filesFunc.deleteDoc(props.prop_doc_id, props.prop_page_id);
 };
 </script>
 

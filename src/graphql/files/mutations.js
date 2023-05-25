@@ -1,25 +1,25 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export const filesUpload = gql`
-  mutation filesUpload($files: [Upload]!) {
-    filesUpload(files: $files) {
+  mutation filesUpload($files: [Upload]!, $file_id: String) {
+    filesUpload(files: $files, file_id: $file_id) {
       status
       ids
     }
   }
-`
+`;
 
 export const fileDelete = gql`
-  mutation($id: String!) {
+  mutation ($id: String!) {
     delete_file(id: $id) {
       status
       recordId
     }
   }
-`
+`;
 
 export const fileUpdate = gql`
-  mutation($id: String!, $input: update_file_input!) {
+  mutation ($id: String!, $input: update_file_input!) {
     update_file(id: $id, input: $input) {
       status
       recordId
@@ -35,4 +35,4 @@ export const fileUpdate = gql`
       }
     }
   }
-`
+`;

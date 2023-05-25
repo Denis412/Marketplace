@@ -66,6 +66,7 @@ import { computed, ref, watch, onMounted, onBeforeMount } from "vue";
 import { useFileStore } from "src/stores/file";
 import { useRoute, useRouter } from "vue-router";
 import { filesApi } from "src/sdk/files/file";
+import { filesFunc } from "src/use/fileFunctions";
 import { data } from "src/utils/documentData";
 
 const route = useRoute();
@@ -100,6 +101,13 @@ watch(route, async () => {
 
   console.log("currentFile", currentFile);
 
+  console.log(editor.value);
+
+  if (editor.value && currentFile) {
+    console.log("hello");
+    filesFunc.updateFileContent(currentFile.id, editor.value);
+  }
+
   if (!previousRout.value && editor.value) {
     filesApi.createHtmlFile(
       editor.value,
@@ -121,6 +129,9 @@ watch(route, async () => {
     editor.value = "";
     storeFile.SET_CURRENT_TITLE_DOC("");
   }
+  console.log(currentFile);
+  console.log(editor.value);
+  // Сохранение текущего состояния редактора перед уходом с страницы
 
   previousRout.value = route.params.id;
 });

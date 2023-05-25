@@ -65,6 +65,63 @@ const createHtmlFile = async function ({
   await uploadFiles({ files: file, parent_id, space_id, fileName });
 };
 
+async function updateFileContent(fileId, content) {
+  try {
+    // Создание Blob из содержимого файла
+    const blob = new Blob([content], { type: "text/html" });
+    const formData = new FormData();
+
+    formData.append("files", blob);
+
+    const file = formData.getAll("files");
+
+    // Отправка запроса на сервер для обновления содержимого файла
+    console.log("Проверка аргументов:", { files: file, file_id: fileId }); // Проверка передаваемых аргументов
+    await uploadFile({ files: file, file_id: fileId });
+    console.log("Изменения в файле успешно сохранены");
+  } catch (error) {
+    console.error("Ошибка при сохранении изменений в файле:", error);
+  }
+}
+
+// async function updateFileContent(fileId, content) {
+//   try {
+//     // Создание Blob из содержимого файла
+//     const blob = new Blob([content], { type: "text/html" });
+//     console.log("Проверка Blob:", blob); // Проверка создания Blob
+
+//     const formData = new FormData();
+//     formData.append("files", blob);
+
+//     const file = formData.getAll("files");
+//     console.log("Проверка FormData:", file); // Проверка добавления в FormData
+
+//     // Отправка запроса на сервер для обновления содержимого файла
+//     await uploadFile({ files: file, file_id: fileId });
+//     console.log("Изменения в файле успешно сохранены");
+//   } catch (error) {
+//     console.error("Ошибка при сохранении изменений в файле:", error);
+//   }
+// }
+
+// async function updateFileContent(fileId, content) {
+//   try {
+//     // Создание Blob из содержимого файла
+//     const blob = new Blob([content], { type: "text/html" });
+//     const formData = new FormData();
+
+//     formData.append("files", blob);
+
+//     const file = formData.getAll("files");
+
+//     // Отправка запроса на сервер для обновления содержимого файла
+//     await uploadFile({ files: file, file_id: fileId });
+//     console.log("Изменения в файле успешно сохранены");
+//   } catch (error) {
+//     console.error("Ошибка при сохранении изменений в файле:", error);
+//   }
+// }
+
 const updateFile = async (name, doc, page_id, parent_id = "") => {
   await updateFiles(
     {
@@ -150,6 +207,7 @@ const filesFunc = {
   createHtmlFile,
   updateFile,
   deleteDoc,
+  updateFileContent,
 };
 
 export { filesFunc };
