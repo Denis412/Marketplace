@@ -14,8 +14,13 @@
       <q-item-section @click="showDialog = true">Удалить </q-item-section>
     </q-item>
 
-    <c-delete-dialog-document :prop_doc_id="props.prop_data.object_id" :prop_page_id="props.prop_data.page_id"
-      v-model="showDialog" />
+    <c-delete-dialog-document
+      :prop_doc_id="props.prop_data.object_id"
+      :prop_page_id="props.prop_data.page_id"
+      :prop_stat="props.prop_stat"
+      :tree="props.tree"
+      v-model="showDialog"
+    />
 
     <q-item class="popup-component" clickable>
       <q-img class="popup-png" src="/assets/icons/doc_popup/lock.png" />
@@ -46,13 +51,21 @@
             <q-icon name="keyboard_arrow_down" />
           </q-item-section>
           <q-menu>
-            <q-item class="sub-popup-component" clickable @click="nocustomer = !nocustomer">
+            <q-item
+              class="sub-popup-component"
+              clickable
+              @click="nocustomer = !nocustomer"
+            >
               <q-icon name="check" v-if="nocustomer"></q-icon>
               <q-icon v-else></q-icon>
               <q-item-section>Без заказчика</q-item-section>
             </q-item>
 
-            <q-item class="sub-popup-component" clickable @click="customer = !customer">
+            <q-item
+              class="sub-popup-component"
+              clickable
+              @click="customer = !customer"
+            >
               <q-icon name="check" v-if="customer"></q-icon>
               <q-icon v-else></q-icon>
               <q-item-section>С заказчиком</q-item-section>
@@ -62,7 +75,10 @@
       </q-menu>
     </q-item>
 
-    <c-rename-item-document :prop_doc="prop_doc" :prop_page_id="props.prop_data.page_id" />
+    <c-rename-item-document
+      :prop_doc="prop_doc"
+      :prop_page_id="props.prop_data.page_id"
+    />
   </q-list>
 </template>
 
@@ -81,6 +97,8 @@ const FILES = computed(() => storeFile.GET_FILES);
 const router = useRouter();
 
 const props = defineProps({
+  prop_stat: Object,
+  tree: Object,
   prop_doc: Object,
   prop_data: Object,
   prop_clicked_index_doc: Number,
@@ -108,10 +126,10 @@ const openDoc = () => {
 };
 
 let showDialog = ref(false);
-let close = ref(false)
-let redact = ref(false)
-let customer = ref(false)
-let nocustomer = ref(false)
+let close = ref(false);
+let redact = ref(false);
+let customer = ref(false);
+let nocustomer = ref(false);
 </script>
 
 <style lang="scss" scoped>
