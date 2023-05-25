@@ -78,6 +78,14 @@ const route = useRoute();
 
 const currentProject = inject("currentProject");
 
+// const { result: members } = BaseService.fetchApiPaginate(userApi.paginateSubjects, {
+//   where: {
+//     column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
+//     operator: "FTS",
+//     value: currentTeam.value?.id,
+//   },
+// });
+
 const grouped = computed(() =>
   currentProject.value?.members.reduce((groups, subject) => {
     subject.group.forEach((group) => {

@@ -1,12 +1,14 @@
-import { provideApolloClient, useMutation } from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import { filesUpload, fileUpdate, fileDelete } from "src/graphql/files/mutations";
 import { ApolloClient } from "@apollo/client/core";
 import { getClientOptions } from "src/apollo/index";
+import { getFiles } from "src/graphql/files/queries";
 
 provideApolloClient(apolloClient);
 
 const { mutate } = useMutation(filesUpload);
+const { refetch } = useQuery(getFiles);
 
 const uploadFiles = async (files) => {
   console.log(files);
@@ -21,8 +23,6 @@ const uploadFiles = async (files) => {
       },
     }
   );
-
-  console.log(BigInt(data.data.filesUpload.ids[0]).toString());
 
   return uploadedData.filesUpload.ids;
 };
@@ -39,6 +39,15 @@ const getFileHtmlByUrl = async (path, id, name) => {
   console.log(1111111111111, res);
 
   return res;
+};
+
+const fetchImageFile = async (url) => {
+  const response = await fetch(url, {
+    method: "no-cors",
+  });
+  const link = URL.createObjectURL(await response.blob());
+
+  return link;
 };
 
 const upload = async (files) => {
@@ -129,8 +138,10 @@ const filesApi = {
   upload,
   setTimeoutFunc,
   renameDocument,
+  fetchImageFile,
   deleteDoc,
   getUrl,
+  get,
   updateRouteId,
 };
 

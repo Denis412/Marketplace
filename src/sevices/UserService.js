@@ -1,3 +1,4 @@
+import filesApi from "src/sdk/file";
 import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
 import { convertSubject } from "src/utils/convertSubject";
@@ -19,9 +20,12 @@ export default class UserService {
       JSON.parse(localStorage.getItem("user-data")).user_id
     );
 
+    console.log("data subject", subjectsData[0]);
+
     const currentUserData = convertSubject({
       ...userData,
       ...subjectsData[0],
+      // avatar: await filesApi.fetchImageFile(subjectsData[0].avatar),
     });
 
     return currentUserData;

@@ -22,11 +22,21 @@ import { ref, computed, inject } from "vue";
 import _ from "lodash";
 
 import CSpecialistsList from "./ClubSpecialistsList.vue";
+import BaseService from "src/sevices/BaseService";
+import userApi from "src/sdk/user";
 
-const members = inject("currentMembers");
+const currentTeam = inject("currentTeam");
 
 const { team_space } = defineProps({
   team_space: Boolean,
+});
+
+const { result: members } = BaseService.fetchApiPaginate(userApi.paginateSubjects, {
+  where: {
+    column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
+    operator: "FTS",
+    value: currentTeam.value?.id,
+  },
 });
 
 const specialtiesList = ref([
@@ -41,9 +51,7 @@ const specialtiesList = ref([
   { filterName: "Аналитик", displayName: "Аналитики", value: "analitics" },
 ]);
 
-const groupByMembers = computed(() =>
-  _.groupBy(members?.value, team_space ? "speciality1" : "speciality1.name")
-);
+const groupByMembers = computed(() => _.groupBy(members?.value, "speciality1.name"));
 </script>
 
 <style scoped lang="scss"></style>

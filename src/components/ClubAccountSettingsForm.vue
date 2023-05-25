@@ -179,15 +179,6 @@ const changeUSerData = async (prop, value) => {
       };
 
     await UserService.subjectUpdate({ subject: currentUser.value, input });
-    for (let team of currentUser.value.teams) {
-      await UserService.subjectUpdate({
-        subject: currentUser.value,
-        input,
-        is_team: true,
-        space_id: team.space,
-      });
-      // await userApi.update(currentUser.value.subject_id, input, true, team.space);
-    }
 
     userStore.SET_PROP(prop, value);
   } catch (error) {
