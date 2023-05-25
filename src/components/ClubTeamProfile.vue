@@ -1,5 +1,6 @@
 <template>
   <main v-if="currentTeam">
+    <!-- <pre>{{ mem }}</pre> -->
     <section v-if="loading" class="loader loader-lg"></section>
 
     <section v-else>
@@ -17,7 +18,10 @@ import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
 
+import userApi from "src/sdk/user";
+
 import { useTeamIsMember } from "src/use/teams";
+import BaseService from "src/sevices/BaseService";
 
 const { isProfile } = defineProps({
   isProfile: Boolean,
@@ -33,7 +37,9 @@ const isOwner = computed(() => currentUser.value.subject_id === currentTeam?.val
 provide("isOwner", isOwner);
 provide("isMember", result);
 
-onMounted(async () => await checkIsMember(currentTeam?.value));
+onMounted(async () => {
+  await checkIsMember(currentTeam?.value);
+});
 </script>
 
 <style scoped lang="scss"></style>

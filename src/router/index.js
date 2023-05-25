@@ -62,8 +62,6 @@ export default route(function (/* { store, ssrContext } */) {
     } else if (teamMember || to.name === "team") {
       const result = await userStore.FETCH_CURRENT_SPACE_SUBJECT(to.query.space, true);
 
-      console.log("subject", result);
-
       if (teamMember && !result)
         next(`/club/team/${to.params.id}?name=${to.query?.name}&space=${to.query?.space}`);
     } else userStore.RESET_CURRENT_SPACE_SUBJECT();

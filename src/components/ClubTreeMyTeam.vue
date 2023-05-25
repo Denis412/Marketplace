@@ -52,6 +52,7 @@ const pages = computed(() =>
 console.log(router.currentRoute.value.path.includes("team"));
 
 const redirect = () => {
+  console.log("redirect");
   router.push({
     name: selected.value === "Командное пространство" ? "teamSpace" : "team",
     params: { id: route.params.id },
@@ -60,5 +61,4 @@ const redirect = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

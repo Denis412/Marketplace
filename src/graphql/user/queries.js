@@ -150,14 +150,12 @@ export const paginateSubjectsInMainSpace = gql`
           name
         }
         speciality1 {
-          name
-        }
-        speciality1 {
           id
           name
         }
         teams {
           id
+          author_id
           avatar
           space
           description

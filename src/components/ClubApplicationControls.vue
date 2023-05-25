@@ -15,7 +15,7 @@
           @click.stop="accept"
         />
 
-        <c-button v-else outline label="Отклонить" @click.stop="cancel" />
+        <c-button v-else outline label="Отменить" @click.stop="cancel" />
       </div>
 
       <div v-else class="flex q-gutter-x-md rel-index-0">

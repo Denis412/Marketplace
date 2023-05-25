@@ -96,7 +96,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
@@ -134,9 +134,6 @@ const sixthInput = ref(null);
 
 const inputCode = async (value, inputNumber) => {
   fullCode.value = replaceAt(fullCode.value, inputNumber - 1, value);
-  console.log(authInfo);
-
-  console.log("hello", value, inputNumber, fullCode.value, fullCode.value.length);
 
   if (inputNumber === 1) secondInput.value.focus();
   else if (inputNumber === 2) thirdInput.value.focus();
@@ -205,8 +202,6 @@ const sendCode = async () => {
 const focusInput = (value, object) => {
   if (value === " " || value === "") object.focus();
 };
-
-onMounted(() => firstInput.value?.focus());
 </script>
 
 <style scoped lang="scss">

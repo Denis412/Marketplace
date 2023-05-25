@@ -16,7 +16,7 @@
 import CTeamProfile from "src/components/ClubTeamProfile.vue";
 import teamApi from "src/sdk/team";
 import userApi from "src/sdk/user";
-import { computed, provide } from "vue";
+import { computed, onMounted, provide } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -43,6 +43,8 @@ const currentMembers = computed(() => members.value?.paginate_subject.data);
 
 provide("currentTeam", team);
 provide("currentMembers", currentMembers);
+
+onMounted(() => console.log("hello space"));
 </script>
 
 <style scoped lang="scss"></style>

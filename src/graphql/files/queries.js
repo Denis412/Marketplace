@@ -7,12 +7,7 @@ export const getFiles = gql`
     $page: Int!
     $perPage: Int!
   ) {
-    paginate_file(
-      page: $page
-      perPage: $perPage
-      where: $where
-      orderBy: $orderBy
-    ) {
+    paginate_file(page: $page, perPage: $perPage, where: $where, orderBy: $orderBy) {
       data {
         type_id
         id

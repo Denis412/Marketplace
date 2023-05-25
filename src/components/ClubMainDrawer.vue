@@ -25,9 +25,7 @@
         class="drawer-wrapper"
       >
         <router-link :to="{ name: item.path }" class="row no-wrap c-pl-16 drawer-item">
-          <div class="flex flex-center bg-primary" style="border-radius: 6px; padding: 4px">
-            <img src="/assets/icons/home/home-white.svg" alt="" />
-          </div>
+          <img :src="`/assets/icons/${item.img}`" alt="" />
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
@@ -96,6 +94,11 @@ const mainTreeItems = ref([
     img: "HomeIconDemo.svg",
     path: "addDocument",
     content: "+",
+  },
+  {
+    title: "Лендинг",
+    img: "HomeIconDemo.svg",
+    path: "addDocument",
   },
 ]);
 

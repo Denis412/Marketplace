@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-
-import userApi from "src/sdk/user";
 import { convertSubject } from "src/utils/convertSubject";
+
+import UserService from "src/sevices/UserService";
+import userApi from "src/sdk/user";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -18,24 +19,7 @@ export const useUserStore = defineStore("user", {
 
   actions: {
     async FETCH_CURRENT_USER() {
-      const subjectsData = await userApi.refetchPaginateSubjects({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "user_id",
-          operator: "EQ",
-          value: JSON.parse(localStorage.getItem("user-data")).user_id,
-        },
-      });
-
-      const userData = await userApi.refetchUserById(
-        JSON.parse(localStorage.getItem("user-data")).user_id
-      );
-
-      this.currentUser = convertSubject({
-        ...userData,
-        ...subjectsData[0],
-      });
+      this.currentUser = await UserService.fetchCurrentUser();
     },
 
     async FETCH_CURRENT_SPACE_SUBJECT(space_id = 0, is_team = false) {
@@ -52,10 +36,13 @@ export const useUserStore = defineStore("user", {
           space_id,
         });
 
+        console.log("data", subjectsData);
+
         this.currentSpaceSubject = subjectsData[0];
 
         return subjectsData[0];
       } catch (e) {
+        console.log(e);
         return null;
       }
     },

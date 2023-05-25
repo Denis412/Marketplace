@@ -1,7 +1,7 @@
 <template>
   <section class="project-target flex no-wrap justify-between c-mt-72">
     <div class="col column c-mr-96">
-      <h4 class="text-h4">Цель проекта</h4>
+      <h4 class="text-subtitle4">Цель проекта</h4>
 
       <q-input
         autogrow
@@ -23,7 +23,7 @@
     />
 
     <div class="col column description-project-info">
-      <h4 class="text-h4">Описание проекта</h4>
+      <h4 class="text-subtitle4">Описание проекта</h4>
 
       <q-input
         autogrow

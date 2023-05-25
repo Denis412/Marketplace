@@ -30,7 +30,7 @@ const navigation_items = ref([
   },
   {
     label: "Магазин",
-    name: "shop",
+    name: "orders",
     icon: "img:/assets/icons/shop/shop-white.svg",
     active_icon: "",
   },
