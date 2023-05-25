@@ -32,7 +32,7 @@ const { result, loading, checkIsMember } = useTeamIsMember();
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
 
-const { result: mem, refetch } = BaseService.fetchApiPaginate(userApi.paginateSubjects, "subject", {
+const { result: mem } = BaseService.fetchApiPaginate(userApi.paginateSubjects, {
   where: {
     column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
     operator: "FTS",
@@ -40,17 +40,7 @@ const { result: mem, refetch } = BaseService.fetchApiPaginate(userApi.paginateSu
   },
 });
 
-const { result: mem1, refetch: refetch1 } = BaseService.fetchApiPaginate(
-  userApi.paginateSubjects,
-  "subject",
-  {
-    where: {
-      column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
-      operator: "FTS",
-      value: currentTeam.value?.id,
-    },
-  }
-);
+BaseService.fetchApiPaginate(userApi.paginateSubjects);
 
 const isOwner = computed(() => currentUser.value.subject_id === currentTeam?.value.author_id);
 
@@ -59,8 +49,6 @@ provide("isMember", result);
 
 onMounted(async () => {
   await checkIsMember(currentTeam?.value);
-
-  setTimeout(async () => await refetch({}), 2000);
 });
 </script>
 
