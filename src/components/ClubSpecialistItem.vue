@@ -27,7 +27,7 @@
       </div>
 
       <div class="text-caption1 q-mt-sm text-violet-6" v-else>
-        {{ specialistRoles }}
+        {{ specialist.role }}
       </div>
     </div>
   </q-item>

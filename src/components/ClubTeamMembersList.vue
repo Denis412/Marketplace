@@ -1,5 +1,6 @@
 <template>
   <q-list>
+    <!-- <pre>{{ currentMembers }}</pre> -->
     <section v-for="specialty in specialtiesList" :key="specialty.index">
       <section v-if="groupByMembers[specialty.filterName]">
         <div class="text-body2 text-violet-6">
@@ -35,9 +36,20 @@ const { result: members } = BaseService.fetchApiPaginate(userApi.paginateSubject
   where: {
     column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
     operator: "FTS",
-    value: currentTeam.value?.id,
+    value: currentTeam?.value?.id,
   },
 });
+
+const currentMembers = computed(() =>
+  members.value?.map((member) =>
+    Object.assign(
+      {},
+      member,
+      members.value.find((m) => m.id === member.id),
+      { role: member.id === currentTeam.value?.author_id ? "Лидер" : "Участник" }
+    )
+  )
+);
 
 const specialtiesList = ref([
   {
@@ -51,7 +63,7 @@ const specialtiesList = ref([
   { filterName: "Аналитик", displayName: "Аналитики", value: "analitics" },
 ]);
 
-const groupByMembers = computed(() => _.groupBy(members?.value, "speciality1.name"));
+const groupByMembers = computed(() => _.groupBy(currentMembers?.value, "speciality1.name"));
 </script>
 
 <style scoped lang="scss"></style>

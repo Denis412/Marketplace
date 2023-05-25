@@ -16,7 +16,11 @@
       </q-card-section>
 
       <q-card-section>
-        <q-img class="bg-violet4 cursor-pointer project-card-image" @click="redirectProjectPage" />
+        <q-img
+          class="bg-violet4 cursor-pointer project-card-image"
+          :src="currentProject.avatar"
+          @click="redirectProjectPage"
+        />
       </q-card-section>
 
       <q-card-section>
