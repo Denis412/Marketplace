@@ -115,6 +115,72 @@ const deleteById = async (id, space_id) => {
   return pageData.pageDelete;
 };
 
+const getRootPage = async (rootPageId, space_id) => {
+  let data_tree = [];
+  let rootPages = await refetchPaginatePagesNew({
+    where: {
+      column: "id",
+      operator: "EQ",
+      value: rootPageId,
+    },
+    space_id: space_id,
+  });
+
+  for (const rootPage of rootPages) {
+    const rootData = {
+      title_page: rootPage.title,
+      object_id: rootPage.object.id,
+      page_id: rootPage.id,
+      page_parent_id: rootPage.parent_id,
+      children: [],
+    };
+
+    // data_tree.push(rootData);
+
+    if (rootPage.children.data.length > 0) {
+      await getChildrenPages(rootPage.children.data, rootData, data_tree);
+    }
+  }
+
+  console.log("data_tree", data_tree);
+  return data_tree;
+};
+
+const getChildrenPages = async (
+  children,
+  parent,
+  data_tree,
+  isTopLevel = true
+) => {
+  for (const child of children) {
+    const childData = {
+      title_page: child.title,
+      object_id: child.object.id,
+      page_id: child.id,
+      page_parent_id: child.parent_id,
+      children: [],
+    };
+
+    // Проверяем, определено ли свойство children у родительского элемента
+    if (parent.children == undefined) {
+      // Если свойство children не определено, добавляем данные текущего дочернего элемента в массив родительского элемента
+      parent.push(childData);
+    } else {
+      // Если свойство children определено, добавляем данные текущего дочернего элемента в массив children родительского элемента
+      parent.children.push(childData);
+      if (isTopLevel) {
+        data_tree.push(childData);
+      }
+    }
+
+    // Проверяем, имеет ли текущий дочерний элемент свойство children и имеет ли оно дочерние элементы
+    if (child.children && child.children.data.length > 0) {
+      // Если текущий дочерний элемент имеет дочерние элементы, вызываем функцию getChildrenPages для обработки его дочерних элементов
+      await getChildrenPages(child.children.data, childData, data_tree, false);
+    }
+  }
+};
+
 const pageApi = {
   paginatePages,
   paginatePagesNew,
@@ -125,6 +191,8 @@ const pageApi = {
   deleteById,
   refetchQueryPageById,
   queryPageById,
+  getRootPage,
+  getChildrenPages,
 };
 
 export default pageApi;
