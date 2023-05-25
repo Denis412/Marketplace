@@ -6,7 +6,7 @@
         :src="user.avatar || '/assets/images/preloaders/default-avatar.svg'"
       />
 
-      <q-img v-else :src="specialist.avatar || '/assets/images/preloaders/default-avatar.svg'" />
+      <q-img v-else :src="specialist?.avatar || '/assets/images/preloaders/default-avatar.svg'" />
     </q-avatar>
 
     <div v-if="currentUser" class="q-ml-md">
