@@ -25,13 +25,15 @@
       </q-item-section>
 
       <q-menu anchor="bottom right" self="center left">
-        <q-item class="popup-component" clickable @click="close = !close">
+        <q-item class="popup-component" clickable
+          @click="close = !close, redact = false, nocustomer = false, customer = false">
           <q-icon name="check" v-if="close"></q-icon>
           <q-icon v-else></q-icon>
           <q-item-section>Закрытый</q-item-section>
         </q-item>
 
-        <q-item class="popup-component" clickable @click="redact = !redact">
+        <q-item class="popup-component" clickable
+          @click="redact = !redact, close = false, nocustomer = false, customer = false">
           <q-icon name="check" v-if="redact"></q-icon>
           <q-icon v-else></q-icon>
           <q-item-section>Редактирование</q-item-section>
@@ -46,13 +48,15 @@
             <q-icon name="keyboard_arrow_down" />
           </q-item-section>
           <q-menu>
-            <q-item class="sub-popup-component" clickable @click="nocustomer = !nocustomer">
+            <q-item class="sub-popup-component" clickable
+              @click="nocustomer = !nocustomer, close = false, redact = false, customer = false">
               <q-icon name="check" v-if="nocustomer"></q-icon>
               <q-icon v-else></q-icon>
               <q-item-section>Без заказчика</q-item-section>
             </q-item>
 
-            <q-item class="sub-popup-component" clickable @click="customer = !customer">
+            <q-item class="sub-popup-component" clickable
+              @click="customer = !customer, close = false, redact = false, nocustomer = false">
               <q-icon name="check" v-if="customer"></q-icon>
               <q-icon v-else></q-icon>
               <q-item-section>С заказчиком</q-item-section>
@@ -108,7 +112,7 @@ const openDoc = () => {
 };
 
 let showDialog = ref(false);
-let close = ref(false)
+let close = ref(true)
 let redact = ref(false)
 let customer = ref(false)
 let nocustomer = ref(false)
