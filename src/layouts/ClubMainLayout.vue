@@ -30,7 +30,7 @@ const exclude = ref([
   "ClubProjectInformationPage",
   "ClubTeamProfileProjects",
   "ClubTeamInvitePage",
-  // "ClubMyProjectsPage",
+  "ClubCreateTeamPage",
 ]);
 
 const currentUser = computed(() => useUserStore().GET_CURRENT_USER);

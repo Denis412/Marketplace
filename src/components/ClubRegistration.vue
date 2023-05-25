@@ -24,7 +24,7 @@
           v-model="form.name"
           type="text"
           placeholder="Введите ваше имя"
-          :rules="[required, maxLength(50)]"
+          :rules="[required, onlyRussian, maxLength(50)]"
         />
 
         <c-input
@@ -32,7 +32,7 @@
           v-model="form.surname"
           type="text"
           placeholder="Введите вашу фамилию"
-          :rules="[required, maxLength(50)]"
+          :rules="[required, onlyRussian, maxLength(50)]"
         />
 
         <c-input
@@ -112,7 +112,8 @@ import userApi from "src/sdk/user";
 
 const $q = useQuasar();
 const timer = useTimer(90);
-const { required, minLength, maxLength, passwordValid, equal, onlyLatin } = useValidators();
+const { required, minLength, maxLength, passwordValid, equal, onlyLatin, onlyRussian } =
+  useValidators();
 
 const authUserInfo = ref({});
 const agreement = ref(false);

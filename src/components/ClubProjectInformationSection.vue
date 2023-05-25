@@ -21,7 +21,7 @@
             <q-input
               :placeholder="created_at || 'ДД.ММ.ГГГГ'"
               v-model="form.created_at"
-              class="date-input c-input-outline"
+              class="date-input c-input-outline no-pointer-events"
               outlined
               readonly
             >
@@ -40,7 +40,7 @@
               outlined
               readonly
               v-model="form.team_name"
-              class="c-input-outline"
+              class="c-input-outline no-pointer-events"
               @change="updateProp('team_name', $event)"
               :placeholder="currentProject?.team_name || 'Напишите название команды'"
             />
