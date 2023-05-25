@@ -14,11 +14,10 @@
         <q-btn
           class="yes-actions-delete-popup"
           label="Удалить"
-          @click="
-            filesFunc.deleteDoc(prop_doc_id, prop_page_id), (showDialog = false)
-          "
+          v-close-popup
+          @click="deleteDocument"
         />
-        <q-btn class="no-actions-delete-popup" label="отмена" v-close-popup />
+        <q-item class="no-actions-delete-popup" v-close-popup>Отмена</q-item>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -28,23 +27,23 @@
 import { ref } from "vue";
 import { filesFunc } from "src/use/fileFunctions";
 
-let showDialog = ref(true);
-
 const props = defineProps({
+  prop_stat: Object,
+  tree: Object,
   prop_doc_id: String,
   prop_page_id: String,
 });
 
 const deleteDocument = () => {
-  filesFunc.deleteDoc(props.prop_doc_id, props.prop_page_id);
-  showDialog = false;
+  props.tree.remove(props.prop_stat);
+  filesApi.deleteDoc(props.prop_doc_id, props.prop_page_id);
 };
 </script>
 
 <style lang="scss" scoped>
 .delete-popup {
   width: 463px;
-  height: 204px;
+  height: 210px;
 
   border: 1px solid #bbbbbb;
   box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.06);
@@ -83,7 +82,7 @@ const deleteDocument = () => {
 
 .actions-delete-popup {
   margin-top: 41px;
-  margin-left: 238px;
+  margin-left: 228px;
 }
 
 .yes-actions-delete-popup {
@@ -91,6 +90,7 @@ const deleteDocument = () => {
   flex-direction: row;
   align-items: center;
   padding: 0px 16px;
+
   gap: 16px;
   width: 95px;
   height: 36px;
@@ -103,12 +103,12 @@ const deleteDocument = () => {
 .no-actions-delete-popup {
   width: 56px;
   height: 15px;
+  margin-left: 13px;
 
   font-family: "Montserrat";
   font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
+  font-weight: 540;
+  cursor: pointer;
 
   display: flex;
   align-items: center;

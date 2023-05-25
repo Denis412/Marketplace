@@ -10,19 +10,40 @@
         </q-item-section>
       </span>
 
+      <span v-else>
+        <img :src="`/icons/dote.svg`" alt="" />
+      </span>
+
       <img :src="`/icons/file-grey.svg`" alt="" class="q-pr-md" />
 
-      <router-link class="name_doc link" @click="set_breadcumps"
-        :to="{ name: 'Document', params: { id: `${props.node.object_id}` } }">
+      <router-link
+        class="name_doc link"
+        @click="set_breadcumps"
+        :to="{ name: 'Document', params: { id: `${props.node.object_id}` } }"
+      >
         {{ node.title_page.replace(".html", "") }}
       </router-link>
 
-      <c-add-document :node="props.node" class="addDoc q-px-md" />
+      <div class="items-wrapper">
+        <c-add-document :node="props.node" class="addDoc" />
 
-      <div class="menu-wrapper" clickable>
-        <q-btn-dropdown no-icon-animation dropdown-icon="more_vert" size="sm" no-caps unelevated no-wrap label=""
-          class="btn-dropdown-doc" v-model="showMenu">
-          <c-menu-document :prop_doc="doc" :prop_data="props.node" />
+        <q-btn-dropdown
+          no-icon-animation
+          dropdown-icon="more_vert"
+          size="sm"
+          no-caps
+          unelevated
+          no-wrap
+          padding="none"
+          class="btn-dropdown-doc"
+          v-model="showMenu"
+        >
+          <c-menu-document
+            :prop_doc="doc"
+            :prop_data="props.node"
+            :tree="props.tree"
+            :prop_stat="props.stat"
+          />
           <!-- <c-menu-document :prop_clicked_index_doc="index" :prop_doc="doc" /> -->
         </q-btn-dropdown>
       </div>
@@ -45,6 +66,7 @@ const doc = ref();
 // console.log("node", props.node.object_id);
 
 const props = defineProps({
+  tree: Object,
   node: Object,
   // index: Number,
   stat: Object,
@@ -82,14 +104,14 @@ getFile();
 
 <style scoped lang="scss">
 .menu-wrapper {
-  width: 40px;
+  width: 30px;
 }
 
 .name_doc {
+  white-space: nowrap;
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: left;
 }
 
 .item_doc {
@@ -105,6 +127,10 @@ getFile();
 
 .addDoc {
   visibility: hidden;
+}
+
+.addDoc:hover {
+  background: #eaeaea;
 }
 
 .item_doc:hover .addDoc {
@@ -125,6 +151,11 @@ getFile();
   opacity: 0;
   animation: ani 0.3s forwards;
   visibility: visible;
+}
+
+.items-wrapper {
+  align-items: center;
+  display: flex;
 }
 
 @keyframes ani {

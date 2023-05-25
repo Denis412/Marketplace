@@ -5,11 +5,11 @@
         v-model="data_tree"
         ref="tree"
         virtualization
-        style="height: 500px"
+        :max-level="4"
         @after-drop="contex()"
       >
         <template #default="{ node, stat }">
-          <c-tabs-item :stat="stat" :node="node" />
+          <c-tabs-item :stat="stat" :node="node" :tree="tree" />
           <!-- <c-tabs-item :stat="stat" :node="node" :doc="FILES[node.index]" /> -->
         </template>
       </Draggable>
@@ -27,6 +27,7 @@ import EventBus from "../sdk/files/eventBus";
 
 const rootPage = ref();
 const data_tree = ref([]);
+const tree = ref(null);
 
 //Получение корневой страницы документов
 const getData = async () => {

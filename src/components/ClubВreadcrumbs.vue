@@ -1,5 +1,5 @@
 <template>
-  <span>{{ path }}</span>
+  <span v-if="path">{{ path }}</span>
 </template>
 
 <script setup>
