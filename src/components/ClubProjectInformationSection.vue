@@ -1,6 +1,6 @@
 <template>
   <section class="c-mt-72 information-section">
-    <h4 class="text-h4">Информация о проекте</h4>
+    <span class="text-subtitle4">Информация о проекте</span>
 
     <div class="c-mt-40 c-gutter-y-32">
       <div class="flex no-wrap justify-between q-gutter-x-md">

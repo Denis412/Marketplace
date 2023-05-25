@@ -19,15 +19,15 @@
 
     <div v-else class="q-ml-md">
       <div class="text-body2 text-violet-6">
-        {{ specialist.fullname.first_name }} {{ specialist.fullname.last_name }}
+        {{ specialist?.fullname.first_name }} {{ specialist?.fullname.last_name }}
       </div>
 
       <div class="text-caption1 q-mt-sm text-violet-6" v-if="!roles">
-        {{ specialist.speciality1?.name || specialist.speciality1 }}
+        {{ specialist?.speciality1?.name || specialist?.speciality1 }}
       </div>
 
       <div class="text-caption1 q-mt-sm text-violet-6" v-else>
-        {{ specialist.role }}
+        {{ specialist?.role }}
       </div>
     </div>
   </q-item>

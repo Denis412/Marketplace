@@ -69,6 +69,9 @@ export const projectsPaginateInTeamSpace = gql`
             first_name
             last_name
           }
+          email {
+            email
+          }
           speciality1
           group {
             id
