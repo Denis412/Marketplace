@@ -1,29 +1,33 @@
 <template>
-  <q-card flat class="project-card">
-    <main class="q-gutter-y-md">
-      <q-card-section class="column wrap">
-        <section class="q-gutter-y-sm">
-          <div>
-            <span class="text-subtitle4 text-violet8">
-              {{ currentProject.name }}
-            </span>
-          </div>
+  <q-card flat class="project-card card-shadow">
+    <main class="column no-wrap h-100p justify-between">
+      <q-card-section class="q-gutter-y-lg">
+        <section class="column wrap">
+          <section class="q-gutter-y-sm">
+            <div>
+              <span class="text-subtitle4 text-violet8">
+                {{ currentProject.name }}
+              </span>
+            </div>
 
-          <div>
-            <span class="text-caption1 text-gray7"> Команда: {{ currentProject.team_name }} </span>
-          </div>
+            <div>
+              <span class="text-caption1 text-gray7">
+                Команда: {{ currentProject.team_name }}
+              </span>
+            </div>
+          </section>
         </section>
+
+        <q-card-section>
+          <q-img
+            class="bg-violet4 cursor-pointer project-card-image"
+            :src="currentProject.avatar"
+            @click="redirectProjectPage"
+          />
+        </q-card-section>
       </q-card-section>
 
-      <q-card-section>
-        <q-img
-          class="bg-violet4 cursor-pointer project-card-image"
-          :src="currentProject.avatar"
-          @click="redirectProjectPage"
-        />
-      </q-card-section>
-
-      <q-card-section>
+      <q-card-section class="q-mt-md">
         <div class="column text-caption1 text-gray7 q-gutter-y-md">
           <span v-if="currentProject.description">
             {{ truncate(currentProject.description, 78) }}
@@ -37,7 +41,7 @@
         </div>
       </q-card-section>
 
-      <q-card-section class="flex justify-center" v-if="application">
+      <q-card-section class="flex justify-center items-end" style="height: 100%" v-if="application">
         <c-application-controls :application="application" project incoming />
       </q-card-section>
     </main>
@@ -81,15 +85,12 @@ const redirectProjectPage = () => {
 .project-card {
   padding: 12px 16px;
 
-  max-height: 430px;
-  height: 430px;
+  height: 100%;
 
-  box-shadow: 0px 29px 12px rgba(0, 0, 0, 0.01), 0px 16px 10px rgba(0, 0, 0, 0.05),
-    0px 7px 7px rgba(0, 0, 0, 0.09), 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1) !important;
   border-radius: 12px;
 
   &-image {
-    min-height: 150px;
+    min-height: 200px;
     max-height: 200px;
   }
 

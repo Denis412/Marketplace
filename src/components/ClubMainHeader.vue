@@ -2,10 +2,13 @@
   <q-header class="header-main flex flex-center bg-dark-purple c-px-32">
     <q-toolbar>
       <q-img class="logo" src="/assets/images/logo-white.svg" alt="logo" />
-      <q-toolbar-title class="flex items-center">
+
+      <q-toolbar-title class="flex no-wrap items-center">
         <span class="text-h3">Клуб</span>
 
-        <c-header-navigation class="navigation text-caption1" />
+        <div class="flex">
+          <c-header-navigation class="navigation text-caption1" />
+        </div>
       </q-toolbar-title>
 
       <div class="relative-position">

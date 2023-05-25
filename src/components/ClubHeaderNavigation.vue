@@ -1,5 +1,5 @@
 <template>
-  <section class="text-caption1">
+  <section class="text-caption1 flex">
     <q-btn
       flat
       no-caps
@@ -61,7 +61,10 @@ const redirectPage = (page_name) => {
 
 <style scoped lang="scss">
 .active-item {
-  color: $violet-3;
+  color: white;
+
+  text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.25), 0px 0px 4px #c800c8, 0px 0px 8px #c800c8,
+    0px 0px 11px #c800c8, 0px 0px 18px #c800c8;
 
   transition: 0.3s;
 }

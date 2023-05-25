@@ -41,6 +41,8 @@ export const getSubjectById = gql`
           description
           avatar
         }
+        created_at
+        updated_at
       }
       birthday {
         date

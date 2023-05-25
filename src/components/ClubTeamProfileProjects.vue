@@ -55,7 +55,7 @@
               <section v-for="project in projects" :key="project.id" class="col-4">
                 <c-project-card
                   flat
-                  class="flex flex-center project-card cursor-pointer"
+                  class="flex flex-center cursor-pointer"
                   :project="project"
                   @click="redirectProjectPage(project)"
                 />
@@ -103,6 +103,7 @@ import _ from "lodash";
 
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";
+import projectApi from "src/sdk/project";
 
 const router = useRouter();
 
@@ -113,7 +114,15 @@ const { isProfile } = defineProps({
 const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
 
-const chunkedProjects = computed(() => _.chunk(currentTeam.value?.projects, 2));
+const { result: currentProjects } = projectApi.paginateProject({
+  page: 1,
+  perPage: 50,
+  space_id: currentTeam.value.space,
+});
+
+const chunkedProjects = computed(() =>
+  _.chunk(currentProjects.value?.paginate_project.data, isProfile ? 3 : 2)
+);
 
 const slide = ref(0);
 const selectProjectsList = ref("active");
@@ -154,6 +163,7 @@ const switchSlide = (direction = "", position = -1) => {
 
 .project-card {
   min-height: 256px;
+  height: 100%;
 
   border: 1px dashed $violet-6;
   border-radius: 5px;
