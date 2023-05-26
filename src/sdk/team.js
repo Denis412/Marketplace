@@ -30,14 +30,10 @@ const refetchPaginateTeams = async ({ page, perPage, where }) => {
   return teamsData.paginate_team.data;
 };
 
-const create = async ({ name, description, leader_telegram_chat_id, space }) => {
+const create = async ({ input, space_id }) => {
+  // name, description, leader_telegram_chat_id
   const { data: teamData } = await creatingTeam({
-    input: {
-      name,
-      description,
-      leader_telegram_chat_id,
-      space,
-    },
+    input: { ...input, space: space_id },
   });
 
   console.log("create team", teamData);
@@ -45,10 +41,10 @@ const create = async ({ name, description, leader_telegram_chat_id, space }) => 
   return teamData.create_team.record;
 };
 
-const update = async (id, data) => {
+const update = async ({ id, input }) => {
   const { data: teamData } = await updatingTeam({
     id,
-    input: data,
+    input,
   });
 
   console.log("update team", teamData);

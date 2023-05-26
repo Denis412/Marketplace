@@ -75,6 +75,8 @@ import { useTeamCreate } from "src/use/teams";
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
 
+import TeamService from "src/sevices/TeamService";
+
 import filesApi from "src/sdk/file";
 
 const currentUser = inject("currentUser");
@@ -95,7 +97,8 @@ const uploadFile = ref(null);
 
 const teamCreate = async () => {
   try {
-    await createTeam({ ...form.value, author: currentUser.value });
+    TeamService.createTeam({ ...form.value });
+    // await createTeam({ ...form.value, author: currentUser.value });
 
     router.push({
       name: "my-teams",

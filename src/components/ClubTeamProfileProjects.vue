@@ -19,7 +19,7 @@
         <c-card-add-project
           v-if="isOwner && !isProfile"
           flat
-          class="flex flex-center project-card add-card col-4"
+          class="flex flex-center project-card add-card project-card-empty col-4"
         />
 
         <q-card flat class="flex flex-center project-card project-card-empty col">

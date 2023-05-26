@@ -104,7 +104,7 @@ export default class BaseService {
       result.value = await baseMutation(method_link, variables, options);
 
       if (mutates && mutates.length) {
-        result.value = result.value ? [result.value] : [];
+        result.value = result.value ? [Object.assign({}, result.value)] : [];
 
         for (let mutate of mutates) {
           result.value.push(

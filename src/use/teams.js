@@ -22,8 +22,10 @@ export const useTeamCreate = () => {
       creatingTeam.value = true;
 
       space = await spaceApi.create({
-        name,
-        description,
+        input: {
+          name,
+          description,
+        },
       });
 
       //**************************Свойства субъекта*********************************
@@ -439,15 +441,20 @@ export const useTeamCreate = () => {
       });
 
       team = await teamApi.create({
-        name,
-        description,
-        leader_telegram_chat_id: author.telegram_chat_id,
-        space: space.id,
+        input: {
+          name,
+          description,
+          leader_telegram_chat_id: author.telegram_chat_id,
+        },
+        space_id: space.id,
       });
 
-      await teamApi.update(team.id, {
-        members: {
-          [process.env.SUBJECT_TYPE_ID]: [team.author_id],
+      await teamApi.update({
+        id: team.id,
+        input: {
+          members: {
+            [process.env.SUBJECT_TYPE_ID]: [team.author_id],
+          },
         },
       });
 
