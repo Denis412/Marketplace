@@ -1,5 +1,5 @@
 <template>
-  <q-card class="w-100p h-100p" :class="{ 'project-card': !project.avatar }">
+  <q-card class="w-100p project-card" :class="{ 'project-card-empty': !project.avatar }">
     <q-img :src="project.avatar" class="project-card-img" />
 
     <div class="project-card-bg"></div>
@@ -22,12 +22,14 @@ const { project } = defineProps({
 
 <style scoped lang="scss">
 .project-card {
-  min-height: 256px;
-
+  height: 256px;
+  max-height: 256px;
   $radius: 5px;
 
-  border: 1px dashed $violet-6;
-  border-radius: $radius;
+  &-empty {
+    border: 1px dashed $violet-6;
+    border-radius: $radius;
+  }
 
   &-content {
     &__absolute {

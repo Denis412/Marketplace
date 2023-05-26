@@ -48,17 +48,24 @@
               :name="index"
               class="row q-col-gutter-x-md"
             >
-              <section v-if="isOwner && !isProfile" class="col-4">
-                <c-card-add-project flat class="flex flex-center project-card add-card" />
+              <section v-if="isOwner && !isProfile" class="add-card col-4">
+                <c-card-add-project flat class="flex flex-center project-card project-card-empty" />
               </section>
 
-              <section v-for="project in projects" :key="project.id" class="col-4">
-                <c-project-card
-                  flat
-                  class="flex flex-center cursor-pointer"
-                  :project="project"
-                  @click="redirectProjectPage(project)"
-                />
+              <section class="row col q-col-gutter-x-md">
+                <section
+                  v-for="project in projects"
+                  :key="project.id"
+                  style="max-height: 100%"
+                  :class="{ 'col-4': isProfile, 'col-6': !isProfile }"
+                >
+                  <c-project-card
+                    flat
+                    class="flex flex-center cursor-pointer"
+                    :project="project"
+                    @click="redirectProjectPage(project)"
+                  />
+                </section>
               </section>
             </q-carousel-slide>
           </q-carousel>
@@ -163,13 +170,16 @@ const switchSlide = (direction = "", position = -1) => {
 
 .project-card {
   min-height: 256px;
+  max-height: 256px;
   height: 100%;
 
-  border: 1px dashed $violet-6;
-  border-radius: 5px;
+  &-empty {
+    border: 1px dashed $violet-6;
+    border-radius: 5px;
+  }
 
   &-add {
-    // max-width: 352px;
+    max-width: 352px;
   }
 }
 

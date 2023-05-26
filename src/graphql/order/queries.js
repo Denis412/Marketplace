@@ -25,11 +25,16 @@ export const getOrderById = gql`
       }
       price_end
       price_start
-      date_complete
+      date_complete {
+        date
+        time
+      }
       draft
       status
       team
-      date_approve
+      date_approve {
+        date
+      }
       deal
       rejection
     }
@@ -61,11 +66,16 @@ export const getOrders = gql`
         files
         price_end
         price_start
-        date_complete
+        date_complete {
+          date
+          time
+        }
         draft
         status
         team
-        date_approve
+        date_approve {
+          date
+        }
         deal
         rejection
       }
