@@ -16,7 +16,7 @@
         no-caps
         class="club-button-background text-body1 q-mt-lg"
         label="Пригласить"
-        @click="redirectInvite(true)"
+        @click="redirectInvite"
       />
 
       <c-specialist-item
@@ -40,13 +40,11 @@ const router = useRouter();
 const currentCustomers = inject("currentCustomers");
 const currentLeader = inject("currentLeader");
 
-const redirectInvite = (is_customer = false) => {
-  const query = is_customer ? { ...route.query, customer: true } : { ...route.query };
-
+const redirectInvite = () => {
   router.push({
     name: "projectInvite",
     params: { ...route.params },
-    query,
+    query: { ...route.query, customer: true },
   });
 };
 </script>

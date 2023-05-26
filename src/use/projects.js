@@ -373,6 +373,17 @@ export const useProjectApplication = () => {
         space_id,
       });
 
+      await permissionApi.create({
+        input: {
+          model_type: "object",
+          model_id: result.value.id,
+          owner_type: "subject",
+          owner_id: subject.id,
+          level: 5,
+        },
+        space_id,
+      });
+
       loading.value = false;
     } catch (e) {
       error.value = e;

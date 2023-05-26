@@ -1,9 +1,11 @@
 <template>
-  <footer class="flex justify-between items-center c-mt-32">
-    <section v-if="!project" class="text-body2">{{ statusObject.updated_at }}</section>
+  <footer class="flex justify-between items-center c-mt-32 rel-index-0">
+    <section v-if="!project" class="text-body2">
+      {{ new Date(application.updated_at).toLocaleDateString() }}
+    </section>
 
     <section class="flex items-center q-gutter-x-md text-body1">
-      <div :style="{ color: statusObject.property?.color }">
+      <div v-if="!incoming" :style="{ color: statusObject.property?.color }">
         {{ statusObject.property?.label }}
       </div>
 
@@ -15,12 +17,12 @@
           @click.stop="accept"
         />
 
-        <c-button v-else outline label="Отменить" @click.stop="cancel" />
+        <c-button v-else outline label="Отменить" class="text-body1" @click.stop="cancel" />
       </div>
 
-      <div v-else class="flex q-gutter-x-md rel-index-0">
-        <c-button background label="Принять" @click.stop="accept" />
-        <c-button outline label="Отклонить" @click.stop="cancel" />
+      <div v-else class="flex c-gutter-x-32">
+        <c-button background label="Принять" class="text-body1" @click.stop="accept" />
+        <c-button outline label="Отклонить" class="text-body1" @click.stop="cancel" />
       </div>
     </section>
   </footer>

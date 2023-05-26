@@ -1,5 +1,5 @@
 <template>
-  <q-page class="c-pa-32 page-background">
+  <q-page class="c-pa-32">
     <header>
       <h3 class="text-h3" v-if="!route.query.customer">Пригласить участника</h3>
       <h3 class="text-h3" v-else>Пригласить заказчика</h3>
@@ -37,7 +37,7 @@
 
       <section class="row c-mt-24">
         <section class="col">
-          <div class="subjects-wrapper">
+          <div class="subjects-wrapper gray-scrollbar">
             <q-list class="q-gutter-y-md" v-if="showSubjects?.length">
               <c-invite-subject-item
                 v-for="subject in showSubjects"
@@ -231,12 +231,17 @@ const resetSubjects = () => (selectedSubjects.value = []);
   width: 450px;
 }
 
+.c {
+  background: $violet-4;
+}
+
 .subjects-wrapper {
   max-height: 532px;
-  overflow-y: auto;
 
   padding: 24px;
-  background: $grey-4;
+  background: white;
+  box-shadow: 0px 29px 12px rgba(0, 0, 0, 0.01), 0px 16px 10px rgba(0, 0, 0, 0.05),
+    0px 7px 7px rgba(0, 0, 0, 0.09), 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1) !important;
   border-radius: 10px;
 }
 
@@ -244,6 +249,8 @@ const resetSubjects = () => (selectedSubjects.value = []);
   height: max-content;
 
   border-radius: 10px;
-  background: $grey-4;
+  box-shadow: 0px 29px 12px rgba(0, 0, 0, 0.01), 0px 16px 10px rgba(0, 0, 0, 0.05),
+    0px 7px 7px rgba(0, 0, 0, 0.09), 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1) !important;
+  background: white;
 }
 </style>

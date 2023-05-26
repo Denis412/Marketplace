@@ -15,7 +15,7 @@
         no-caps
         class="club-button-background text-body1"
         label="Пригласить"
-        @click="redirectInvite(false)"
+        @click="redirectInvite"
       />
     </q-toolbar>
 
@@ -48,6 +48,14 @@ const route = useRoute();
 const currentProject = inject("currentProject");
 
 const selectedList = ref("members");
+
+const redirectInvite = () => {
+  router.push({
+    name: "projectInvite",
+    params: { ...route.params },
+    query: { ...route.query },
+  });
+};
 </script>
 
 <style scoped lang="scss"></style>

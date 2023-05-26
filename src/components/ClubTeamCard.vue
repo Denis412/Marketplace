@@ -1,6 +1,6 @@
 <template>
   <q-card
-    class="team rounded-borders-10 c-pa-32 cursor-pointer flex column justify-between"
+    class="team card-shadow rounded-borders-10 c-pa-32 cursor-pointer column no-wrap justify-between"
     @click="to()"
   >
     <section class="flex no-wrap">
@@ -68,9 +68,6 @@ const teamDelete = async () => await deleteTeam(team, currentUser.value.subject_
 
 <style lang="scss" scoped>
 .team {
-  box-shadow: 0px 38px 15px rgba(0, 0, 0, 0.01), 0px 21px 13px rgba(0, 0, 0, 0.03),
-    0px 10px 10px rgba(0, 0, 0, 0.04), 0px 2px 5px rgba(0, 0, 0, 0.05),
-    0px 0px 0px rgba(0, 0, 0, 0.05);
   max-height: 275px;
   height: 275px;
 

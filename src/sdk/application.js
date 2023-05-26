@@ -65,7 +65,7 @@ const create = async ({ name, subject, team, project, status, sender, is_custome
 
   console.log("create application", applicationData);
 
-  return applicationData.create_application;
+  return applicationData.create_application.record;
 };
 
 const update = async (id, data, space_id) => {
@@ -78,7 +78,7 @@ const update = async (id, data, space_id) => {
 
   console.log("update application", applicationData);
 
-  return applicationData.update_application;
+  return applicationData.update_application.record;
 };
 
 const deleteById = async (id, space_id) => {
