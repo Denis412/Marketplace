@@ -11,6 +11,7 @@
         </div>
       </q-toolbar-title>
 
+      <c-notification />
       <div class="relative-position">
         <q-avatar
           class="cursor-pointer relative-position header-avatar"
@@ -23,7 +24,6 @@
           <c-right-person-menu v-if="showIconMenu" :current-user="currentUser" />
         </transition>
       </div>
-      <c-notification />
     </q-toolbar>
   </q-header>
 </template>

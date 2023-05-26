@@ -20,14 +20,14 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const selectedPage = ref("teams");
+const selectedPage = ref();
 const navigation_items = ref([
-  {
-    label: "Мой кабинет",
-    name: "my-space",
-    icon: "img:/assets/icons/my-space/my-space-white.svg",
-    active_icon: "",
-  },
+  // {
+  //   label: "Мой кабинет",
+  //   name: "my-space",
+  //   icon: "img:/assets/icons/my-space/my-space-white.svg",
+  //   active_icon: "",
+  // },
   {
     label: "Магазин",
     name: "orders",
