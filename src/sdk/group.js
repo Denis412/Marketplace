@@ -31,8 +31,8 @@ const refetchPaginateGroups = async ({ page, perPage, where, space_id }) => {
   return groupData.paginate_group.data;
 };
 
-const create = async (space_id, data) => {
-  const { data: groupData } = await creatingGroup({ input: data }, spaceHeader(space_id));
+const create = async ({ space_id, input }) => {
+  const { data: groupData } = await creatingGroup({ input }, spaceHeader(space_id));
 
   console.log("group create", groupData);
 

@@ -22,9 +22,7 @@ const route = useRoute();
 const router = useRouter();
 const currentUser = inject("currentUser");
 
-const selected = ref(
-  route.path.includes("team-space") ? "Командное пространство" : "Профиль команды"
-);
+const selected = ref(route.path.includes("space") ? "Командное пространство" : "Профиль команды");
 
 const { result: pagesTree } = pageApi.paginateRootPages({
   page: 1,
@@ -37,8 +35,25 @@ const { result: pagesTree } = pageApi.paginateRootPages({
   space_id: route.query.space,
 });
 
-const pages = computed(() =>
-  pagesTree.value?.rootPages.data.map((page) => ({
+const pages = computed(() => {
+  if (!pagesTree.value?.rootPages.data?.length) {
+    return [
+      {
+        id: route.params.id,
+        label: route.query.name,
+        icon: "img:/assets/icons/tree/default-tree-icon.svg",
+        children: [
+          {
+            id: route.params.id,
+            label: "Профиль команды",
+            icon: "img:/assets/icons/tree/default-tree-icon.svg",
+          },
+        ],
+      },
+    ];
+  }
+
+  return pagesTree.value?.rootPages.data.map((page) => ({
     label: page.title,
     icon: "img:/assets/icons/tree/default-tree-icon.svg",
     children: page.children.data.map((children) => ({
@@ -46,8 +61,8 @@ const pages = computed(() =>
       label: children.title,
       icon: "img:/assets/icons/tree/default-tree-icon.svg",
     })),
-  }))
-);
+  }));
+});
 
 console.log(router.currentRoute.value.path.includes("team"));
 

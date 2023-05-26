@@ -142,8 +142,6 @@ const inputCode = async (value, inputNumber) => {
   else if (inputNumber === 5) sixthInput.value.focus();
 
   if (fullCode.value.indexOf(" ") === -1) {
-    console.log(authInfo);
-
     try {
       if (!reset && !resetCode.value)
         await userApi.setPassword({

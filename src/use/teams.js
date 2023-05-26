@@ -81,22 +81,31 @@ export const useTeamCreate = () => {
         space_id: space.id,
       });
 
-      await groupApi.create(space.id, {
-        name: "Участник",
-        description: "Группа участников",
-        parent_group_id: teamGroup[0].id,
+      await groupApi.create({
+        input: {
+          name: "Участник",
+          description: "Группа участников",
+          parent_group_id: teamGroup[0].id,
+        },
+        space_id: space.id,
       });
 
-      await groupApi.create(space.id, {
-        name: "Заказчик",
-        description: "Группа заказчиков",
-        parent_group_id: teamGroup[0].id,
+      await groupApi.create({
+        input: {
+          name: "Заказчик",
+          description: "Группа заказчиков",
+          parent_group_id: teamGroup[0].id,
+        },
+        space_id: space.id,
       });
 
-      await groupApi.create(space.id, {
-        name: "Приглашенный",
-        description: "Группа приглашенных",
-        parent_group_id: teamGroup[0].id,
+      await groupApi.create({
+        input: {
+          name: "Приглашенный",
+          description: "Группа приглашенных",
+          parent_group_id: teamGroup[0].id,
+        },
+        space_id: space.id,
       });
 
       //**************************Свойства проекта*********************************

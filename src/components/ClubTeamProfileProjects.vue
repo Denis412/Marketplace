@@ -106,7 +106,7 @@
 import { computed, inject, onMounted, ref } from "vue";
 
 import { useRouter } from "vue-router";
-import _ from "lodash";
+import * as _ from "lodash";
 
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";

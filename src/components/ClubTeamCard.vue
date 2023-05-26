@@ -57,7 +57,7 @@ const { team, application, incoming } = defineProps({
 
 const to = async () => {
   router.push({
-    name: "team",
+    name: "teamSpace",
     params: { id: team.id },
     query: { name: team.name, space: team.space },
   });
