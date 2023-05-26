@@ -1,5 +1,5 @@
 <template>
-  <q-form @submit="updateTeamData" class="teamSettingForm c-mb-32">
+  <q-form class="teamSettingForm c-mb-32">
     <div class="flex teamSettingForm-section c-mb-40 c-pb-32">
       <section class="flex no-wrap">
         <c-label-control label="Ссылка на чат команды в Telegram">
@@ -10,6 +10,7 @@
               class="c-input-outline teamSettingForm-input"
               outlined
               :rules="[minLength(18), maxLength(45), telegramm]"
+              @change="updateTeamData"
             >
               <template #append>
                 <q-icon name="img:/icons/editBlack.svg" class="create-form-icon cursor-pointer" />
@@ -19,8 +20,6 @@
         </c-label-control>
       </section>
     </div>
-
-    <c-team-settings-buttons />
   </q-form>
 </template>
 
@@ -29,13 +28,13 @@ import { ref, inject } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 import { useValidators } from "src/use/validators";
-import { useTeamUpdate } from "src/use/teams";
 
 import CLabelControl from "./ClubLabelControl.vue";
 import CTeamSettingsButtons from "./ClubTeamSettingsButtons.vue";
 
+import TeamService from "src/sevices/TeamService";
+
 const { maxLength, telegramm, minLength } = useValidators();
-const { result: teamData, updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
 const telegram_chat_id = ref(currentTeam.value.telegram_chat_id);
@@ -43,9 +42,12 @@ const router = useRouter();
 const route = useRoute();
 
 const updateTeamData = async () => {
-  await updateTeam(currentTeam.value.id, {
-    telegram_chat_id: telegram_chat_id.value,
-  });
+  const { result: teamData } = await TeamService.updateTeam(
+    { telegram_chat_id: telegram_chat_id.value },
+    { id: currentTeam.value.id }
+  );
+
+  console.log("team", teamData.value);
 
   router.push({
     name: "teamSpace",

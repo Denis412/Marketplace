@@ -1,7 +1,8 @@
+import { ref } from "vue";
+
 import projectApi from "src/sdk/project";
 import BaseService from "./BaseService";
 import teamApi from "src/sdk/team";
-import { ref } from "vue";
 import spaceApi from "src/sdk/space";
 import groupApi from "src/sdk/group";
 import typeApi from "src/sdk/type";
@@ -11,7 +12,7 @@ import pageApi from "src/sdk/page";
 
 export default class TeamService {
   static fetchTeamsPaginate(variables = {}, options = {}) {
-    return BaseService.fetchApiPaginate(teamApi.paginateProject, variables, options);
+    return BaseService.fetchApiPaginate(teamApi.paginateTeams, variables, options);
   }
 
   static fetchTeamProjectsPaginate(variables = {}, options = {}) {
@@ -23,9 +24,47 @@ export default class TeamService {
     const loading = ref(false);
     const error = ref(null);
 
+    loading.value = true;
+
     const { result: teamSpace } = await BaseService.apiMutation(spaceApi.create, {
       name: variables.name,
       description: variables.description,
+    });
+
+    const { result: createdTeam, error: err } = await BaseService.apiMutation(
+      teamApi.create,
+      variables,
+      {
+        space_id: teamSpace.value.id,
+      }
+    );
+
+    console.log("team", createdTeam.value);
+
+    if (err.value) console.log("error", err.value);
+
+    await BaseService.apiMutation(
+      teamApi.update,
+      { members: { [process.env.SUBJECT_TYPE_ID]: [createdTeam.value.author_id] } },
+      { id: createdTeam.value.id }
+    );
+
+    //Создание страниц
+
+    const { result: rootPage, mutate } = await BaseService.apiMutation(
+      pageApi.create,
+      { title: createdTeam.value.name },
+      { space_id: teamSpace.value.id }
+    );
+
+    await mutate({
+      title: "Командное пространство",
+      parent_id: rootPage.value.id,
+    });
+
+    await mutate({
+      title: "Профиль команды",
+      parent_id: rootPage.value.id,
     });
 
     //Создание групп
@@ -324,37 +363,27 @@ export default class TeamService {
       ]
     );
 
-    const { result: createdTeam } = await BaseService.apiMutation(
-      teamApi.create,
-      {
-        ...variables,
-      },
-      { space_id: teamSpace.value.id }
-    );
+    loading.value = false;
 
-    await BaseService.apiMutation(
+    return { result, loading, error };
+  }
+
+  static async updateTeam(variables, options) {
+    const result = ref(null);
+    const loading = ref(false);
+    const error = ref(null);
+
+    loading.value = true;
+
+    const { result: mutateResult } = await BaseService.apiMutation(
       teamApi.update,
-      { members: { [process.env.SUBJECT_TYPE_ID]: [createdTeam.value.author_id] } },
-      { id: createdTeam.value.id }
+      variables,
+      options
     );
 
-    //Создание страниц
+    result.value = mutateResult.value;
 
-    const { result: rootPage, mutate } = await BaseService.apiMutation(
-      pageApi.create,
-      { title: createdTeam.value.name },
-      { space_id: teamSpace.value.id }
-    );
-
-    await mutate({
-      title: "Командное пространство",
-      parent_id: rootPage.value.id,
-    });
-
-    await mutate({
-      title: "Профиль команды",
-      parent_id: rootPage.value.id,
-    });
+    loading.value = false;
 
     return { result, loading, error };
   }
