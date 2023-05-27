@@ -3,14 +3,13 @@
     class="c-input-outline"
     outlined
     v-model="value"
-    @update:modelValue="emitChange"
+    @update:model-value="emitChange"
     :type="calcType"
-    :autogrow="autogrow"
-    :placeholder="placeholder"
-    :rules="rules"
   >
-    <template v-slot:append v-if="visibility">
-      <q-icon class="cursor-pointer" :name="iconName" @click="toggleShowText" />
+    <template v-slot:append>
+      <q-icon v-if="visibility" class="cursor-pointer" :name="iconName" @click="toggleShowText" />
+
+      <slot name="icon"></slot>
     </template>
   </q-input>
 </template>
@@ -19,22 +18,11 @@
 import { computed, ref } from "vue";
 import capitalizeWord from "src/utils/capitalizeWord";
 
-const {
-  type,
-  placeholder,
-  visibility,
-  autogrow,
-  rules,
-  modelValue,
-  modelModifiers,
-  countInput,
-} = defineProps({
+const { type, visibility, modelValue, modelModifiers, countInput, iconLeft } = defineProps({
   type: String,
-  placeholder: String,
   visibility: Boolean,
-  autogrow: Boolean,
   countInput: String,
-  rules: Array,
+  iconLeft: String,
   modelValue: String,
   modelModifiers: {
     default: () => ({}),
@@ -51,8 +39,8 @@ const iconName = computed(() => {
 
   if (visibility) {
     name = showText.value
-      ? "img:/src/assets/icons/eye/eye-grey.svg"
-      : "img:/src/assets/icons/eye/eye-hidden-grey.svg";
+      ? "img:/assets/icons/eye/eye-grey.svg"
+      : "img:/assets/icons/eye/eye-hidden-grey.svg";
   }
 
   return name;

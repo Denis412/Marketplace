@@ -1,24 +1,66 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
+import { convertSubject } from "src/utils/convertSubject";
 
-export const useUserStore = defineStore('user', {
+import UserService from "src/sevices/UserService";
+import userApi from "src/sdk/user";
+
+export const useUserStore = defineStore("user", {
   state: () => ({
     currentUser: null,
-    files: 'wtf',
+    currentSpaceSubject: null,
+    files: "wtf",
   }),
 
   getters: {
     GET_CURRENT_USER() {
-      return this.currentUser
+      return this.currentUser;
     },
   },
 
   actions: {
-    SET_CURRENT_USER() {
-      this.currentUser = JSON.parse(localStorage.getItem('user-data'))
+    async FETCH_CURRENT_USER() {
+      this.currentUser = await UserService.fetchCurrentUser();
+    },
+
+    async FETCH_CURRENT_SPACE_SUBJECT(space_id = 0, is_team = false) {
+      try {
+        const subjectsData = await userApi.refetchPaginateSubjects({
+          page: 1,
+          perPage: 1,
+          where: {
+            column: "user_id",
+            operator: "EQ",
+            value: JSON.parse(localStorage.getItem("user-data")).user_id,
+          },
+          is_team,
+          space_id,
+        });
+
+        console.log("data", subjectsData);
+
+        this.currentSpaceSubject = subjectsData[0];
+
+        return subjectsData[0];
+      } catch (e) {
+        console.log(e);
+        return null;
+      }
+    },
+
+    RESET_CURRENT_SPACE_SUBJECT() {
+      this.currentSpaceSubject = null;
+    },
+
+    SET_PROP(prop, value) {
+      this.currentUser[prop] = value;
+    },
+
+    SET_AVATAR(avatar_url) {
+      this.currentUser.avatar = avatar_url;
     },
 
     LOGOUT_CURRENT_USER() {
-      this.currentUser = null
+      this.currentUser = null;
     },
   },
-})
+});

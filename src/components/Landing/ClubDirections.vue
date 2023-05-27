@@ -3,9 +3,9 @@
     <h2 class="title relative-position z-max">
       Выберите направление
       <img
-      src="src/assets/images/Vector3.svg"
-      class="absolute-center shadow"
-    />
+        src="/assets/images/landing-background/main-page/bg-14.svg"
+        class="absolute-center shadow"
+      />
     </h2>
 
     <div class="font-size-24 text-weight-light subtitle">

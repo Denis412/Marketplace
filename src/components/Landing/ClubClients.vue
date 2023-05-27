@@ -3,8 +3,8 @@
     <div class="text-h3">Кому подходит 1Т Клуб</div>
 
     <div class="relative-position">
-      <img class="q-mt-md" src="../../assets/images/Vector11.svg" />
-      <img src="src/assets/images/Ellipse69.svg" class="absolute-center" />
+      <img class="q-mt-md" src="/assets/images/landing/branches1.svg" />
+      <img src="/assets/images/landing-background/main-page/bg-13.svg" class="absolute-center" />
     </div>
 
     <c-categories-group />

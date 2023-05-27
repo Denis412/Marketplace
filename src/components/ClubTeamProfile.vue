@@ -1,29 +1,44 @@
 <template>
-  <section>
-    <header>
-      <h3 class="text-h3">Профиль команды</h3>
-    </header>
+  <main v-if="currentTeam">
+    <!-- <pre>{{ mem }}</pre> -->
+    <section v-if="loading" class="loader loader-lg"></section>
 
-    <main class="c-mt-24">
-      <c-team-profile-header
-        :title="team.title"
-        :description="team.description"
-        :directions="team.directions"
-      />
-
-      <c-team-profile-projects :projects="team.projects" />
-      <c-team-profile-members :team="team" />
-    </main>
-  </section>
+    <section v-else>
+      <c-team-profile-header :is-profile="isProfile" />
+      <c-team-profile-projects :is-profile="isProfile" class="c-pt-32" />
+      <c-team-profile-members :is-profile="isProfile" />
+    </section>
+  </main>
 </template>
 
 <script setup>
+import { computed, inject, onMounted, provide, watch } from "vue";
+
 import CTeamProfileHeader from "./ClubTeamProfileHeader.vue";
 import CTeamProfileProjects from "src/components/ClubTeamProfileProjects.vue";
 import CTeamProfileMembers from "./ClubTeamProfileMembers.vue";
 
-const { team } = defineProps({
-  team: Object,
+import userApi from "src/sdk/user";
+
+import { useTeamIsMember } from "src/use/teams";
+import BaseService from "src/sevices/BaseService";
+
+const { isProfile } = defineProps({
+  isProfile: Boolean,
+});
+
+const { result, loading, checkIsMember } = useTeamIsMember();
+
+const currentUser = inject("currentUser");
+const currentTeam = inject("currentTeam");
+
+const isOwner = computed(() => currentUser.value.subject_id === currentTeam?.value.author_id);
+
+provide("isOwner", isOwner);
+provide("isMember", result);
+
+onMounted(async () => {
+  await checkIsMember(currentTeam?.value);
 });
 </script>
 

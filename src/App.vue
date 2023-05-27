@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component }">
-    <keep-alive>
+    <keep-alive exclude="Document">
       <component :is="Component" />
     </keep-alive>
   </router-view>
@@ -9,12 +9,21 @@
 <script setup>
 import { onMounted } from "vue";
 import { useUserStore } from "./stores/user";
-
+import { useFileStore } from "src/stores/file";
 import userApi from "src/sdk/user";
+import stompApi from "src/sdk/stomp";
+import { Cookies } from "quasar";
 
 const store = useUserStore();
 
-onMounted(() => {
-  userApi.isAuth() ? store.SET_CURRENT_USER() : null;
+const storeFile = useFileStore();
+
+stompApi.queueCreate();
+
+onMounted(async () => {
+  storeFile.SET_FILES();
+  userApi.isAuth() ? await store.FETCH_CURRENT_USER() : null;
+
+  stompApi.connectQueue(Cookies.get("queue"));
 });
 </script>

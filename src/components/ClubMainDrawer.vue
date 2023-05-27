@@ -8,53 +8,65 @@
     :width="256"
     :mini-width="64"
   >
-    <q-list class="c-pr-8 c-pt-12 no-scroll">
+    <c-tree-teams v-if="route.path.includes('teams')" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-my-team v-if="team" :class="{ 'c-tree-mini': miniState }" />
+
+    <!-- <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
         v-for="item in mainTreeItems"
         :key="item.title"
         :class="{ active: isActive(item.path) }"
         class="drawer-wrapper"
       >
-        <router-link
-          :to="{ name: item.path }"
-          class="row no-wrap c-pl-16 drawer-item"
-        >
-          <img :src="`/src/assets/icons/${item.img}`" alt="" />
+        <router-link :to="{ name: item.path }" class="row no-wrap c-pl-16 drawer-item">
+          <img :src="`/assets/icons/${item.img}`" alt="" />
 
           <div class="text-caption1 drawer-text c-ml-12">
             {{ item.title }}
+            <q-icon
+              @click="addDocument"
+              v-if="item.title == 'Документы'"
+              name="add"
+              class="addDoc"
+            />
           </div>
         </router-link>
-        <c-qtabs-document v-if="item.title == 'Лендинг'" />
-      </q-item>
-    </q-list>
 
-    <button
-      ref="btn"
-      class="bg-violet-6 drawer-btn absolute"
-      @click="toggleDrawer()"
-    >
-      <img src="/src/assets/icons/DrawerArrow.svg" />
+        <c-qtabs-document v-if="item.title == 'Документы'" />
+      </q-item>
+    </q-list> -->
+
+    <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
+      <img src="/assets/icons/arrow/drawer-arrow.svg" />
     </button>
   </q-drawer>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { useRoute } from "vue-router";
+import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
+import CTreeTeams from "src/components/ClubTreeTeams.vue";
+import CTreeMyTeam from "src/components/ClubTreeMyTeam.vue";
 
-import CQtabsDocument from "src/components/q-tabs/ClubQtabsDocument.vue";
+import { filesApi } from "src/sdk/files/file";
 
-const { side } = defineProps({
+const { side, team } = defineProps({
   side: String,
+  team: Boolean,
 });
 
 const route = useRoute();
+const currentUser = inject("currentUser");
 
 const drawer = ref(false);
 const miniState = ref(false);
 
 const btn = ref();
+
+const isMyteam = () => {
+  return currentUser.value?.teams.some((team) => team.space === route.query.space);
+};
 
 const mainTreeItems = ref([
   {
@@ -70,17 +82,13 @@ const mainTreeItems = ref([
   {
     title: "Команды",
     img: "HomeIconDemo.svg",
-    path: "teams",
+    path: "my-teams",
   },
   {
-    title: "Мои проекты",
+    title: "Документы",
     img: "HomeIconDemo.svg",
-    path: "projects",
-  },
-  {
-    title: "Мое пространство",
-    img: "HomeIconDemo.svg",
-    path: "space",
+    path: "addDocument",
+    content: "+",
   },
   {
     title: "Лендинг",
@@ -92,6 +100,10 @@ const mainTreeItems = ref([
 const toggleDrawer = () => {
   miniState.value = !miniState.value;
   btn.value.classList.toggle("rotate");
+};
+
+const addDocument = () => {
+  filesApi.createHtmlFile();
 };
 
 const isActive = (path) => {
@@ -154,5 +166,8 @@ const isActive = (path) => {
 
 .rotate {
   transform: rotate(-180deg);
+}
+.addDoc {
+  padding-left: 4rem;
 }
 </style>

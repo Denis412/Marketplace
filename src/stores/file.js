@@ -1,29 +1,35 @@
-import { defineStore } from 'pinia'
-import { useQuery } from '@vue/apollo-composable'
-import { getFiles } from 'src/graphql/files/queries'
+import { defineStore } from "pinia";
+import { onResult, refetch } from "src/sdk/files/fileQuery";
 
-export const useFileStore = defineStore('file', {
-  id: 'file',
+export const useFileStore = defineStore("file", {
+  id: "file",
   state: () => ({
     files: [],
+    refetchFiles: {},
+    currentTitleDoc: "",
+    currentEditorValue: "",
   }),
 
   getters: {
     GET_FILES() {
-      return this.files
+      return this.files;
     },
   },
 
   actions: {
     SET_FILES() {
-      try {
-        const { onResult, refetch } = useQuery(getFiles)
-        onResult((queryResult) => {
-          this.files = queryResult.data['paginate_file'].data
-        })
-      } catch (e) {
-        console.log('Ошибка:', e)
-      }
+      onResult((queryResult) => {
+        this.files = queryResult.data["paginate_file"].data;
+        this.refetchFiles = refetch;
+      });
+    },
+
+    SET_CURRENT_TITLE_DOC(value) {
+      this.currentTitleDoc = value;
+    },
+
+    SET_CURRENT_EDITOR_VALUE(value) {
+      this.currentEditorValue = value;
     },
   },
-})
+});

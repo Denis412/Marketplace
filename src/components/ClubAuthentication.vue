@@ -1,45 +1,26 @@
 <template>
   <div class="fullscreen text-center flex row">
-    <q-file
-      v-model="files"
-      label="Pick files"
-      filled
-      multiple
-      append
-      style="max-width: 300px"
-    />
-    <c-button
-      background
-      label="Загрузить"
-      @click="upload"
-      style="height: 50px"
-    />
-
     <section class="col relative-position flex flex-center">
       <q-form class="flex column items-center" @submit="authorization">
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
         <c-input
-          class="c-mb-10 c-input-400"
+          class="c-input-400"
           v-model="form.login"
           type="email"
           placeholder="Введите ваш e-mail"
         />
 
         <c-input
-          class="c-mb-15 c-input-400"
+          class="q-mt-md c-input-400"
           v-model="form.password"
           type="password"
           placeholder="Введите пароль"
           visibility
         />
 
-        <p
-          href=""
-          class="c-mb-50 link-grey cursor-pointer"
-          @click="resetPassword"
-        >
+        <p href="" class="c-mb-50 q-mt-md link-grey cursor-pointer" @click="resetPassword">
           Забыли пароль?
         </p>
 
@@ -48,21 +29,15 @@
 
       <q-img
         class="absolute c-img-270 c-ab-0 c-ar--13 c-z--1"
-        src="../assets/images/authentication/gears.svg"
+        src="/assets/images/authentication/gears.svg"
       />
     </section>
 
     <section class="col-5 bg-auth relative-position flex flex-center">
       <div class="absolute c-width c-at-0 c-ar-20 c-z--1">
-        <q-img
-          class="c-img-120"
-          src="../assets/images/authentication/envelope.svg"
-        />
+        <q-img class="c-img-120" src="/assets/images/authentication/envelope.svg" />
 
-        <q-img
-          class="c-img-120 c-at--3"
-          src="../assets/images/authentication/speech-bubble.svg"
-        />
+        <q-img class="c-img-120 c-at--3" src="/assets/images/authentication/speech-bubble.svg" />
       </div>
 
       <div class="flex column flex-center">
@@ -72,24 +47,11 @@
           Зарегистрируйтесь в нашем клубе прямо сейчас
         </p>
 
-        <c-button
-          to="/registration"
-          outline
-          label="Регистрация"
-          class="text-body1"
-        />
+        <c-button to="/registration" outline label="Регистрация" class="text-body1" />
       </div>
     </section>
 
-    <c-confirmation-code-dialog
-      v-if="reset"
-      v-model="reset"
-      :timer="timer"
-      edit-password
-      :auth-info="authInfo"
-    />
-
-    <!-- <c-edit-password-dialog v-model="reset" /> -->
+    <c-password-recovery-dialog v-model="forgotPassword" :auth-info="authInfo" />
   </div>
 </template>
 
@@ -100,28 +62,21 @@ import { useUserStore } from "stores/user";
 
 import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
-import CConfirmationCodeDialog from "./ClubConfirmationCodeDialog.vue";
-import CEditPasswordDialog from "src/components/ClubEditPasswordDialog.vue";
+import CPasswordRecoveryDialog from "./ClubPasswordRecoveryDialog.vue";
 import userApi from "src/sdk/user";
-import { useTimer } from "src/use/timer";
-import filesApi from "src/sdk/file";
+import { useQuasar } from "quasar";
+// import filesApi from "src/sdk/file";
+// import { useTimer } from "src/use/timer";
+// import { filesApi } from "src/sdk/files/file";
+
+const $q = useQuasar();
+const router = useRouter();
+const userStore = useUserStore();
+
+const forgotPassword = ref(false);
+const authInfo = ref({});
 
 const files = ref(null);
-
-const upload = async () => {
-  try {
-    await filesApi.uploadFiles(files.value);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const router = useRouter();
-const store = useUserStore();
-const timer = useTimer(90);
-
-const reset = ref(false);
-const authInfo = ref({});
 
 const form = ref({
   login: "",
@@ -129,29 +84,33 @@ const form = ref({
 });
 
 const authorization = async () => {
+  console.log("authenticated", form.value);
   try {
     await userApi.login(form.value);
 
-    store.SET_CURRENT_USER();
+    await userStore.FETCH_CURRENT_USER();
 
-    router.push({
-      name: "club",
+    console.log("store", userStore.GET_CURRENT_USER);
+
+    await router.push({
+      path: "/club",
     });
   } catch (error) {
     console.log(error);
+
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: "Введен неверный логин или пароль!",
+    });
   }
 };
 
-const resetPassword = async () => {
-  if (timer.timer.value === 90) {
-    authInfo.value.email = form.value.login;
-    authInfo.value.password = form.value.password;
+const resetPassword = () => {
+  authInfo.value.email = form.value.login;
+  authInfo.value.password = form.value.password;
 
-    timer.clear();
-    timer.start();
-  }
-
-  reset.value = true;
+  forgotPassword.value = true;
 };
 </script>
 

@@ -21,7 +21,7 @@ module.exports = configure(function (/* ctx */) {
     boot: [],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
-    css: ["app.scss", "fonts.scss", "controls.scss", "spaces.scss"],
+    css: ["app.scss", "fonts.scss", "controls.scss", "spaces.scss", "colors.scss"],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -51,11 +51,56 @@ module.exports = configure(function (/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: "/",
       // analyze: true,
       env: {
         GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphql",
+        FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru/",
+        RABBIT_URI: "wss://stud.druid.1t.ru/ws",
+
+        MAIN_SPACE_ID: 42,
+
+        TEAMS_PAGE_ID: "4854717215393261588",
+        ALL_TEAMS_PAGE_ID: "5191226628121289747",
+        MY_TEAMS_PAGE_ID: "5297017851980857027",
+
+        USERS_GROUP_ID: "2954744714133191151", // Группа разработчиков
+
+        APPLICATION_STATUS_PROPERTY: "5892464470060638614",
+
+        APPLICATION_STATUS_PENDING: "1672342866228253681",
+        APPLICATION_STATUS_REJECTED: "7969392693338571273",
+        APPLICATION_STATUS_APPROVED: "6989336487856023800",
+
+        APPLICATION_TEAM_PROPERTY: "3278596465340119929",
+        APPLICATION_SUBJECT_PROPERTY: "8095962102739461791",
+
+        SUBJECT_TEAMS_PROPERTY_ID: "4567125113940260904",
+
+        SPECIALITY_TYPE_ID: "1054792999490113487",
+        USER_STATUS_TYPE_ID: "1676382032638755233",
+        SUBJECT_TYPE_ID: "6410837257365292951",
+        TEAM_TYPE_ID: "5546930648465563539",
+        TASK_TYPE_ID: "3",
+        PROJECT_TYPE_ID: "2961807509853802219",
+        FILE_TYPE_ID: "5",
+        COMMENT_TYPE_ID: "6",
         USERS_GROUP_ID: "1319554634306561363",
+
+        ORDER_TYPE_ID: "5117870577983195887",
+        ORDER_FUNCTION_ID: "7160658608500929189",
+
+        ORDER_STATUS_0: "1744362893253691369", // Черновик
+        ORDER_STATUS_1: "2363916507227203881", // Поиск исполнителя
+        ORDER_STATUS_2: "3814249250560291482", // Есть кандидат
+        ORDER_STATUS_3: "4837591619999500045", // Заключается сделка
+        ORDER_STATUS_4: "3133592897321301481", // Выполняется
+        ORDER_STATUS_5: "7494949799001030133", // Завершен
+        ORDER_STATUS_6: "2375299492231411693", // Оспаривается
+        ORDER_STATUS_7: "1725305287553643069", // Отменен заказчиком
+        ORDER_STATUS_8: "6243889424355631278", // Отменен исполнителем
+
+        PROPERTY_STATUS_ID: "6803516740521580313",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
@@ -79,7 +124,7 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      lang: 'ru',
+      lang: "ru",
       config: {},
 
       // iconSet: 'material-icons', // Quasar icon set

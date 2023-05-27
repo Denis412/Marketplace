@@ -1,25 +1,23 @@
-import { createHttpLink, InMemoryCache } from '@apollo/client/core'
-import { createUploadLink } from 'apollo-upload-client'
-import { setContext } from '@apollo/client/link/context'
-import { Cookies } from 'quasar'
-import tokenApi from 'src/sdk/token'
-import { ApolloLink, concat } from '@apollo/client/core'
+import { createHttpLink, InMemoryCache } from "@apollo/client/core";
+import { createUploadLink } from "apollo-upload-client";
+import { setContext } from "@apollo/client/link/context";
+import { Cookies } from "quasar";
+import tokenApi from "src/sdk/token";
+import { ApolloLink, concat } from "@apollo/client/core";
 
 export /* async */ function getClientOptions(/* {app, router, ...} */) {
   const httpLink = createHttpLink({
-    uri: process.env.GRAPHQL_URI || 'https://app.stud.druid.1t.ru/graphql',
+    uri: process.env.GRAPHQL_URI || "https://app.stud.druid.1t.ru/graphql",
     // credentials: "include",
-  })
+  });
 
   const uploadLink = createUploadLink({
-    uri: process.env.GRAPHQL_URI || 'https://app.stud.druid.1t.ru/graphql',
+    uri: process.env.GRAPHQL_URI || "https://app.stud.druid.1t.ru/graphql",
     // credentials: "include",
-  })
+  });
 
   const authLink = setContext((_, { headers }) => {
-    const token = tokenApi.getTokenData()?.access_token
-
-    // console.log("cook", Cookies.get("access_token"));
+    const token = tokenApi.getTokenData()?.access_token;
 
     return !token
       ? { headers: { ...headers } }
@@ -28,17 +26,17 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
             ...headers,
             authorization: `Bearer ${token}`,
           },
-        }
-  })
+        };
+  });
 
   const link = concat(
     authLink,
     ApolloLink.split(
       (operation) => operation.getContext().hasUpload,
       uploadLink,
-      httpLink,
-    ),
-  )
+      httpLink
+    )
+  );
 
   return Object.assign(
     // General options.
@@ -47,37 +45,37 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
       cache: new InMemoryCache(),
     },
     // Specific Quasar mode options.
-    process.env.MODE === 'spa'
+    process.env.MODE === "spa"
       ? {
           //
         }
       : {},
-    process.env.MODE === 'ssr'
+    process.env.MODE === "ssr"
       ? {
           //
         }
       : {},
-    process.env.MODE === 'pwa'
+    process.env.MODE === "pwa"
       ? {
           //
         }
       : {},
-    process.env.MODE === 'bex'
+    process.env.MODE === "bex"
       ? {
           //
         }
       : {},
-    process.env.MODE === 'cordova'
+    process.env.MODE === "cordova"
       ? {
           //
         }
       : {},
-    process.env.MODE === 'capacitor'
+    process.env.MODE === "capacitor"
       ? {
           //
         }
       : {},
-    process.env.MODE === 'electron'
+    process.env.MODE === "electron"
       ? {
           //
         }
@@ -94,16 +92,16 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
         }
       : {},
     // For ssr mode, when on server.
-    process.env.MODE === 'ssr' && process.env.SERVER
+    process.env.MODE === "ssr" && process.env.SERVER
       ? {
           ssrMode: true,
         }
       : {},
     // For ssr mode, when on client.
-    process.env.MODE === 'ssr' && process.env.CLIENT
+    process.env.MODE === "ssr" && process.env.CLIENT
       ? {
           ssrForceFetchDelay: 100,
         }
-      : {},
-  )
+      : {}
+  );
 }
