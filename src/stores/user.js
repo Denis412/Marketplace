@@ -24,6 +24,17 @@ export const useUserStore = defineStore("user", {
 
     async FETCH_CURRENT_SPACE_SUBJECT(space_id = 0, is_team = false) {
       try {
+        await UserService.fetchSubjectPaginate().refetch(
+          {
+            where: {
+              column: "user_id",
+              operator: "EQ",
+              value: JSON.parse(localStorage.getItem("user-data")).user_id,
+            },
+          },
+          { space_id }
+        );
+
         const subjectsData = await userApi.refetchPaginateSubjects({
           page: 1,
           perPage: 1,

@@ -42,6 +42,8 @@ const paginateSubjects = ({ where, page, perPage, space_id, is_invite, is_team, 
   else if (is_my_teams) query = paginateSubjectsForMyTeams;
   else query = paginateSubjectsInMainSpace;
 
+  console.log("query", query);
+
   return useQuery(
     query,
     { page, perPage, where },
@@ -79,6 +81,8 @@ const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invi
     is_team,
   });
 
+  console.log("paginte passed");
+
   const { data: subjectsData } = await refetch();
 
   console.log("refetch paginate subjects", subjectsData);
@@ -97,6 +101,7 @@ const refetchSubjectById = async (id, space_id = 0) => {
 };
 
 const registration = async ({ name, surname, email }) => {
+  console.log({ name, email, surname });
   const { data: userInfo } = await signUp({
     input: {
       name,

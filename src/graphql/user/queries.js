@@ -67,7 +67,6 @@ export const paginateSubjectInAnotherSpace = gql`
         id
         type_id
         user_id
-        avatar
         fullname {
           first_name
           middle_name
@@ -92,7 +91,6 @@ export const paginateSubjectInAnotherSpace = gql`
         email {
           email
         }
-        speciality1
         group {
           id
           name
@@ -182,8 +180,8 @@ export const paginateSubjectsForInvite = gql`
     paginate_subject(page: $page, perPage: $perPage, where: $where) {
       data {
         id
-        user_id
         avatar
+        user_id
         fullname {
           first_name
           middle_name
@@ -207,6 +205,9 @@ export const paginateSubjectsForMyTeams = gql`
         id
         fullname {
           first_name
+        }
+        email {
+          email
         }
         teams {
           id

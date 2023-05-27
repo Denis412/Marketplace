@@ -8,16 +8,10 @@
     :width="256"
     :mini-width="64"
   >
-    <c-tree-teams
-      v-if="route.path.includes('teams') || (route.path.includes('team') && !isMyteam())"
-      :class="{ 'c-tree-mini': miniState }"
-    />
-    <c-tree-my-team
-      v-else-if="route.path.includes('team') && isMyteam()"
-      :class="{ 'c-tree-mini': miniState }"
-    />
+    <c-tree-teams v-if="route.path.includes('teams')" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-my-team v-if="team" :class="{ 'c-tree-mini': miniState }" />
 
-    <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
+    <!-- <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
         v-for="item in mainTreeItems"
         :key="item.title"
@@ -40,7 +34,7 @@
 
         <c-qtabs-document v-if="item.title == 'Документы'" />
       </q-item>
-    </q-list>
+    </q-list> -->
 
     <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
       <img src="/assets/icons/arrow/drawer-arrow.svg" />
@@ -57,8 +51,9 @@ import CTreeMyTeam from "src/components/ClubTreeMyTeam.vue";
 
 import { filesApi } from "src/sdk/files/file";
 
-const { side } = defineProps({
+const { side, team } = defineProps({
   side: String,
+  team: Boolean,
 });
 
 const route = useRoute();

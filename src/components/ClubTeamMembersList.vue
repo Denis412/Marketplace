@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, computed, inject } from "vue";
+import { ref, computed, inject, onMounted } from "vue";
 
 import _ from "lodash";
 
@@ -32,7 +32,9 @@ const { team_space } = defineProps({
   team_space: Boolean,
 });
 
-const { result: members } = BaseService.fetchApiPaginate(userApi.paginateSubjects, {
+// const members = ref([]);
+
+const { result: members, refetch } = BaseService.fetchApiPaginate(userApi.paginateSubjects, {
   where: {
     column: `${process.env.SUBJECT_TEAMS_PROPERTY_ID}->${process.env.TEAM_TYPE_ID}`,
     operator: "FTS",
@@ -64,6 +66,10 @@ const specialtiesList = ref([
 ]);
 
 const groupByMembers = computed(() => _.groupBy(currentMembers?.value, "speciality1.name"));
+
+onMounted(async () => {
+  console.log(await refetch());
+});
 </script>
 
 <style scoped lang="scss"></style>

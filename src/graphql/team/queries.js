@@ -6,6 +6,7 @@ export const getTeamsWithWhere = gql`
       data {
         id
         type_id
+        avatar
         author_id
         leader_telegram_chat_id
         telegram_chat_id
@@ -26,11 +27,6 @@ export const getTeamsWithWhere = gql`
             email {
               email
             }
-            avatar
-            speciality1 {
-              id
-              name
-            }
           }
           team {
             id
@@ -47,11 +43,6 @@ export const getTeamsWithWhere = gql`
             last_name
           }
           group {
-            name
-          }
-          avatar
-          speciality1 {
-            id
             name
           }
         }

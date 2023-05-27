@@ -57,13 +57,12 @@ export default route(function (/* { store, ssrContext } */) {
 
       const subject = await userStore.FETCH_CURRENT_SPACE_SUBJECT(0, false);
 
-      if (team[0]?.author_id !== subject.id)
-        next(`/club/team/${to.params.id}?space=${to.query?.space}`);
+      if (team[0]?.author_id !== subject.id) next(`/team/${to.params.id}?space=${to.query?.space}`);
     } else if (teamMember || to.name === "team") {
       const result = await userStore.FETCH_CURRENT_SPACE_SUBJECT(to.query.space, true);
 
       if (teamMember && !result)
-        next(`/club/team/${to.params.id}?name=${to.query?.name}&space=${to.query?.space}`);
+        next(`/team/${to.params.id}?name=${to.query?.name}&space=${to.query?.space}`);
     } else userStore.RESET_CURRENT_SPACE_SUBJECT();
 
     const isAuthenticated = localStorage.getItem("user-data");

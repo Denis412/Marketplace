@@ -6,13 +6,13 @@
           <section class="q-gutter-y-sm">
             <div>
               <span class="text-subtitle4 text-violet8">
-                {{ currentProject.name }}
+                {{ currentProject?.name }}
               </span>
             </div>
 
             <div>
               <span class="text-caption1 text-gray7">
-                Команда: {{ currentProject.team_name }}
+                Команда: {{ currentProject?.team_name }}
               </span>
             </div>
           </section>
@@ -21,7 +21,7 @@
         <q-card-section>
           <q-img
             class="bg-violet4 cursor-pointer project-card-image"
-            :src="currentProject.avatar"
+            :src="currentProject?.avatar"
             @click="redirectProjectPage"
           />
         </q-card-section>
@@ -29,12 +29,12 @@
 
       <q-card-section class="q-mt-md">
         <div class="column text-caption1 text-gray7 q-gutter-y-md">
-          <span v-if="currentProject.description">
-            {{ truncate(currentProject.description, 78) }}
+          <span v-if="currentProject?.description">
+            {{ truncate(currentProject?.description, 78) }}
           </span>
 
-          <span v-if="currentProject.delivery_date">
-            до {{ currentProject.delivery_date?.date }}
+          <span v-if="currentProject?.delivery_date">
+            до {{ currentProject?.delivery_date?.date }}
           </span>
 
           <span>Роль в проекте: Участник</span>

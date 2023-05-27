@@ -1,5 +1,6 @@
 <template>
   <q-page class="c-pa-32">
+    <!-- <pre>{{ teams }}</pre> -->
     <div v-if="loading" class="loader loader-lg"></div>
 
     <div v-else>
@@ -18,12 +19,10 @@
 import CTeamsHeader from "src/components/ClubTeamsHeader.vue";
 import CTeamCardList from "src/components/ClubTeamCardList.vue";
 import { computed, ref } from "vue";
-import teamApi from "src/sdk/team";
 
-const { result: teams, loading } = teamApi.paginateTeams({
-  page: 1,
-  perPage: 100,
-});
+import TeamService from "src/sevices/TeamService";
+
+const { result: teams, loading, refetch } = TeamService.fetchTeamsPaginate();
 
 const filteredTeams = ref(null);
 const filters = ref({
@@ -31,21 +30,19 @@ const filters = ref({
   ready_for_orders: "",
 });
 
-const showTeams = computed(() => filteredTeams.value ?? teams.value?.paginate_team.data);
+const showTeams = computed(() => filteredTeams.value ?? teams.value);
 
 const filteringTeams = async (filter, value) => {
   filters.value[filter] = value;
 
-  filteredTeams.value = await teamApi.refetchPaginateTeams({
-    page: 1,
-    perPage: 100,
+  filteredTeams.value = await refetch({
     where: filters.value.name
       ? { column: "name", operator: "FTS", value: filters.value.name }
       : null,
   });
 
   if (filters.value.ready_for_orders)
-    filteredTeams.value = filteredTeams.value.filter(
+    filteredTeams.value = filteredTeams.value?.filter(
       (team) =>
         team.ready_for_orders === filters.value.ready_for_orders.value ||
         (!filters.value.ready_for_orders.value && team.ready_for_orders === null)

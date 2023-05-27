@@ -25,7 +25,7 @@
           outlined
           v-model="upload_img"
           accept=".png,.jpg"
-          ref="uploadFile"
+          ref="uploader"
           @update:model-value="updateFile()"
         />
       </section>
@@ -75,41 +75,66 @@ import { useTeamCreate } from "src/use/teams";
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
 
+import TeamService from "src/sevices/TeamService";
+
+import { useUserStore } from "src/stores/user";
 import filesApi from "src/sdk/file";
 
 const currentUser = inject("currentUser");
 
+const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
 const { required, maxLength, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
-const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
 
 const form = ref({
   name: "",
   description: "",
+  avatar: "",
 });
+
+// const creatingTeam = ref(false);
 
 const upload_img = ref(null);
 const avatar_URL = ref("/assets/images/preloaders/default-avatar.svg");
-const uploadFile = ref(null);
+const uploader = ref(null);
 
 const teamCreate = async () => {
   try {
+    // creatingTeam.value = true;
+
+    if (upload_img.value) {
+      const ids = await filesApi.uploadFiles(upload_img.value);
+
+      const files = await filesApi.refetchFilesPaginate({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "id",
+          operator: "EQ",
+          value: ids[0],
+        },
+      });
+
+      form.value.avatar = filesApi.getUrl(files[0]);
+    }
+
+    // await TeamService.createTeam(form.value);
+
     await createTeam({ ...form.value, author: currentUser.value });
+
+    // await useUserStore().FETCH_CURRENT_USER();
 
     router.push({
       name: "my-teams",
     });
 
     // await filesApi.uploadFiles(upload_img.value);
-
-    // await teamApi.update(teamData.value.id, {
-    //   avatar: avatar.value,
-    //   name: form.value.name,
-    // });
   } catch (error) {
     console.log(error);
   }
+
+  // creatingTeam.value = false;
 };
 
 const updateFile = () => {
@@ -120,13 +145,7 @@ const updateFile = () => {
   }
 };
 
-const triggerInput = () => {
-  $q.notify({
-    type: "negative",
-    message: "В разработке!",
-  });
-  // uploadFile.value.pickFiles();
-};
+const triggerInput = () => uploader.value.pickFiles();
 </script>
 
 <style scoped lang="scss">

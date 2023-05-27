@@ -4,25 +4,37 @@ import { filesUpload, fileUpdate, fileDelete } from "src/graphql/files/mutations
 import { ApolloClient } from "@apollo/client/core";
 import { getClientOptions } from "src/apollo/index";
 import { getFiles } from "src/graphql/files/queries";
+import { spaceHeader } from "src/utils/spaceHeader";
 
 provideApolloClient(apolloClient);
 
 const { mutate } = useMutation(filesUpload);
 const { refetch } = useQuery(getFiles);
 
+const filesPaginate = ({ page, perPage, where, space_id }) => {
+  return useQuery(
+    getFiles,
+    { page, perPage, where },
+    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+  );
+};
+
+const refetchFilesPaginate = async ({ page, perPage, where, space_id }) => {
+  const { refetch } = filesPaginate({ page, perPage, where, space_id });
+
+  const { data: filesData } = await refetch();
+
+  console.log("refetch paginate files", filesData);
+
+  return filesData.paginate_file.data;
+};
+
 const uploadFiles = async (files) => {
   console.log(files);
 
-  const { data: uploadedData } = await mutate(
-    {
-      files,
-    },
-    {
-      context: {
-        hasUpload: true,
-      },
-    }
-  );
+  const { data: uploadedData } = await mutate({ files }, { context: { hasUpload: true } });
+
+  console.log("upload files", uploadedData);
 
   return uploadedData.filesUpload.ids;
 };
@@ -123,7 +135,7 @@ const get = async (file_id) => {
 };
 
 const getUrl = (file) => {
-  return `${process.env.FILE_STORAGE_URI}/${file.path}/${file.id}.${file.extension}?n=${file.name}`;
+  return `${process.env.FILE_STORAGE_URI}/${file.short_link}.${file.extension}?n=${file.name}`;
 };
 
 const updateRouteId = (id_route, routeParamsId) => {
@@ -133,6 +145,8 @@ const updateRouteId = (id_route, routeParamsId) => {
 
 const filesApi = {
   uploadFiles,
+  filesPaginate,
+  refetchFilesPaginate,
   getFileHtmlByUrl,
   createHtmlFile,
   upload,

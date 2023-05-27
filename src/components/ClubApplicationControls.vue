@@ -4,6 +4,8 @@
       {{ new Date(application.updated_at).toLocaleDateString() }}
     </section>
 
+    <!-- <pre>{{ statusObject }}</pre> -->
+
     <section class="flex items-center q-gutter-x-md text-body1">
       <div v-if="!incoming" :style="{ color: statusObject.property?.color }">
         {{ statusObject.property?.label }}
@@ -29,7 +31,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useQuasar } from "quasar";
 
 import CButton from "./ClubButton.vue";
@@ -37,6 +39,8 @@ import CButton from "./ClubButton.vue";
 import propertyApi from "src/sdk/property";
 import { useTeamApplication } from "src/use/teams";
 import { useProjectApplication } from "src/use/projects";
+
+const emit = defineEmits(["statusCalc"]);
 
 const { acceptApplication, cancelApplication } = useTeamApplication();
 const { acceptApplication: acceptProjectApplication, cancelApplication: cancelProjectApplication } =
@@ -133,6 +137,13 @@ const cancel = async () => {
       space_id: application.project.space,
     });
 };
+
+watch(statusObject, (value) => {
+  if (!value) return;
+
+  console.log("send");
+  emit("statusCalc", statusObject.value, application);
+});
 </script>
 
 <style scoped lang="scss"></style>
