@@ -1,7 +1,9 @@
 <template>
   <q-header class="header bg-dark-purple px-160 z-max" elevated>
     <q-toolbar>
-      <q-img class="logo-header" src="/assets/images/logo-gradient.svg" alt="logo" />
+      <q-img class="logo-header" src="/assets/images/Logo-white.svg" alt="logo" />
+
+      <span class="text-h5 c-pl-16">КЛУБ</span>
 
       <q-tabs class="main-tabs">
         <q-route-tab
@@ -20,12 +22,17 @@
       <q-space />
 
       <div>
-        <c-button to="/registration" background label="Вступить в клуб" />
+        <c-button
+          to="/registration"
+          class="text-button1 q-px-lg"
+          background-square
+          label="Вступить в 1T клуб"
+        />
         <c-button
           to="/authentication"
-          outline-no-text
+          outline-no-text-square
           label="Войти"
-          class="bg-dark-purple q-ml-md"
+          class="text-button1 bg-dark-purple q-ml-md q-px-lg"
         />
       </div>
     </q-toolbar>
@@ -38,6 +45,6 @@ import CButton from "src/components/ClubButton.vue";
 
 <style scoped>
 .main-tabs {
-  margin-left: 4rem;
+  margin-left: 5rem;
 }
 </style>
