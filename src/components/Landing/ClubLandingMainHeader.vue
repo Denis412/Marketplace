@@ -1,28 +1,20 @@
 <template>
   <q-header class="header bg-dark-purple px-160 z-max" elevated>
     <q-toolbar>
-      <q-img
-        class="logo-header"
-        src="/assets/images/logo-gradient.svg"
-        alt="logo"
-      />
+      <q-img class="logo-header" src="/assets/images/logo-gradient.svg" alt="logo" />
 
       <q-tabs class="main-tabs">
-        <q-tab
+        <q-route-tab
           no-caps
-          name="buisness"
+          name="business"
           label="Для бизнеса"
           class="rounded-borders"
+          to="business"
         />
 
         <q-tab no-caps name="work" label="Для работы" class="rounded-borders" />
 
-        <q-tab
-          no-caps
-          name="development"
-          label="Для развития"
-          class="rounded-borders"
-        />
+        <q-tab no-caps name="development" label="Для развития" class="rounded-borders" />
       </q-tabs>
 
       <q-space />
