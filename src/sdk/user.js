@@ -42,6 +42,8 @@ const paginateSubjects = ({ where, page, perPage, space_id, is_invite, is_team, 
   else if (is_my_teams) query = paginateSubjectsForMyTeams;
   else query = paginateSubjectsInMainSpace;
 
+  console.log("query", query);
+
   return useQuery(
     query,
     { page, perPage, where },
@@ -78,6 +80,8 @@ const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invi
     is_invite,
     is_team,
   });
+
+  console.log("paginte passed");
 
   const { data: subjectsData } = await refetch();
 

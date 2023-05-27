@@ -1,25 +1,5 @@
 import { computed, ref } from "vue";
 
-async function catchExceptionReactiveResult(method, ...params) {
-  const result = ref(null);
-  const loading = ref(false);
-  const error = ref(null);
-
-  try {
-    loading.value = true;
-
-    result.value = await method(...params);
-  } catch (e) {
-    error.value = e;
-
-    console.log(e);
-  }
-
-  loading.value = false;
-
-  return { result, loading, error };
-}
-
 function baseQuery(method_link, variables = {}, options = {}) {
   return method_link?.({
     ...variables,
@@ -64,16 +44,22 @@ export default class BaseService {
 
     async function refetch(refetch_variables = null, refetch_options = null) {
       try {
+        console.log("refetch start", variables, refetch_variables, options, refetch_options);
+
         const { data, loading, error } = await baseQuery(
           method_link,
           refetch_variables ?? variables,
           refetch_options ?? options
         ).refetch(refetch_variables ?? variables);
 
+        console.log("refetch data", data);
+
         if (!refetch_options?.update_parent_query)
           return refetch_options?.only_one || options?.only_one
             ? extractPropertyData(data)?.[0]
             : extractPropertyData(data);
+
+        console.log("refetch pass", data);
 
         refetchResult.value =
           refetch_options?.only_one || options?.only_one

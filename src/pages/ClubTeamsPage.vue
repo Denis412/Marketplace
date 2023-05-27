@@ -19,7 +19,6 @@
 import CTeamsHeader from "src/components/ClubTeamsHeader.vue";
 import CTeamCardList from "src/components/ClubTeamCardList.vue";
 import { computed, ref } from "vue";
-import teamApi from "src/sdk/team";
 
 import TeamService from "src/sevices/TeamService";
 
@@ -43,7 +42,7 @@ const filteringTeams = async (filter, value) => {
   });
 
   if (filters.value.ready_for_orders)
-    filteredTeams.value = filteredTeams.value.filter(
+    filteredTeams.value = filteredTeams.value?.filter(
       (team) =>
         team.ready_for_orders === filters.value.ready_for_orders.value ||
         (!filters.value.ready_for_orders.value && team.ready_for_orders === null)

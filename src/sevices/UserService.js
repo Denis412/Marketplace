@@ -6,32 +6,6 @@ import { computed } from "vue";
 import BaseService from "./BaseService";
 
 export default class UserService {
-  static async fetchCurrentUser() {
-    const subjectsData = await userApi.refetchPaginateSubjects({
-      page: 1,
-      perPage: 1,
-      where: {
-        column: "user_id",
-        operator: "EQ",
-        value: JSON.parse(localStorage.getItem("user-data")).user_id,
-      },
-    });
-
-    const userData = await userApi.refetchUserById(
-      JSON.parse(localStorage.getItem("user-data")).user_id
-    );
-
-    console.log("data subject", subjectsData[0]);
-
-    const currentUserData = convertSubject({
-      ...userData,
-      ...subjectsData[0],
-      // avatar: await filesApi.fetchImageFile(subjectsData[0].avatar),
-    });
-
-    return currentUserData;
-  }
-
   static fetchSubjectPaginate(variables = {}, options = {}) {
     return BaseService.fetchApiPaginate(userApi.paginateSubjects, variables, options);
   }
@@ -61,20 +35,49 @@ export default class UserService {
     return { result, loading, error, refetch };
   }
 
-  static async subjectUpdate({ subject, id, input, is_team, space_id }) {
-    const subjectData = await userApi.refetchPaginateSubjects({
-      page: 1,
-      perPage: 1,
-      where: {
-        column: "email",
-        operator: "FTS",
-        value: subject.email,
+  static async fetchCurrentUser() {
+    const subjectData = await this.fetchSubjectPaginate().refetch(
+      {
+        where: {
+          column: "user_id",
+          operator: "EQ",
+          value: JSON.parse(localStorage.getItem("user-data")).user_id,
+        },
       },
-      is_team,
-      space_id,
+      { only_one: true }
+    );
+
+    console.log("fetch in api passed");
+
+    // const userData = await userApi.refetchUserById(
+    //   JSON.parse(localStorage.getItem("user-data")).user_id
+    // );
+
+    console.log("data subject", subjectData);
+
+    const currentUserData = convertSubject({
+      // ...userData,
+      ...subjectData,
     });
 
-    await userApi.update(subjectData[0].id, input, is_team, space_id);
+    return currentUserData;
+  }
+
+  static async subjectUpdate({ subject, id, input, is_team, space_id }) {
+    const subjectData = await this.fetchSubjectPaginate(
+      {
+        where: {
+          column: "email",
+          operator: "FTS",
+          value: subject.email,
+        },
+      },
+      { only_one: true, space_id }
+    ).refetch();
+
+    await userApi.update(subjectData.id, input, is_team, space_id);
+
+    console.log("udpate subject");
   }
 
   static async leaveTeam({ subject, input }) {}

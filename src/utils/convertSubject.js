@@ -1,4 +1,5 @@
 export const convertSubject = (subjectData) => {
+  console.log("subject", subjectData);
   const birthday = subjectData.birthday?.date || "";
   const speciality1 = subjectData.speciality1?.name || "";
   const status = subjectData.status?.name || "";

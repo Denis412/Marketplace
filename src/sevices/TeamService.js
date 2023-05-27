@@ -34,9 +34,7 @@ export default class TeamService {
     const { result: createdTeam, error: err } = await BaseService.apiMutation(
       teamApi.create,
       variables,
-      {
-        space_id: teamSpace.value.id,
-      }
+      { space_id: teamSpace.value.id }
     );
 
     console.log("team", createdTeam.value);
@@ -362,6 +360,10 @@ export default class TeamService {
         },
       ]
     );
+
+    await this.fetchTeamsPaginate().refetch();
+
+    console.log("refetch teams");
 
     loading.value = false;
 
