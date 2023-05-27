@@ -766,26 +766,6 @@ export const useTeamApplication = () => {
           },
         });
 
-        const subjectData = await userApi.refetchPaginateSubjects({
-          page: 1,
-          perPage: 100,
-          is_team: true,
-          space_id: application.team.space,
-        });
-
-        const subject = subjectData.find(
-          (sub) => sub.email.email === application.subject.email.email
-        );
-
-        await userApi.update(
-          subject.id,
-          {
-            speciality1: application.subject.speciality1.name,
-          },
-          true,
-          application.team.space
-        );
-
         await applicationApi.deleteById(application.id);
       } else
         await applicationApi.update(application.id, {
