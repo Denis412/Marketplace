@@ -1,7 +1,7 @@
 <template>
   <img
     :src="`/assets/images/landing/partitians/vector-${index - 1}.png`"
-    :class="`face${index} absolute cursor-pointer avatar`"
+    :class="`face${cur_index} absolute cursor-pointer avatar`"
     :alt="`face${index}`"
   />
 </template>
@@ -10,6 +10,12 @@
 const { index } = defineProps({
   index: Number,
 });
+
+let cur_index = index
+
+if(cur_index > 33){
+  cur_index-=33
+}
 </script>
 
 <style lang="scss" scoped>

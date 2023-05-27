@@ -38,7 +38,6 @@ import { ref } from "vue";
 import CPartitian from "./ClubPartitian.vue";
 
 const flag = ref(false)
-const chet = ref(33)
 </script>
 
 <style lang="scss" scoped>
