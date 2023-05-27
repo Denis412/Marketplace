@@ -3,7 +3,7 @@
     <div class="column justify-start">
     <header>
       <div class="text-h4 flex justify-start direction_card_header c-mb-12">{{ title }}</div>
-      <hr class="line q-mb-sm">
+      <hr class="line q-mb-lg">
     </header>
 
     <main class="text-body2">
