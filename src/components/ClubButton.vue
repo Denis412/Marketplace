@@ -44,8 +44,10 @@ const {
   rippleColor,
   flat,
   background,
+  backgroundSquare,
   outline,
   outlineNoText,
+  outlineNoTextSquare
 } = defineProps({
   disable: Boolean,
   label: String,
@@ -56,8 +58,10 @@ const {
   iconRight: String,
   flat: Boolean,
   background: Boolean,
+  backgroundSquare: Boolean,
   outline: Boolean,
   outlineNoText: Boolean,
+  outlineNoTextSquare: Boolean
 });
 
 const iconRightDisableName = computed(
@@ -72,7 +76,9 @@ const typeClass = {
   "club-button-flat": flat,
   "club-button-outline": outline,
   "club-button-outline-text-colored": outlineNoText,
+  "club-button-outline-text-colored-square": outlineNoTextSquare,
   "club-button-background": background,
+  "club-button-background-square": backgroundSquare
 };
 </script>
 
