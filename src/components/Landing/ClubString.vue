@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="c-mb-160">
     <q-scroll-observer @scroll="onScroll" />
     <h2 :style="{ translate: translateRight + 'px' }" class="text-h0 text-no-wrap invert">
       {{ computedString(stringContent.invertText) }}
@@ -25,12 +25,21 @@ const computedString = (string) => {
 };
 
 const onScroll = (info) => {
-  translateRight.value = -1000 + info.position.top / 2;
-  translateLeft.value = 1000 + info.position.top / 2;
+  translateRight.value = -2000 + info.position.top / 2;
+  translateLeft.value = 2000 + info.position.top / 2;
 };
 </script>
 
 <style scoped lang="scss">
+.c {
+  &-m {
+    &b {
+      &-160 {
+        margin-bottom: 160px;
+      }
+    }
+  }
+}
 .text-h0 {
   font-family: "Furore" !important;
   font-size: 90px !important;
@@ -39,7 +48,6 @@ const onScroll = (info) => {
 }
 .invert {
   color: transparent;
-  // border: 2px solid #9043b4;
   -webkit-text-stroke: 2px #9043b4;
   margin-bottom: 64px;
 }
