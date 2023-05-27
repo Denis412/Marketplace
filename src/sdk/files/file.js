@@ -16,7 +16,7 @@ const getFileHtmlByUrl = async (path, id, name, extension) => {
   );
   const html = await response.text();
 
-  let res = await Promise.resolve(html);
+  let res = await Promise.resolve(html); // не нужен
 
   return res;
 };

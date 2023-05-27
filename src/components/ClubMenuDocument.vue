@@ -76,6 +76,7 @@
     </q-item>
 
     <c-rename-item-document
+      :prop_data="prop_data"
       :prop_doc="prop_doc"
       :prop_page_id="props.prop_data.page_id"
     />
@@ -105,7 +106,7 @@ const props = defineProps({
 });
 
 console.log(props);
-console.log("menu_doc", props.prop_doc);
+console.log("menu_doc", props.prop_data);
 
 const duplicateDocument = async () => {
   let document = props.prop_doc;
