@@ -30,13 +30,31 @@
       </q-item-section>
 
       <q-menu anchor="bottom right" self="center left">
-        <q-item class="popup-component" clickable @click="close = !close">
+        <q-item
+          class="popup-component"
+          clickable
+          @click="
+            (close = !close),
+              (redact = false),
+              (nocustomer = false),
+              (customer = false)
+          "
+        >
           <q-icon name="check" v-if="close"></q-icon>
           <q-icon v-else></q-icon>
           <q-item-section>Закрытый</q-item-section>
         </q-item>
 
-        <q-item class="popup-component" clickable @click="redact = !redact">
+        <q-item
+          class="popup-component"
+          clickable
+          @click="
+            (redact = !redact),
+              (close = false),
+              (nocustomer = false),
+              (customer = false)
+          "
+        >
           <q-icon name="check" v-if="redact"></q-icon>
           <q-icon v-else></q-icon>
           <q-item-section>Редактирование</q-item-section>
@@ -126,7 +144,7 @@ const openDoc = () => {
 };
 
 let showDialog = ref(false);
-let close = ref(false);
+let close = ref(true);
 let redact = ref(false);
 let customer = ref(false);
 let nocustomer = ref(false);

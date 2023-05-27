@@ -11,7 +11,7 @@
       </span>
 
       <span v-else>
-        <img :src="`/icons/dote.svg`" alt="" />
+        <img :src="`/icons/dote.svg`" alt="" class="dote" />
       </span>
 
       <img :src="`/icons/file-grey.svg`" alt="" class="q-pr-md" />
@@ -123,6 +123,10 @@ getFile();
 
 .link {
   text-decoration: none;
+}
+
+.dote {
+  padding-left: 5px;
 }
 
 .addDoc {
