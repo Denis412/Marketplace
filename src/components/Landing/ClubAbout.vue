@@ -1,20 +1,13 @@
 <template>
-  <section class="section-margin container">
-    <div class="q-mb-md text-h3">О Клубе за 1 минуту</div>
-
-    <div class="flex justify-between">
-      <p class="text-subtitle2">
-        Мы проводим мероприятия и даём рекомендации участникам 1Т Клуба для их
-        профессионального развития в IT, бизнесе и инвестировании. У нас можно
-        найти специалистов и партнеров для совместной работы, а также
-        обмениваться знаниями и опытом.
-      </p>
-
-      <q-video
+  <section class="container q-mt-xl c-mt-215">
+    <div class="row">
+      <div class="q-mb-md text-h3 col-12 text-center q-mb-xl">1Т Клуб за 1 минуту</div>
+      <div class="col-12">
+        <q-video
         class="video"
         src="https://www.youtube.com/watch?v=OJzN26zynP0"
-      />
-    </div>
+        />
+    </div></div>
   </section>
 </template>
 
@@ -26,8 +19,8 @@ p {
 }
 
 .video {
-  width: 640px;
-  height: 457px;
+  width: 100%;
+  height: 600px;
   border-radius: 10px;
 }
 </style>
