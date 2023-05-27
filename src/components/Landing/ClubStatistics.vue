@@ -3,17 +3,17 @@
     <div class="flex justify-between">
       <div class="text-h1">
         200+
-        <div class="text-h2">заказов</div>
+        <div class="text-h2 text-violet-3">заказов</div>
       </div>
 
       <div class="text-h1">
         1500+
-        <div class="text-h2">участников</div>
+        <div class="text-h2 text-violet-3">участников</div>
       </div>
 
       <div class="text-h1">
         50+
-        <div class="text-h2">Городов</div>
+        <div class="text-h2 text-violet-3">Городов</div>
       </div>
     </div>
 
@@ -38,5 +38,9 @@ import CPartitian from "./ClubPartitian.vue";
     margin-top: 58px;
     height: 338px;
   }
+}
+
+.text-violet-3{
+  color: rgba(144, 67, 180, 1);
 }
 </style>
