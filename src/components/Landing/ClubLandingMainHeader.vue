@@ -30,12 +30,12 @@
       <q-space />
 
       <div>
-        <c-button to="/registration" class="text-header q-px-lg" background-square label="Вступить в 1T клуб" />
+        <c-button to="/registration" class="text-button1 q-px-lg" background-square label="Вступить в 1T клуб" />
         <c-button
           to="/authentication"
           outline-no-text-square 
           label="Войти"
-          class="text-header bg-dark-purple q-ml-md q-px-lg"
+          class="text-button1 bg-dark-purple q-ml-md q-px-lg"
         /> 
       </div>
     </q-toolbar>
