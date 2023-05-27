@@ -7,13 +7,7 @@
       <c-directions />
       <c-string />
       <c-clients />
-
-      <section>
-        <h4 class="text-h4">
-          Реализуйте свои бизнес-идеи с it-специалистами, которым можно доверять
-        </h4>
-        <q-btn>Вступить в 1Т Клуб</q-btn>
-      </section>
+      <c-join-business />
 
       <section>
         <h3 class="text-h3">Лучшие it-команды 1т клуба</h3>
@@ -45,4 +39,5 @@ import CMainScreen from "components/Landing/ClubMainScreen.vue";
 import CDirections from "components/Landing/ClubDirections.vue";
 import CString from "components/Landing/ClubString.vue";
 import CClients from "components/Landing/ClubClients.vue";
+import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";
 </script>
