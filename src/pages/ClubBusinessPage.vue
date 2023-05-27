@@ -19,16 +19,7 @@
         <div>слайдер</div>
       </section>
 
-      <section>
-        <h3 class="text-h3">Часто задаваемые вопросы</h3>
-        <p>Какие бизнес-задачи поможет решить 1Т клуб?</p>
-        <p>
-          Могу ли я принять участие в 1Т Клубе, если еще не предприниматель, а только начинаю свое
-          дело?
-        </p>
-        <p>Что будет, если команды 1Т Клуба не справятся с проектом?</p>
-        <p>Какие требования к резидентам 1Т Клуба?</p>
-      </section>
+      <c-faq />
     </main>
   </q-page>
 </template>
@@ -40,4 +31,5 @@ import CDirections from "components/Landing/ClubDirections.vue";
 import CString from "components/Landing/ClubString.vue";
 import CClients from "components/Landing/ClubClients.vue";
 import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";
+import CFaq from "components/Landing/ClubFAQ.vue";
 </script>
