@@ -6,6 +6,7 @@ export const projectsPaginate = gql`
       data {
         id
         name
+        avatar
         author_id
         description
         target
@@ -36,12 +37,14 @@ export const projectsPaginateInTeamSpace = gql`
       data {
         id
         name
+        avatar
         author_id
         description
         target
         team_name
         created_at
         space
+
         members {
           id
           fullname {

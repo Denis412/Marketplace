@@ -1,6 +1,5 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <!-- <pre>{{ currentProject }}</pre> -->
     <div class="loader loader-lg" v-if="!currentProject || loading" />
 
     <div v-else>

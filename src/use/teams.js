@@ -669,12 +669,15 @@ export const useTeamAcceptUser = () => {
         },
       });
 
-      await teamApi.update(team_id, {
-        members: {
-          [process.env.SUBJECT_TYPE_ID]: [
-            ...teamData[0].members.map((member) => member.id),
-            data.id,
-          ],
+      await teamApi.update({
+        id: team_id,
+        input: {
+          members: {
+            [process.env.SUBJECT_TYPE_ID]: [
+              ...teamData[0].members.map((member) => member.id),
+              data.id,
+            ],
+          },
         },
       });
 

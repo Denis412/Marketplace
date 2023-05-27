@@ -22,12 +22,12 @@ const router = useRouter();
 
 const selectedPage = ref("teams");
 const navigation_items = ref([
-  {
-    label: "Мой кабинет",
-    name: "my-space",
-    icon: "img:/assets/icons/my-space/my-space-white.svg",
-    active_icon: "",
-  },
+  // {
+  //   label: "Мой кабинет",
+  //   name: "my-space",
+  //   icon: "img:/assets/icons/my-space/my-space-white.svg",
+  //   active_icon: "",
+  // },
   {
     label: "Магазин",
     name: "orders",
