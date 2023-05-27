@@ -7,7 +7,6 @@ export const userSignUp = gql`
       record {
         id
         email
-        registration_passed
         name
         surname
       }

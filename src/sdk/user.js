@@ -101,6 +101,7 @@ const refetchSubjectById = async (id, space_id = 0) => {
 };
 
 const registration = async ({ name, surname, email }) => {
+  console.log({ name, email, surname });
   const { data: userInfo } = await signUp({
     input: {
       name,
