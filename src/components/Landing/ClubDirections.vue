@@ -1,18 +1,12 @@
 <template>
   <section class="text-center directions container">
-    <h2 class="title relative-position z-max">
+    <h2 class="title relative-position z-max text-h3 q-mb-xl q-pb-xl">
       Выберите направление
       <img
         src="/assets/images/landing-background/main-page/bg-14.svg"
         class="absolute-center shadow"
       />
     </h2>
-
-    <div class="font-size-24 text-weight-light subtitle">
-      Выберите интересующий вас профиль и мы поможем вам познакомиться с
-      платформой или сделать это самостоятельно.
-    </div>
-
     <c-card-group :directions="cardsList" />
   </section>
 </template>
@@ -25,17 +19,17 @@ const cardsList = ref([
   {
     id: 1,
     title: "Для Бизнеса",
-    content: ["Новые партнеры", "Специалисты для развития бизнес-проектов"],
+    content: ["IT-ментор для поиска точек роста в вашем бизнесе", "Команды IT-специалистов для развития бизнес-проектов"],
   },
   {
     id: 2,
     title: "Для Работы",
-    content: ["Новые заказы", "Стажировка в 1Т Клубе", "Участие в командах"],
+    content: ["Фриланс заказы для IT-специалистов", "Стажировка в 1Т Клубе", "Работа над  IT-проектом в укомплектованных командах"],
   },
   {
     id: 3,
     title: "Для Развития",
-    content: ["Онлайн-курсы", "База знаний", "Консультации экспертов"],
+    content: ["Онлайн-обучение IT-профессиям", "База IT-знаний", "Консультации IT-экспертов"],
   },
 ]);
 </script>

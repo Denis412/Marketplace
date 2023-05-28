@@ -1,6 +1,6 @@
 <template>
-  <section class="flex column section-margin text-center container">
-    <div class="text-h3">Кому подходит 1Т Клуб</div>
+  <section class="section-margin text-center container">
+    <div class="text-h3">Вступайте в 1Т Клуб, если вы</div>
 
     <div class="relative-position">
       <img class="q-mt-md" src="/assets/images/landing/branches1.svg" />

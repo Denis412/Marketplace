@@ -56,6 +56,63 @@
   }
 }
 
+.c-input-outline-white {
+  padding-bottom: 0 !important;
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__bottom {
+      min-height: 0;
+      padding: 0;
+    }
+
+    & .q-field__bottom--animated {
+      transform: none;
+      position: relative;
+
+      div div {
+        @extend .text-caption2;
+
+        margin-top: 16px;
+      }
+    }
+
+    & .q-field__control {
+      padding-left: 24px;
+      padding-right: 24px;
+      height: $input-height-md;
+
+      div {
+        height: $input-height-md;
+
+        input,
+        textarea {
+          @extend .text-body2;
+
+          color: white;
+
+          &::placeholder {
+            color: rgba(164, 152, 183, 1);
+          }
+        }
+        .q-field__label {
+          top: 0;
+
+          display: flex;
+          align-items: center;
+        }
+      }
+      &:hover {
+        border: 1px solid rgb(162, 162, 162);
+      }
+      &:before {
+        border-color: white;
+        border-style: solid !important;
+      }
+    }
+  }
+}
+
 .c-input-outline-border-none {
   padding-bottom: 0 !important;
 
@@ -229,6 +286,18 @@
   }
 }
 
+.club-button-background-square {
+  color: white;
+  background: $primary-gradient;
+
+  border-radius: 5px !important;
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.5);
+    background: $primary-gradient-disaled;
+  }
+}
+
 .club-button-background {
   color: white;
   background: $primary-gradient;
@@ -255,6 +324,33 @@
 
   &:disabled {
     color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.club-button-outline-text-colored-square {
+  $border: 3px;
+
+  border: $border solid transparent !important;
+  border-radius: 5px !important;
+
+  background: white;
+  background-clip: padding-box !important;
+
+  & .q-focus-helper {
+    border-radius: 0 !important;
+  }
+
+  &:before {
+    margin: -$border !important;
+    z-index: -1 !important;
+
+    border: none !important;
+    border-radius: inherit !important;
+    background: $primary-gradient !important;
+  }
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.3) !important;
   }
 }
 

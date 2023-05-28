@@ -3,25 +3,32 @@
     <div class="col">
       <h1 class="text-h1">1Т Клуб</h1>
 
-      <p class="text-subtitle3 q-mt-md">
-        1Т Клуб - сообщество единомышленников, которых объединяет страсть к
-        работе и саморазвитию.
+      <p class="text-subtitle5 q-mt-md">
+        1Т Клуб — сообщество IT-специалистов, которых объединяет страсть к работе и саморазвитию
       </p>
 
-      <c-button
-        to="/registration"
-        background
-        size="xl"
-        class="q-mt-xl"
-        label="Вступить в клуб"
-      />
+      <section class="flex q-py-md q-mt-xl items-center">
+        <c-button
+          to="/registration"
+          background
+          class="text-button2 q-mr-lg c-px-32 c-py-16"
+          label="Вступить в 1Т клуб"
+        />
+
+        <a class="text-subtitle5 link" href="#about">
+          <q-img
+            class="play_video"
+            src="/assets/images/Play_video.svg"
+            height="60px"
+            width="60px"
+            alt="logo"
+          />
+          <span class="q-ml-md">Смотреть ролик</span></a
+        >
+      </section>
     </div>
 
-    <q-img
-      class="col"
-      style="max-width: 480px"
-      src="/assets/images/amico.svg"
-    />
+    <q-img class="col" style="max-width: 480px" src="/assets/images/amico.svg" />
   </section>
 </template>
 
@@ -32,5 +39,13 @@ import CButton from "../ClubButton.vue";
 <style lang="scss" scoped>
 section {
   margin-top: 85px;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+.play_video {
+  cursor: pointer;
 }
 </style>

@@ -1,41 +1,27 @@
 <template>
-  <q-form class="form rounded-borders-12 flex column items-center">
-    <header class="text-h4 club-mb-32">Напишите нам</header>
+  <q-form class="form rounded-borders-12 flex column q-mt-xl">
+    <header class="text-h4 club-mb-32 text-center">Напишите нам</header>
 
     <main style="width: 100%">
       <div class="form-control">
-        <label for="firstName" class="text-body2">Имя</label>
-
         <c-input
           id="firstName"
           class="text-caption1"
           type="text"
           placeholder="Ваше имя"
+          :my_class="'c-input-outline-white'"
           v-model="form.first_name"
         />
       </div>
 
       <div class="form-control">
-        <label for="phoneNumber" class="text-body2">Номер телефона</label>
-
         <c-input
           id="phoneNumber"
           class="text-caption1"
           type="text"
-          placeholder="+7 (000) 000-00-00"
+          placeholder="Номер телефона"
           v-model="form.phone_number"
-        />
-      </div>
-
-      <div class="form-control">
-        <label for="email" class="text-body2">Почта</label>
-
-        <c-input
-          id="email"
-          class="text-caption1"
-          type="text"
-          placeholder="main23@mail.ru"
-          v-model="form.email"
+          :my_class="'c-input-outline-white'"
         />
       </div>
 
@@ -45,6 +31,7 @@
           class="text-caption1"
           placeholder="Сообщение"
           v-model="form.message"
+          :my_class="'c-input-outline-white'"
         />
       </div>
     </main>
@@ -53,13 +40,13 @@
       <q-checkbox
         keep-color
         dark
-        class="text-caption2"
-        style="max-width: 190px"
+        class="text-caption2 q-mb-lg"
+        style="max-width: 300px; color: rgba(164, 152, 183, 1)"
         v-model="form.checked"
-        label="Я принимаю условия обработки персональных данных"
+        label="Даю согласие на обработку данных"
       />
 
-      <q-btn no-caps label="Отправить" class="gradient-box-2" />
+      <c-button class="text-button2 my-btn q-px-lg" background-square label="Отправить" />
     </footer>
   </q-form>
 </template>
@@ -83,17 +70,22 @@ const form = ref({
   max-width: 448px;
   width: 448px;
 
-  min-height: 628px;
-
-  background: rgba(135, 32, 148, 0.4);
-  padding: 2rem 4rem;
+  background: linear-gradient(
+      101.5deg,
+      rgba(16, 5, 34, 0.05) 37.03%,
+      rgba(187, 173, 209, 0.04) 80.19%,
+      rgba(16, 5, 34, 0.14) 100%
+    ),
+    rgba(18, 7, 36, 0.95);
+  padding: 2rem 2rem;
+  margin-left: 10rem;
 
   &-control {
     margin-top: 1rem;
-
-    &:last-child {
-      margin-top: 2rem;
-    }
   }
+}
+
+.my-btn {
+  width: 100%;
 }
 </style>
