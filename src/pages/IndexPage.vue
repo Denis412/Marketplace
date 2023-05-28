@@ -9,6 +9,7 @@
       <c-about />
       <c-clients />
       <c-how-join />
+      <c-eco-system />
       <c-steps />
       <c-partners />
       <c-join />
@@ -37,4 +38,5 @@ import CCommunity from "components/Landing/ClubCommunity.vue";
 import CHowJoin from "components/Landing/ClubHowJoin.vue";
 import CQuestions from "components/Landing/ClubQuestions.vue";
 import CContacts from "components/Landing/ClubContacts.vue";
+import CEcoSystem from "components/Landing/ClubEcoSystem.vue"
 </script>
