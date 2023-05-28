@@ -35,18 +35,23 @@
           bg-color="white"
           placeholder="Введите название"
           class="text-body2"
+          maxlength="30"
           v-model="form.name"
-          :rules="[required, maxLength(30)]"
+          :rules="[required, minLength(2), maxLength(30)]"
         />
 
-        <c-input
-          bg-color="white"
+        <q-input
+          borderless
+          outlined
           placeholder="Введите описание"
-          class="club-textarea-mh-150 text-body2"
+          type="textarea"
+          maxlength="1000"
+          bg-color="white"
+          class="c-input-outline club-textarea-mh-150 gray-scrollbar-input text-body2"
           autogrow
-          style="max-height: 100px"
           v-model="form.description"
           :rules="[required, maxLengthForTeamForm(1000)]"
+          lazy-rules
         />
       </section>
     </main>
@@ -83,7 +88,7 @@ import filesApi from "src/sdk/file";
 const currentUser = inject("currentUser");
 
 const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
-const { required, maxLength, maxLengthForTeamForm } = useValidators();
+const { required, maxLength, minLength, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
 

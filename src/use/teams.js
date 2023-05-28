@@ -21,10 +21,30 @@ export const useTeamCreate = () => {
     try {
       creatingTeam.value = true;
 
+      team = await teamApi.create({
+        input: {
+          name,
+          avatar,
+          description,
+          leader_telegram_chat_id: author.telegram_chat_id,
+        },
+        space_id: space.id,
+      });
+
       space = await spaceApi.create({
         input: {
           name,
           description,
+        },
+      });
+
+      await teamApi.update({
+        id: team.id,
+        input: {
+          space: space.id,
+          members: {
+            [process.env.SUBJECT_TYPE_ID]: [team.author_id],
+          },
         },
       });
 
@@ -40,26 +60,6 @@ export const useTeamCreate = () => {
         },
         space_id: space.id,
       });
-
-      // await propertyApi.createMany({
-      //   input: [
-      //     {
-      //       name: "speciality1",
-      //       label: "Специальность",
-      //       data_type: "text",
-      //       type_id: subjectType[0].id,
-      //       order: 2,
-      //     },
-      //     {
-      //       name: "avatar",
-      //       label: "Аватар",
-      //       data_type: "text",
-      //       type_id: subjectType[0].id,
-      //       order: 4,
-      //     },
-      //   ],
-      //   space_id: space.id,
-      // });
 
       //*******************************************************************************
 
@@ -367,25 +367,6 @@ export const useTeamCreate = () => {
       });
 
       //*******************************************************************************
-
-      team = await teamApi.create({
-        input: {
-          name,
-          avatar,
-          description,
-          leader_telegram_chat_id: author.telegram_chat_id,
-        },
-        space_id: space.id,
-      });
-
-      await teamApi.update({
-        id: team.id,
-        input: {
-          members: {
-            [process.env.SUBJECT_TYPE_ID]: [team.author_id],
-          },
-        },
-      });
 
       const rootPageData = await pageApi.create({
         input: {
