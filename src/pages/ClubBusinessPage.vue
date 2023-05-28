@@ -4,15 +4,11 @@
 
     <main class="text-white relative-position" style="z-index: 1">
       <c-main-screen />
-      <c-directions />
+      <c-directions class="c-mb-160" />
       <c-string />
-      <c-clients />
+      <c-clients class="c-mb-160" />
       <c-join-business />
-
-      <section>
-        <h3 class="text-h3">Лучшие it-команды 1т клуба</h3>
-        <div>слайдер</div>
-      </section>
+      <c-best-teams class="c-mb-160" />
 
       <section>
         <h3 class="text-h3">Задачи, которые решили участинки в 1т клубе</h3>
@@ -31,5 +27,13 @@ import CDirections from "components/Landing/ClubDirections.vue";
 import CString from "components/Landing/ClubString.vue";
 import CClients from "components/Landing/ClubClients.vue";
 import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";
+import CBestTeams from "components/Landing/ClubBestTeams.vue";
+
 import CFaq from "components/Landing/ClubFAQ.vue";
 </script>
+
+<style scoped lang="scss">
+.c-mb-160 {
+  margin-bottom: 160px;
+}
+</style>
