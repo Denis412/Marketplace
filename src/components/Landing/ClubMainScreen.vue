@@ -8,30 +8,27 @@
       </p>
 
       <section class="flex q-py-md q-mt-xl items-center">
-      <c-button
-        to="/registration"
-        background
-        class="text-button2 q-mr-lg c-px-32 c-py-16"
-        label="Вступить в 1Т клуб"
-      />
-      
-      <!-- Куда должно вести? -->
-      <q-img
-        src="/assets/images/Play_video.svg"
-        height="60px"
-        width="60px"
-        alt="logo"
-      />
+        <c-button
+          to="/registration"
+          background
+          class="text-button2 q-mr-lg c-px-32 c-py-16"
+          label="Вступить в 1Т клуб"
+        />
 
-      <span class="text-subtitle5 c-ml-12">Смотреть ролик</span>
-    </section>
+        <a class="text-subtitle5 link" href="#about">
+          <q-img
+            class="play_video"
+            src="/assets/images/Play_video.svg"
+            height="60px"
+            width="60px"
+            alt="logo"
+          />
+          <span class="q-ml-md">Смотреть ролик</span></a
+        >
+      </section>
     </div>
 
-    <q-img
-      class="col"
-      style="max-width: 480px"
-      src="/assets/images/amico.svg"
-    />
+    <q-img class="col" style="max-width: 480px" src="/assets/images/amico.svg" />
   </section>
 </template>
 
@@ -42,5 +39,13 @@ import CButton from "../ClubButton.vue";
 <style lang="scss" scoped>
 section {
   margin-top: 85px;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+.play_video {
+  cursor: pointer;
 }
 </style>

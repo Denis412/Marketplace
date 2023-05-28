@@ -1,13 +1,11 @@
 <template>
-  <section class="container q-mt-xl section-margin">
+  <section class="container q-mt-xl section-margin" id="about">
     <div class="row">
       <div class="q-mb-md text-h3 col-12 text-center q-mb-xl">1Т Клуб за 1 минуту</div>
       <div class="col-12">
-        <q-video
-        class="video"
-        src="https://www.youtube.com/watch?v=OJzN26zynP0"
-        />
-    </div></div>
+        <q-video class="video" src="https://www.youtube.com/watch?v=OJzN26zynP0" />
+      </div>
+    </div>
   </section>
 </template>
 
