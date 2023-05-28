@@ -1,7 +1,6 @@
 <template>
   <div class="flex items-center item">
-    <div class="link text-subtitle2">{{ title }}</div>
-
+    <div class="text-subtitle5">{{ title }}</div>
     <div>
       <q-img class="item-image" :src="imageUrl" />
     </div>
@@ -16,15 +15,7 @@ const { title, imageUrl } = defineProps({
 </script>
 
 <style scoped lang="scss">
-.link {
-  text-decoration: underline;
-}
-
 .item {
-  &:nth-child(2) {
-    margin-top: 131px;
-  }
-
   &-image {
     cursor: pointer;
 

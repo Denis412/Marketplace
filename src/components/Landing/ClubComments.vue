@@ -1,83 +1,123 @@
 <template>
-  <section class="comments container">
-    <div class="text-h3 text-center">Отзывы</div>
+  <h3 class="text-h3 text-center section-margin q-pb-xl">Отзывы участников 1Т Клуба</h3>
+  <Carousel :itemsToShow="2" :wrapAround="true" :transition="500" ref="carousel">
+    <Slide v-for="slide in slides" :key="slide">
+      <div class="row carousel__item">
+        <div class="col-5 test">
+          <img :src="slide.photo" alt="" />
+        </div>
+        <div class="col-7 q-pa-md text-left justify-between flex">
+          <div class="text-body2">{{ slide.text }}</div>
+          <div>
+            <div class="text-subtitle4">{{ slide.name }}</div>
+            <div class="text-body2 text-violet4">{{ slide.role }}</div>
+          </div>
+        </div>
+      </div>
+    </Slide>
+  </Carousel>
 
-    <q-list class="row no-wrap comments-list">
-      <c-review-card
-        v-for="comment in comments"
-        :key="comment.id"
-        v-bind="comment"
-      />
-    </q-list>
-  </section>
+  <div class="text-center">
+    <q-btn
+      @click="carousel.prev()"
+      unelevated
+      dense
+      size="xl"
+      class="q-mr-md"
+      :icon="'chevron_left'"
+    />
+    <q-btn
+      @click="carousel.next()"
+      unelevated
+      dense
+      size="xl"
+      class="q-mr-md"
+      :icon="'chevron_right'"
+    />
+  </div>
 </template>
 
 <script setup>
-import CReviewCard from "components/Landing/ClubReviewCard.vue";
 import { ref } from "vue";
+import { Carousel, Pagination, Slide } from "vue3-carousel";
 
-const comments = ref([
+import "vue3-carousel/dist/carousel.css";
+
+const carousel = ref(null);
+const slides = [
   {
-    id: 1,
-    avatarUrl: "/assets/images/preloaders/default-avatar.svg",
-    fullname: "Дмитрий Соколов",
-    jobTitle: "Дизайнер",
-    content:
-      "Честно говоря, я был сильно удивлен, что несмотря на разные результаты, масштабы бизнеса, опыт, все с кем мне приходилось общаться в клубе, невероятно доброжелательные, открытые и близкие по духу люди. также с помощью клуба нашел двух специалистов для решения своей задачи.",
-    stars: 4,
+    name: "Татьяна Новикова",
+    role: "Системный аналитик",
+    text: "После 1Т Спринта хотелось поработать на реальных проектах. Эту возможность  предоставил 1Т Клуб.                                                  Менторы помогли в сложных моментах и благодаря знаниям с 1Т Спринта удалось решать меняющиеся требования. Теперь, с завершением первого проекта и переходом к следующему, уверенность как специалист растет. Приятно знать,      что опытные наставники из 1Т Клуба помогают в этом процессе.",
+    photo: "/assets/images/landing/photo_1.svg",
   },
   {
-    id: 2,
-    avatarUrl: "/assets/images/preloaders/default-avatar.svg",
-    fullname: "Александр Иванов",
-    jobTitle: "Менеджер",
-    content:
-      "Я стал частью большой команды. Для меня это личностный рост и постоянная поддержка. Могу обратиться с любым вопросом и меня услышат. Начал находить решения, как мне эффективнее продвигаться по моим задачам. Сейчас активно принимаю участие в проекте. Я убедился, что замыкаться в своей области и в своем кругу знакомств не дают развития. За это моя благодарность 1Т Клубу.",
-    stars: 5,
+    name: "Екатерина Куршина",
+    role: "Менеджер IT-проектов",
+    text: "Наша команда — новички в IT. Совсем недавно мы закончили онлайн-курсы в 1Т Спринт, а свой первый проект получили в 1Т Клубе. Безумно приятно, что 1Т не оставляет своих выпускников. Нам очень помогли эксперты советами, как выстраивать этапы разработки, как общаться с заказчиком, к кому обращаться с вопросами.                          Это был прекрасный старт, чтобы расти дальше! ",
+    photo: "/assets/images/landing/photo_2.svg",
   },
   {
-    id: 3,
-    avatarUrl: "/assets/images/preloaders/default-avatar.svg",
-    fullname: "Александр Иванов",
-    jobTitle: "Менеджер",
-    content:
-      "Честно говоря, я был сильно удивлен, что несмотря на разные результаты, масштабы бизнеса, опыт, все с кем мне приходилось общаться в клубе, невероятно доброжелательные, открытые и близкие по духу люди. также с помощью клуба нашел двух специалистов для решения своей задачи.",
-    stars: 5,
+    name: "Виктория Ознобихина",
+    role: "Frontend- разработчик",
+    text: "Работа в проекте 1Т Клуба позволяет получить ценный опыт сотрудничества с заказчиком и командой. Спасибо менторам, которые всегда готовы помочь и сделать наш работу более эффективной. Это вдохновляет на рост профессиональных навыков и повышение мотивации к развитию. Работать со замечательной командой, которая создает теплую и благоприятную атмосферу - это истинное удовольствие.",
+    photo: "/assets/images/landing/photo_3.svg",
   },
-  // {
-  //   id: 4,
-  //   avatarUrl: "/assets/images/preloaders/default-avatar.svg",
-  //   fullname: "Александр Иванов",
-  //   jobTitle: "Менеджер",
-  //   content:
-  //     "Честно говоря, я был сильно удивлен, что несмотря на разные результаты, масштабы бизнеса, опыт, все с кем мне приходилось общаться в клубе, невероятно доброжелательные, открытые и близкие по духу люди. также с помощью клуба нашел двух специалистов для решения своей задачи.",
-  //   stars: 5,
-  // },
-  // {
-  //   id: 5,
-  //   avatarUrl: "/assets/images/preloaders/default-avatar.svg",
-  //   fullname: "Александр Иванов",
-  //   jobTitle: "Менеджер",
-  //   content:
-  //     "Честно говоря, я был сильно удивлен, что несмотря на разные результаты, масштабы бизнеса, опыт, все с кем мне приходилось общаться в клубе, невероятно доброжелательные, открытые и близкие по духу люди. также с помощью клуба нашел двух специалистов для решения своей задачи.",
-  //   stars: 5,
-  // },
-]);
+];
 </script>
 
-<style lang="scss" scoped>
-.comments {
-  margin-top: 124px;
+<style scoped>
+.carousel__item {
+  max-height: 418px;
+  width: 610px;
+  background: linear-gradient(
+    101.5deg,
+    rgba(16, 5, 34, 0.15) 37.03%,
+    rgba(255, 255, 255, 0.1) 80.19%,
+    rgba(16, 5, 34, 0.15) 100%
+  );
+  border: 1px solid white;
+  color: white;
+  border-radius: 8px;
+}
+.carousel__slide {
+  padding: 5px;
 }
 
-.comments-list {
-  margin-top: 50px;
-  overflow-x: auto;
-  width: 100%;
+.carousel__viewport {
+  perspective: 2000px;
 }
 
-.comments-list,
-.comments-list .card {
-  transform: rotateX(180deg);
+.carousel__track {
+  transform-style: preserve-3d;
+}
+
+.carousel__slide--sliding {
+  transition: 0.5s;
+}
+
+.carousel__slide {
+  opacity: 0.9;
+  transform: rotateY(-20deg) scale(0.9);
+}
+
+.carousel__slide--active ~ .carousel__slide {
+  transform: rotateY(20deg) scale(0.9);
+}
+
+.carousel__slide--prev {
+  opacity: 0.5;
+  transform: rotateY(-10deg) scale(0.95);
+}
+
+.carousel__slide--next {
+  opacity: 0.5;
+  transform: rotateY(10deg) scale(0.95);
+}
+
+.carousel__slide--active {
+  padding: 30px;
+  opacity: 1;
+  transform: rotateY(0) scale(1.1);
 }
 </style>

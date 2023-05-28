@@ -1,15 +1,14 @@
 <template>
   <section class="section-margin text-center container">
-    <div class="text-h3">С нами сотрудничают</div>
-
-    <q-list class="row justify-between q-mt-xl">
-      <img
-        class="partner-logo"
-        v-for="partner in partners"
-        :key="partner.id"
-        :src="partner.imageUrl"
-      />
-    </q-list>
+    <div class="text-h3 q-mt-xl">С нами сотрудничают</div>
+    <div class="items-wrap">
+      <div class="items marquee reverce">
+        <img class="item" v-for="partner in partners" :key="partner.id" :src="partner.imageUrl" />
+      </div>
+      <div aria-hidden="true" class="items marquee reverce">
+        <img class="item" v-for="partner in partners" :key="partner.id" :src="partner.imageUrl" />
+      </div>
+    </div>
   </section>
 </template>
 
@@ -25,7 +24,55 @@ const partners = ref([
 </script>
 
 <style lang="scss" scoped>
-.partner-logo {
-  max-width: 256px;
+.items-wrap {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: 20px;
+}
+.items-wrap:before,
+.items-wrap:after {
+  content: "";
+  height: 100%;
+  top: 0;
+  width: 10%;
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+.items {
+  flex-shrink: 0;
+  display: flex;
+  gap: 20px;
+  counter-reset: item;
+  justify-content: space-around;
+  min-width: 100%;
+}
+.item {
+  flex: 0 0 auto;
+  width: 235px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  margin-left: 100px;
+  transition: all 0.1s ease-in-out;
+}
+.marquee {
+  animation: scroll 20s linear infinite;
+}
+.reverce {
+  animation-direction: reverse;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 20px));
+  }
 }
 </style>

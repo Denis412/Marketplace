@@ -1,47 +1,34 @@
 <template>
-  <section class="questions container">
-    <div class="text-h3">Часто задаваемые вопросы</div>
-    <c-dropdown
-      v-for="item in dropdown"
-      :key="item.title"
-      :title="item.title"
-      :content="item.content"
-    />
+  <section class="text-center container section-margin">
+    <h3 class="text-h3 text-left q-mb-xl">Часто задаваемые вопросы</h3>
+    <c-faq-list :questions="questionList" class="q-pb-xl" />
   </section>
 </template>
-
 <script setup>
+import CFaqList from "./ClubFAQList.vue";
 import { ref } from "vue";
-import CDropdown from "./ClubDropdown.vue";
 
-const dropdown = ref([
+const questionList = ref([
   {
-    title: "Какие требования к участникам Клуба?",
-    content: "placeholder",
+    id: 1,
+    label: "Какие требования к участникам 1Т Клуба?",
+    content: [],
   },
   {
-    title: "Что внутри 1Т Клуба? Какие задачи я смогу решать?",
-    content: "placeholder",
+    id: 2,
+    label: "Что внутри 1Т Клуба? Какие задачи я смогу решать?",
+    content: [],
   },
   {
-    title: "Как вступить в команду команду?",
-    content: "placeholder",
+    id: 3,
+    label: "Как вступить в команду 1Т Клуба?",
+    content: [],
   },
   {
-    title: "Как оформить заказ в 1Т Клубе?",
-    content: "placeholder",
+    id: 4,
+    label: "Как оформить заказ в 1Т Клубе?",
+    content: [],
   },
 ]);
 </script>
-
-<style lang="scss" scoped>
-.questions {
-  margin-top: 124px;
-}
-
-.title {
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 39px;
-}
-</style>
+<style scoped lang="scss"></style>
