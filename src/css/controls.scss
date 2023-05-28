@@ -2,6 +2,8 @@
 
 .c-input-outline {
   padding-bottom: 0 !important;
+
+  border-radius: 8px !important;
   div {
     border-radius: 8px !important;
 
@@ -49,6 +51,62 @@
 
       &:before {
         border-style: solid !important;
+      }
+    }
+  }
+}
+
+.c-input-outline-border-none {
+  padding-bottom: 0 !important;
+
+  border-radius: 8px !important;
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__bottom {
+      min-height: 0;
+      padding: 0;
+    }
+
+    & .q-field__bottom--animated {
+      transform: none;
+      position: relative;
+
+      div div {
+        @extend .text-caption2;
+
+        margin-top: 16px;
+      }
+    }
+
+    & .q-field__control {
+      padding-left: 24px;
+      padding-right: 24px;
+      height: $input-height-md;
+
+      div {
+        height: $input-height-md;
+
+        input,
+        textarea {
+          @extend .text-body2;
+
+          color: #6d6d6d;
+
+          &::placeholder {
+            color: #6d6d6d4d;
+          }
+        }
+        .q-field__label {
+          top: 0;
+
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      &:before {
+        border-style: none !important;
       }
     }
   }

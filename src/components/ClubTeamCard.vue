@@ -1,6 +1,5 @@
 <template>
   <q-card
-    v-if="isShowCard"
     class="team card-shadow rounded-borders-10 c-pa-32 cursor-pointer column no-wrap justify-between"
     @click="to()"
   >

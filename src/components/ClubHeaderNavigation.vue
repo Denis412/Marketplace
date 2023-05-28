@@ -7,6 +7,7 @@
       v-for="item in navigation_items"
       :key="item.label"
       :icon="item.icon"
+      :disable="item.name === 'my-space' || item.name === 'orders'"
       :label="item.label"
       :class="{ 'active-item': selectedPage === item.name }"
       @click="redirectPage(item.name)"
@@ -22,12 +23,12 @@ const router = useRouter();
 
 const selectedPage = ref("teams");
 const navigation_items = ref([
-  // {
-  //   label: "Мой кабинет",
-  //   name: "my-space",
-  //   icon: "img:/assets/icons/my-space/my-space-white.svg",
-  //   active_icon: "",
-  // },
+  {
+    label: "Мой кабинет",
+    name: "my-space",
+    icon: "img:/assets/icons/my-space/my-space-white.svg",
+    active_icon: "",
+  },
   {
     label: "Магазин",
     name: "orders",
