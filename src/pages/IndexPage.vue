@@ -13,6 +13,7 @@
       <c-steps />
       <c-partners />
       <c-products />
+      <c-string />
       <c-comments />
       <c-community />
       <c-questions />
@@ -22,6 +23,7 @@
 </template>
 
 <script setup>
+import CString from "components/Landing/ClubString.vue";
 import CMainScreen from "components/Landing/ClubMainScreen.vue";
 import CDirections from "components/Landing/ClubDirections.vue";
 import CStatistics from "components/Landing/ClubStatistics.vue";
