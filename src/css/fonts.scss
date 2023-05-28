@@ -25,12 +25,12 @@
 
 @font-face {
   font-family: "Inter-Thin";
-  src: url("Inter-Thin"), url("src/assets/fonts/Inter/Inter-Thin.otf");
+  src: local("Inter-Thin"), url("src/assets/fonts/Inter/Inter-Thin.ttf");
 }
 
 @font-face {
   font-family: "Inter-Bold";
-  src: url("Inter-Bold"), url("src/assets/fonts/Inter/Inter-Bold.otf");
+  src: local("Inter-Bold"), url("src/assets/fonts/Inter/Inter-Bold.ttf");
 }
 
 .text-h1,
