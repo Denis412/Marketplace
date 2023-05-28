@@ -21,12 +21,12 @@ const stringContent = {
 };
 
 const computedString = (string) => {
-  return (string + " / ").repeat(10);
+  return (string + " / ").repeat(20);
 };
 
 const onScroll = (info) => {
-  translateRight.value = -2000 + info.position.top / 2;
-  translateLeft.value = 2000 + info.position.top / 2;
+  translateRight.value = -4000 + info.position.top / 2;
+  translateLeft.value = 4200 + info.position.top / 2;
 };
 </script>
 
