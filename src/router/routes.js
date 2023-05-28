@@ -8,6 +8,11 @@ const routes = [
         name: "landing-main",
         component: () => import("pages/IndexPage.vue"),
       },
+      {
+        path: "business",
+        name: "landing-business",
+        component: () => import("pages/ClubBusinessPage.vue"),
+      },
     ],
   },
   {
