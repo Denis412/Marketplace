@@ -12,7 +12,7 @@
         </q-item>
 
         <q-item
-          v-else
+          v-else-if="isMember"
           clickable
           v-ripple
           class="flex no-wrap items-center text-caption1 text-black"
@@ -62,6 +62,7 @@ const router = useRouter();
 
 const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
+const isMember = inject("isMember");
 
 const showPopup = ref(false);
 
