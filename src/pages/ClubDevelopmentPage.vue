@@ -1,5 +1,5 @@
 <template>
-  <q-page class="bg-dark-purple h-100p" style="overflow-x: hidden">
+  <q-page class="bg-dark-purple h-100p no-scroll" style="overflow-x: hidden">
     <c-background-spot />
 
     <main class="text-white relative-position" style="z-index: 1">
@@ -11,8 +11,8 @@
 
       <c-suggestion />
       <c-experts />
-      <!-- слайдер -->
       <c-work />
+      <!-- редактировать инфо -->
       <c-teams />
       <!-- слайдер -->
       <c-banner />
@@ -20,7 +20,7 @@
       <c-course-ai />
       <c-networking />
       <c-partners />
-      <!-- лента(Никита) -->
+      <c-string />
       <!-- видеоотзывы(Олег) -->
     </main>
   </q-page>
@@ -28,6 +28,7 @@
 
 <script setup>
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
+import CString from "components/Landing/ClubString.vue";
 import CMainScreen from "components/Landing/ClubMainScreen.vue";
 import CSuggestion from "components/Landing-develop/ClubSuggestion.vue";
 import CPartners from "components/Landing/ClubPartners.vue";

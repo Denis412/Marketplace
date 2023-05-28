@@ -219,7 +219,7 @@
   margin: 0 auto;
 }
 
-.rounded-borders-5{
+.rounded-borders-5 {
   border-radius: 8px;
 }
 
@@ -548,9 +548,13 @@
   }
 }
 
-.club-carousel{
-  .q-carousel{
+.club-carousel {
+  .q-carousel {
     background-color: transparent;
+    min-height: 572px !important;
   }
-  
+  & .carousel__slide {
+    width: 448px !important;
+    margin-right: 32px;
+  }
 }

@@ -11,7 +11,7 @@ const routes = [
       {
         path: "selfdevelopment",
         name: "landing-selfdevelopment",
-        component: () => import("pages/SelfDevelopPage.vue"),
+        component: () => import("src/pages/ClubDevelopmentPage.vue"),
       },
       {
         path: "business",

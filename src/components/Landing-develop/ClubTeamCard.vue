@@ -34,6 +34,7 @@ const { team } = defineProps({
     background: linear-gradient(97.7deg, #432076 0%, #3a1d47 100%);
     border-radius: 20px;
     max-width: 352px;
+    height: 520px;
   }
   &-chip {
     padding: 6px 16px;

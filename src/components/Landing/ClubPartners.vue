@@ -1,5 +1,5 @@
 <template>
-  <section class="section-margin text-center container">
+  <section class="section-margin section-mb text-center container">
     <div class="text-h3 q-mt-xl">С нами сотрудничают</div>
     <div class="items-wrap">
       <div class="items marquee reverce">

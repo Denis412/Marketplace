@@ -1,5 +1,5 @@
 <template>
-  <section class="section-margin text-center container q-mb-xl">
+  <section class="section-margin section-mb text-center container q-mb-xl">
     <div class="text-h3 q-mb-xl">Наши продукты</div>
 
     <q-list class="row justify-between">
