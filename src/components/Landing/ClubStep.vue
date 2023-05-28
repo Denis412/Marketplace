@@ -5,7 +5,7 @@
     </div>
     <div class="absolute-center step-shadow"></div>
     <div class="absolute step-text">
-      <div class="text-subtitle2">
+      <div class="text-subtitle1">
         {{ title }}
       </div>
       <p class="text-body2">
@@ -46,15 +46,17 @@ const { num } = defineProps({
     margin: 210px 0 0 355px;
   }
 
-  margin-top: 210px;
+  margin-top: 180px;
 }
 
 .step1 {
   margin-top: 0;
 }
-
+.step4{
+  margin-top: 120px !important;
+}
 .step5 {
-  margin-top: 274px;
+  margin-top: 110px !important
 }
 
 .num {
@@ -64,6 +66,6 @@ const { num } = defineProps({
 .step-text {
   width: 544px;
   top: 46px;
-  left: 74px;
+  left: 8rem;
 }
 </style>
