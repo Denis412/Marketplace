@@ -54,6 +54,63 @@
   }
 }
 
+.c-input-outline-white {
+  padding-bottom: 0 !important;
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__bottom {
+      min-height: 0;
+      padding: 0;
+    }
+
+    & .q-field__bottom--animated {
+      transform: none;
+      position: relative;
+
+      div div {
+        @extend .text-caption2;
+
+        margin-top: 16px;
+      }
+    }
+
+    & .q-field__control {
+      padding-left: 24px;
+      padding-right: 24px;
+      height: $input-height-md;
+
+      div {
+        height: $input-height-md;
+
+        input,
+        textarea {
+          @extend .text-body2;
+
+          color: white;
+
+          &::placeholder {
+            color: rgba(164, 152, 183, 1);
+          }
+        }
+        .q-field__label {
+          top: 0;
+
+          display: flex;
+          align-items: center;
+        }
+      }
+      &:hover{
+        border: 1px solid rgb(162, 162, 162);
+      }
+      &:before {
+        border-color: white;
+        border-style: solid !important;
+      }
+    }
+  }
+}
+
 .c-input-number {
   div {
     border-radius: 8px !important;
