@@ -1,5 +1,5 @@
 <template>
-  <section class="container q-mt-xl c-mt-215">
+  <section class="container q-mt-xl section-margin">
     <div class="row">
       <div class="q-mb-md text-h3 col-12 text-center q-mb-xl">1Т Клуб за 1 минуту</div>
       <div class="col-12">

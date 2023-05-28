@@ -2,7 +2,7 @@
   <section class="item">
     <q-img class="img" :src="imageUrl" />
 
-    <div class="q-mt-md text-subtitle2">
+    <div class="q-mt-md text-subtitle4">
       {{ title }}
     </div>
 
@@ -22,8 +22,8 @@ const { imageUrl, title, content } = defineProps({
 
 <style scoped lang="scss">
 .img {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 80px;
+  max-height: 80px;
 
   transition: 0.4s;
 
