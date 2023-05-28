@@ -69,7 +69,7 @@ const redirect = (page_id) => {
   const page = currentUser.value.teams.find((team) => team.id === page_id);
 
   router.push({
-    name: "team",
+    name: "teamSpace",
     params: { id: page.id },
     query: { name: page.name, space: page.space },
   });

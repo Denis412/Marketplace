@@ -36,10 +36,8 @@ const paginate = async (where) => {
   return spacesData.spaces;
 };
 
-const create = async (data) => {
-  const { data: spaceData } = await creatingSpace({
-    input: data,
-  });
+const create = async ({ input }) => {
+  const { data: spaceData } = await creatingSpace({ input });
 
   console.log("create space", spaceData);
 

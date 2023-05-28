@@ -171,6 +171,18 @@
   }
 }
 
+.club-button-background-square {
+  color: white;
+  background: $primary-gradient;
+
+  border-radius: 5px !important;
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.5);
+    background: $primary-gradient-disaled;
+  }
+}
+
 .club-button-background {
   color: white;
   background: $primary-gradient;
@@ -197,6 +209,33 @@
 
   &:disabled {
     color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.club-button-outline-text-colored-square{
+  $border: 3px;
+
+  border: $border solid transparent !important;
+  border-radius: 5px !important;
+
+  background: white;
+  background-clip: padding-box !important;
+
+  & .q-focus-helper {
+    border-radius: 0 !important;
+  }
+
+  &:before {
+    margin: -$border !important;
+    z-index: -1 !important;
+
+    border: none !important;
+    border-radius: inherit !important;
+    background: $primary-gradient !important;
+  }
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.3) !important;
   }
 }
 

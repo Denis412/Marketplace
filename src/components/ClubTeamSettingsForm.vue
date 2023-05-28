@@ -182,17 +182,17 @@
 <script setup>
 import { ref, inject } from "vue";
 import { useValidators } from "src/use/validators";
-import { useTeamUpdate } from "src/use/teams";
 
 import CLabelControl from "./ClubLabelControl.vue";
 import CButton from "src/components/ClubButton.vue";
 import CChip from "./ClubChip.vue";
 import { useQuasar } from "quasar";
 
+import TeamService from "src/sevices/TeamService";
+
 const $q = useQuasar();
 
 const { required, maxLength, minLength, isTelegramUrl } = useValidators();
-const { updateTeam } = useTeamUpdate();
 
 const currentTeam = inject("currentTeam");
 const upload_img = ref();
@@ -243,11 +243,8 @@ const updateFile = () => {
 const addAvatar = () => uploadFile.value.pickFiles();
 const deleteAvatar = () => (form.value.avatar = "/assets/images/preloaders/default-avatar.svg");
 
-const updateTeamData = async (prop_name, value) => {
-  await updateTeam(currentTeam.value.id, {
-    [prop_name]: value,
-  });
-};
+const updateTeamData = async (prop_name, value) =>
+  await TeamService.updateTeam({ [prop_name]: value }, { id: currentTeam.value.id });
 </script>
 
 <style lang="scss" scoped>

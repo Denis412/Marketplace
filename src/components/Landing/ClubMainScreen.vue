@@ -7,7 +7,24 @@
         {{ subtitle }}
       </p>
 
-      <c-button to="/registration" background size="xl" class="q-mt-xl" label="Вступить в клуб" />
+      <section class="flex q-py-md q-mt-xl items-center">
+      <c-button
+        to="/registration"
+        background
+        class="text-button2 q-mr-lg"
+        label="Вступить в 1Т клуб"
+      />
+      
+      <!-- Куда должно вести? -->
+      <q-img
+        src="/assets/images/Play_video.svg"
+        height="60px"
+        width="60px"
+        alt="logo"
+      />
+
+      <span class="text-subtitle5 c-ml-12">Смотреть ролик</span>
+    </section>
     </div>
 
     <q-img class="col" style="max-width: 480px" :src="img" />

@@ -9,7 +9,6 @@ export const projectsPaginate = gql`
         author_id
         description
         target
-        avatar
         team_name
         created_at
         members {
@@ -17,10 +16,6 @@ export const projectsPaginate = gql`
           fullname {
             first_name
             last_name
-          }
-          speciality1 {
-            id
-            name
           }
           group {
             id
@@ -44,7 +39,6 @@ export const projectsPaginateInTeamSpace = gql`
         author_id
         description
         target
-        avatar
         team_name
         created_at
         space
@@ -57,7 +51,6 @@ export const projectsPaginateInTeamSpace = gql`
           email {
             email
           }
-          speciality1
           group {
             id
             name
@@ -72,7 +65,6 @@ export const projectsPaginateInTeamSpace = gql`
           email {
             email
           }
-          speciality1
           group {
             id
             name

@@ -9,9 +9,14 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
       },
       {
-        path: "develop",
-        name: "landing-develop",
-        component: () => import("pages/ClubDevelopPage.vue"),
+        path: "selfdevelopment",
+        name: "landing-selfdevelopment",
+        component: () => import("pages/SelfDevelopPage.vue"),
+      },
+      {
+        path: "business",
+        name: "landing-business",
+        component: () => import("pages/ClubBusinessPage.vue"),
       },
     ],
   },
@@ -37,39 +42,9 @@ const routes = [
         component: () => import("pages/ClubUserProfileSettingsPage.vue"),
       },
       {
-        path: "team/:id",
-        name: "team",
-        props: true,
-        component: () => import("pages/ClubTeamPage.vue"),
-      },
-      {
-        path: "team-space/:id",
-        name: "teamSpace",
-        meta: { isTeamMember: true },
-        component: () => import("pages/ClubTeamSpace.vue"),
-      },
-      {
-        path: "team/:id/invite",
-        name: "teamInvite",
-        meta: { isTeamOwner: true },
-        component: () => import("pages/ClubTeamInvitePage.vue"),
-      },
-      {
         path: "project/:id/invite",
         name: "projectInvite",
         component: () => import("pages/ClubTeamInvitePage.vue"),
-      },
-      {
-        path: "team/:id/edit",
-        name: "teamEdit",
-        meta: { isTeamOwner: true },
-        component: () => import("src/pages/ClubTeamSettingsPage.vue"),
-      },
-      {
-        path: "team-space/:id/edit",
-        name: "teamSpaceEdit",
-        meta: { isTeamOwner: true },
-        component: () => import("src/pages/ClubTeamSettingsPage.vue"),
       },
       {
         path: "teams",
@@ -154,6 +129,44 @@ const routes = [
         path: "notifications",
         name: "notifications",
         component: () => import("pages/ClubNotificationPage.vue"),
+      },
+    ],
+  },
+
+  {
+    path: "/team",
+    name: "teamLayout",
+    component: () => import("layouts/ClubTeamLayout.vue"),
+    children: [
+      {
+        path: ":id",
+        name: "team",
+        component: () => import("pages/ClubTeamPage.vue"),
+      },
+      {
+        path: "space/:id",
+        name: "teamSpace",
+        meta: { isTeamMember: true },
+        component: () => import("pages/ClubTeamSpace.vue"),
+      },
+      {
+        path: "space/:id/edit",
+        name: "teamSpaceEdit",
+        meta: { isTeamOwner: true },
+        component: () => import("src/pages/ClubTeamSettingsPage.vue"),
+      },
+      {
+        path: ":id/edit",
+        name: "teamEdit",
+        meta: { isTeamOwner: true },
+        component: () => import("src/pages/ClubTeamSettingsPage.vue"),
+      },
+
+      {
+        path: ":id/invite",
+        name: "teamInvite",
+        meta: { isTeamOwner: true },
+        component: () => import("pages/ClubTeamInvitePage.vue"),
       },
     ],
   },

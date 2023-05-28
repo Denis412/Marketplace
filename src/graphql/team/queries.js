@@ -26,11 +26,6 @@ export const getTeamsWithWhere = gql`
             email {
               email
             }
-            avatar
-            speciality1 {
-              id
-              name
-            }
           }
           team {
             id
@@ -47,11 +42,6 @@ export const getTeamsWithWhere = gql`
             last_name
           }
           group {
-            name
-          }
-          avatar
-          speciality1 {
-            id
             name
           }
         }

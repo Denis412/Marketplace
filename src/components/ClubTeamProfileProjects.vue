@@ -19,10 +19,10 @@
         <c-card-add-project
           v-if="isOwner && !isProfile"
           flat
-          class="flex flex-center project-card add-card col-4"
+          class="flex flex-center project-card add-card project-card-empty col-4"
         />
 
-        <q-card flat class="flex flex-center project-card col">
+        <q-card flat class="flex flex-center project-card project-card-empty col">
           <q-img class="no-projects-img" src="/assets/images/team-page/no-projects.svg" />
 
           <div class="text-body2 c-ml-64">У команды пока нет проектов...</div>
@@ -103,10 +103,10 @@
 </template>
 
 <script setup>
-import { computed, inject, ref } from "vue";
+import { computed, inject, onMounted, ref } from "vue";
 
 import { useRouter } from "vue-router";
-import _ from "lodash";
+import * as _ from "lodash";
 
 import CCardAddProject from "./ClubCardAddProject.vue";
 import CProjectCard from "./ClubProjectCard.vue";
@@ -121,7 +121,7 @@ const { isProfile } = defineProps({
 const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
 
-const { result: currentProjects } = projectApi.paginateProject({
+const { result: currentProjects, refetch } = projectApi.paginateProject({
   page: 1,
   perPage: 50,
   space_id: currentTeam.value.space,
@@ -153,6 +153,12 @@ const switchSlide = (direction = "", position = -1) => {
 
   slide.value = currentValue;
 };
+
+onMounted(async () => {
+  console.log("hello");
+
+  await refetch();
+});
 </script>
 
 <style scoped lang="scss">

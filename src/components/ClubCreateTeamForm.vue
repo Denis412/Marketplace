@@ -65,15 +65,16 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from "vue";
+import { inject, ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 import { useValidators } from "src/use/validators";
-import { useTeamCreate } from "src/use/teams";
 
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
+
+import TeamService from "src/sevices/TeamService";
 
 import filesApi from "src/sdk/file";
 
@@ -82,7 +83,6 @@ const currentUser = inject("currentUser");
 const { required, maxLength, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
-const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
 
 const form = ref({
   name: "",
@@ -95,7 +95,7 @@ const uploadFile = ref(null);
 
 const teamCreate = async () => {
   try {
-    await createTeam({ ...form.value, author: currentUser.value });
+    await TeamService.createTeam(form.value);
 
     router.push({
       name: "my-teams",

@@ -2,7 +2,8 @@ import filesApi from "src/sdk/file";
 import typeApi from "src/sdk/type";
 import userApi from "src/sdk/user";
 import { convertSubject } from "src/utils/convertSubject";
-import { computed, ref } from "vue";
+import { computed } from "vue";
+import BaseService from "./BaseService";
 
 export default class UserService {
   static async fetchCurrentUser() {
@@ -31,94 +32,9 @@ export default class UserService {
     return currentUserData;
   }
 
-  // static fetchSubjectPaginate(variables = {}, options = {}) {
-  //   const refetchResult = ref(null);
-  //   const refetchLoading = ref(null);
-  //   const refetchError = ref(null);
-
-  //   const {
-  //     result: resultUser,
-  //     loading: loadingUser,
-  //     error: errorUser,
-  //   } = userApi.paginateSubjects({
-  //     ...variables,
-  //     ...options,
-  //     page: variables.page || 1,
-  //     perPage: variables.perPage || 50,
-  //     is_team: options.space_id,
-  //   });
-
-  //   const result = computed(() =>
-  //     options.only_one
-  //       ? refetchResult.value ?? resultUser.value?.paginate_subject.data[0]
-  //       : refetchResult.value ?? resultUser.value?.paginate_subject.data
-  //   );
-  //   const loading = computed(() => refetchLoading.value ?? loadingUser.value);
-  //   const error = computed(() => refetchError.value ?? errorUser.value);
-
-  //   async function refetch(variables) {
-  //     const { refetch: refetchUser } = userApi.paginateSubjects({
-  //       ...variables,
-  //       ...options,
-  //       page: variables.page || 1,
-  //       perPage: variables.perPage || 50,
-  //       is_team: options?.space_id,
-  //     });
-
-  //     const { data, loading, error } = await refetchUser(variables);
-
-  //     refetchResult.value = data.paginate_subject.data;
-  //     refetchLoading.value = loading;
-  //     refetchError.value = error;
-
-  //     return options?.only_one ? refetchResult.value[0] : refetchResult.value;
-  //   }
-
-  //   return { result, loading, error, refetch };
-  // }
-
-  // static fetchApiPaginate(method_link, result_name, variables = {}, options = {}) {
-  //   const refetchResult = ref(null);
-  //   const refetchLoading = ref(null);
-  //   const refetchError = ref(null);
-
-  //   const {
-  //     result: resultApi,
-  //     loading: loadingApi,
-  //     error: errorApi,
-  //   } = method_link?.({
-  //     ...variables,
-  //     ...options,
-  //     page: variables.page || 1,
-  //     perPage: variables.perPage || 50,
-  //   });
-
-  //   const result = computed(() =>
-  //     options.only_one
-  //       ? refetchResult.value ?? resultApi.value?.[result_name].data[0]
-  //       : refetchResult.value ?? resultApi.value?.[result_name].data
-  //   );
-  //   const loading = computed(() => refetchLoading.value ?? loadingApi.value);
-  //   const error = computed(() => refetchError.value ?? errorApi.value);
-
-  //   async function refetch(variables) {
-  //     const { data, loading, error } = await method_link?.({
-  //       ...variables,
-  //       ...options,
-  //       page: variables.page || 1,
-  //       perPage: variables.perPage || 50,
-  //       is_team: options?.space_id,
-  //     }).refetch(variables);
-
-  //     refetchResult.value = data?.[result_name].data;
-  //     refetchLoading.value = loading;
-  //     refetchError.value = error;
-
-  //     return options?.only_one ? refetchResult.value[0] : refetchResult.value;
-  //   }
-
-  //   return { result, loading, error, refetch };
-  // }
+  static fetchSubjectPaginate(variables = {}, options = {}) {
+    return BaseService.fetchApiPaginate(userApi.paginateSubjects, variables, options);
+  }
 
   static fetchSubjectById(variables = {}, options = {}) {
     const {
