@@ -1,5 +1,5 @@
 <template>
-  <section class="section-margin text-center container q-mb-xl">
+  <section class="section-margin text-center container my-section">
     <div class="text-h3 q-mb-xl">Наши продукты</div>
 
     <q-list class="row justify-between">
@@ -31,4 +31,8 @@ const products = ref([
 ]);
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.my-section {
+  margin-bottom: 160px;
+}
+</style>
