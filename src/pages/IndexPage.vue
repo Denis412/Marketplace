@@ -12,7 +12,6 @@
       <c-eco-system />
       <c-steps />
       <c-partners />
-      <c-join />
       <c-products />
       <c-comments />
       <c-community />
@@ -30,7 +29,6 @@ import CSteps from "components/Landing/ClubSteps.vue";
 import CAbout from "components/Landing/ClubAbout.vue";
 import CClients from "components/Landing/ClubClients.vue";
 import CPartners from "components/Landing/ClubPartners.vue";
-import CJoin from "components/Landing/ClubJoin.vue";
 import CProducts from "components/Landing/ClubProducts.vue";
 import CComments from "components/Landing/ClubComments.vue";
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
@@ -38,5 +36,5 @@ import CCommunity from "components/Landing/ClubCommunity.vue";
 import CHowJoin from "components/Landing/ClubHowJoin.vue";
 import CQuestions from "components/Landing/ClubQuestions.vue";
 import CContacts from "components/Landing/ClubContacts.vue";
-import CEcoSystem from "components/Landing/ClubEcoSystem.vue"
+import CEcoSystem from "components/Landing/ClubEcoSystem.vue";
 </script>
