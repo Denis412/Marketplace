@@ -11,7 +11,7 @@
       <c-button
         to="/registration"
         background
-        class="text-button2 q-mr-lg"
+        class="text-button2 q-mr-lg c-px-32 c-py-16"
         label="Вступить в 1Т клуб"
       />
       
