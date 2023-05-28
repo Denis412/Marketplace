@@ -317,6 +317,10 @@
   margin-top: 124px;
 }
 
+.section-mb {
+  margin-bottom: 160px;
+}
+
 .page-background {
   background: $light-page !important;
 }
@@ -538,4 +542,11 @@
   .q-card__section {
     @extend .text-caption1;
   }
+}
+
+.club-carousel{
+  .q-carousel{
+    background-color: transparent;
+  }
+  
 }

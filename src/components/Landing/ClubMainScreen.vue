@@ -1,36 +1,31 @@
 <template>
-  <section class="flex no-wrap container">
+  <section class="flex no-wrap container items-center">
     <div class="col">
-      <h1 class="text-h1">1Т Клуб</h1>
+      <h1 class="text-h1">{{ title }}</h1>
 
-      <p class="text-subtitle3 q-mt-md">
-        1Т Клуб - сообщество единомышленников, которых объединяет страсть к
-        работе и саморазвитию.
+      <p class="text-subtitle4 q-mt-md">
+        {{ subtitle }}
       </p>
 
-      <c-button
-        to="/registration"
-        background
-        size="xl"
-        class="q-mt-xl"
-        label="Вступить в клуб"
-      />
+      <c-button to="/registration" background size="xl" class="q-mt-xl" label="Вступить в клуб" />
     </div>
 
-    <q-img
-      class="col"
-      style="max-width: 480px"
-      src="/assets/images/amico.svg"
-    />
+    <q-img class="col" style="max-width: 480px" :src="img" />
   </section>
 </template>
 
 <script setup>
 import CButton from "../ClubButton.vue";
+
+const { title, subtitle, img } = defineProps({
+  title: String,
+  subtitle: String,
+  img: String,
+});
 </script>
 
 <style lang="scss" scoped>
 section {
-  margin-top: 85px;
+  margin-top: 56px;
 }
 </style>

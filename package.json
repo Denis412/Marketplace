@@ -23,6 +23,7 @@
     "stompjs": "^2.3.3",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0",
+    "vue3-youtube": "^0.1.9",
     "ws": "^8.13.0"
   },
   "devDependencies": {
