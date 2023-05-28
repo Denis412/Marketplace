@@ -8,7 +8,8 @@
       <section>
         <q-img
           :src="currentProject?.avatar || ''"
-          class="bg-violet4 rounded-borders-8 project-avatar c-mt-40 cursor-pointer"
+          class="bg-violet4 rounded-borders-8 project-avatar c-mt-40"
+          :class="{ 'cursor-pointer': isLeader }"
           @click="pickFiles"
         />
 
@@ -30,7 +31,7 @@
 </template>
 
 <script setup>
-import { computed, provide, ref, onMounted, watch, reactive, toRefs } from "vue";
+import { computed, provide, ref, onMounted, watch, reactive, toRefs, inject } from "vue";
 import { useRoute } from "vue-router";
 
 import CSectionProjectsHeaders from "src/components/ClubSectionProjectsHeaders.vue";
@@ -45,6 +46,8 @@ import userApi from "src/sdk/user";
 
 const route = useRoute();
 const { result, updateProject } = useProjectUpdate();
+
+const currentUser = inject("currentUser");
 
 const res = {
   leader: ref(null),
@@ -66,11 +69,13 @@ const { result: currentProject } = BaseService.fetchApiPaginate(
   { only_one: true, space_id: route.query.space }
 );
 
+const isLeader = ref(false);
+
 const uploader = ref(null);
 const loading = ref(false);
 const selectFile = ref(null);
 
-const pickFiles = () => uploader.value.pickFiles();
+const pickFiles = () => (isLeader.value ? uploader.value.pickFiles() : null);
 
 const uploadImage = async () => {
   const fileId = await filesApi.uploadFiles(selectFile.value);
@@ -108,15 +113,21 @@ const groupProjectSubjects = async (group_names) => {
           { only_one: true }
         );
 
-        if (currentProject.value?.author_id === subject.id)
+        if (currentProject.value?.author_id === subject.id) {
           res.leader.value = Object.assign({}, subjectMainSpace, { role: "Руководитель проекта" });
 
-        res[group_name].value.push(
-          Object.assign({}, subjectMainSpace, {
-            role:
-              currentProject.value?.author_id === subject.id ? "Руководитель проекта" : "Участник",
-          })
-        );
+          if (currentUser.value.subject_id === subjectMainSpace.id) isLeader.value = true;
+        }
+
+        if (group_name !== "leader" && currentUser.value.subject_id === subjectMainSpace)
+          res[group_name].value.push(
+            Object.assign({}, subjectMainSpace, {
+              role:
+                currentProject.value?.author_id === subject.id
+                  ? "Руководитель проекта"
+                  : "Участник",
+            })
+          );
       } catch (e) {
         console.log(e);
       }
@@ -129,6 +140,7 @@ const groupProjectSubjects = async (group_names) => {
 provide("spaceId", route.query.space);
 provide("currentProject", currentProject);
 
+provide("isLeader", isLeader);
 provide("currentMembers", res.members);
 provide("currentCustomers", res.customers);
 provide("currentLeader", res.leader);

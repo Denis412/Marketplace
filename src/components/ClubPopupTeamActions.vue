@@ -28,23 +28,6 @@
           @click="copyTeamTelegram"
         >
           Поделиться
-          <transition name="slide">
-            <div
-              v-show="showPopup"
-              class="flex flex-center"
-              :style="popupStyle"
-              style="
-                position: absolute;
-                padding: 10px;
-                width: max-content;
-                height: min-content;
-                border-radius: 5px;
-                background: lightgray;
-              "
-            >
-              <span class="text-caption2">Скопировано в буфер обмена</span>
-            </div>
-          </transition>
         </q-item>
       </q-list>
     </q-menu>
@@ -53,7 +36,7 @@
 
 <script setup>
 import { useQuasar } from "quasar";
-import { inject, reactive, ref, watchEffect } from "vue";
+import { inject, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const $q = useQuasar();
@@ -63,13 +46,6 @@ const router = useRouter();
 const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
 const isMember = inject("isMember");
-
-const showPopup = ref(false);
-
-const popupStyle = reactive({
-  top: 0,
-  left: 0,
-});
 
 const editProfile = async () => {
   router.push({

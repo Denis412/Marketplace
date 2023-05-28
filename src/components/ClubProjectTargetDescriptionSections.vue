@@ -6,9 +6,11 @@
       <q-input
         autogrow
         outlined
+        :readonly="!isLeader"
         v-model="target"
         @change="updateProp('target', $event)"
         class="c-input-outline c-input-area-mh q-mt-lg col"
+        :class="{ 'no-pointer-events': !isLeader }"
         placeholder="Опишите цель проекта"
       />
     </div>
@@ -28,9 +30,11 @@
       <q-input
         autogrow
         outlined
+        :readonly="!isLeader"
         v-model="description"
         @change="updateProp('description', $event)"
         class="c-input-outline c-input-area-mh q-mt-lg col"
+        :class="{ 'no-pointer-events': !isLeader }"
         placeholder="Напишите описание проекта"
       />
     </div>
@@ -45,6 +49,7 @@ const { result, updateProject } = useProjectUpdate();
 
 const currentProject = inject("currentProject");
 const space_id = inject("spaceId");
+const isLeader = inject("isLeader");
 
 const target = ref(currentProject.value?.target);
 const description = ref(currentProject.value?.description);
