@@ -135,8 +135,11 @@ provide("currentLeader", res.leader);
 
 watch(currentProject, async (value) => {
   if (value) await groupProjectSubjects(["members", "customers"]);
+});
 
-  console.log(res);
+onMounted(async () => {
+  if (!res.leader.value || !res.members.value?.length || !res.customers.value?.length)
+    await groupProjectSubjects(["members", "customers"]);
 });
 </script>
 

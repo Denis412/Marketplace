@@ -28,7 +28,6 @@ export const useTeamCreate = () => {
           description,
           leader_telegram_chat_id: author.telegram_chat_id,
         },
-        space_id: space.id,
       });
 
       space = await spaceApi.create({
@@ -390,26 +389,6 @@ export const useTeamCreate = () => {
         },
         space_id: space.id,
       });
-
-      await userApi.refetchPaginateSubjects({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "id",
-          operator: "EQ",
-          value: team.author_id,
-        },
-      });
-
-      // await userApi.update(
-      //   projectTypeData.author_id,
-      //   {
-      //     speciality1: mainSpaceSubject[0].speciality1.name,
-      //     avatar: mainSpaceSubject[0].avatar,
-      //   },
-      //   true,
-      //   space.id
-      // );
 
       createTeamResult.value = { team, space };
 

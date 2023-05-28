@@ -3,7 +3,21 @@
     <header>
       <h3 class="text-h3 text-center">Создание команды</h3>
 
-      <h3 v-if="creatingTeam" class="text-h3-text-center">Создание...</h3>
+      <teleport v-if="creatingTeam" to="body">
+        <div
+          style="
+            z-index: 10000;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+          "
+        >
+          <div class="loader loader-lg" />
+        </div>
+      </teleport>
     </header>
 
     <main class="flex column flex-center c-mt-32">
@@ -84,6 +98,8 @@ import TeamService from "src/sevices/TeamService";
 
 import { useUserStore } from "src/stores/user";
 import filesApi from "src/sdk/file";
+import userApi from "src/sdk/user";
+import teamApi from "src/sdk/team";
 
 const currentUser = inject("currentUser");
 
@@ -128,13 +144,11 @@ const teamCreate = async () => {
 
     await createTeam({ ...form.value, author: currentUser.value });
 
-    // await useUserStore().FETCH_CURRENT_USER();
+    await useUserStore().FETCH_CURRENT_USER();
 
     router.push({
       name: "my-teams",
     });
-
-    // await filesApi.uploadFiles(upload_img.value);
   } catch (error) {
     console.log(error);
   }
