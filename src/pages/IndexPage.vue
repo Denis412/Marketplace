@@ -7,15 +7,14 @@
       <c-directions />
       <c-statistics />
       <c-about />
-      <c-items />
-      <c-steps />
       <c-clients />
+      <c-how-join />
+      <c-steps />
       <c-partners />
       <c-join />
       <c-products />
       <c-comments />
       <c-community />
-      <c-how-join />
       <c-questions />
       <c-contacts />
     </main>
@@ -27,7 +26,6 @@ import CMainScreen from "components/Landing/ClubMainScreen.vue";
 import CDirections from "components/Landing/ClubDirections.vue";
 import CStatistics from "components/Landing/ClubStatistics.vue";
 import CSteps from "components/Landing/ClubSteps.vue";
-import CItems from "components/Landing/ClubItems.vue";
 import CAbout from "components/Landing/ClubAbout.vue";
 import CClients from "components/Landing/ClubClients.vue";
 import CPartners from "components/Landing/ClubPartners.vue";
