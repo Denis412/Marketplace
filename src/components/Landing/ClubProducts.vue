@@ -1,13 +1,9 @@
 <template>
-  <section class="section-margin text-center container">
-    <div class="text-subtitle1">Наши продукты</div>
+  <section class="section-margin text-center container q-mb-xl">
+    <div class="text-h3 q-mb-xl">Наши продукты</div>
 
     <q-list class="row justify-between">
-      <c-product-item
-        v-for="product in products"
-        :key="product.id"
-        v-bind="product"
-      />
+      <c-product-item v-for="product in products" :key="product.id" v-bind="product" />
     </q-list>
   </section>
 </template>

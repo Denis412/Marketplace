@@ -1,6 +1,7 @@
 <template>
-  <section class="section-margin how-join container row justify-between">
-    <div class="image relative-position">
+  <section class="section-margin how-join container">
+    <div class="row">
+    <div class="col-6 relative-position">
       <img src="/assets/images/landing/welcome.svg" />
 
       <img
@@ -10,17 +11,22 @@
       />
     </div>
 
-    <div class="info">
+    <div class="col-6 c-mt-80 c-pt-40">
       <h3 class="text-h3">Как вступить в 1Т Клуб?</h3>
 
-      <p class="text-body2 club-mt-72">
-        Присоединяйтесь к нашему сообществу, пройдя простую регистрацию на
-        сайте. Вступайте в 1Т Клуб и станьте частью нашей большой и дружной
-        семьи!
+      <p class="text-body2 q-mt-lg">
+        Присоединяйтесь к нашему IT-сообществу. 
+Пройдите простую регистрацию на сайте и станьте частью большой и дружной IT-семьи!
       </p>
 
-      <c-button background label="Присоединиться" class="info-btn block" />
+      <c-button
+        to="/registration"
+        background
+        class="text-button2 c-px-32 c-py-16 q-mt-lg"
+        label="Вступить в 1Т клуб"
+      />
     </div>
+  </div>
   </section>
 </template>
 
@@ -29,16 +35,9 @@ import CButton from "../ClubButton.vue";
 </script>
 
 <style lang="scss" scoped>
-.how-join {
-  padding: 0 96px;
-}
 
-.info {
-  max-width: 474px;
-}
 
 .info-btn {
-  margin: 72px auto 0 auto;
   padding: 8px 20px;
 
   width: 172px;

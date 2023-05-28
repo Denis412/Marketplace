@@ -112,10 +112,6 @@
       src="/assets/images/landing-background/main-page/bg-11.svg"
       style="position: absolute; left: 45.76vw; top: 6054px"
     />
-    <img
-      src="/assets/images/landing-background/main-page/bg-12.svg"
-      style="position: absolute; left: 42.08vw; top: 8160px"
-    />
   </div>
 </template>
 
