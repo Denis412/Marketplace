@@ -9,7 +9,7 @@
         :img="'/assets/images/amico.svg'"
         :video="true"
       />
-      <c-directions />
+      <c-directions :cards-list="cardsList" :btn-content="'Перейти'" />
       <c-statistics />
       <c-about />
       <c-clients />
@@ -44,4 +44,29 @@ import CHowJoin from "components/Landing/ClubHowJoin.vue";
 import CQuestions from "components/Landing/ClubQuestions.vue";
 import CContacts from "components/Landing/ClubContacts.vue";
 import CEcoSystem from "components/Landing/ClubEcoSystem.vue";
+
+const cardsList = [
+  {
+    id: 1,
+    title: "Для Бизнеса",
+    content: [
+      "IT-ментор для поиска точек роста в вашем бизнесе",
+      "Команды IT-специалистов для развития бизнес-проектов",
+    ],
+  },
+  {
+    id: 2,
+    title: "Для Работы",
+    content: [
+      "Фриланс заказы для IT-специалистов",
+      "Стажировка в 1Т Клубе",
+      "Работа над  IT-проектом в укомплектованных командах",
+    ],
+  },
+  {
+    id: 3,
+    title: "Для Развития",
+    content: ["Онлайн-обучение IT-профессиям", "База IT-знаний", "Консультации IT-экспертов"],
+  },
+];
 </script>

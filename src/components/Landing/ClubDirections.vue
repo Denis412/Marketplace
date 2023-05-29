@@ -7,31 +7,17 @@
         class="absolute-center shadow"
       />
     </h2>
-    <c-card-group :directions="cardsList" />
+    <c-card-group :directions="cardsList" :btnContent="btnContent" />
   </section>
 </template>
 
 <script setup>
 import CCardGroup from "components/Landing/ClubCardGroup.vue";
-import { ref } from "vue";
 
-const cardsList = ref([
-  {
-    id: 1,
-    title: "Для Бизнеса",
-    content: ["IT-ментор для поиска точек роста в вашем бизнесе", "Команды IT-специалистов для развития бизнес-проектов"],
-  },
-  {
-    id: 2,
-    title: "Для Работы",
-    content: ["Фриланс заказы для IT-специалистов", "Стажировка в 1Т Клубе", "Работа над  IT-проектом в укомплектованных командах"],
-  },
-  {
-    id: 3,
-    title: "Для Развития",
-    content: ["Онлайн-обучение IT-профессиям", "База IT-знаний", "Консультации IT-экспертов"],
-  },
-]);
+const { btnContent, cardsList } = defineProps({
+  btnContent: String,
+  cardsList: Array,
+});
 </script>
 
 <style lang="scss" scoped>
