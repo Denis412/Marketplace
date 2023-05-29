@@ -51,7 +51,7 @@ li {
 .card {
   border: 4px solid transparent;
   padding: 32px;
-  min-height: 366px;
+  min-height: 350px;
   width: 352px;
   background: linear-gradient(
     101.5deg,
