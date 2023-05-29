@@ -3,7 +3,7 @@
     <c-background-spot class="overflow-hidden" />
 
     <main class="text-white relative-position" style="z-index: 1">
-      <c-main-screen />
+      <c-business-screen />
       <c-directions class="c-mb-160" />
       <c-string />
       <c-clients class="c-mb-160" />
@@ -18,7 +18,7 @@
 
 <script setup>
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
-import CMainScreen from "components/Landing/ClubMainScreen.vue";
+import CBusinessScreen from "components/Landing/ClubBusinessScreen.vue";
 import CDirections from "components/Landing/ClubDirections.vue";
 import CString from "components/Landing/ClubString.vue";
 import CClients from "components/Landing/ClubClients.vue";
