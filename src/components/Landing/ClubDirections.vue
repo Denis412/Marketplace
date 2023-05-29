@@ -1,37 +1,24 @@
 <template>
   <section class="text-center directions container">
     <h2 class="title relative-position z-max text-h3 q-mb-xl q-pb-xl">
-      Выберите направление
+      {{ title }}
       <img
         src="/assets/images/landing-background/main-page/bg-14.svg"
         class="absolute-center shadow"
       />
     </h2>
-    <c-card-group :directions="cardsList" />
+    <c-card-group :directions="cardsList" :btnContent="btnContent" />
   </section>
 </template>
 
 <script setup>
 import CCardGroup from "components/Landing/ClubCardGroup.vue";
-import { ref } from "vue";
 
-const cardsList = ref([
-  {
-    id: 1,
-    title: "Для Бизнеса",
-    content: ["IT-ментор для поиска точек роста в вашем бизнесе", "Команды IT-специалистов для развития бизнес-проектов"],
-  },
-  {
-    id: 2,
-    title: "Для Работы",
-    content: ["Фриланс заказы для IT-специалистов", "Стажировка в 1Т Клубе", "Работа над  IT-проектом в укомплектованных командах"],
-  },
-  {
-    id: 3,
-    title: "Для Развития",
-    content: ["Онлайн-обучение IT-профессиям", "База IT-знаний", "Консультации IT-экспертов"],
-  },
-]);
+const { title, btnContent, cardsList } = defineProps({
+  btnContent: String,
+  cardsList: Array,
+  title: String,
+});
 </script>
 
 <style lang="scss" scoped>

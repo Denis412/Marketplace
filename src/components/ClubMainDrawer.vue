@@ -11,6 +11,11 @@
     <c-tree-teams v-if="!team" :class="{ 'c-tree-mini': miniState }" />
     <c-tree-my-team v-if="team" :class="{ 'c-tree-mini': miniState }" />
 
+    <c-tree-orders
+      v-else-if="route.path.includes('orders')"
+      :class="{ 'c-tree-mini': miniState }"
+    />
+
     <!-- <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
         v-for="item in mainTreeItems"
@@ -34,7 +39,7 @@
 
         <c-qtabs-document v-if="item.title == 'Документы'" />
       </q-item>
-    </q-list> -->
+    </q-list>  -->
 
     <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
       <img src="/assets/icons/arrow/drawer-arrow.svg" />

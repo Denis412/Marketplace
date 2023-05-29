@@ -3,33 +3,32 @@
     <c-background-spot class="overflow-hidden" />
 
     <main class="text-white relative-position" style="z-index: 1">
-      <c-main-screen />
-      <c-directions />
+      <c-business-screen />
+      <c-business-offers />
+      <c-advantages />
       <c-string />
-      <c-clients />
+      <c-business-tools />
       <c-join-business />
-
-      <section>
-        <h3 class="text-h3">Лучшие it-команды 1т клуба</h3>
-        <div>слайдер</div>
-      </section>
-
-      <section>
-        <h3 class="text-h3">Задачи, которые решили участинки в 1т клубе</h3>
-        <div>слайдер</div>
-      </section>
-
+      <c-best-teams />
+      <c-tasks />
       <c-faq />
+      <c-request />
     </main>
   </q-page>
 </template>
 
 <script setup>
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
-import CMainScreen from "components/Landing/ClubMainScreen.vue";
-import CDirections from "components/Landing/ClubDirections.vue";
+import CBusinessScreen from "components/Landing/ClubBusinessScreen.vue";
+import CBusinessOffers from "components/Landing/ClubBusinessOffers.vue";
+import CAdvantages from "components/Landing/ClubAdvantages.vue";
 import CString from "components/Landing/ClubString.vue";
-import CClients from "components/Landing/ClubClients.vue";
+import CBusinessTools from "components/Landing/ClubBusinessTools.vue";
 import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";
+import CBestTeams from "components/Landing/ClubBestTeams.vue";
+import CTasks from "components/Landing/ClubTasks.vue";
 import CFaq from "components/Landing/ClubFAQ.vue";
+import CRequest from "components/Landing/ClubRequest.vue";
 </script>
+
+<style scoped lang="scss"></style>

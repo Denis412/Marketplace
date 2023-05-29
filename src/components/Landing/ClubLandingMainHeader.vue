@@ -14,9 +14,15 @@
           to="business"
         />
 
-        <q-tab no-caps name="work" label="Для работы" class="rounded-borders" />
+        <q-route-tab no-caps name="work" label="Для работы" class="rounded-borders" to="work" />
 
-        <q-tab no-caps name="development" label="Для развития" class="rounded-borders" />
+        <q-route-tab
+          no-caps
+          name="development"
+          label="Для развития"
+          class="rounded-borders"
+          to="selfdevelopment"
+        />
       </q-tabs>
 
       <q-space />

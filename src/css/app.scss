@@ -288,6 +288,15 @@
 .club-mb-16 {
   margin-bottom: 16px;
 }
+.c-mb-160 {
+  margin-bottom: 160px;
+}
+.c-mb-18 {
+  margin-bottom: 18px;
+}
+.c-mb-32 {
+  margin-bottom: 32px;
+}
 
 .c-pa-24 {
   padding: 24px;
@@ -319,6 +328,10 @@
 
 .section-margin {
   margin-top: 124px;
+}
+
+.section-mb {
+  margin-bottom: 160px;
 }
 
 .page-background {
@@ -541,5 +554,14 @@
 
   .q-card__section {
     @extend .text-caption1;
+  }
+}
+
+.club-carousel {
+  .q-carousel {
+    background-color: transparent;
+  }
+  & .carousel__slide {
+    min-width: 452px !important;
   }
 }

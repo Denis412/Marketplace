@@ -2,7 +2,7 @@
   <section class="c-mb-36">
     <!-- получить фильтрованный массив, убрать filter -->
     <q-list
-      v-for="elem in list.filter((elem) => !elem.status).splice(0, 3)"
+      v-for="elem in list.filter((elem) => !elem.status).slice(0, 3)"
       :key="elem.id"
     >
       <q-item class="flex justify-between c-notification-item">

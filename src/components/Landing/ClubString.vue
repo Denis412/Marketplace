@@ -23,7 +23,7 @@ const stringContent = {
 };
 
 const computedString = (string) => {
-  return (string + " / ").repeat(10);
+  return (string + " / ").repeat(20);
 };
 
 const onScroll = (info) => {
