@@ -75,7 +75,7 @@
       <c-button
         outline
         class="text-body1 c-ml-32"
-        label="Отмена"
+        label="Отменить"
         type="reset"
         to="/club/teams/my-teams"
       />

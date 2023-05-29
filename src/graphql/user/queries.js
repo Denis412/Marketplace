@@ -122,6 +122,10 @@ export const paginateSubjectsInMainSpace = gql`
         }
         gender
         city
+        competencies {
+          id
+          name
+        }
         projects {
           id
           name
