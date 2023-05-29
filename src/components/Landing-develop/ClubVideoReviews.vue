@@ -1,21 +1,35 @@
 <template>
-  <section class="section-mb club-carousel">
-    <h3 class="text-h3 text-center c-mb-64">Эксперты 1Т Клуба</h3>
-    <q-carousel v-model="slide" swipeable animated class="text-white">
-      <q-carousel-slide v-for="card in expertsList" :name="card.name" :key="card.id">
-        <c-experts-card :card="card" />
-      </q-carousel-slide>
-    </q-carousel>
+  <section class="section-mb">
+    <h3 class="text-h3 text-center c-mb-64">Видеоотзывы участников 1Т Клуба</h3>
 
-    <div class="row justify-center">
-      <q-btn-toggle
-        glossy
-        v-model="slide"
-        :options="[
-          { label: 1, value: 'one' },
-          { label: 2, value: 'two' },
-          { label: 3, value: 'three' },
-        ]"
+    <Carousel
+      :itemsToShow="3"
+      :wrapAround="true"
+      :transition="700"
+      ref="carousel"
+      class="video-carousel"
+    >
+      <Slide v-for="slide in reviewsList" :key="slide">
+        <c-review-card :review="slide" />
+      </Slide>
+    </Carousel>
+
+    <div class="text-center">
+      <q-btn
+        @click="carousel.prev()"
+        unelevated
+        dense
+        size="xl"
+        class="q-mr-md"
+        :icon="'chevron_left'"
+      />
+      <q-btn
+        @click="carousel.next()"
+        unelevated
+        dense
+        size="xl"
+        class="q-mr-md"
+        :icon="'chevron_right'"
       />
     </div>
   </section>
@@ -23,37 +37,32 @@
 
 <script setup>
 import { ref } from "vue";
-import CExpertsCard from "components/Landing-develop/ClubExpertsCard.vue";
+import { Carousel, Pagination, Slide } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
 
-const slide = ref("one");
+import CReviewCard from "components/Landing-develop/ClubReviewCard.vue";
 
-const expertsList = [
+const carousel = ref(null);
+const reviewsList = [
   {
     id: 1,
-    name: "one",
-    person: "Александр Иванов",
-    description:
-      "Главный эксперт 1T Клуба, также известный как основатель банка «Ivanoff». Основатель ряда проектов в реальном секторе, криптоинвестор.",
-    img: "assets/images/landing-develop/experts/Alexander.png",
+    src: "",
   },
   {
     id: 2,
-    name: "two",
-    person: "Александр Иванов",
-    description:
-      "Главный эксперт 1T Клуба, также известный как основатель банка «Ivanoff». Основатель ряда проектов в реальном секторе, криптоинвестор.",
-    img: "assets/images/landing-develop/experts/Alexander.png",
+    src: "",
   },
   {
     id: 3,
-    name: "three",
-    person: "Александр Иванов",
-    description:
-      "Главный эксперт 1T Клуба, также известный как основатель банка «Ivanoff». Основатель ряда проектов в реальном секторе, криптоинвестор.",
-    img: "assets/images/landing-develop/experts/Alexander.png",
+    src: "",
   },
 ];
 </script>
 
 <style lang="scss" scoped>
+.video-carousel {
+  max-width: 1120px;
+  margin: 0 auto;
+  text-align: left;
+}
 </style>

@@ -1,21 +1,24 @@
 <template>
-  <section class="section-mb q-pa-md row items-start q-gutter-md">
+  <section class="q-pa-md row items-start q-gutter-md c-mb-28">
     <q-card class="team-card">
       <img :src="team.img" />
 
-      <q-card-section class="c-pa-32">
-        <p class="text-subtitle3 c-mb-8">{{ team.name }}</p>
-        <p class="text-body2 c-mb-24">{{ team.description }}</p>
+      <q-card-section class="flex column justify-between c-pa-32 team-content">
+        <section>
+          <p class="text-subtitle3 c-mb-8">{{ team.name }}</p>
+          <p class="text-body2 c-mb-24">{{ team.description }}</p>
+        </section>
 
-        <section class="c-mb-24">
+        <section>
           <q-chip
             v-for="(chip, index) in team.chips"
             :key="chip[index]"
-            class="text-caption2 team-chip"
+            class="text-caption2 team-chip c-mb-24"
             >{{ chip }}</q-chip
           >
+
+          <section class="text-body1 q-pt-none">Подробнее ></section>
         </section>
-        <section class="text-body1 q-pt-none">Подробнее ></section>
       </q-card-section>
     </q-card>
   </section>
@@ -39,6 +42,14 @@ const { team } = defineProps({
   &-chip {
     padding: 6px 16px;
   }
+  &-content {
+    max-height: 324px;
+    height: 100%;
+  }
+}
+
+.c-mb-28 {
+  margin-bottom: 28px;
 }
 
 .base {

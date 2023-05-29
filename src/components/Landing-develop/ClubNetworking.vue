@@ -1,5 +1,5 @@
 <template>
-  <section class="section-mb section">
+  <section class="section">
     <h2 class="text-h2 text-center c-mb-24">Нетворкинг</h2>
     <p class="text-subtitle2 text-center c-mb-64">
       Окружайте себя IT-экспертами, участвуйте в онлайн и офлайн мероприятиях и расширяйте свой круг
@@ -57,6 +57,7 @@ const onPlayerReady = (event) => {
 .section {
   max-width: 1120px;
   margin: 0 auto;
+  margin-bottom: 160px;
 }
 
 .networking-video {

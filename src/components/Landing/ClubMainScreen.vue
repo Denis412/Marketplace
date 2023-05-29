@@ -16,7 +16,7 @@
       />
       
       <!-- Куда должно вести? -->
-      <q-img
+      <q-img 
         src="/assets/images/Play_video.svg"
         height="60px"
         width="60px"

@@ -551,10 +551,9 @@
 .club-carousel {
   .q-carousel {
     background-color: transparent;
-    min-height: 572px !important;
   }
   & .carousel__slide {
-    width: 448px !important;
+    min-width: 452px !important;
     margin-right: 32px;
   }
 }

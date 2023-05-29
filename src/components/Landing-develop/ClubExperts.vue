@@ -2,23 +2,14 @@
   <section class="section-mb">
     <h3 class="text-h3 text-center c-mb-64">Эксперты 1Т Клуба</h3>
     <Carousel
-      :itemsToShow="4"
+      :itemsToShow="3"
       :wrapAround="true"
       :transition="700"
       ref="carousel"
-      class="c-mb-32 club-carousel"
+      class="c-mb-32 club-carousel experts-carousel"
     >
       <Slide v-for="slide in expertsList" :key="slide">
-        <q-card class="carousel__item" flat bordered>
-          <q-card-section horizontal>
-            <q-img class="col-5 img" :src="slide.img" />
-
-            <q-card-section class="c-pa-20 experts-card-section">
-              <p class="text-body2 c-mb-24">{{ slide.description }}</p>
-              <p class="text-subtitle4" style="padding: 0">{{ slide.person }}</p>
-            </q-card-section>
-          </q-card-section>
-        </q-card>
+        <c-experts-card :card="slide" />
       </Slide>
     </Carousel>
 
@@ -46,17 +37,18 @@
 <script setup>
 import { ref } from "vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
-
 import "vue3-carousel/dist/carousel.css";
+
+import CExpertsCard from "src/components/Landing-develop/ClubExpertsCard.vue";
 
 const carousel = ref(null);
 const expertsList = [
   {
     id: 1,
-    person: "Иван Никаноров",
+    person: "Роман Ищенко",
     description:
-      "Главный эксперт 1T Клуба, также известный как основатель банка «Ivanoff». Основатель ряда проектов в реальном секторе, криптоинвестор.",
-    img: "assets/images/landing-develop/experts/Alexander.png",
+      "18 лет в создании систем продаж и маркетинга. Руководил Интернет Университетом, выстраивал обучение собственников образовательных стартапов.",
+    img: "/assets/images/landing-develop/experts/Ischenko.png",
   },
   {
     id: 2,
@@ -70,7 +62,7 @@ const expertsList = [
     person: "Ирина Никонович",
     description:
       "Работала в области информационной безопасности в крупных компаниях, таких как Disco и Synimatic, где занимала должность разработчика.",
-    img: "assets/images/landing-develop/experts/Alexander.png",
+    img: "assets/images/landing-develop/experts/Nikonovich.png",
   },
 ];
 </script>
@@ -93,6 +85,10 @@ const expertsList = [
 .experts-card-section {
   text-align: left;
   padding-left: 38px;
+}
+
+.experts-carousel {
+  text-align: left;
 }
 </style>
 

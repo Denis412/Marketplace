@@ -12,16 +12,15 @@
       <c-suggestion />
       <c-experts />
       <c-work />
-      <!-- редактировать инфо -->
       <c-teams />
-      <!-- слайдер -->
       <c-banner />
       <c-course-sprint />
       <c-course-ai />
       <c-networking />
       <c-partners />
       <c-string />
-      <!-- видеоотзывы(Олег) -->
+      <c-video-reviews/>
+      <!-- нужны видео -->
     </main>
   </q-page>
 </template>
@@ -39,4 +38,5 @@ import CBanner from "components/Landing-develop/ClubBanner.vue";
 import CCourseSprint from "components/Landing-develop/ClubCourseSprint.vue";
 import CCourseAi from "components/Landing-develop/ClubCourseA.vue";
 import CNetworking from "components/Landing-develop/ClubNetworking.vue";
+import CVideoReviews from "components/Landing-develop/ClubVideoReviews.vue";
 </script>
