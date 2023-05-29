@@ -5,8 +5,7 @@
       <c-advantages-item
         v-for="item in contentList"
         :key="item.id"
-        :content="item.content"
-        :id="item.id"
+        :item="item"
         class="card--content"
       />
     </section>
@@ -39,7 +38,6 @@ const contentList = [
 
 <style scoped lang="scss">
 .card {
-  background-color: #fff;
   min-width: 100%;
   min-height: 200px;
   overflow-x: auto;
@@ -48,11 +46,5 @@ const contentList = [
 
 .card::-webkit-scrollbar {
   display: none;
-}
-
-.card--content {
-  background-color: #e74c3c;
-  min-width: 500px;
-  margin: 5px;
 }
 </style>

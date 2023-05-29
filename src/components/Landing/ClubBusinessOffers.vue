@@ -1,5 +1,5 @@
 <template>
-  <section class="text-center container c-mb-160">
+  <section class="text-center section-margin container c-mb-160">
     <h3 class="text-h3 c-mb-64">ЧТО ПРЕДЛАГАЕТ 1Т КЛУБ ДЛЯ ВАШЕГО БИЗНЕСА</h3>
     <c-card-group :offers="cardsList" />
   </section>

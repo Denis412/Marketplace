@@ -1,5 +1,5 @@
 <template>
-  <section class="text-center directions container">
+  <section class="text-center section-mb directions container">
     <h2 class="title relative-position z-max text-h3 q-mb-xl q-pb-xl">
       {{ title }}
       <img
