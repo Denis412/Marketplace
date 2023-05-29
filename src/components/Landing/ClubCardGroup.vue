@@ -4,11 +4,11 @@
   </q-list>
 
   <q-list v-else-if="directions" class="row justify-between q-mt-md">
-    <c-directions-card
-      v-for="card in directions"
-      :key="card.id"
-      v-bind="card"
-    />
+    <c-directions-card v-for="card in directions" :key="card.id" v-bind="card" />
+  </q-list>
+
+  <q-list v-else-if="offers" class="row justify-between q-mt-md">
+    <c-business-offers-card v-for="card in offers" :key="card.id" v-bind="card" />
   </q-list>
 </template>
 
@@ -16,10 +16,12 @@
 import { defineProps } from "vue";
 import CItemsCard from "components/Landing/ClubItemsCard.vue";
 import CDirectionsCard from "components/Landing/ClubDirectionsCard.vue";
+import CBusinessOffersCard from "components/Landing/ClubBusinessOffersCard.vue";
 
-const { items, directions } = defineProps({
+const { items, directions, offers } = defineProps({
   items: Object,
   directions: Object,
+  offers: Object,
 });
 </script>
 

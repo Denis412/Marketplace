@@ -4,7 +4,7 @@
 
     <main class="text-white relative-position" style="z-index: 1">
       <c-business-screen />
-      <c-directions class="c-mb-160" />
+      <c-business-offers class="c-mb-160" />
       <c-string />
       <c-clients class="c-mb-160" />
       <c-join-business />
@@ -19,7 +19,7 @@
 <script setup>
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
 import CBusinessScreen from "components/Landing/ClubBusinessScreen.vue";
-import CDirections from "components/Landing/ClubDirections.vue";
+import CBusinessOffers from "components/Landing/ClubBusinessOffers.vue";
 import CString from "components/Landing/ClubString.vue";
 import CClients from "components/Landing/ClubClients.vue";
 import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";

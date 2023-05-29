@@ -32,6 +32,7 @@ import CButton from "../ClubButton.vue";
 <style lang="scss" scoped>
 .container {
   margin-top: 60px;
+  margin-bottom: 160px;
 }
 .screen {
   &-content {
