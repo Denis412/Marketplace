@@ -35,6 +35,7 @@ export const getTeamsWithWhere = gql`
           }
           status
           sender
+          updated_at
         }
         members {
           id

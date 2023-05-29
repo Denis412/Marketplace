@@ -4,7 +4,6 @@
       <q-card v-if="subjects" flat class="q-pa-md applications-item card-shadow rounded-borders-10">
         <c-specialist-item :specialist="application.subject" />
 
-        <pre>{{ incoming }}</pre>
         <c-application-controls
           :application="application"
           :incoming="incoming"

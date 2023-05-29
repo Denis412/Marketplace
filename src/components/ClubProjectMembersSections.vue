@@ -12,6 +12,7 @@
 
       <q-btn
         flat
+        v-if="isLeader"
         no-caps
         class="club-button-background text-body1"
         label="Пригласить"
@@ -45,6 +46,7 @@ import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
+const isLeader = inject("isLeader");
 const currentProject = inject("currentProject");
 
 const selectedList = ref("members");
