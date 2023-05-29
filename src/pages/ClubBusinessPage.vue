@@ -5,6 +5,7 @@
     <main class="text-white relative-position" style="z-index: 1">
       <c-business-screen />
       <c-business-offers />
+      <c-advantages />
       <c-string />
       <c-business-tools />
       <c-join-business />
@@ -20,6 +21,7 @@
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
 import CBusinessScreen from "components/Landing/ClubBusinessScreen.vue";
 import CBusinessOffers from "components/Landing/ClubBusinessOffers.vue";
+import CAdvantages from "components/Landing/ClubAdvantages.vue";
 import CString from "components/Landing/ClubString.vue";
 import CBusinessTools from "components/Landing/ClubBusinessTools.vue";
 import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";
