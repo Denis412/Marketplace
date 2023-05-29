@@ -1,32 +1,41 @@
 <template>
   <section class="section-margin how-join container">
     <div class="row">
-    <div class="col-6 relative-position">
-      <img src="/assets/images/landing/welcome.svg" />
+      <div class="col-6 relative-position">
+        <iframe
+          width="448"
+          height="593"
+          class="video"
+          src="https://youtube.com/shorts/TQ_ZIHDJ_pw?feature=share"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
 
-      <img
-        class="absolute-center"
-        src="/assets/images/landing-background/main-page/bg-15.svg"
-        style="z-index: -1"
-      />
+        <img
+          class="absolute-center"
+          src="/assets/images/landing-background/main-page/bg-15.svg"
+          style="z-index: -1"
+        />
+      </div>
+
+      <div class="col-6 c-mt-80 c-pt-40">
+        <h3 class="text-h3">Как вступить в 1Т Клуб?</h3>
+
+        <p class="text-body2 q-mt-lg">
+          Присоединяйтесь к нашему IT-сообществу. Пройдите простую регистрацию на сайте и станьте
+          частью большой и дружной IT-семьи!
+        </p>
+
+        <c-button
+          to="/registration"
+          background
+          class="text-button2 c-px-32 c-py-16 q-mt-lg"
+          label="Вступить в 1Т клуб"
+        />
+      </div>
     </div>
-
-    <div class="col-6 c-mt-80 c-pt-40">
-      <h3 class="text-h3">Как вступить в 1Т Клуб?</h3>
-
-      <p class="text-body2 q-mt-lg">
-        Присоединяйтесь к нашему IT-сообществу. 
-Пройдите простую регистрацию на сайте и станьте частью большой и дружной IT-семьи!
-      </p>
-
-      <c-button
-        to="/registration"
-        background
-        class="text-button2 c-px-32 c-py-16 q-mt-lg"
-        label="Вступить в 1Т клуб"
-      />
-    </div>
-  </div>
   </section>
 </template>
 
@@ -35,8 +44,6 @@ import CButton from "../ClubButton.vue";
 </script>
 
 <style lang="scss" scoped>
-
-
 .info-btn {
   padding: 8px 20px;
 

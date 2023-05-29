@@ -163,6 +163,11 @@ const applicationSend = async () => {
   }
 }
 
+.text-description {
+  max-width: 100px;
+  text-overflow: ellipsis;
+}
+
 .header-controls {
   p {
     margin: 0;

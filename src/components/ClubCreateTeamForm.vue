@@ -51,7 +51,7 @@
           class="text-body2"
           maxlength="30"
           v-model="form.name"
-          :rules="[required, minLength(2), maxLength(30)]"
+          :rules="[required, minLength(2), isLatin, maxLength(30)]"
         />
 
         <q-input
@@ -104,7 +104,7 @@ import teamApi from "src/sdk/team";
 const currentUser = inject("currentUser");
 
 const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
-const { required, maxLength, minLength, maxLengthForTeamForm } = useValidators();
+const { required, maxLength, minLength, isLatin, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
 

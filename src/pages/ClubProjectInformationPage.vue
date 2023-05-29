@@ -82,9 +82,9 @@ const uploadImage = async () => {
   const avatar = await filesApi.get(fileId);
 
   await updateProject({
-    id: currentProject.value.id,
+    id: currentProject.value?.id,
     input: {
-      name: currentProject.value.name,
+      name: currentProject.value?.name,
       avatar: filesApi.getUrl(avatar[0]),
     },
     space_id: route.query.space,
@@ -119,7 +119,7 @@ const groupProjectSubjects = async (group_names) => {
           if (currentUser.value.subject_id === subjectMainSpace.id) isLeader.value = true;
         }
 
-        if (group_name !== "leader" && currentUser.value.subject_id === subjectMainSpace)
+        if (group_name !== "leader" && subject.email.email === subjectMainSpace.email.email)
           res[group_name].value.push(
             Object.assign({}, subjectMainSpace, {
               role:

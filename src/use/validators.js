@@ -12,6 +12,8 @@ export function useValidators() {
     minLength: (length) => (val) =>
       !val || val.length >= length || `Минимально возможное количество символов ${length}`,
 
+    isLatin: (val) => /^[a-zA-Zа-яА-Я\d]+$/.test(val) || "Введены недопустимые символы.",
+
     passwordValid: (val) =>
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!?\-#$%_.]+$/.test(val) ||
       "Пароль должен содержать как минимум одну заглавную и одну строчную букву, а также как минимум одну цифру",

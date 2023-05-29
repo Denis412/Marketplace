@@ -173,7 +173,7 @@ const selectSpecialitites = computed(() =>
 );
 
 const showSubjects = computed(
-  () => filteredSubjects.value ?? (!route.query.space ? teamFilter.value : projectFilter.value)
+  () => filteredSubjects.value ?? (!route.query?.project ? teamFilter.value : projectFilter.value)
 );
 
 const teamFilter = computed(() => {
