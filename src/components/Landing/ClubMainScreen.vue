@@ -1,10 +1,10 @@
 <template>
-  <section class="flex no-wrap container">
+  <section class="flex no-wrap container items-center">
     <div class="col">
-      <h1 class="text-h1">1Т Клуб</h1>
+      <h1 class="text-h1">{{ title }}</h1>
 
-      <p class="text-subtitle5 q-mt-md">
-        1Т Клуб — сообщество IT-специалистов, которых объединяет страсть к работе и саморазвитию
+      <p class="text-subtitle4 q-mt-md">
+        {{ subtitle }}
       </p>
 
       <section class="flex q-py-md q-mt-xl items-center">
@@ -34,11 +34,18 @@
 
 <script setup>
 import CButton from "../ClubButton.vue";
+
+const { title, subtitle, img, video } = defineProps({
+  title: String,
+  subtitle: String,
+  img: String,
+  video: Boolean,
+});
 </script>
 
 <style lang="scss" scoped>
 section {
-  margin-top: 85px;
+  margin-top: 56px;
 }
 
 .link {

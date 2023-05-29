@@ -112,6 +112,7 @@ const {
 } = useProjectApplication();
 
 const route = useRoute();
+const router = useRouter();
 const $q = useQuasar();
 
 const selectedSubjects = ref([]);
@@ -231,10 +232,7 @@ const inviteSubjects = async () => {
 
     selectedSubjects.value = [];
 
-    // router.push({
-    //   name: "team",
-    //   params: { name: route.params.name },
-    // });
+    router.go(-1);
   } catch (error) {
     console.log(error);
 

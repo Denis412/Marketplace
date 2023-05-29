@@ -3,7 +3,12 @@
     <c-background-spot style="z-index: 0" />
 
     <main class="text-white relative-position" style="z-index: 1">
-      <c-main-screen />
+      <c-main-screen
+        :title="'1Т Клуб'"
+        :subtitle="'1Т Клуб - сообщество единомышленников, которых объединяет страсть к работе и саморазвитию.'"
+        :img="'/assets/images/amico.svg'"
+        :video="true"
+      />
       <c-directions />
       <c-statistics />
       <c-about />
