@@ -1,4 +1,5 @@
 <template>
+  <!-- <pre>{{ currentTeam }}</pre> -->
   <q-card flat class="header-wrapper w-100p">
     <q-toolbar class="absolute flex justify-end">
       <c-popup-team-actions />
@@ -43,7 +44,8 @@
           <c-button
             v-if="!isMember && !isOwner && isProfile"
             background
-            label="Подать заявку"
+            :disable="isInvited"
+            :label="!isInvited ? 'Подать заявку' : 'Заявка отправлена'"
             class="text-body2"
             @click="applicationSend"
           />
@@ -80,7 +82,7 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import { useTeamApplication, useTeamUpdate } from "src/use/teams";
@@ -88,6 +90,7 @@ import { useTeamApplication, useTeamUpdate } from "src/use/teams";
 import CButton from "src/components/ClubButton.vue";
 import CChip from "./ClubChip.vue";
 import CPopupTeamActions from "./ClubPopupTeamActions.vue";
+import teamApi from "src/sdk/team";
 
 const { isProfile } = defineProps({
   isProfile: Boolean,
@@ -105,12 +108,11 @@ const isOwner = inject("isOwner");
 const isMember = inject("isMember");
 const fullDes = ref(true);
 
-// const editProfile = async () => {
-//   router.push({
-//     name: "teamEdit",
-//     params: { id: currentTeam.value.id },
-//   });
-// };
+const isInvited = computed(() =>
+  currentTeam.value?.applications.some(
+    (application) => application.subject.id === currentUser.value.subject_id
+  )
+);
 
 const updateTeamStatus = async () => {
   await updateTeam(currentTeam.value.id, {
@@ -132,6 +134,16 @@ const applicationSend = async () => {
     sender_id: currentUser.value.subject_id,
     target: currentTeam.value,
   });
+
+  await teamApi.refetchPaginateTeams({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "id",
+      operator: "EQ",
+      value: currentTeam.value.id,
+    },
+  });
 };
 </script>
 
@@ -149,6 +161,11 @@ const applicationSend = async () => {
   &-item {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
+}
+
+.text-description {
+  max-width: 100px;
+  text-overflow: ellipsis;
 }
 
 .header-controls {

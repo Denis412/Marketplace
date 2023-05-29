@@ -108,7 +108,7 @@
         <q-input
           v-model="form.email"
           :placeholder="currentUser?.email"
-          class="c-input-outline"
+          class="c-input-outline no-pointer-events"
           outlined
           readonly
         />

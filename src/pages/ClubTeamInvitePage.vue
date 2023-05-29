@@ -91,7 +91,7 @@ import CButton from "src/components/ClubButton.vue";
 import CInviteSubjectItem from "src/components/ClubInviteSubjectItem.vue";
 import CSelectedSubjectChip from "src/components/ClubSelectedSubjectChip.vue";
 import CDropdown from "src/components/ClubDropdown.vue";
-import { computed, provide, ref, watch } from "vue";
+import { computed, inject, provide, ref, watch } from "vue";
 
 import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";
@@ -100,6 +100,9 @@ import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import { useTeamApplication } from "src/use/teams";
 import { useProjectApplication } from "src/use/projects";
+import projectApi from "src/sdk/project";
+
+const currentUser = inject("currentUser");
 
 const { result, loading: sending, sendApplication } = useTeamApplication();
 const {
@@ -118,7 +121,7 @@ const filters = ref({
   speciality: "",
 });
 
-const { result: team, loading: loadingTeam } = teamApi.paginateTeams({
+const { result: team } = teamApi.paginateTeams({
   page: 1,
   perPage: 1,
   where: {
@@ -128,17 +131,38 @@ const { result: team, loading: loadingTeam } = teamApi.paginateTeams({
   },
 });
 
-const { result: allSpecialities, loading } = specilalityApi.paginateSpeciality({
+const { result: project } = projectApi.paginateProject({
+  page: 1,
+  perPage: 1,
+  where: {
+    column: "id",
+    operator: "EQ",
+    value: route.params.id,
+  },
+  space_id: route.query.space,
+});
+
+const { result: projectSubjects } = userApi.paginateSubjects({
+  page: 1,
+  perPage: 100,
+  is_team: true,
+  space_id: route.query.space,
+});
+
+const { result: allSpecialities } = specilalityApi.paginateSpeciality({
   page: 1,
   perPage: 100,
 });
 
-const { result: allSubjects, loading: loadingSubjects } = userApi.paginateSubjects({
+const { result: allSubjects } = userApi.paginateSubjects({
   page: 1,
   perPage: 100,
-  is_invite: !route.query.space,
-  is_team: route.query.space,
-  space_id: route.query.space,
+  is_invite: true,
+  where: {
+    column: "id",
+    operator: "NEQ",
+    value: currentUser.value.subject_id,
+  },
 });
 
 const selectSpecialitites = computed(() =>
@@ -147,9 +171,30 @@ const selectSpecialitites = computed(() =>
     value: speciality.id,
   }))
 );
+
 const showSubjects = computed(
-  () => filteredSubjects.value ?? allSubjects.value?.paginate_subject.data
+  () => filteredSubjects.value ?? (!route.query?.project ? teamFilter.value : projectFilter.value)
 );
+
+const teamFilter = computed(() => {
+  return allSubjects.value?.paginate_subject.data.filter((subject) => {
+    return !team.value?.paginate_team.data[0]?.members.some((member) => member.id === subject.id);
+  });
+});
+
+const projectFilter = computed(() => {
+  return projectSubjects.value?.paginate_subject.data.filter((subject) => {
+    return (
+      !project.value?.paginate_project.data[0]?.members.some(
+        (member) => member.email.email === subject.email.email
+      ) &&
+      !project.value?.paginate_project.data[0]?.customers.some(
+        (customer) => customer.email.email === subject.email.email
+      ) &&
+      project.value?.paginate_project.data[0]?.leader?.email.email !== subject.email.email
+    );
+  });
+});
 
 provide("selectedSubjects", selectedSubjects);
 
@@ -206,16 +251,26 @@ const filteringSubjects = async (filter) => {
     return;
   }
 
-  filteredSubjects.value = await userApi.refetchPaginateSubjects({
-    page: 1,
-    perPage: 100,
-    where: filters.value.name
-      ? { column: "fullname", operator: "FTS", value: filters.value.name }
-      : null,
-    is_invite: !route.query.space,
-    is_team: route.query.space,
-    space_id: route.query.space,
-  });
+  if (!route.query.space) filteredSubjects.value = teamFilter.value;
+  else filteredSubjects.value = projectFilter.value;
+
+  filteredSubjects.value = filteredSubjects.value.filter(
+    (subject) =>
+      subject.fullname.first_name.includes(filters.value.name) ||
+      subject.fullname.middle_name.includes(filters.value.name) ||
+      subject.fullname.last_name.includes(filters.value.name)
+  );
+
+  // filteredSubjects.value = await userApi.refetchPaginateSubjects({
+  //   page: 1,
+  //   perPage: 100,
+  //   where: filters.value.name
+  //     ? { column: "fullname", operator: "FTS", value: filters.value.name }
+  //     : null,
+  //   is_invite: !route.query.space,
+  //   is_team: route.query.space,
+  //   space_id: route.query.space,
+  // });
 
   if (filters.value.speciality)
     filteredSubjects.value = filteredSubjects.value.filter(

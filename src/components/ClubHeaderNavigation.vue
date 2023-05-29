@@ -7,6 +7,7 @@
       v-for="item in navigation_items"
       :key="item.label"
       :icon="item.icon"
+      :disable="item.name === 'my-space' || item.name === 'orders'"
       :label="item.label"
       :class="{ 'active-item': selectedPage === item.name }"
       @click="redirectPage(item.name)"

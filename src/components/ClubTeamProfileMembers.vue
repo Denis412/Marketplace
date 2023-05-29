@@ -54,7 +54,7 @@
 
 <script setup>
 import { inject, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useApplications } from "src/use/applications";
 
 import _ from "lodash";
@@ -70,6 +70,7 @@ const { isProfile } = defineProps({
 const isOwner = inject("isOwner");
 const currentTeam = inject("currentTeam");
 
+const route = useRoute();
 const router = useRouter();
 const { filteredApplications } = useApplications(currentTeam, true);
 
@@ -79,6 +80,7 @@ const inviteUser = async () => {
   router.push({
     name: "teamInvite",
     params: { id: currentTeam.value.id },
+    query: { ...route.query },
   });
 };
 </script>

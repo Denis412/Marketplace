@@ -9,8 +9,10 @@
             <q-input
               outlined
               v-model="form.name"
+              :readonly="!isLeader"
               @change="updateProp('name', $event)"
               class="c-input-outline"
+              :class="{ 'no-pointer-events': !isLeader }"
               :placeholder="currentProject?.name || 'Напишите название проекта'"
             />
           </template>
@@ -51,9 +53,11 @@
           <template #control>
             <q-input
               v-model="form.delivery_date"
+              :readonly="!isLeader"
               mask="##.##.####"
               :placeholder="delivery_date || 'ДД.ММ.ГГГГ'"
               class="date-input c-input-outline"
+              :class="{ 'no-pointer-events': !isLeader }"
               outlined
             >
               <template #append>
@@ -61,6 +65,7 @@
                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                     <q-date
                       v-model="form.delivery_date"
+                      :readonly="!isLeader"
                       @update:model-value="updateProp('delivery_date', $event)"
                       mask="DD.MM.YYYY"
                     />
@@ -83,6 +88,8 @@ import { useProjectUpdate } from "src/use/projects";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+
+const isLeader = inject("isLeader");
 
 const { result, loading, updateProject } = useProjectUpdate();
 

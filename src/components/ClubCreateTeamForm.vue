@@ -3,7 +3,21 @@
     <header>
       <h3 class="text-h3 text-center">Создание команды</h3>
 
-      <h3 v-if="creatingTeam" class="text-h3-text-center">Создание...</h3>
+      <teleport v-if="creatingTeam" to="body">
+        <div
+          style="
+            z-index: 10000;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+          "
+        >
+          <div class="loader loader-lg" />
+        </div>
+      </teleport>
     </header>
 
     <main class="flex column flex-center c-mt-32">
@@ -25,7 +39,7 @@
           outlined
           v-model="upload_img"
           accept=".png,.jpg"
-          ref="uploadFile"
+          ref="uploader"
           @update:model-value="updateFile()"
         />
       </section>
@@ -35,18 +49,23 @@
           bg-color="white"
           placeholder="Введите название"
           class="text-body2"
+          maxlength="30"
           v-model="form.name"
-          :rules="[required, maxLength(30)]"
+          :rules="[required, minLength(2), isLatin, maxLength(30)]"
         />
 
-        <c-input
-          bg-color="white"
+        <q-input
+          borderless
+          outlined
           placeholder="Введите описание"
-          class="club-textarea-mh-150 text-body2"
+          type="textarea"
+          maxlength="1000"
+          bg-color="white"
+          class="c-input-outline club-textarea-mh-150 gray-scrollbar-input text-body2"
           autogrow
-          style="max-height: 100px"
           v-model="form.description"
           :rules="[required, maxLengthForTeamForm(1000)]"
+          lazy-rules
         />
       </section>
     </main>
@@ -65,51 +84,76 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 import { useValidators } from "src/use/validators";
+import { useTeamCreate } from "src/use/teams";
 
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
 
 import TeamService from "src/sevices/TeamService";
 
+import { useUserStore } from "src/stores/user";
 import filesApi from "src/sdk/file";
+import userApi from "src/sdk/user";
+import teamApi from "src/sdk/team";
 
 const currentUser = inject("currentUser");
 
-const { required, maxLength, maxLengthForTeamForm } = useValidators();
+const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
+const { required, maxLength, minLength, isLatin, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
 
 const form = ref({
   name: "",
   description: "",
+  avatar: "",
 });
+
+// const creatingTeam = ref(false);
 
 const upload_img = ref(null);
 const avatar_URL = ref("/assets/images/preloaders/default-avatar.svg");
-const uploadFile = ref(null);
+const uploader = ref(null);
 
 const teamCreate = async () => {
   try {
-    await TeamService.createTeam(form.value);
+    // creatingTeam.value = true;
+
+    if (upload_img.value) {
+      const ids = await filesApi.uploadFiles(upload_img.value);
+
+      const files = await filesApi.refetchFilesPaginate({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "id",
+          operator: "EQ",
+          value: ids[0],
+        },
+      });
+
+      form.value.avatar = filesApi.getUrl(files[0]);
+    }
+
+    // await TeamService.createTeam(form.value);
+
+    await createTeam({ ...form.value, author: currentUser.value });
+
+    await useUserStore().FETCH_CURRENT_USER();
 
     router.push({
       name: "my-teams",
     });
-
-    // await filesApi.uploadFiles(upload_img.value);
-
-    // await teamApi.update(teamData.value.id, {
-    //   avatar: avatar.value,
-    //   name: form.value.name,
-    // });
   } catch (error) {
     console.log(error);
   }
+
+  // creatingTeam.value = false;
 };
 
 const updateFile = () => {
@@ -120,13 +164,7 @@ const updateFile = () => {
   }
 };
 
-const triggerInput = () => {
-  $q.notify({
-    type: "negative",
-    message: "В разработке!",
-  });
-  // uploadFile.value.pickFiles();
-};
+const triggerInput = () => uploader.value.pickFiles();
 </script>
 
 <style scoped lang="scss">

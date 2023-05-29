@@ -30,13 +30,14 @@
         :application="application"
         :incoming="incoming"
         @accept="$emit('accept', application)"
+        @status-calc="hideCard"
       />
     </q-card-section>
   </q-card>
 </template>
 
 <script setup>
-import { inject } from "vue";
+import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import CApplicationControls from "./ClubApplicationControls.vue";
@@ -48,6 +49,8 @@ const currentUser = inject("currentUser");
 const router = useRouter();
 
 const { deletingTeam, deleteTeam } = useTeamDelete();
+
+const isShowCard = ref(true);
 
 const { team, application, incoming } = defineProps({
   team: Object,
@@ -64,6 +67,12 @@ const to = async () => {
 };
 
 const teamDelete = async () => await deleteTeam(team, currentUser.value.subject_id);
+
+const hideCard = (status, application) => {
+  console.log("app", status, application);
+  if (incoming && status.label !== "Одобрена" && status.label !== "Отклонена")
+    isShowCard.value = false;
+};
 </script>
 
 <style lang="scss" scoped>

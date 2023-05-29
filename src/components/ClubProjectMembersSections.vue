@@ -53,7 +53,7 @@ const redirectInvite = () => {
   router.push({
     name: "projectInvite",
     params: { ...route.params },
-    query: { ...route.query },
+    query: { ...route.query, project: true },
   });
 };
 </script>

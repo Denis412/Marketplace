@@ -4,12 +4,14 @@
       <q-card v-if="subjects" flat class="q-pa-md applications-item card-shadow rounded-borders-10">
         <c-specialist-item :specialist="application.subject" />
 
+        <pre>{{ incoming }}</pre>
         <c-application-controls
           :application="application"
           :incoming="incoming"
           :is_team="is_team"
           :is_project="is_project"
           :project="project"
+          @status-calc="hidedApplication"
         />
       </q-card>
 
@@ -29,6 +31,7 @@ import CApplicationControls from "./ClubApplicationControls.vue";
 import CSpecialistItem from "./ClubSpecialistItem.vue";
 import CTeamCard from "src/components/ClubTeamCard.vue";
 import { useQuasar } from "quasar";
+import { ref } from "vue";
 
 const $q = useQuasar();
 
@@ -40,6 +43,15 @@ const { applications, incoming, subjects, project, is_project, is_team } = defin
   project: Boolean,
   is_project: Boolean,
 });
+
+const showApplications = ref([]);
+
+const hidedApplication = (status, application) => {
+  console.log("app", status, application);
+
+  if ((status.label !== "Одобрена" && status.label !== "Отклонена") || !incoming)
+    showApplications.value.push(application);
+};
 </script>
 
 <style lang="scss" scoped></style>

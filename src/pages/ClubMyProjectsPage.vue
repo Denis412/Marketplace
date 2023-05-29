@@ -49,8 +49,6 @@ import applicationApi from "src/sdk/application";
 const userStore = useUserStore();
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
 
-// const currentProjects = computed(() => currentUser.value?)
-
 const projects = ref([]);
 const applications = ref([]);
 const loading = ref(true);

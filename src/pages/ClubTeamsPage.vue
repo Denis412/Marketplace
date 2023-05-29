@@ -19,11 +19,17 @@
 import CTeamsHeader from "src/components/ClubTeamsHeader.vue";
 import CTeamCardList from "src/components/ClubTeamCardList.vue";
 import { computed, ref } from "vue";
+
 import teamApi from "src/sdk/team";
 
-import TeamService from "src/sevices/TeamService";
-
-const { result: teams, loading, refetch } = TeamService.fetchTeamsPaginate();
+const {
+  result: teams,
+  loading,
+  refetch,
+} = teamApi.paginateTeams({
+  page: 1,
+  perPage: 50,
+});
 
 const filteredTeams = ref(null);
 const filters = ref({
@@ -31,7 +37,7 @@ const filters = ref({
   ready_for_orders: "",
 });
 
-const showTeams = computed(() => filteredTeams.value ?? teams.value);
+const showTeams = computed(() => filteredTeams.value ?? teams.value?.paginate_team.data);
 
 const filteringTeams = async (filter, value) => {
   filters.value[filter] = value;
@@ -43,7 +49,7 @@ const filteringTeams = async (filter, value) => {
   });
 
   if (filters.value.ready_for_orders)
-    filteredTeams.value = filteredTeams.value.filter(
+    filteredTeams.value = filteredTeams.value?.filter(
       (team) =>
         team.ready_for_orders === filters.value.ready_for_orders.value ||
         (!filters.value.ready_for_orders.value && team.ready_for_orders === null)

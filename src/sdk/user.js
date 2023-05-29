@@ -42,6 +42,8 @@ const paginateSubjects = ({ where, page, perPage, space_id, is_invite, is_team, 
   else if (is_my_teams) query = paginateSubjectsForMyTeams;
   else query = paginateSubjectsInMainSpace;
 
+  console.log("query", query);
+
   return useQuery(
     query,
     { page, perPage, where },
@@ -53,13 +55,13 @@ const queryGetSubjectById = (id, space_id = 0) => {
   return useQuery(getSubjectById, { id }, spaceHeader(space_id || process.env.MAIN_SPACE_ID));
 };
 
-const queryGetUserById = (id, space_id = 0) => {
-  return useQuery(getUser, { id }, spaceHeader(space_id || process.env.MAIN_SPACE_ID));
+const queryGetUserById = (id) => {
+  return useQuery(getUser, { id });
 };
 
-const refetchUserById = async (id, space_id = 0) => {
+const refetchUserById = async (id) => {
   console.log("id", id);
-  const { refetch } = queryGetUserById(id, space_id);
+  const { refetch } = queryGetUserById(id);
 
   const { data: userData } = await refetch();
 
@@ -79,6 +81,8 @@ const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invi
     is_team,
   });
 
+  console.log("paginte passed");
+
   const { data: subjectsData } = await refetch();
 
   console.log("refetch paginate subjects", subjectsData);
@@ -97,6 +101,7 @@ const refetchSubjectById = async (id, space_id = 0) => {
 };
 
 const registration = async ({ name, surname, email }) => {
+  console.log({ name, email, surname });
   const { data: userInfo } = await signUp({
     input: {
       name,
@@ -149,7 +154,7 @@ const saveLocalUserData = (saveData) => {
   localStorage.setItem("user-data", JSON.stringify(saveData));
 };
 
-const saveUserData = async (userInfo, first_entry = false) => {
+const saveUserData = async (userInfo) => {
   tokenApi.save(userInfo.userSignIn.record);
 
   const userData = await refetchUserById(userInfo.userSignIn.recordId);
@@ -182,7 +187,7 @@ const saveUserData = async (userInfo, first_entry = false) => {
   return userData;
 };
 
-const login = async ({ login, password }, first_entry = false, recovery = false) => {
+const login = async ({ login, password }, recovery = false) => {
   const { data: userInfo } = await signIn({
     input: {
       login,
@@ -192,7 +197,7 @@ const login = async ({ login, password }, first_entry = false, recovery = false)
 
   console.log("login", userInfo);
 
-  const userData = recovery ? null : await saveUserData(userInfo, first_entry);
+  const userData = recovery ? null : await saveUserData(userInfo);
 
   return userData?.user;
 };

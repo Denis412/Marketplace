@@ -4,6 +4,11 @@ const routes = [
     component: () => import("layouts/ClubLandingLayout.vue"),
     children: [
       {
+        path: "customer-application",
+        name: "customer-application",
+        component: () => import("pages/ClubCustomerApplicationPage.vue"),
+      },
+      {
         path: "",
         name: "landing-main",
         component: () => import("pages/IndexPage.vue"),

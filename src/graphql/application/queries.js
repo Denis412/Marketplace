@@ -49,7 +49,6 @@ export const paginateApplicationsInTeamSpace = gql`
           email {
             email
           }
-          speciality1
         }
         is_customer
         status

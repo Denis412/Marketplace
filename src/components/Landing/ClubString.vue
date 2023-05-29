@@ -1,9 +1,11 @@
 <template>
   <section class="c-mb-160">
     <q-scroll-observer @scroll="onScroll" />
+
     <h2 :style="{ translate: translateRight + 'px' }" class="text-h0 text-no-wrap invert">
       {{ computedString(stringContent.invertText) }}
     </h2>
+
     <h2 :style="{ translate: -translateLeft + 'px' }" class="text-h0 text-no-wrap">
       {{ computedString(stringContent.mainText) }}
     </h2>
@@ -25,8 +27,8 @@ const computedString = (string) => {
 };
 
 const onScroll = (info) => {
-  translateRight.value = -4000 + info.position.top / 2;
-  translateLeft.value = 4200 + info.position.top / 2;
+  translateRight.value = -4200 + info.position.top / 2;
+  translateLeft.value = 2000 + info.position.top / 2;
 };
 </script>
 
