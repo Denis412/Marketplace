@@ -1,7 +1,7 @@
 <template>
   <section class="text-center section-bottom section-mb">
     <h3 class="text-h3 c-mb-64">НАШИ ПРЕИМУЩЕСТВА</h3>
-    <section class="card">
+    <div class="card" ref="scroller" @wheel.prevent="onWheel">
       <c-advantages-item
         v-for="item in contentList"
         :key="item.id"
@@ -9,11 +9,12 @@
         :id="item.id"
         class="card--content"
       />
-    </section>
+    </div>
   </section>
 </template>
 <script setup>
 import CAdvantagesItem from "./ClubAdvantagesItem.vue";
+import { ref } from "vue";
 
 const contentList = [
   {
@@ -35,6 +36,12 @@ const contentList = [
       "Возможность наблюдать за работой над IT-проектом с помощью сервиса для управления задачами",
   },
 ];
+
+const scroller = ref(null);
+
+const onWheel = (e) => {
+  scroller.value.scrollLeft += e.deltaY;
+};
 </script>
 
 <style scoped lang="scss">
