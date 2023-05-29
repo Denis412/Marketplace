@@ -1,6 +1,6 @@
 <template>
   <h3 class="text-h3 text-center section-margin q-pb-xl">Отзывы участников 1Т Клуба</h3>
-  <Carousel :itemsToShow="2" :wrapAround="true" :transition="500" ref="carousel">
+  <Carousel :itemsToShow="2" :wrapAround="true" :transition="500" ref="carousel" class="c-mb-40">
     <Slide v-for="slide in slides" :key="slide">
       <div class="row carousel__item">
         <div class="col-5 test">
@@ -68,7 +68,7 @@ const slides = [
 
 <style scoped>
 .carousel__item {
-  max-height: 418px;
+  max-height: 420px;
   width: 610px;
   background: linear-gradient(
     101.5deg,
@@ -76,8 +76,7 @@ const slides = [
     rgba(255, 255, 255, 0.1) 80.19%,
     rgba(16, 5, 34, 0.15) 100%
   );
-  border: 1px solid white;
-  color: white;
+  border: 2px solid rgba(63, 63, 70, 0.7);
   border-radius: 8px;
 }
 .carousel__slide {
@@ -107,12 +106,12 @@ const slides = [
 
 .carousel__slide--prev {
   opacity: 0.5;
-  transform: rotateY(-10deg) scale(0.95);
+  transform: translateY(-5%) scale(0.9);
 }
 
 .carousel__slide--next {
   opacity: 0.5;
-  transform: rotateY(10deg) scale(0.95);
+  transform: translateY(-5%) scale(0.9);
 }
 
 .carousel__slide--active {
