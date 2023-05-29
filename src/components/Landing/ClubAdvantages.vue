@@ -1,12 +1,19 @@
 <template>
-  <section class="text-center c-mb-160">
+  <section class="text-center section-bottom section-mb">
     <h3 class="text-h3 c-mb-64">НАШИ ПРЕИМУЩЕСТВА</h3>
-    <c-advantages-list class="horizontal-scroll-wrapper squares" :content-list="contentList" />
+    <section class="card">
+      <c-advantages-item
+        v-for="item in contentList"
+        :key="item.id"
+        :content="item.content"
+        :id="item.id"
+        class="card--content"
+      />
+    </section>
   </section>
 </template>
 <script setup>
-import CAdvantagesList from "./ClubAdvantagesList.vue";
-import { ref } from "vue";
+import CAdvantagesItem from "./ClubAdvantagesItem.vue";
 
 const contentList = [
   {
@@ -31,50 +38,21 @@ const contentList = [
 </script>
 
 <style scoped lang="scss">
-$finalHeight: 250px;
-$finalWidth: 3 * $finalHeight;
-$scrollBarHeight: 1px;
-
-::-webkit-scrollbar {
-  width: $scrollBarHeight;
-  height: $scrollBarHeight;
+.card {
+  background-color: #fff;
+  min-width: 100%;
+  min-height: 200px;
+  overflow-x: auto;
+  display: flex;
 }
 
-::-webkit-scrollbar-button {
-  width: $scrollBarHeight;
-  height: $scrollBarHeight;
+.card::-webkit-scrollbar {
+  display: none;
 }
 
-body {
-  background: #111;
-}
-
-div {
-  box-sizing: border-box;
-}
-
-.horizontal-scroll-wrapper {
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  width: calc(#{$finalHeight} + #{$scrollBarHeight});
-  max-height: $finalWidth;
-  margin: 0;
-  padding-top: $scrollBarHeight;
-  background: #abc;
-  overflow-y: auto;
-  overflow-x: hidden;
-  transform: rotate(-90deg) translateY(-$finalHeight);
-  transform-origin: right top;
-}
-
-.squares {
-  padding: $finalHeight 0 0 0;
-  & > div {
-    width: $finalHeight;
-    height: $finalHeight;
-    margin: 10px 0;
-  }
+.card--content {
+  background-color: #e74c3c;
+  min-width: 500px;
+  margin: 5px;
 }
 </style>
