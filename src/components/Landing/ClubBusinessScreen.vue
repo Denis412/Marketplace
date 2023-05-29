@@ -12,7 +12,7 @@
           to="/registration"
           background
           class="text-button2 reg-btn"
-          label="Вступить в 1Т клуб"
+          label="Вступить в 1Т Клуб"
         />
       </section>
     </div>

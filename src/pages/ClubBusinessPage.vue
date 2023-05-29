@@ -11,6 +11,7 @@
       <c-best-teams />
       <c-tasks />
       <c-faq />
+      <c-request />
     </main>
   </q-page>
 </template>
@@ -25,6 +26,7 @@ import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";
 import CBestTeams from "components/Landing/ClubBestTeams.vue";
 import CTasks from "components/Landing/ClubTasks.vue";
 import CFaq from "components/Landing/ClubFAQ.vue";
+import CRequest from "components/Landing/ClubRequest.vue";
 </script>
 
 <style scoped lang="scss"></style>
