@@ -1,5 +1,5 @@
 <template>
-  <section class="text-center container">
+  <section class="text-center container c-mb-160">
     <h3 class="text-h3 c-mb-64">Лучшие it-команды 1т клуба</h3>
     <div>
       <q-carousel

@@ -4,13 +4,12 @@
 
     <main class="text-white relative-position" style="z-index: 1">
       <c-business-screen />
-      <c-business-offers class="c-mb-160" />
+      <c-business-offers />
       <c-string />
-      <c-clients class="c-mb-160" />
+      <c-business-tools />
       <c-join-business />
-      <c-best-teams class="c-mb-160" />
+      <c-best-teams />
       <c-tasks />
-
       <c-faq />
     </main>
   </q-page>
@@ -21,7 +20,7 @@ import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
 import CBusinessScreen from "components/Landing/ClubBusinessScreen.vue";
 import CBusinessOffers from "components/Landing/ClubBusinessOffers.vue";
 import CString from "components/Landing/ClubString.vue";
-import CClients from "components/Landing/ClubClients.vue";
+import CBusinessTools from "components/Landing/ClubBusinessTools.vue";
 import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";
 import CBestTeams from "components/Landing/ClubBestTeams.vue";
 import CTasks from "components/Landing/ClubTasks.vue";
