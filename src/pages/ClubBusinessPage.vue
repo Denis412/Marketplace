@@ -9,11 +9,7 @@
       <c-clients class="c-mb-160" />
       <c-join-business />
       <c-best-teams class="c-mb-160" />
-
-      <section>
-        <h3 class="text-h3">Задачи, которые решили участинки в 1т клубе</h3>
-        <div>слайдер</div>
-      </section>
+      <c-tasks />
 
       <c-faq />
     </main>
@@ -28,12 +24,8 @@ import CString from "components/Landing/ClubString.vue";
 import CClients from "components/Landing/ClubClients.vue";
 import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";
 import CBestTeams from "components/Landing/ClubBestTeams.vue";
-
+import CTasks from "components/Landing/ClubTasks.vue";
 import CFaq from "components/Landing/ClubFAQ.vue";
 </script>
 
-<style scoped lang="scss">
-.c-mb-160 {
-  margin-bottom: 160px;
-}
-</style>
+<style scoped lang="scss"></style>
