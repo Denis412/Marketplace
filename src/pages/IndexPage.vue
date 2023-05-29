@@ -7,6 +7,7 @@
         :title="'1Т Клуб'"
         :subtitle="'1Т Клуб - сообщество единомышленников, которых объединяет страсть к работе и саморазвитию.'"
         :img="'/assets/images/amico.svg'"
+        :video="true"
       />
       <c-directions />
       <c-statistics />
