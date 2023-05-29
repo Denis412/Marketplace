@@ -3,9 +3,11 @@
     <div class="col">
       <h1 class="text-h1">{{ title }}</h1>
 
-      <p class="text-subtitle4 q-mt-md">
-        {{ subtitle }}
-      </p>
+      <div class="row">
+        <p class="text-body2 q-mt-md col-11">
+          {{ subtitle }}
+        </p>
+      </div>
 
       <section class="flex q-py-md q-mt-xl items-center">
         <c-button
@@ -15,7 +17,7 @@
           label="Вступить в 1Т клуб"
         />
 
-        <a class="text-subtitle5 link" href="#about">
+        <a v-if="video" class="text-subtitle5 link" href="#about">
           <q-img
             class="play_video"
             src="/assets/images/Play_video.svg"

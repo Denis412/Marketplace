@@ -6,7 +6,8 @@
       <c-main-screen
         :title="'Для Работы'"
         :subtitle="'1Т Клуб — работа и стажировка для IT-специалистов  от джуна до сеньора. С нами вы найдете подходящий IT-проект и построите карьеру сразу после обучения'"
-        :img="'assets/images/landing-work/work-main.svg'"
+        :img="'assets/images/landing-work/amico.svg'"
+        :video="false"
       />
 
       <c-experts />
