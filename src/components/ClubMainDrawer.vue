@@ -48,6 +48,7 @@ import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
 import CTreeTeams from "src/components/ClubTreeTeams.vue";
 import CTreeMyTeam from "src/components/ClubTreeMyTeam.vue";
+import CTreeOrders from "src/components/ClubTreeOrders.vue";
 
 import { filesApi } from "src/sdk/files/file";
 
@@ -68,34 +69,34 @@ const isMyteam = () => {
   return currentUser.value?.teams.some((team) => team.space === route.query.space);
 };
 
-const mainTreeItems = ref([
-  {
-    title: "Главная",
-    img: "HomeIconDemo.svg",
-    path: "club",
-  },
-  {
-    title: "Магазин",
-    img: "HomeIconDemo.svg",
-    path: "market",
-  },
-  {
-    title: "Команды",
-    img: "HomeIconDemo.svg",
-    path: "my-teams",
-  },
-  {
-    title: "Документы",
-    img: "HomeIconDemo.svg",
-    path: "addDocument",
-    content: "+",
-  },
-  {
-    title: "Лендинг",
-    img: "HomeIconDemo.svg",
-    path: "addDocument",
-  },
-]);
+// const mainTreeItems = ref([
+//   {
+//     title: "Главная",
+//     img: "HomeIconDemo.svg",
+//     path: "club",
+//   },
+//   {
+//     title: "Магазин",
+//     img: "HomeIconDemo.svg",
+//     path: "market",
+//   },
+//   {
+//     title: "Команды",
+//     img: "HomeIconDemo.svg",
+//     path: "my-teams",
+//   },
+//   {
+//     title: "Документы",
+//     img: "HomeIconDemo.svg",
+//     path: "addDocument",
+//     content: "+",
+//   },
+//   {
+//     title: "Лендинг",
+//     img: "HomeIconDemo.svg",
+//     path: "addDocument",
+//   },
+// ]);
 
 const toggleDrawer = () => {
   miniState.value = !miniState.value;

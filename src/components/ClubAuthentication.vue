@@ -93,7 +93,7 @@ const authorization = async () => {
     console.log("store", userStore.GET_CURRENT_USER);
 
     await router.push({
-      path: "/club",
+      path: "/club/profile",
     });
   } catch (error) {
     console.log(error);
