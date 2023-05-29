@@ -66,57 +66,47 @@ const slides = [
 ];
 </script>
 
-<style scoped>
-.carousel__item {
-  max-height: 420px;
-  width: 610px;
-  background: linear-gradient(
-    101.5deg,
-    rgba(16, 5, 34, 0.15) 37.03%,
-    rgba(255, 255, 255, 0.1) 80.19%,
-    rgba(16, 5, 34, 0.15) 100%
-  );
-  border: 2px solid rgba(63, 63, 70, 0.7);
-  border-radius: 8px;
-}
-.carousel__slide {
-  padding: 5px;
-}
-
-.carousel__viewport {
-  perspective: 2000px;
-}
-
-.carousel__track {
-  transform-style: preserve-3d;
-}
-
-.carousel__slide--sliding {
-  transition: 0.5s;
-}
-
-.carousel__slide {
-  opacity: 0.9;
-  transform: rotateY(-20deg) scale(0.9);
-}
-
-.carousel__slide--active ~ .carousel__slide {
-  transform: rotateY(20deg) scale(0.9);
-}
-
-.carousel__slide--prev {
-  opacity: 0.5;
-  transform: translateY(-5%) scale(0.9);
-}
-
-.carousel__slide--next {
-  opacity: 0.5;
-  transform: translateY(-5%) scale(0.9);
-}
-
-.carousel__slide--active {
-  padding: 30px;
-  opacity: 1;
-  transform: rotateY(0) scale(1.1);
+<style lang="scss" scoped>
+.carousel {
+  &__img {
+    width: 100%;
+    max-width: 250px;
+    min-width: 250px;
+    border-radius: 10px 0 0 10px;
+  }
+  &__item {
+    height: 420px;
+    width: 620px;
+    background: linear-gradient(
+      101.5deg,
+      rgba(16, 5, 34, 0.15) 37.03%,
+      rgba(255, 255, 255, 0.1) 80.19%,
+      rgba(16, 5, 34, 0.15) 100%
+    );
+    border: 2px solid rgba(63, 63, 70, 0.7);
+    color: white;
+    border-radius: 12px;
+  }
+  &__viewport {
+    perspective: 2000px;
+  }
+  &__track {
+    transform-style: preserve-3d;
+  }
+  &__slide {
+    opacity: 0.9;
+    transform: scale(1);
+    &--sliding {
+      transition: 0.5s;
+    }
+    &--prev {
+      opacity: 0.5;
+      transform: translateY(-5%) scale(0.9);
+    }
+    &--next {
+      opacity: 0.5;
+      transform: translateY(-5%) scale(0.9);
+    }
+  }
 }
 </style>
