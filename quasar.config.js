@@ -90,6 +90,8 @@ module.exports = configure(function (/* ctx */) {
         ORDER_TYPE_ID: "5117870577983195887",
         ORDER_FUNCTION_ID: "7160658608500929189",
 
+        DEFAULT_SPECIALITY_ID: "3291532951454342514",
+
         ORDER_STATUS_0: "1744362893253691369", // Черновик
         ORDER_STATUS_1: "2363916507227203881", // Поиск исполнителя
         ORDER_STATUS_2: "3814249250560291482", // Есть кандидат

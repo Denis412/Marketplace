@@ -24,6 +24,10 @@ export const getTeamsWithWhere = gql`
               first_name
               last_name
             }
+            avatar
+            speciality1 {
+              name
+            }
             email {
               email
             }

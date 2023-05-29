@@ -213,6 +213,17 @@ const inviteSubjects = async () => {
           space_id: route.query.space,
         });
       }
+
+      await projectApi.refetchPaginateProjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: route.query.name,
+        },
+        space_id: route.query.space,
+      });
     } else {
       for (let subject of selectedSubjects.value) {
         await sendApplication({
@@ -255,7 +266,7 @@ const filteringSubjects = async (filter) => {
     return;
   }
 
-  if (!route.query.space) filteredSubjects.value = teamFilter.value;
+  if (!route.query.project) filteredSubjects.value = teamFilter.value;
   else filteredSubjects.value = projectFilter.value;
 
   filteredSubjects.value = filteredSubjects.value.filter(
@@ -264,17 +275,6 @@ const filteringSubjects = async (filter) => {
       subject.fullname.middle_name.includes(filters.value.name) ||
       subject.fullname.last_name.includes(filters.value.name)
   );
-
-  // filteredSubjects.value = await userApi.refetchPaginateSubjects({
-  //   page: 1,
-  //   perPage: 100,
-  //   where: filters.value.name
-  //     ? { column: "fullname", operator: "FTS", value: filters.value.name }
-  //     : null,
-  //   is_invite: !route.query.space,
-  //   is_team: route.query.space,
-  //   space_id: route.query.space,
-  // });
 
   if (filters.value.speciality)
     filteredSubjects.value = filteredSubjects.value.filter(
