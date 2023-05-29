@@ -22,13 +22,14 @@ const { title, content } = defineProps({
 
 <style lang="scss" scoped>
 .content {
-  max-width: 280px;
+  max-width: 280x;
 }
 .tabs {
   margin-left: 32px;
   text-align: left;
 }
 li {
+  width: 256px;
   position: relative;
   color: #d6c1dd;
   list-style: none;
@@ -38,6 +39,9 @@ li {
     position: absolute;
     top: 4px;
     left: -32px;
+  }
+  &:first-child {
+    max-width: 230px;
   }
   &:last-child::before {
     content: url("/assets/icons/business/solution.svg");
