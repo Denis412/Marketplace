@@ -1,5 +1,8 @@
 <template>
-  <section class="text-white column flex-center c-mb-160" style="overflow: hidden; z-index: 0">
+  <section
+    class="text-white column flex-center c-mb-160 container"
+    style="overflow: hidden; z-index: 0"
+  >
     <section class="text-center">
       <h2 class="text-h2 c-mb-24">Оставить заявку</h2>
       <p class="text-subtitle2 c-mb-32">Расскажите нам о проекте, после мы свяжемся с вами</p>
@@ -123,8 +126,11 @@ const form = ref({
 </script>
 
 <style scoped lang="scss">
+.container {
+  max-width: 1120px;
+}
 .form {
-  width: 80vw;
+  width: 100%;
 
   padding: 64px 96px;
 
