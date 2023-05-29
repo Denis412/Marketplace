@@ -9,6 +9,7 @@
       :key="card.id"
       v-bind="card"
       :btnContent="btnContent"
+      :to="card.to"
     />
   </q-list>
 

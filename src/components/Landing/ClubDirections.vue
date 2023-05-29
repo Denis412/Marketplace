@@ -1,7 +1,7 @@
 <template>
   <section class="text-center directions container">
     <h2 class="title relative-position z-max text-h3 q-mb-xl q-pb-xl">
-      Выберите направление
+      {{ title }}
       <img
         src="/assets/images/landing-background/main-page/bg-14.svg"
         class="absolute-center shadow"
@@ -14,9 +14,10 @@
 <script setup>
 import CCardGroup from "components/Landing/ClubCardGroup.vue";
 
-const { btnContent, cardsList } = defineProps({
+const { title, btnContent, cardsList } = defineProps({
   btnContent: String,
   cardsList: Array,
+  title: String,
 });
 </script>
 

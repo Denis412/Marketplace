@@ -1,5 +1,5 @@
 <template>
-  <section class="section-mb">
+  <section class="section-mb section-margin">
     <h3 class="text-h3 text-center c-mb-64">Эксперты 1Т Клуба</h3>
     <Carousel
       :itemsToShow="3"
@@ -91,4 +91,3 @@ const expertsList = [
   text-align: left;
 }
 </style>
-

@@ -9,7 +9,11 @@
         :img="'/assets/images/amico.svg'"
         :video="true"
       />
-      <c-directions :cards-list="cardsList" :btn-content="'Перейти'" />
+      <c-directions
+        :title="'Выберите направление'"
+        :cards-list="cardsList"
+        :btn-content="'Перейти'"
+      />
       <c-statistics />
       <c-about />
       <c-clients />
@@ -53,6 +57,7 @@ const cardsList = [
       "IT-ментор для поиска точек роста в вашем бизнесе",
       "Команды IT-специалистов для развития бизнес-проектов",
     ],
+    to: "business",
   },
   {
     id: 2,
@@ -62,11 +67,13 @@ const cardsList = [
       "Стажировка в 1Т Клубе",
       "Работа над  IT-проектом в укомплектованных командах",
     ],
+    to: "work",
   },
   {
     id: 3,
     title: "Для Развития",
     content: ["Онлайн-обучение IT-профессиям", "База IT-знаний", "Консультации IT-экспертов"],
+    to: "selfdevelopment",
   },
 ];
 </script>

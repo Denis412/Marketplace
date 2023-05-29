@@ -8,20 +8,21 @@
 
       <main class="text-body2">
         <ul class="q-ml-sm tabs">
-          <li v-for="contentItem in content" :key="contentItem">
+          <li class="q-pb-sm" v-for="contentItem in content" :key="contentItem">
             <span>{{ contentItem }}</span>
           </li>
         </ul>
       </main>
     </div>
     <footer>
-      <q-btn class="text-body2 card-button q-pa-sm" no-caps :label="btnContent" />
+      <q-btn class="text-body2 card-button q-pa-sm" no-caps :to="to" :label="btnContent" />
     </footer>
   </q-card>
 </template>
 
 <script setup>
-const { btnContent, title, content } = defineProps({
+const { to, btnContent, title, content } = defineProps({
+  to: String,
   btnContent: String,
   title: String,
   content: Array,
