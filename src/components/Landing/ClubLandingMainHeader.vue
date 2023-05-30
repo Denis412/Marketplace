@@ -1,7 +1,7 @@
 <template>
-  <q-header class="header сontainer bg-dark-purple px-160 z-max" elevated>
-    <q-toolbar>
-      <router-link class="link" to="main">
+  <q-header class="header bg-dark-purple px-160 z-max" elevated>
+    <q-toolbar class="container">
+      <router-link class="link" :to="{ name: 'landing-main' }">
         <q-img class="logo-header" src="/assets/images/Logo-white.svg" alt="logo" />
 
         <span class="text-h5 c-pl-16">КЛУБ</span></router-link
@@ -11,17 +11,17 @@
         <q-route-tab
           no-caps
           name="business"
-          label="Для бизнеса"
+          label="Для Бизнеса"
           class="rounded-borders"
           to="business"
         />
 
-        <q-route-tab no-caps name="work" label="Для работы" class="rounded-borders" to="work" />
+        <q-route-tab no-caps name="work" label="Для Работы" class="rounded-borders" to="work" />
 
         <q-route-tab
           no-caps
           name="development"
-          label="Для развития"
+          label="Для Развития"
           class="rounded-borders"
           to="selfdevelopment"
         />
