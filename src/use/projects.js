@@ -143,6 +143,9 @@ export const useProjectCreate = () => {
           name,
           team_name: team.name,
           space: space_id,
+          leader: {
+            [subject[0].type_id]: subject[0].id,
+          },
           members: {
             [subject[0].type_id]: [subject[0].id],
           },

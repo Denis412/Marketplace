@@ -1,10 +1,5 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <!-- <div class="flex justify-between">
-      <pre>{{ applications }}</pre>
-
-      <pre>{{ projects }}</pre>
-    </div> -->
     <div class="loader loader-lg" v-if="loading" />
 
     <div v-else>

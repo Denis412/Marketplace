@@ -187,11 +187,35 @@ export const useTeamCreate = () => {
 
       await propertyApi.create({
         input: {
+          label: "Руководитель проекта",
+          name: "leader",
+          type_id: projectTypeData.id,
+          data_type: "object",
+          order: 8,
+          multiple: {
+            status: false,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
+                inverse_relation: true,
+                inverse_relation_label: "Проекты",
+                inverse_relation_name: "projects_leader",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
           label: "Заказчики",
           name: "customers",
           type_id: projectTypeData.id,
           data_type: "object",
-          order: 8,
+          order: 9,
           multiple: {
             status: true,
             max_number: 3,
@@ -216,7 +240,7 @@ export const useTeamCreate = () => {
           label: "Дата сдачи",
           data_type: "datetime",
           type_id: projectTypeData.id,
-          order: 9,
+          order: 10,
           meta: {
             properties: [
               {
