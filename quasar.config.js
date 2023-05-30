@@ -60,6 +60,7 @@ module.exports = configure(function (/* ctx */) {
 
         EMAILJS_SERVICE_ID: "service_1wdj4t5",
         EMAILJS_TEMPLATE_ID: "template_vlarxg7",
+        EMAILJS_TEMPLATE_WRITE_ID: "template_tf5j6md",
         EMAILJS_PUBLIC_KEY: "8VISXizKwxu9ZO_pL",
 
         MAIN_SPACE_ID: 42,

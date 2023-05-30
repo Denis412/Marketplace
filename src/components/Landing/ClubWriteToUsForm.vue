@@ -1,5 +1,5 @@
 <template>
-  <q-form class="form rounded-borders-12 flex column q-mt-xl">
+  <q-form class="form rounded-borders-12 flex column q-mt-xl" @submit="sendEmail">
     <header class="text-h4 club-mb-32 text-center">Напишите нам</header>
 
     <main style="width: 100%">
@@ -10,6 +10,8 @@
           type="text"
           placeholder="Ваше имя"
           :my_class="'c-input-outline-white'"
+          :rules="[required]"
+          lazy-rules
           v-model="form.first_name"
         />
       </div>
@@ -19,18 +21,24 @@
           id="phoneNumber"
           class="text-caption1"
           type="text"
+          mask="+# (###) ###-##-##"
           placeholder="Номер телефона"
           v-model="form.phone_number"
+          :rules="[required]"
+          lazy-rules
           :my_class="'c-input-outline-white'"
         />
       </div>
 
-      <div class="form-control">
+      <div class="form-control" style="height: 150px">
         <c-input
           type="textarea"
-          class="text-caption1"
+          autogrow
+          class="text-caption1 c-input-area-mh gray-scrollbar-input"
           placeholder="Сообщение"
           v-model="form.message"
+          :rules="[required]"
+          lazy-rules
           :my_class="'c-input-outline-white'"
         />
       </div>
@@ -46,7 +54,13 @@
         label="Даю согласие на обработку данных"
       />
 
-      <c-button class="text-body1 my-btn q-px-lg q-py-md" background-square label="Отправить" />
+      <c-button
+        :disable="!form.checked"
+        class="text-body1 my-btn q-px-lg q-py-md"
+        type="submit"
+        background-square
+        label="Отправить"
+      />
     </footer>
   </q-form>
 </template>
@@ -55,14 +69,48 @@
 import { ref } from "vue";
 import CInput from "components/ClubInput.vue";
 import CButton from "../ClubButton.vue";
+import emailjs from "@emailjs/browser";
+import { useQuasar } from "quasar";
+import { useValidators } from "src/use/validators";
+
+const $q = useQuasar();
+const { required } = useValidators();
 
 const form = ref({
   first_name: "",
   phone_number: "",
-  email: "",
   message: "",
   checked: false,
 });
+
+const sendEmail = () => {
+  emailjs
+    .send(
+      process.env.EMAILJS_SERVICE_ID,
+      process.env.EMAILJS_TEMPLATE_WRITE_ID,
+      form.value,
+      process.env.EMAILJS_PUBLIC_KEY
+    )
+    .then(
+      (result) => {
+        form.value = {
+          first_name: "",
+          phone_number: "",
+          message: "",
+          checked: false,
+        };
+      },
+      (error) => {
+        console.log("FAILED...", error.text);
+      }
+    );
+
+  $q.notify({
+    type: "positive",
+    position: "top",
+    message: "Сообщение отправлено.",
+  });
+};
 </script>
 
 <style scoped lang="scss">
