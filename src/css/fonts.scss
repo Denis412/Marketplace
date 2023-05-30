@@ -39,6 +39,7 @@
 .text-h4,
 .text-h5 {
   font-family: "Furore" !important;
+  letter-spacing: 2px;
 }
 
 .text-h1 {
@@ -109,7 +110,6 @@
   line-height: 28px !important;
 }
 
-
 .text-body1 {
   font-family: "Montserrat-Regular" !important;
   font-size: 16px !important;
@@ -141,14 +141,14 @@
   line-height: 16px !important;
 }
 
-.text-button1{
+.text-button1 {
   font-family: "Inter-Thin" !important;
   font-weight: 300;
   font-size: 16px;
   line-height: 24px;
 }
 
-.text-button2{
+.text-button2 {
   font-family: "Inter-Bold" !important;
   font-size: 20px;
   line-height: 28px;

@@ -74,11 +74,12 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, onMounted, ref } from "vue";
 
 import CChip from "src/components/ClubChip.vue";
 import CSectionMainProfileUserInformation from "src/components/ClubSectionMainProfileUserInformation.vue";
 import CItemPortfolio from "src/components/ClubItemPortfolio.vue";
+import userApi from "src/sdk/user";
 
 const currentUser = inject("currentUser");
 
@@ -98,6 +99,19 @@ const items = ref([
     image: "",
   },
 ]);
+
+// onMounted(async () => {
+//   console.log("hello");
+//   await userApi.refetchPaginateSubjects({
+//     page: 1,
+//     perPage: 1,
+//     where: {
+//       column: "id",
+//       operator: "EQ",
+//       value: currentUser.value.subject_id,
+//     },
+//   });
+// });
 </script>
 
 <style scoped lang="scss">

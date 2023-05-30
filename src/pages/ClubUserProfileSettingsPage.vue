@@ -278,6 +278,8 @@ const deleteCompetence = async (label) => {
       [process.env.COMPETENCE_TYPE_ID]: form.value.competencies.map((competence) => competence.id),
     },
   });
+
+  useUserStore().SET_PROP("competencies", form.value.competencies);
 };
 
 const updateInfo = async (property_name, value) => {
@@ -314,7 +316,7 @@ const updateInfo = async (property_name, value) => {
       },
     };
 
-    useUserStore().SET_PROP(property_name, value.label);
+    useUserStore().SET_PROP("speciality1", value.label);
   } else if (property_name === "competencies" && value.label && value.label.trim()) {
     console.log("value", value);
     if (form.value.competencies?.find((competence) => competence.name === value.label)) {
