@@ -1,10 +1,6 @@
 <template>
   <q-list class="flex justify-between">
-    <c-category-item
-      v-for="category in categories"
-      :key="category.id"
-      v-bind="category"
-    />
+    <c-category-item v-for="category in categories" :key="category.id" v-bind="category" />
   </q-list>
 </template>
 
@@ -35,7 +31,7 @@ const categories = ref([
     id: 4,
     imageUrl: "/assets/images/landing/experts.svg",
     title: "Эксперт",
-    content: "Станьте ментором и помогайте командам в работе над IT-проектами",
+    content: "Станьте ментором и помогайте командам ㅤㅤ в работе над ㅤㅤㅤ IT-проектами ㅤ",
   },
   {
     id: 5,
