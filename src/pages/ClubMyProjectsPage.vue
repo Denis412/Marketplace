@@ -23,7 +23,7 @@
         </section>
       </q-list>
 
-      <q-list v-else class="row c-mt-40">
+      <q-list v-else-if="selectedProjectsType === 'applicated'" class="row c-mt-40">
         <section v-for="application in applications" :key="application.id" class="col-4 q-pa-md">
           <c-card-project :current-project="application.project" :application="application" />
         </section>

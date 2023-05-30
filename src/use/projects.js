@@ -261,6 +261,18 @@ export const useProjectApplication = () => {
         space_id,
       });
 
+      const stubjectInTeamSpace = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "email",
+          operator: "FTS",
+          value: subject.email.email,
+        },
+        is_team: true,
+        space_id,
+      });
+
       const applicationType = await typeApi.refetchPaginateType({
         page: 1,
         perPage: 1,
@@ -336,7 +348,7 @@ export const useProjectApplication = () => {
         where: {
           column: `${subjectProperty[0].id}->${subjectType[0].id}`,
           operator: "EQ",
-          value: subject.id,
+          value: stubjectInTeamSpace[0].id,
         },
       });
 
@@ -346,7 +358,7 @@ export const useProjectApplication = () => {
       result.value = await applicationApi.create({
         name: project_name,
         subject: {
-          [subjectType[0].id]: subject.id,
+          [subjectType[0].id]: stubjectInTeamSpace[0].id,
         },
         project: {
           [projectType[0].id]: project_id,
@@ -361,7 +373,7 @@ export const useProjectApplication = () => {
           model_type: "object",
           model_id: result.value.id,
           owner_type: "subject",
-          owner_id: subject.id,
+          owner_id: stubjectInTeamSpace[0].id,
           level: 5,
         },
         space_id,

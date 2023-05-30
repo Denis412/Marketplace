@@ -184,8 +184,11 @@ const teamFilter = computed(() => {
 });
 
 const projectFilter = computed(() => {
-  return projectSubjects.value?.paginate_subject.data.filter((subject) => {
+  return allSubjects.value?.paginate_subject.data.filter((subject) => {
     return (
+      projectSubjects.value?.paginate_subject.data.some(
+        (sub) => sub.email.email === subject.email.email
+      ) &&
       !project.value?.paginate_project.data[0]?.members.some(
         (member) => member.email.email === subject.email.email
       ) &&
@@ -223,6 +226,14 @@ const inviteSubjects = async () => {
           value: route.query.name,
         },
         space_id: route.query.space,
+      });
+
+      delete route.query.customer;
+
+      router.push({
+        name: "project",
+        params: { ...route.params },
+        query: { ...route.query },
       });
     } else {
       for (let subject of selectedSubjects.value) {
@@ -287,13 +298,16 @@ const filteringSubjects = async (filter) => {
 const resetSubjects = () => (selectedSubjects.value = []);
 
 const cancel = () => {
-  if (route.query.project)
+  if (route.query.project) {
+    delete route.query.project;
+    delete route.query.customer;
+
     router.push({
       name: "project",
       params: { ...route.params },
       query: { ...route.query },
     });
-  else
+  } else
     router.push({
       name: "teamSpace",
       params: { ...route.params },
