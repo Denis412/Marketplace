@@ -15,28 +15,11 @@
 import { ref } from "vue";
 import CAdvantagesItem from "./ClubAdvantagesItem.vue";
 
-const contentList = [
-  {
-    id: 1,
-    content: "Получение IT-заказов от лидирующих  компаний на рынке",
-  },
-  {
-    id: 2,
-    content: "Улучшение своих навыков благодаря наставничеству IT-экспертов",
-  },
-  {
-    id: 3,
-    content: "Заказы для  IT-специалистов любого уровня",
-  },
-  {
-    id: 4,
-    content: "Консультации  и менторская поддержка при работе над IT-проектами",
-  },
-  {
-    id: 5,
-    content: "Защита IT-cделок от финансовых рисков и безопасность сделок",
-  },
-];
+const { contentList } = defineProps({
+  contentList: Array,
+});
+
+console.log(contentList);
 const scroller = ref(null);
 
 const onWheel = (e) => {

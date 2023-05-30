@@ -14,7 +14,7 @@
         :cards-list="cardsList"
         :btn-content="'Вступить в 1Т Клуб'"
       />
-      <c-advantages-work />
+      <c-advantages :content-list="contentList" />
       <c-space />
       <c-experts />
       <c-teams />
@@ -28,7 +28,7 @@
 <script setup>
 import CSpace from "components/Landing/ClubSpace.vue";
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
-import CAdvantagesWork from "src/components/Landing/ClubAdvantagesWork.vue";
+import CAdvantages from "src/components/Landing/ClubAdvantages.vue";
 import CString from "components/Landing/ClubString.vue";
 import CMainScreen from "components/Landing/ClubMainScreen.vue";
 import CExperts from "components/Landing-develop/ClubExperts.vue";
@@ -66,6 +66,29 @@ const cardsList = [
       "Хотите сделать IT-проект проект для портфолио",
     ],
     to: "registration",
+  },
+];
+
+const contentList = [
+  {
+    id: 1,
+    content: "Получение IT-заказов от лидирующих  компаний на рынке",
+  },
+  {
+    id: 2,
+    content: "Улучшение своих навыков благодаря наставничеству IT-экспертов",
+  },
+  {
+    id: 3,
+    content: "Заказы для  IT-специалистов любого уровня",
+  },
+  {
+    id: 4,
+    content: "Консультации  и менторская поддержка при работе над IT-проектами",
+  },
+  {
+    id: 5,
+    content: "Защита IT-cделок от финансовых рисков и безопасность сделок",
   },
 ];
 </script>
