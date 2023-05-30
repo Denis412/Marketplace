@@ -1,6 +1,6 @@
 <template>
   <q-footer class="footer px-160 q-pb-xl section-margin">
-    <div class="flex q-pt-lg q-py-xl" style="width: 100%">
+    <div class="flex q-pt-lg q-py-xl container" style="width: 100%">
       <section class="col relative">
         <img src="/assets/images/Logo_no_gradient.svg" class="footer-logo" />
       </section>
@@ -44,11 +44,11 @@ const nav = [
   },
   {
     text: "Для Работы",
-    route: "business",
+    route: "work",
   },
   {
     text: "Для Развития",
-    route: "business",
+    route: "selfdevelopment",
   },
 ];
 

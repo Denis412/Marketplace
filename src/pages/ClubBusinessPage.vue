@@ -1,6 +1,6 @@
 <template>
   <q-page class="bg-dark-purple h-100p no-scroll" style="overflow-x: hidden">
-    <c-background-spot class="overflow-hidden" />
+    <c-background-spot />
 
     <main class="text-white relative-position" style="z-index: 1">
       <c-main-screen

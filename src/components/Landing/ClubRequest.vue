@@ -166,14 +166,6 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-
-    <section style="z-index: -1">
-      <q-img
-        class="absolute"
-        style="top: 20px; left: -100px"
-        src="/assets/images/customer-application/bg-1.svg"
-      />
-    </section>
   </section>
 </template>
 

@@ -2,7 +2,7 @@
   <q-carousel-slide :name="name" class="row no-wrap justify-between items-center carousel">
     <div class="text-center col-6">
       <q-carousel
-        v-model="slide"
+        v-model="slider"
         transition-prev="slide-right"
         transition-next="slide-left"
         animated
@@ -17,7 +17,7 @@
           class="q-pa-none"
         >
           <div class="row flex-center no-wrap cards">
-            <q-card class="card col-6">
+            <q-card class="col-6" :class="!item.image[0] ? 'card-hidden' : 'card'">
               <q-img :src="item.image[0]">
                 <div class="text-left bottom-img flex column justify-end">
                   <p class="text-body1 bottom-text">{{ item.name[0] }}</p>
@@ -27,7 +27,7 @@
                 </div>
               </q-img>
             </q-card>
-            <q-card class="card col-6">
+            <q-card class="col-6" :class="!item.image[1] ? 'card-hidden' : 'card'">
               <q-img :src="item.image[1]">
                 <div class="text-left bottom-img flex column justify-end">
                   <p class="text-body1 bottom-text">{{ item.name[1] }}</p>
@@ -49,16 +49,24 @@
               dense
               fab
               padding="0"
+              :disable="currentSlider === 1"
               icon="img:/assets/icons/arrow/arrow-left-round.svg"
-              @click="$refs.carousel.previous()"
+              @click="
+                $refs.carousel.previous();
+                prevSlide();
+              "
             />
             <q-btn
               class="btn-next"
               dense
               fab
+              :disable="currentSlider === teammates.length"
               padding="0"
               icon="img:/assets/icons/arrow/arrow-right-round.svg"
-              @click="$refs.carousel.next()"
+              @click="
+                $refs.carousel.next();
+                nextSlide();
+              "
             />
           </q-carousel-control>
         </template>
@@ -83,14 +91,22 @@
 <script setup>
 import { ref } from "vue";
 
-const { name, content, links, teams } = defineProps({
+const { name, content, links, teammates } = defineProps({
   name: String,
   content: String,
   links: Object,
   teammates: Object,
 });
 
-const slide = ref(1);
+const slider = ref(1);
+
+const currentSlider = ref(1);
+const nextSlide = () => {
+  currentSlider.value += 1;
+};
+const prevSlide = () => {
+  currentSlider.value -= 1;
+};
 </script>
 <style scoped lang="scss">
 .carousel {
@@ -103,6 +119,7 @@ const slide = ref(1);
     width: 504px;
   }
 }
+
 .link-btn {
   color: #191919;
   background-color: #f2f2f2;
@@ -133,6 +150,11 @@ const slide = ref(1);
     max-height: 320px;
   }
   border-radius: 10px;
+  &-hidden {
+    min-height: 300px;
+    max-width: 228px;
+    opacity: 0%;
+  }
 }
 .cards {
   gap: 16px;
@@ -155,5 +177,8 @@ const slide = ref(1);
   &-next {
     margin-right: 1%;
   }
+}
+.hidden {
+  opacity: 70%;
 }
 </style>

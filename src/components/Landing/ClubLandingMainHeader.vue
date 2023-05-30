@@ -1,25 +1,27 @@
 <template>
   <q-header class="header bg-dark-purple px-160 z-max" elevated>
-    <q-toolbar>
-      <q-img class="logo-header" src="/assets/images/Logo-white.svg" alt="logo" />
+    <q-toolbar class="container">
+      <router-link class="link" :to="{ name: 'landing-main' }">
+        <q-img class="logo-header" src="/assets/images/Logo-white.svg" alt="logo" />
 
-      <span class="text-h5 c-pl-16">КЛУБ</span>
+        <span class="text-h5 c-pl-16">КЛУБ</span></router-link
+      >
 
       <q-tabs class="main-tabs">
         <q-route-tab
           no-caps
           name="business"
-          label="Для бизнеса"
+          label="Для Бизнеса"
           class="rounded-borders"
           to="business"
         />
 
-        <q-route-tab no-caps name="work" label="Для работы" class="rounded-borders" to="work" />
+        <q-route-tab no-caps name="work" label="Для Работы" class="rounded-borders" to="work" />
 
         <q-route-tab
           no-caps
           name="development"
-          label="Для развития"
+          label="Для Развития"
           class="rounded-borders"
           to="selfdevelopment"
         />
@@ -49,8 +51,15 @@
 import CButton from "src/components/ClubButton.vue";
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .main-tabs {
   margin-left: 5rem;
+}
+
+.link {
+  color: white;
+  &:hover {
+    text-decoration: none;
+  }
 }
 </style>

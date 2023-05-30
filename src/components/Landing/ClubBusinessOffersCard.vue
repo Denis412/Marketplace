@@ -2,7 +2,7 @@
   <q-card class="card text-left">
     <div class="content">
       <div class="text-h4 card_header">{{ title }}</div>
-      <div class="text-body2">
+      <div class="text-body2 text">
         <ul class="tabs">
           <li v-for="contentItem in content" :key="contentItem">
             <span>{{ contentItem }}</span>
@@ -68,7 +68,7 @@ li {
 }
 
 .card_header {
-  color: rgba(206, 185, 214, 1);
+  color: #ede5f0;
   padding-bottom: 16px;
   margin-bottom: 32px;
   border-bottom: 2px solid white;
