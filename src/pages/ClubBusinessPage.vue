@@ -6,7 +6,7 @@
       <c-main-screen
         :title="'Для Бизнеса'"
         :subtitle="'1Т Клуб — это поддержка, наставничество и полная вовлеченность в ваш IT-проект'"
-        :img="'assets/images/landing-business/amico.svg'"
+        :img="'/assets/images/landing-business/amico.svg'"
         :video="false"
       />
       <c-business-offers />
