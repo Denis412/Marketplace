@@ -30,7 +30,7 @@
       </section>
     </div>
 
-    <q-img class="col" style="max-width: 480px" src="/assets/images/amico.svg" />
+    <q-img class="col" style="max-width: 480px" :src="img || '/assets/images/amico.svg'" />
   </section>
 </template>
 
