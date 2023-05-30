@@ -36,18 +36,23 @@ const getData = async () => {
 };
 
 const contex = () => {
-  let parent_id =
-    dragContext.targetInfo.dragNode.parent?.data.page_id ||
-    "4440891212883535597";
-
+  const { dragNode } = dragContext;
+  let parent_id = dragNode.parent?.data.page_id || "4440891212883535597";
   pageApi.update({
     input: {
       parent_id: parent_id,
     },
-
-    id: dragContext.startInfo.dragNode.data.page_id,
+    id: dragNode.data.page_id,
     space_id: 13,
   });
+  // Определите, куда переместить перетаскиваемую страницу
+  const move = dragContext.insertBefore ? "BEFORE" : "AFTER";
+  // Определите идентификатор страницы, относительно которой будет осуществляться перемещение
+  const pageId = dragContext.insertBefore
+    ? dragContext.insertBefore.data.page_id
+    : dragContext.insertAfter.data.page_id;
+  // Вызовите метод movePages с необходимыми аргументами
+  pageApi.movePages(move, pageId, [dragNode.data.page_id]);
 };
 
 onMounted(() => {

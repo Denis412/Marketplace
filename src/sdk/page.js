@@ -4,7 +4,12 @@ import {
   useQuery,
 } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
-import { pageCreate, pageDelete, pageUpdate } from "src/graphql/page/mutations";
+import {
+  pageCreate,
+  pageDelete,
+  pageMove,
+  pageUpdate,
+} from "src/graphql/page/mutations";
 import {
   pagesPaginate,
   getPageById,
@@ -17,6 +22,14 @@ provideApolloClient(apolloClient);
 const { mutate: creatingPage } = useMutation(pageCreate);
 const { mutate: updatingPage } = useMutation(pageUpdate);
 const { mutate: deletingPage } = useMutation(pageDelete);
+const { mutate: movePage } = useMutation(pageMove);
+
+const movePages = async (move, pageId, movingPageIds) => {
+  const variables = { move, pageId, movingPageIds };
+  // Выполните мутацию с помощью movePage
+  // Например:
+  const response = await movePage(variables);
+};
 
 const paginatePages = ({ page, perPage, where, orderBy, space_id }) => {
   return useQuery(
@@ -193,6 +206,7 @@ const pageApi = {
   queryPageById,
   getRootPage,
   getChildrenPages,
+  movePages,
 };
 
 export default pageApi;
