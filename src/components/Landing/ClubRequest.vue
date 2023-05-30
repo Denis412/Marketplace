@@ -181,7 +181,7 @@
 import CLabelControl from "src/components/ClubLabelControl.vue";
 // import CRecaptcha from "src/components/ClubRecaptcha.vue";
 import emailjs from "@emailjs/browser";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const isAccept = ref(false);
 
