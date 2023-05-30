@@ -113,7 +113,6 @@ const {
 
 const router = useRouter();
 const route = useRoute();
-const router = useRouter();
 const $q = useQuasar();
 
 const selectedSubjects = ref([]);
