@@ -15,6 +15,7 @@
       <c-business-tools />
       <c-join-business />
       <c-best-teams />
+      <c-tasks />
       <c-faq />
       <c-request />
     </main>
