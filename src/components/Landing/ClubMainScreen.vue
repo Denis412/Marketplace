@@ -4,16 +4,16 @@
       <h1 class="text-h1">{{ title }}</h1>
 
       <div class="row">
-        <p class="text-body2 q-mt-md col-11">
+        <p class="text-body2 q-mt-md col-10">
           {{ subtitle }}
         </p>
       </div>
 
-      <section class="flex q-py-md q-mt-xl items-center">
+      <section class="flex q-py-md c-mt-40 items-center">
         <c-button
           to="/registration"
           background
-          class="text-button2 q-mr-lg c-px-32 c-py-16"
+          class="text-subtitle4 q-mr-lg c-px-32"
           label="Вступить в 1Т клуб"
         />
 

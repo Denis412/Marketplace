@@ -2,20 +2,22 @@
   <q-card class="card q-pa-lg column justify-between">
     <div class="column justify-start">
       <header>
-        <div class="text-h4 flex justify-start direction_card_header c-mb-12">{{ title }}</div>
+        <div class="text-h4 flex justify-start direction_card_header c-mb-12 z-max">
+          {{ title }}
+        </div>
         <hr class="line q-mb-lg" />
       </header>
 
       <main class="text-body2">
         <ul class="q-ml-sm tabs">
           <li class="q-pb-sm" v-for="contentItem in content" :key="contentItem">
-            <span>{{ contentItem }}</span>
+            <span class="content">{{ contentItem }}</span>
           </li>
         </ul>
       </main>
     </div>
     <footer>
-      <q-btn class="text-body2 card-button q-pa-sm" no-caps :to="to" :label="btnContent" />
+      <q-btn class="text-body1 card-button q-pa-sm" no-caps :to="to" :label="btnContent" />
     </footer>
   </q-card>
 </template>
@@ -43,9 +45,12 @@ li span {
   color: white;
 }
 
+.content {
+  color: #d6c1dd;
+}
 .line {
   width: 234px;
-  height: 2px;
+  height: 1px;
   background-color: white;
 }
 .card {
@@ -73,10 +78,12 @@ li span {
 .card-button {
   width: 100%;
   border-radius: 8px;
+  padding-top: 14px;
+  padding-bottom: 14px;
   background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
 }
 
 .direction_card_header {
-  color: rgba(206, 185, 214, 1);
+  color: #ede5f0;
 }
 </style>

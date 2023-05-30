@@ -46,7 +46,7 @@
         label="Даю согласие на обработку данных"
       />
 
-      <c-button class="text-button2 my-btn q-px-lg" background-square label="Отправить" />
+      <c-button class="text-body1 my-btn q-px-lg q-py-md" background-square label="Отправить" />
     </footer>
   </q-form>
 </template>

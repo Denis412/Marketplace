@@ -22,6 +22,7 @@ import CWriteToUsForm from "components/Landing/ClubWriteToUsForm.vue";
 }
 
 .map {
+  margin-bottom: 160px;
   background-image: url("/assets/images/landing/map.png");
   background-size: cover;
   background-repeat: no-repeat;
