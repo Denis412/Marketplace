@@ -8,8 +8,9 @@
     :width="256"
     :mini-width="64"
   >
-    <c-tree-teams v-if="!team" :class="{ 'c-tree-mini': miniState }" />
     <c-tree-my-team v-if="team" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-projects v-else-if="projects" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-teams v-else-if="!team" :class="{ 'c-tree-mini': miniState }" />
 
     <c-tree-orders
       v-else-if="route.path.includes('orders')"
@@ -53,13 +54,15 @@ import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
 import CTreeTeams from "src/components/ClubTreeTeams.vue";
 import CTreeMyTeam from "src/components/ClubTreeMyTeam.vue";
+import CTreeProjects from "src/components/ClubTreeProjects.vue";
 import CTreeOrders from "src/components/ClubTreeOrders.vue";
 
 import { filesApi } from "src/sdk/files/file";
 
-const { side, team } = defineProps({
+const { side, team, projects } = defineProps({
   side: String,
   team: Boolean,
+  projects: Boolean,
 });
 
 const route = useRoute();

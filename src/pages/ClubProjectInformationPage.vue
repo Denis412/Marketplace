@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { provide, ref, onMounted, watch, inject } from "vue";
+import { provide, ref, onMounted, watch, inject, computed } from "vue";
 import { useRoute } from "vue-router";
 
 import CSectionProjectsHeaders from "src/components/ClubSectionProjectsHeaders.vue";
@@ -58,17 +58,30 @@ const res = {
 
 const { refetch } = BaseService.fetchApiPaginate(userApi.paginateSubjects);
 
-const { result: currentProject } = BaseService.fetchApiPaginate(
-  projectApi.paginateProject,
-  {
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: route.query.name,
-    },
+const { result: project } = projectApi.paginateProject({
+  page: 1,
+  perPage: 1,
+  where: {
+    column: "name",
+    operator: "EQ",
+    value: route.query.name,
   },
-  { only_one: true, space_id: route.query.space }
-);
+  space_id: route.query.space,
+});
+
+const currentProject = computed(() => project.value?.paginate_project.data[0]);
+
+// const { result: currentProject } = BaseService.fetchApiPaginate(
+//   projectApi.paginateProject,
+//   {
+//     where: {
+//       column: "name",
+//       operator: "EQ",
+//       value: route.query.name,
+//     },
+//   },
+//   { only_one: true, space_id: route.query.space }
+// );
 
 const isLeader = ref(false);
 

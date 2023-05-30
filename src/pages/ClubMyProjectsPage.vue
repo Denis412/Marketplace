@@ -34,7 +34,7 @@
 
 <script setup>
 import { useUserStore } from "src/stores/user";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 import CCardProject from "src/components/ClubCardProject.vue";
 import projectApi from "src/sdk/project";
@@ -49,7 +49,9 @@ const applications = ref([]);
 const loading = ref(true);
 const selectedProjectsType = ref("active");
 
-const subject = userApi.queryGetSubjectById(currentUser.value.subject_id);
+// const subject = userApi.queryGetSubjectById(currentUser.value.subject_id);
+
+useUserStore().SET_PROP("projects", projects.value);
 
 onMounted(async () => {
   let pr = [];
