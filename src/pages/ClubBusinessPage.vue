@@ -3,14 +3,18 @@
     <c-background-spot class="overflow-hidden" />
 
     <main class="text-white relative-position" style="z-index: 1">
-      <c-business-screen />
+      <c-main-screen
+        :title="'Для Бизнеса'"
+        :subtitle="'1Т Клуб — это поддержка, наставничество и полная вовлеченность в ваш IT-проект'"
+        :img="'assets/images/landing-business/amico.svg'"
+        :video="false"
+      />
       <c-business-offers />
-      <c-advantages />
+      <c-advantages-business />
       <c-string />
       <c-business-tools />
       <c-join-business />
       <c-best-teams />
-      <c-tasks />
       <c-faq />
       <c-request />
     </main>
@@ -19,9 +23,10 @@
 
 <script setup>
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
+import CMainScreen from "components/Landing/ClubMainScreen.vue";
 import CBusinessScreen from "components/Landing/ClubBusinessScreen.vue";
 import CBusinessOffers from "components/Landing/ClubBusinessOffers.vue";
-import CAdvantages from "components/Landing/ClubAdvantages.vue";
+import CAdvantagesBusiness from "src/components/Landing/ClubAdvantagesBusiness.vue";
 import CString from "components/Landing/ClubString.vue";
 import CBusinessTools from "components/Landing/ClubBusinessTools.vue";
 import CJoinBusiness from "components/Landing/ClubJoinBusiness.vue";

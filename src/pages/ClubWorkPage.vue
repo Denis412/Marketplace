@@ -14,6 +14,7 @@
         :cards-list="cardsList"
         :btn-content="'Вступить в 1Т Клуб'"
       />
+      <c-advantages-work />
       <c-space />
       <c-experts />
       <c-teams />
@@ -27,6 +28,7 @@
 <script setup>
 import CSpace from "components/Landing/ClubSpace.vue";
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
+import CAdvantagesWork from "src/components/Landing/ClubAdvantagesWork.vue";
 import CString from "components/Landing/ClubString.vue";
 import CMainScreen from "components/Landing/ClubMainScreen.vue";
 import CExperts from "components/Landing-develop/ClubExperts.vue";
