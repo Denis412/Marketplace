@@ -12,7 +12,7 @@
         </ul>
       </q-card-section>
       <q-card-section v-else class="q-pl-none">
-        {{ content[0] }}
+        <div v-html="content[0]"></div>
       </q-card-section>
     </q-card>
   </q-expansion-item>
