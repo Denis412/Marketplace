@@ -1,9 +1,11 @@
 <template>
   <q-header class="header сontainer bg-dark-purple px-160 z-max" elevated>
     <q-toolbar>
-      <q-img class="logo-header" src="/assets/images/Logo-white.svg" alt="logo" />
+      <router-link class="link" to="main">
+        <q-img class="logo-header" src="/assets/images/Logo-white.svg" alt="logo" />
 
-      <span class="text-h5 c-pl-16">КЛУБ</span>
+        <span class="text-h5 c-pl-16">КЛУБ</span></router-link
+      >
 
       <q-tabs class="main-tabs">
         <q-route-tab
@@ -49,8 +51,15 @@
 import CButton from "src/components/ClubButton.vue";
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .main-tabs {
   margin-left: 5rem;
+}
+
+.link {
+  color: white;
+  &:hover {
+    text-decoration: none;
+  }
 }
 </style>

@@ -44,11 +44,11 @@ const nav = [
   },
   {
     text: "Для Работы",
-    route: "business",
+    route: "work",
   },
   {
     text: "Для Развития",
-    route: "business",
+    route: "selfdevelopment",
   },
 ];
 

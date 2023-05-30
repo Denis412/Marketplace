@@ -9,7 +9,7 @@ const routes = [
         component: () => import("pages/ClubCustomerApplicationPage.vue"),
       },
       {
-        path: "",
+        path: "main",
         name: "landing-main",
         component: () => import("pages/IndexPage.vue"),
       },
