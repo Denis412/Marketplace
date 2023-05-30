@@ -4,14 +4,14 @@
     style="overflow: hidden; z-index: 0"
   >
     <section class="text-center">
-      <h2 class="text-h2 c-mb-24">Заявка на консультацию</h2>
-      <p class="text-subtitle2 c-mb-32">Оставьте свои контакты, и мы свяжемся с вами</p>
+      <h2 class="text-h2 c-mb-24">Оставить заявку</h2>
+      <p class="text-subtitle2 c-mb-32">Расскажите нам о проекте, после мы свяжемся с вами</p>
     </section>
 
     <q-form class="form" ref="formRef" @submit.prevent="sendEmail">
       <div class="c-gutter-y-32">
         <section class="row c-gutter-x-32">
-          <c-label-control class="col" label="Ваше ФИО" label-class="text-subtitle4">
+          <c-label-control class="col" label="Ваше имя" label-class="text-subtitle4">
             <template #control>
               <q-input
                 v-model="form.name"
@@ -26,7 +26,7 @@
             </template>
           </c-label-control>
 
-          <c-label-control class="col" label="E-mail" label-class="text-subtitle4">
+          <c-label-control class="col" label="Почта для связи" label-class="text-subtitle4">
             <template #control>
               <q-input
                 v-model="form.email"
@@ -78,6 +78,7 @@
                 borderless
                 autogrow
                 v-model="form.message"
+                placeholder="Расскажите о вашей задаче"
                 type="textarea"
                 class="c-input-landing gray-scrollbar-input c-input-area-mh bg-white"
               />
@@ -172,9 +173,11 @@
 import CLabelControl from "src/components/ClubLabelControl.vue";
 // import CRecaptcha from "src/components/ClubRecaptcha.vue";
 import emailjs from "@emailjs/browser";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
 const isAccept = ref(false);
+
+const requestBlock = ref(null);
 
 const alert = ref({
   success: false,
@@ -229,8 +232,6 @@ const sendEmail = () => {
       );
   }
 };
-
-console.log();
 </script>
 
 <style scoped lang="scss">
