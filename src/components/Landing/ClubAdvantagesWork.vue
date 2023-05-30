@@ -1,17 +1,18 @@
 <template>
   <section class="text-center section-bottom section-mb">
     <h3 class="text-h3 c-mb-64">НАШИ ПРЕИМУЩЕСТВА</h3>
-    <section class="card">
+    <div class="card" ref="scroller" @wheel.prevent="onWheel">
       <c-advantages-item
         v-for="item in contentList"
         :key="item.id"
         :item="item"
         class="card--content"
       />
-    </section>
+    </div>
   </section>
 </template>
 <script setup>
+import { ref } from "vue";
 import CAdvantagesItem from "./ClubAdvantagesItem.vue";
 
 const contentList = [
@@ -36,6 +37,11 @@ const contentList = [
     content: "Защита IT-cделок от финансовых рисков и безопасность сделок",
   },
 ];
+const scroller = ref(null);
+
+const onWheel = (e) => {
+  scroller.value.scrollLeft += e.deltaY;
+};
 </script>
 
 <style scoped lang="scss">

@@ -1,14 +1,17 @@
 <template>
-  <section class="advantage-item flex flex-center relative-position">
+  <section
+    class="advantage-item flex flex-center relative-position"
+    :style="item.id == 1 ? 'margin-left:160px' : ''"
+  >
     <q-img class="absolute-right advantage-img" src="assets/images/landing-business/plus.png" />
     <section class="absolute advantage-count">
       <p class="text-h1" style="opacity: 0.2">{{ item.id < 10 ? "0" + item.id : item.id }}</p>
     </section>
-    <p class="text-subtitle4" style="z-index: 1">{{ item.content }}</p>
+    <p class="text-subtitle4 text" style="z-index: 1">{{ item.content }}</p>
   </section>
 </template>
 <script setup>
-const { item } = defineProps({
+const { id, item } = defineProps({
   item: Object,
 });
 </script>
@@ -46,5 +49,9 @@ const { item } = defineProps({
     top: 8px;
     left: -14px;
   }
+}
+
+.text {
+  color: #ede5f0;
 }
 </style>
