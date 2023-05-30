@@ -6,7 +6,7 @@
           width="448"
           height="593"
           class="video"
-          src="https://youtube.com/shorts/TQ_ZIHDJ_pw?feature=share"
+          src="https://www.youtube.com/embed/JLgNkXbrcTA?feature=share"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

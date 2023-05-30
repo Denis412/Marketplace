@@ -64,6 +64,27 @@ const expertsList = [
       "Работала в области информационной безопасности в крупных компаниях, таких как Disco и Synimatic, где занимала должность разработчика.",
     img: "assets/images/landing-develop/experts/Nikonovich.png",
   },
+    {
+    id: 4,
+    person: "Михаил Решин",
+    description:
+      "Опыт более 20 лет в управлении IT проектами. Digital директор, аналитика, дизайн и разработка сайтов и приложений. Экспертиза в UX/UI.",
+    img: "assets/images/landing-develop/experts/Reshin.png",
+  },
+    {
+    id: 5,
+    person: "Иван Никаноров",
+    description:
+      "Опыт веб-разработки более 10 лет. Разработка продуктов для таких компаний как:  УТЦ Гражданской Авиации, Toyota, London Bridge, KJO, РФРИТ и др.",
+    img: "assets/images/landing-develop/experts/Nikanorov.png",
+  },
+    {
+    id: 6,
+    person: "Карина Шушунова",
+    description:
+      "Опыт работы более 10 лет   в Digital-маркетинге. Специализируется в  разработке комплексных performance-стратегий и медиа-стратегий. Эксперт  в веб-аналитике.",
+    img: "assets/images/landing-develop/experts/Shushunova.png",
+  },
 ];
 </script>
 

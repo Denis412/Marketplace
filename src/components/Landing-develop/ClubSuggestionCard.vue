@@ -6,7 +6,7 @@
     </q-card-section>
 
     <q-card-section class="section">
-      <p class="text-body1" style="color: #daa8fd">Подробнее</p>
+      <!-- <p class="text-body1" style="color: #daa8fd">Подробнее</p> -->
     </q-card-section>
 
     <q-img class="absolute-bottom-right sugestion-img" :src="card.img" />

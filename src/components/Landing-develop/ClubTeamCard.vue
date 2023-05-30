@@ -17,9 +17,7 @@
             >{{ chip }}</q-chip
           >
 
-          <section class="text-body1 q-pt-none">
-            Подробнее <q-icon name="chevron_right"></q-icon>
-          </section>
+          <!-- <section class="text-body1 q-pt-none">Подробнее ></section> -->
         </section>
       </q-card-section>
     </q-card>

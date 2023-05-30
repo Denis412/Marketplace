@@ -1,12 +1,17 @@
 <template>
   <section class="review-card c-mb-32">
-    <!-- <q-video  src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0" /> -->
+    <iframe
+      width="352"
+      height="528"
+      :src="review.src + '?rel=0&modestbranding=1'"
+      class="review-video"
+    />
   </section>
 </template>   
 
 <script setup>
 const { review } = defineProps({
-  team: Object,
+  review: Object,
 });
 </script>
 
@@ -18,5 +23,14 @@ const { review } = defineProps({
   height: 528px;
   border-radius: 10px;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+
+  & .ytp-large-play-button-red-bg {
+    background-color: rgb(255, 0, 0);
+  }
+}
+
+.review-video {
+  border: none;
+  border-radius: 10px;
 }
 </style>
