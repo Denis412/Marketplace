@@ -2,34 +2,37 @@
   <!-- <pre>{{ currentTeam }}</pre> -->
   <q-card flat class="header-wrapper w-100p">
     <q-toolbar class="absolute flex justify-end">
-      <c-popup-team-actions />
+      <c-popup-team-actions style="z-index: 10" />
     </q-toolbar>
 
-    <q-card-section class="flex no-wrap c-mx-64 c-mt-64 c-mb-40">
+    <q-card-section class="row no-wrap c-mx-64 c-mt-64 c-mb-40">
       <q-avatar class="large-avatar">
-        <q-img src="/assets/images/preloaders/default-avatar.svg" />
+        <q-img :src="currentTeam.avatar || '/assets/images/preloaders/default-avatar.svg'" />
       </q-avatar>
 
-      <section class="c-ml-32">
+      <section class="c-ml-32 text-information__wrapper">
         <h4 class="text-subtitle1 text-violet6">{{ currentTeam.name }}</h4>
 
-        <section>
-          <p class="text-subtitle5 q-mt-sm">
-            <span v-if="fullDes && currentTeam.description.length > 121">
-              {{ currentTeam.description.substr(0, 121) }}...
-            </span>
-
-            <span v-else>{{ currentTeam.description }}</span>
+        <section class="block gray-scrollbar decription__wrapper w-100p">
+          <p
+            class="text-subtitle5 q-mt-sm ellipsis"
+            v-if="fullDes && currentTeam.description.length > 121"
+          >
+            {{ currentTeam.description.substr(0, 121) }}...
           </p>
 
-          <p
-            class="text-violet4 text-body1 btn-text-align cursor-pointer"
-            @click="fullDes = !fullDes"
-            v-if="currentTeam.description.length > 121"
-          >
-            {{ !fullDes ? "Cкрыть" : "Подробнее" }}
+          <p v-else class="text-subtitle5 q-mt-sm long-text">
+            {{ currentTeam.description }}
           </p>
         </section>
+
+        <div
+          class="text-violet4 text-body1 q-mt-sm btn-text-align cursor-pointer"
+          @click="fullDes = !fullDes"
+          v-if="currentTeam.description.length > 121"
+        >
+          {{ !fullDes ? "Cкрыть" : "Подробнее" }}
+        </div>
 
         <q-list v-if="currentTeam?.directions" class="row c-mt-32 q-gutter-sm text-caption1">
           <c-chip
@@ -161,6 +164,23 @@ const applicationSend = async () => {
   &-item {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
+}
+
+.text-information__wrapper {
+  width: 90%;
+}
+
+.decription__wrapper {
+  max-height: 100px;
+}
+
+.decription__wrapper {
+  width: 90%;
+  max-height: 100px;
+}
+
+.long-text {
+  word-wrap: break-word !important;
 }
 
 .text-description {

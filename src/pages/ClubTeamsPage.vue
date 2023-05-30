@@ -1,9 +1,6 @@
 <template>
   <q-page class="c-pa-32">
-    <!-- <pre>{{ teams }}</pre> -->
-    <div v-if="loading" class="loader loader-lg"></div>
-
-    <div v-else>
+    <div>
       <c-teams-header
         class="c-mb-32"
         @filter-team-status="filteringTeams"
@@ -42,11 +39,13 @@ const showTeams = computed(() => filteredTeams.value ?? teams.value?.paginate_te
 const filteringTeams = async (filter, value) => {
   filters.value[filter] = value;
 
-  filteredTeams.value = await refetch({
+  ({ data: filteredTeams.value } = await refetch({
     where: filters.value.name
       ? { column: "name", operator: "FTS", value: filters.value.name }
       : null,
-  });
+  }));
+
+  filteredTeams.value = filteredTeams.value?.paginate_team?.data;
 
   if (filters.value.ready_for_orders)
     filteredTeams.value = filteredTeams.value?.filter(

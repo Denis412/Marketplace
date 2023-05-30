@@ -1,5 +1,9 @@
 <template>
-  <q-list v-if="teams" class="row c-mb-32 q-col-gutter-lg">
+  <div v-if="!teams" class="text-h4 text-center">Загружаем команды...</div>
+
+  <div v-else-if="!teams.length" class="text-h4 text-center">Команд не найдено.</div>
+
+  <q-list v-else class="row c-mb-32 q-col-gutter-lg">
     <section class="col-6" v-for="team in teams" :key="team.id">
       <c-team-card :team="team" />
     </section>

@@ -453,6 +453,17 @@ export const useProjectApplication = () => {
           space_id,
         });
 
+        await projectApi.refetchPaginateProjects({
+          page: 1,
+          perPage: 1,
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: application.project.name,
+          },
+          space_id: application.project.space,
+        });
+
         const statusProperty = await propertyApi.refetchPaginateProperties({
           page: 1,
           perPage: 1,
@@ -539,6 +550,17 @@ export const useProjectApplication = () => {
           space_id
         );
       }
+
+      await projectApi.refetchPaginateProjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: application.project.name,
+        },
+        space_id: application.project.space,
+      });
 
       loading.value = false;
     } catch (e) {

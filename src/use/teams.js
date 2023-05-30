@@ -414,7 +414,7 @@ export const useTeamUpdate = () => {
 
       console.log("team update", id, data);
 
-      const teamData = await teamApi.update(id, data);
+      const teamData = await teamApi.update({ id, input: data });
 
       await teamApi.refetchPaginateTeams({
         page: 1,

@@ -1,6 +1,6 @@
 <template>
-  <section class="c-mr-24">
-    <q-btn round flat icon="img:/assets/icons/notification.svg" class="c-notification-btn">
+  <section>
+    <q-btn round disable flat icon="img:/assets/icons/notification.svg" class="c-notification-btn">
       <!-- фильтрация на бэке -->
       <q-badge floating color="red" v-if="NotificationList.filter((elem) => !elem.status).length" />
 

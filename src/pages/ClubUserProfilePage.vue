@@ -11,7 +11,12 @@
 
       <div class="q-mt-lg">
         <q-list class="row q-gutter-x-sm q-gutter-y-md">
-          <c-chip v-for="n in 10" :key="n" gradient-outline label="Программирование" />
+          <c-chip
+            v-for="competence in currentUser.competencies"
+            :key="competence.id"
+            gradient-outline
+            :label="competence.name"
+          />
         </q-list>
       </div>
     </section>

@@ -5,13 +5,21 @@
     <q-toolbar class="q-pa-none q-mt-lg">
       <q-tabs v-model="selectedList" indicator-color="black" class="bg-transparent">
         <q-tab name="members" no-caps class="c-tab-text" label="Участники" />
-        <q-tab name="applications" no-caps class="c-tab-text" label="Исходящие заявки" />
+
+        <q-tab
+          v-if="isLeader"
+          name="applications"
+          no-caps
+          class="c-tab-text"
+          label="Исходящие заявки"
+        />
       </q-tabs>
 
       <q-space />
 
       <q-btn
         flat
+        v-if="isLeader"
         no-caps
         class="club-button-background text-body1"
         label="Пригласить"
@@ -45,6 +53,7 @@ import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
+const isLeader = inject("isLeader");
 const currentProject = inject("currentProject");
 
 const selectedList = ref("members");

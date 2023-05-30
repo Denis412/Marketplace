@@ -19,15 +19,34 @@
 
     <div class="partitians">
       <h3 class="text-subtitle1 q-mt-xl q-pt-xl">Участники 1Т Клуба</h3>
+
       <div v-if="!flag" class="partitians-faces relative-position">
         <c-partitian :index="index" v-for="index in 33" :key="index" />
       </div>
+
       <div v-if="flag" class="partitians-faces relative-position">
-        <c-partitian :index="index+33" v-for="index in 33" :key="index" />
+        <c-partitian :index="index + 33" v-for="index in 33" :key="index" />
       </div>
       <div class="q-mt-lg">
-      <q-btn @click="flag = !flag" unelevated dense size="xl" :disable="!flag" class="q-mr-md" :icon="'chevron_left'"/>
-      <q-btn @click="flag = !flag" unelevated dense size="xl" :disable="flag" class="q-mr-md" :icon="'chevron_right'"/>
+        <q-btn
+          @click="flag = !flag"
+          unelevated
+          dense
+          size="xl"
+          :disable="!flag"
+          class="q-mr-md"
+          :icon="'chevron_left'"
+        />
+
+        <q-btn
+          @click="flag = !flag"
+          unelevated
+          dense
+          size="xl"
+          :disable="flag"
+          class="q-mr-md"
+          :icon="'chevron_right'"
+        />
       </div>
     </div>
   </section>
@@ -37,7 +56,7 @@
 import { ref } from "vue";
 import CPartitian from "./ClubPartitian.vue";
 
-const flag = ref(false)
+const flag = ref(false);
 </script>
 
 <style lang="scss" scoped>
@@ -50,8 +69,7 @@ const flag = ref(false)
   }
 }
 
-.text-violet-3{
+.text-violet-3 {
   color: rgba(144, 67, 180, 1);
 }
-
 </style>

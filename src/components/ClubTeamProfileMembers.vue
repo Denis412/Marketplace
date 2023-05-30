@@ -53,9 +53,9 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useApplications } from "src/use/applications";
+// import { useApplications } from "src/use/applications";
 
 import _ from "lodash";
 
@@ -72,7 +72,21 @@ const currentTeam = inject("currentTeam");
 
 const route = useRoute();
 const router = useRouter();
-const { filteredApplications } = useApplications(currentTeam, true);
+// const { filteredApplications } = useApplications(currentTeam, true);
+
+const filteredApplications = computed(() => {
+  return currentTeam.value?.applications.reduce(
+    (acc, application) => {
+      acc[application.sender == "subject" ? "incoming" : "outgoing"].push(application);
+
+      return acc;
+    },
+    {
+      incoming: [],
+      outgoing: [],
+    }
+  );
+});
 
 const selectMembersList = ref("members");
 

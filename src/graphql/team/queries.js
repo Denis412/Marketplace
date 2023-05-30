@@ -24,6 +24,10 @@ export const getTeamsWithWhere = gql`
               first_name
               last_name
             }
+            avatar
+            speciality1 {
+              name
+            }
             email {
               email
             }
@@ -35,6 +39,7 @@ export const getTeamsWithWhere = gql`
           }
           status
           sender
+          updated_at
         }
         members {
           id

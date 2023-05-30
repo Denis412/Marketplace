@@ -4,8 +4,6 @@
       {{ new Date(application.updated_at).toLocaleDateString() }}
     </section>
 
-    <!-- <pre>{{ statusObject }}</pre> -->
-
     <section class="flex items-center q-gutter-x-md text-body1">
       <div v-if="!incoming" :style="{ color: statusObject.property?.color }">
         {{ statusObject.property?.label }}
