@@ -3,7 +3,7 @@
     <iframe
       width="352"
       height="528"
-      :src="review.src + '?rel=0&modestbranding=1'"
+      :src="review.src"
       class="review-video"
     />
   </section>

@@ -16,14 +16,14 @@ const coursesList = [
     id: 1,
     name: "Инженер данных",
     period: "3 месяца обучения",
-    description: "Старт курса 23.05",
+    description: "Старт курса 5 июня",
     img: "assets/images/landing-develop/courses/de.png",
   },
   {
     id: 2,
     name: "Архитектор ИИ",
     period: "3 месяца обучения",
-    description: "Старт курса 23.05",
+    description: "Старт курса 5 июня",
     img: "assets/images/landing-develop/courses/ds.png",
   },
 
@@ -31,7 +31,7 @@ const coursesList = [
     id: 3,
     name: "Аналитик данных",
     period: "3 месяца обучения",
-    description: "Старт курса 23.05",
+    description: "Старт курса 5 июня",
     img: "assets/images/landing-develop/courses/da.png",
   },
 ];
