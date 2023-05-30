@@ -2,7 +2,7 @@
   <div>
     <label for="control">
       <div class="q-mb-md">
-        <span class="text-body2">{{ label }}</span>
+        <span :class="labelClass ? labelClass : 'text-body2'">{{ label }}</span>
       </div>
     </label>
 

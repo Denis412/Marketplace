@@ -169,6 +169,62 @@
   }
 }
 
+.c-input-landing {
+  padding-bottom: 0 !important;
+
+  border-radius: 8px !important;
+  div {
+    border-radius: 8px !important;
+
+    & .q-field__bottom {
+      min-height: 0;
+      padding: 0;
+    }
+
+    & .q-field__bottom--animated {
+      transform: none;
+      position: relative;
+
+      div div {
+        @extend .text-caption2;
+
+        margin-top: 16px;
+      }
+    }
+
+    & .q-field__control {
+      padding-left: 24px;
+      padding-right: 24px;
+      height: $input-height-md;
+
+      div {
+        height: $input-height-md;
+
+        input,
+        textarea {
+          @extend .text-body2;
+
+          color: black;
+
+          &::placeholder {
+            color: $gray-5;
+          }
+        }
+        .q-field__label {
+          top: 0;
+
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      &:before {
+        border-style: none !important;
+      }
+    }
+  }
+}
+
 .c-input-number {
   div {
     border-radius: 8px !important;
@@ -283,6 +339,19 @@
 
   div {
     color: $violet-6;
+  }
+}
+.c-checkbox-violet-2 {
+  .q-checkbox__label {
+    color: $violet-2;
+  }
+
+  div {
+    color: $violet-2;
+  }
+  .q-checkbox__inner--truthy .q-checkbox__bg {
+    background-color: #881d96;
+    color: #881d96;
   }
 }
 

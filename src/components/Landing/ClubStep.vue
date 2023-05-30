@@ -29,9 +29,11 @@ const { num } = defineProps({
 .step-shadow {
   width: 320px;
   height: 320px;
-  background: radial-gradient(50% 50% at 50% 50%,
-      rgba(136, 29, 149, 0.3) 0%,
-      rgba(136, 29, 149, 0) 100%);
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(136, 29, 149, 0.3) 0%,
+    rgba(136, 29, 149, 0) 100%
+  );
   filter: blur(2px);
 }
 
@@ -52,11 +54,14 @@ const { num } = defineProps({
 .step1 {
   margin-top: 0;
 }
-.step4{
+.step4 {
   margin-top: 120px !important;
 }
+.step3 {
+  margin-left: 20px;
+}
 .step5 {
-  margin-top: 110px !important
+  margin-top: 110px !important;
 }
 
 .num {
@@ -65,7 +70,7 @@ const { num } = defineProps({
 
 .step-text {
   width: 544px;
-  top: 46px;
+  top: 20px;
   left: 8rem;
 }
 </style>

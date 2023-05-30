@@ -1,6 +1,6 @@
 <template>
   <h3 class="text-h3 text-center section-margin q-pb-xl">Отзывы участников 1Т Клуба</h3>
-  <Carousel :itemsToShow="2" :wrapAround="true" :transition="500" ref="carousel" class="c-mb-40">
+  <Carousel :itemsToShow="2.4" :wrapAround="true" :transition="500" ref="carousel" class="c-mb-40">
     <Slide v-for="slide in slides" :key="slide">
       <div class="row carousel__item">
         <div class="col-5 test">
@@ -48,7 +48,7 @@ const slides = [
   {
     name: "Татьяна Новикова",
     role: "Системный аналитик",
-    text: "После 1Т Спринта хотелось поработать на реальных проектах. Эту возможность  предоставил 1Т Клуб.                                                  Менторы помогли в сложных моментах и благодаря знаниям с 1Т Спринта удалось решать меняющиеся требования. Теперь, с завершением первого проекта и переходом к следующему, уверенность как специалист растет. Приятно знать,      что опытные наставники из 1Т Клуба помогают в этом процессе.",
+    text: "После курса 1Т Спринт хотелось поработать над реальным проектом — 1Т Клуб дал такую возможность. В сложных моментах нам помогали менторы. После первого проекта в 1Т Клубе появилась уверенность в себе. Приятно, что опытные наставники из 1Т Клуба нам помогают.",
     photo: "/assets/images/landing/photo_1.svg",
   },
   {
@@ -76,7 +76,7 @@ const slides = [
   }
   &__item {
     height: 420px;
-    width: 620px;
+    width: 640px;
     background: linear-gradient(
       101.5deg,
       rgba(16, 5, 34, 0.15) 37.03%,
