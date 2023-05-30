@@ -5,15 +5,14 @@
       Окружайте себя IT-экспертами, участвуйте в онлайн и офлайн мероприятиях и расширяйте свой круг
       общения вместе с 1Т Клубом
     </p>
-
     <section class="networking-video c-mb-96">
       <div id="yt-video">
         <YouTube
           src="https://www.youtube.com/watch?v=sCJrLLcSMe0"
           ref="youtube"
           @ready="onPlayerReady"
-          width="992px"
-          height="558px"
+          width="992"
+          height="558"
         />
       </div>
     </section>

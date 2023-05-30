@@ -17,7 +17,7 @@
             >{{ chip }}</q-chip
           >
 
-          <section class="text-body1 q-pt-none">Подробнее ></section>
+          <!-- <section class="text-body1 q-pt-none">Подробнее ></section> -->
         </section>
       </q-card-section>
     </q-card>
