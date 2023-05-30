@@ -58,6 +58,10 @@ module.exports = configure(function (/* ctx */) {
         FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru/",
         RABBIT_URI: "wss://stud.druid.1t.ru/ws",
 
+        EMAILJS_SERVICE_ID: "service_xp7l7cs",
+        EMAILJS_TEMPLATE_ID: "template_2uq7rmp",
+        EMAILJS_PUBLIC_KEY: "LseC3aX6Zp0nu4Dkn",
+
         MAIN_SPACE_ID: 42,
 
         TEAMS_PAGE_ID: "4854717215393261588",
