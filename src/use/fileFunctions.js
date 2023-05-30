@@ -77,8 +77,16 @@ async function updateFileContent(fileId, content) {
 
     // Отправка запроса на сервер для обновления содержимого файла
     console.log("Проверка аргументов:", { files: file, file_id: fileId }); // Проверка передаваемых аргументов
-    await uploadFile({ files: file, file_id: fileId });
+    await uploadFile(
+      { files: file, file_id: fileId },
+      {
+        context: {
+          hasUpload: true,
+        },
+      }
+    );
     console.log("Изменения в файле успешно сохранены");
+    console.log("Content = ", content);
   } catch (error) {
     console.error("Ошибка при сохранении изменений в файле:", error);
   }

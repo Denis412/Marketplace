@@ -90,6 +90,14 @@ const color = (cmd, name) => {
 let currentFile = null;
 
 watch(route, async () => {
+  console.log("currentFile", currentFile);
+  console.log("1", editor.value);
+
+  if (editor.value && currentFile) {
+    console.log("id", currentFile.id);
+    filesFunc.updateFileContent(currentFile.id, editor.value);
+  }
+
   currentFile = route.params.id
     ? (
         await filesApi.refetchQueryFileById({
@@ -98,15 +106,6 @@ watch(route, async () => {
         })
       ).get_file
     : "";
-
-  console.log("currentFile", currentFile);
-
-  console.log(editor.value);
-
-  if (editor.value && currentFile) {
-    console.log("hello");
-    filesFunc.updateFileContent(currentFile.id, editor.value);
-  }
 
   if (!previousRout.value && editor.value) {
     filesApi.createHtmlFile(
@@ -129,9 +128,11 @@ watch(route, async () => {
     editor.value = "";
     storeFile.SET_CURRENT_TITLE_DOC("");
   }
-  console.log(currentFile);
-  console.log(editor.value);
   // Сохранение текущего состояния редактора перед уходом с страницы
+
+  console.log("2", editor.value);
+
+  console.log("12345");
 
   previousRout.value = route.params.id;
 });
