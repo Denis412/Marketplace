@@ -3,7 +3,7 @@
     <div class="row">
       <div class="q-mb-md text-h3 col-12 text-center q-mb-xl">1Т Клуб за 1 минуту</div>
       <div class="col-12" style="z-index: 100">
-        <q-video class="video" src="https://www.youtube.com/embed/6NWC2IB8trY?rel=0" />
+        <q-video class="video" src="https://www.youtube.com/embed/-zeGefhD9tU?rel=0&autoplay=1&modestbranding=1" />
       </div>
     </div>
   </section>

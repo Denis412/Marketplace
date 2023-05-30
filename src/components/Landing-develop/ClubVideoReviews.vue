@@ -46,15 +46,23 @@ const carousel = ref(null);
 const reviewsList = [
   {
     id: 1,
-    src: "",
+    src: "https://www.youtube.com/embed/6NWC2IB8trY",
   },
   {
     id: 2,
-    src: "",
+    src: "https://www.youtube.com/embed/4erNKpaBd9k",
   },
   {
     id: 3,
-    src: "",
+    src: "https://www.youtube.com/embed/tCh-wSeC-mo",
+  },
+  {
+    id: 4,
+    src: "https://www.youtube.com/embed/xN_CcEY3qVE",
+  },
+  {
+    id: 5,
+    src: 'https://www.youtube.com/embed/xN_CcEY3qVE'
   },
 ];
 </script>
