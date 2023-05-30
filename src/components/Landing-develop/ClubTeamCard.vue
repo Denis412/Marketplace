@@ -17,19 +17,20 @@
             >{{ chip }}</q-chip
           >
 
-          <section class="text-body1 q-pt-none">Подробнее ></section>
+          <section class="text-body1 q-pt-none">
+            Подробнее <q-icon name="chevron_right"></q-icon>
+          </section>
         </section>
       </q-card-section>
     </q-card>
   </section>
-</template>   
+</template>
 
 <script setup>
 const { team } = defineProps({
   team: Object,
 });
 </script>
-
 
 <style lang="scss" scoped>
 .team {
@@ -47,7 +48,6 @@ const { team } = defineProps({
     height: 100%;
   }
 }
-
 .c-mb-28 {
   margin-bottom: 28px;
 }

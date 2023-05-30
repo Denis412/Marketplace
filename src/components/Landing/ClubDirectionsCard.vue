@@ -55,7 +55,7 @@ li span {
 }
 .card {
   border: 4px solid transparent;
-  min-height: 366px;
+  min-height: 390px;
   width: 352px;
   box-sizing: border-box;
 
