@@ -103,6 +103,17 @@ const uploadImage = async () => {
     },
     space_id: route.query.space,
   });
+
+  await projectApi.refetchPaginateProjects({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "id",
+      operator: "EQ",
+      value: route.params.id,
+    },
+    space_id: route.query.space,
+  });
 };
 
 const groupProjectSubjects = async (group_names) => {

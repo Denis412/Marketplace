@@ -1,4 +1,5 @@
 <template>
+  <!-- <pre>{{ pagesTeams }}</pre> -->
   <div class="c-mt-24" v-if="pages">
     <q-tree
       :nodes="pages"
@@ -31,9 +32,9 @@ const { result: pagesTeams } = pageApi.paginatePages({
   page: 1,
   perPage: 1,
   where: {
-    column: "id",
+    column: "title",
     operator: "EQ",
-    value: process.env.PROJECTS_PAGE_ID,
+    value: "Проекты",
   },
 });
 

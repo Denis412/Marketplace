@@ -1,7 +1,6 @@
 <template>
   <q-layout view="hHh LpR lff">
-    <c-landing-main-header v-if="!currentUser" />
-    <c-main-header v-else />
+    <c-main-header />
 
     <q-page-container>
       <router-view v-slot="{ Component }">

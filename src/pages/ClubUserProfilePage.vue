@@ -55,7 +55,7 @@
       </div>
     </section>
 
-    <div class="c-mt-64 c-mb-64 separator" />
+    <!-- <div class="c-mt-64 c-mb-64 separator" />
 
     <section>
       <h4 class="text-h4 c-pb-64">Портфолио</h4>
@@ -69,12 +69,12 @@
           :right-side="index % 2 !== 0"
         />
       </q-list>
-    </section>
+    </section> -->
   </q-page>
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from "vue";
+import { inject, ref } from "vue";
 
 import CChip from "src/components/ClubChip.vue";
 import CSectionMainProfileUserInformation from "src/components/ClubSectionMainProfileUserInformation.vue";

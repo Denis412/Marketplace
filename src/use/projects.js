@@ -227,17 +227,6 @@ export const useProjectUpdate = () => {
 
       result.value = await projectApi.update({ id, input, space_id });
 
-      await projectApi.refetchPaginateProjects({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "id",
-          operator: "EQ",
-          value: id,
-        },
-        space_id,
-      });
-
       loading.value = false;
     } catch (e) {
       error.value = e;

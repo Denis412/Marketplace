@@ -113,25 +113,6 @@ const registration = async ({ name, surname, email }) => {
 
   console.log("registration", userInfo);
 
-  const subjectData = await refetchPaginateSubjects({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "user_id",
-      operator: "EQ",
-      value: userInfo.userSignUp.recordId,
-    },
-  });
-
-  await updatingUser({
-    id: subjectData[0].id,
-    input: {
-      speciality1: {
-        [process.env.SPECIALITY_TYPE_ID]: process.env.DEFAULT_SPECIALITY_ID,
-      },
-    },
-  });
-
   return userInfo.userSignUp;
 };
 
@@ -206,7 +187,7 @@ const saveUserData = async (userInfo) => {
   return userData;
 };
 
-const login = async ({ login, password }, recovery = false) => {
+const login = async ({ login, password }, first_entry = false, recovery = false) => {
   const { data: userInfo } = await signIn({
     input: {
       login,

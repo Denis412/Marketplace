@@ -29,6 +29,13 @@ export const useUserStore = defineStore("user", {
         },
       });
 
+      if (!subjectData[0].speciality1?.name)
+        await userApi.update(subjectData[0].id, {
+          speciality1: {
+            [process.env.SPECIALITY_TYPE_ID]: process.env.DEFAULT_SPECIALITY_ID,
+          },
+        });
+
       console.log("fetch in api passed");
 
       const userData = await userApi.refetchUserById(

@@ -155,7 +155,7 @@
       </div>
     </section>
 
-    <div class="c-my-64 separator" />
+    <!-- <div class="c-my-64 separator" />
 
     <section class="c-gutter-y-64">
       <h4 class="text-h4 c-pt-64 c-ml-96">Портфолио</h4>
@@ -180,7 +180,7 @@
           label="Добавить"
         />
       </div>
-    </section>
+    </section> -->
   </q-page>
 </template>
 

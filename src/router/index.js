@@ -44,6 +44,8 @@ export default route(function (/* { store, ssrContext } */) {
     const teamMember = to.matched.some((record) => record.meta.isTeamMember);
     const teamOwner = to.matched.some((record) => record.meta.isTeamOwner);
 
+    console.log(requiresAuth, teamMember, teamOwner);
+
     if (teamOwner) {
       const team = await teamApi.refetchPaginateTeams({
         page: 1,
