@@ -4,22 +4,24 @@
     @click="to()"
   >
     <section class="flex no-wrap">
-      <q-card-section class="flex flex-center">
+      <q-card-section class="flex flex-center col-5">
         <q-avatar class="avatar-108">
           <q-img :src="team.avatar || '/assets/images/preloaders/default-avatar.svg'" />
         </q-avatar>
       </q-card-section>
 
-      <q-card-section class="c-ml-24">
-        <h4 class="text-subtitle3 text-violet7">
+      <q-card-section class="c-ml-24 col">
+        <h4 class="text-subtitle3 text-violet7 ellipsis">
           {{ team.name }}
         </h4>
 
         <pre>{{ team.space }}</pre>
 
-        <p class="text-body2 c-mt-12 text-gray7">
-          {{ team.description }}
-        </p>
+        <div class="description__wrapper gray-scrollbar">
+          <p class="text-body2 c-mt-12 text-gray7 long-text">
+            {{ truncate(team.description, 90) }}
+          </p>
+        </div>
 
         <c-button color="negative" label="Удалить" @click.stop="teamDelete" />
       </q-card-section>
@@ -42,6 +44,8 @@ import { useRouter } from "vue-router";
 
 import CApplicationControls from "./ClubApplicationControls.vue";
 import CButton from "src/components/ClubButton.vue";
+
+import { truncate } from "src/utils/truncateString";
 
 import { useTeamDelete } from "src/use/teams";
 
@@ -89,6 +93,16 @@ const hideCard = (status, application) => {
   }
 }
 
+.description__wrapper {
+  max-height: 100px;
+  &-content {
+    max-width: 100px;
+  }
+}
+
+.long-text {
+  word-wrap: break-word !important;
+}
 .content {
   height: 100%;
 }
