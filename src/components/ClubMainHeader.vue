@@ -3,8 +3,8 @@
     <q-toolbar>
       <q-img class="logo" src="/assets/images/logo-white.svg" alt="logo" />
 
-      <q-toolbar-title class="flex no-wrap items-center cursor-pointer" @click="toRoot">
-        <span class="text-h3">Клуб</span>
+      <q-toolbar-title class="flex no-wrap items-center cursor-pointer">
+        <span class="text-h3" @click="toRoot">Клуб</span>
 
         <div class="flex">
           <c-header-navigation
@@ -12,21 +12,23 @@
             class="navigation text-caption1"
           />
 
-          <q-tabs
-            v-else
-            v-model="selectedTab"
-            @update:model-value="redirect"
-            class="navigation main-tabs"
-          >
-            <q-tab no-caps name="landing-business" label="Для Бизнеса" class="rounded-borders" />
-
-            <q-tab no-caps name="landing-work" label="Для Работы" class="rounded-borders" />
-
-            <q-tab
+          <q-tabs v-else class="navigation main-tabs">
+            <q-route-tab
               no-caps
-              name="landing-selfdevelopment"
+              name="business"
+              label="Для Бизнеса"
+              class="rounded-borders"
+              to="business"
+            />
+
+            <q-route-tab no-caps name="work" label="Для Работы" class="rounded-borders" to="work" />
+
+            <q-route-tab
+              no-caps
+              name="development"
               label="Для Развития"
               class="rounded-borders"
+              to="selfdevelopment"
             />
           </q-tabs>
         </div>
@@ -80,9 +82,7 @@ const currentUser = inject("currentUser");
 
 const route = useRoute();
 const router = useRouter();
-
 const showIconMenu = ref(false);
-const selectedTab = ref("");
 
 const toggleShowIconMenu = () => {
   showIconMenu.value = !showIconMenu.value;
@@ -100,12 +100,6 @@ const toggleShowIconMenu = () => {
 const toRoot = () => {
   router.push({
     path: "/",
-  });
-};
-
-const redirect = (name) => {
-  router.push({
-    name,
   });
 };
 </script>

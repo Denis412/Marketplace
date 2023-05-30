@@ -38,13 +38,13 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach(async (to, from, next) => {
     const userStore = useUserStore();
 
-    console.log("to", to, from);
+    // console.log("to", to, from);
 
     const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
     const teamMember = to.matched.some((record) => record.meta.isTeamMember);
     const teamOwner = to.matched.some((record) => record.meta.isTeamOwner);
 
-    console.log(requiresAuth, teamMember, teamOwner);
+    // console.log(requiresAuth, teamMember, teamOwner);
 
     if (teamOwner) {
       const team = await teamApi.refetchPaginateTeams({
