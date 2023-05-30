@@ -5,7 +5,7 @@
     <main class="text-white relative-position" style="z-index: 1">
       <c-main-screen
         :title="'Для Развития'"
-        :subtitle="'1Т Клуб — работа и стажировка для специалистов от джуна до сеньора. С нами вы найдете подходящий проект и построите карьеру сразу после обучения'"
+        :subtitle="'1Т Клуб — это площадка, на которой IT-специалисты находят работу и профессионально развиваются'"
         :img="'/assets/images/landing-develop/develop-main.svg'"
       />
 
@@ -19,7 +19,7 @@
       <c-networking />
       <c-partners />
       <c-string />
-      <c-video-reviews/>
+      <c-video-reviews />
       <!-- нужны видео -->
     </main>
   </q-page>
