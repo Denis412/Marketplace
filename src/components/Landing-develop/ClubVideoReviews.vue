@@ -46,23 +46,31 @@ const carousel = ref(null);
 const reviewsList = [
   {
     id: 1,
-    src: "https://www.youtube.com/embed/6NWC2IB8trY",
+    src: "https://www.youtube.com/embed/rqwl1ew8__g?feature=share",
   },
   {
     id: 2,
-    src: "https://www.youtube.com/embed/4erNKpaBd9k",
+    src: "https://www.youtube.com/embed/YOIQzIqhOFE?feature=share",
   },
   {
     id: 3,
-    src: "https://www.youtube.com/embed/tCh-wSeC-mo",
+    src: "https://www.youtube.com/embed/LlhV7VX0IN8?feature=share",
   },
   {
     id: 4,
-    src: "https://www.youtube.com/embed/xN_CcEY3qVE",
+    src: "https://www.youtube.com/embed/g1EjQd6Q66g?feature=share",
   },
   {
     id: 5,
-    src: 'https://www.youtube.com/embed/xN_CcEY3qVE'
+    src: "https://www.youtube.com/embed/u8_e0OSWxhk?feature=share",
+  },
+  {
+    id: 6,
+    src: "https://www.youtube.com/embed/FBUvhsfeegQ?feature=share",
+  },
+  {
+    id: 7,
+    src: "https://www.youtube.com/embed/pGE70BSPPsI?feature=share",
   },
 ];
 </script>
