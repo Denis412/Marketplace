@@ -16,6 +16,7 @@
         <q-file
           style="display: none"
           v-model="selectFile"
+          max-file-size="10485760"
           accept=".png,.jpg"
           ref="uploader"
           @update:model-value="uploadImage"
@@ -31,7 +32,7 @@
 </template>
 
 <script setup>
-import { computed, provide, ref, onMounted, watch, reactive, toRefs, inject } from "vue";
+import { provide, ref, onMounted, watch, inject } from "vue";
 import { useRoute } from "vue-router";
 
 import CSectionProjectsHeaders from "src/components/ClubSectionProjectsHeaders.vue";
