@@ -213,15 +213,29 @@ const sendEmail = () => {
     alert.value.errorText = "Некорректно введена почта";
     alert.value.error = !alert.value.error;
   } else {
-    emailjs.send("service_xp7l7cs", "template_2uq7rmp", form.value, "LseC3aX6Zp0nu4Dkn").then(
-      (result) => {
-        alert.value.success = !alert.value.success;
-      },
-      (error) => {
-        console.log("FAILED...", error.text);
-        alert.value.serverError = !alert.value.serverError;
-      }
-    );
+    emailjs
+      .send(
+        process.env.EMAILJS_SERVICE_ID,
+        process.env.EMAILJS_TEMPLATE_ID,
+        form.value,
+        process.env.EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        (result) => {
+          alert.value.success = !alert.value.success;
+          form.value = {
+            name: "",
+            email: "",
+            company_name: "",
+            phone_number: "",
+            message: "",
+          };
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+          alert.value.serverError = !alert.value.serverError;
+        }
+      );
   }
 };
 
