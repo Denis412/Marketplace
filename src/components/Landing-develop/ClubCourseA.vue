@@ -18,6 +18,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "Старт курса 23.05",
     img: "assets/images/landing-develop/courses/de.png",
+    url: "https://data.1t.ru/c/leo.html",
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "Старт курса 23.05",
     img: "assets/images/landing-develop/courses/ds.png",
+    url: "https://data.1t.ru/c/orion.html",
   },
 
   {
@@ -33,6 +35,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "Старт курса 23.05",
     img: "assets/images/landing-develop/courses/da.png",
+    url: "https://data.1t.ru/c/libra.html",
   },
 ];
 </script>
