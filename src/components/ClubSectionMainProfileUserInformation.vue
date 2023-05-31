@@ -8,14 +8,20 @@
               <q-avatar class="main-information__avatar">
                 <q-img
                   class="main-information__avatar-img"
-                  :src="currentUser.avatar ?? '/assets/images/preloaders/default-avatar.svg'"
+                  :src="
+                    current
+                      ? currentUser.avatar
+                      : user?.avatar ?? '/assets/images/preloaders/default-avatar.svg'
+                  "
                 />
               </q-avatar>
             </div>
 
             <div class="main-information__text-container">
               <div class="main-information__text-container__half">
-                <span class="main-information__text-label">{{ currentUser.nickname }}</span>
+                <span class="main-information__text-label">
+                  {{ current ? currentUser.nickname : user?.nickname }}
+                </span>
 
                 <div
                   class="main-information__text-label q-gutter-x-sm cursor-pointer q-ml-md"
@@ -27,7 +33,7 @@
               </div>
 
               <div class="main-information__text-container__status">
-                <span> Статус: {{ currentUser.status }} </span>
+                <span> Статус: {{ current ? currentUser.status : user?.status?.name }} </span>
               </div>
             </div>
           </div>
@@ -39,15 +45,17 @@
       <div class="main-information__bottom-container">
         <div class="main-information__bottom-container__absolute text-body1 q-gutter-y-md">
           <h4 class="text-h4">
-            {{ currentUser.last_name }}
-            {{ currentUser.first_name }}
-            {{ currentUser.middle_name }}
+            {{ current ? currentUser.last_name : user?.fullname.last_name }}
+            {{ current ? currentUser.first_name : user?.fullname.first_name }}
+            {{ current ? currentUser.middle_name : user?.fullname.middle_name }}
           </h4>
 
           <div class="q-gutter-x-sm">
             <q-icon :size="baseIconSize" name="img:/assets/icons/geodata/geodata-violet-7.svg" />
 
-            <span class="text-gray6">{{ currentUser.city }}, Российская Федерация</span>
+            <span class="text-gray6"
+              >{{ current ? currentUser.city : user?.city }}, Российская Федерация</span
+            >
           </div>
 
           <div class="row text-gray7">
@@ -57,7 +65,7 @@
                 name="img:/assets/icons/calendar/calendar-violet-7.svg"
               />
 
-              <span>{{ currentUser.birthday }}</span>
+              <span>{{ current ? currentUser.birthday : user?.birthday?.date }}</span>
             </div>
 
             <div class="col flex no-wrap items-center q-gutter-x-sm">
@@ -73,7 +81,7 @@
                 name="img:/assets/icons/sex/woman-sex-violet-7.svg"
               />
 
-              <span>{{ currentUser.gender }}</span>
+              <span>{{ current ? currentUser.gender : user?.gender }}</span>
             </div>
           </div>
 
@@ -81,13 +89,13 @@
             <div class="col flex no-wrap items-center q-gutter-x-sm">
               <q-icon :size="baseIconSize" name="img:/assets/icons/person/person-violet-7.svg" />
 
-              <span>{{ currentUser.speciality1 }}</span>
+              <span>{{ current ? currentUser.speciality1 : user?.speciality1 }}</span>
             </div>
 
             <div class="col flex no-wrap items-center q-gutter-x-sm">
               <q-icon :size="baseIconSize" name="img:/assets/icons/socials/telegram-violet-7.svg" />
 
-              <span>{{ currentUser.telegram_chat_id }}</span>
+              <span>{{ current ? currentUser.telegram_chat_id : user?.telegram_chat_id }}</span>
             </div>
           </div>
         </div>
@@ -97,10 +105,19 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
+import { inject, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 const currentUser = inject("currentUser");
+
+const { user, current } = defineProps({
+  user: Object,
+  current: Boolean,
+});
+
+// watch(user, (value) => {
+//   console.log(user);
+// });
 
 const router = useRouter();
 

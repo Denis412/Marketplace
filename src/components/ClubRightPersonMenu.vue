@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { inject, ref} from "vue";
+import { inject, ref } from "vue";
 import { useUserStore } from "src/stores/user";
 import { useRouter } from "vue-router";
 
@@ -63,9 +63,11 @@ const isExit = ref(false);
 const isMenuOpen = ref(true);
 
 const redirect = (route_name) => {
-  isMenuOpen.value = false
+  isMenuOpen.value = false;
   router.push({
     name: route_name,
+    params: { id: currentUser.value.subject_id },
+    query: { current: true },
   });
 };
 

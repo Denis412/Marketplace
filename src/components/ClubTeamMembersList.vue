@@ -8,7 +8,7 @@
         </div>
 
         <c-specialists-list
-          class="flex q-mt-md q-gutter-x-md"
+          class="flex q-mt-md q-gutter-md"
           roles
           :specialists="groupByMembers[specialty.filterName]"
         />

@@ -15,15 +15,11 @@
           {{ team.name }}
         </h4>
 
-        <pre>{{ team.space }}</pre>
-
         <div class="description__wrapper gray-scrollbar">
           <p class="text-body2 c-mt-12 text-gray7 long-text">
             {{ truncate(team.description, 90) }}
           </p>
         </div>
-
-        <c-button color="negative" label="Удалить" @click.stop="teamDelete" />
       </q-card-section>
     </section>
 
@@ -43,7 +39,6 @@ import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import CApplicationControls from "./ClubApplicationControls.vue";
-import CButton from "src/components/ClubButton.vue";
 
 import { truncate } from "src/utils/truncateString";
 
@@ -69,8 +64,6 @@ const to = async () => {
     query: { name: team.name, space: team.space },
   });
 };
-
-const teamDelete = async () => await deleteTeam(team, currentUser.value.subject_id);
 
 const hideCard = (status, application) => {
   console.log("app", status, application);

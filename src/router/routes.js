@@ -42,8 +42,9 @@ const routes = [
         component: () => import("pages/ClubAccountSettingsPage.vue"),
       },
       {
-        path: "profile",
+        path: "profile/:id",
         name: "profile",
+        props: true,
         component: () => import("pages/ClubUserProfilePage.vue"),
       },
       {

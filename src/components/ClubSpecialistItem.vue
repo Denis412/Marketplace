@@ -1,6 +1,6 @@
 <template>
   <q-item class="flex items-center col-5 rounded-borders-10">
-    <q-avatar class="medium-avatar cursor-pointer">
+    <q-avatar class="medium-avatar cursor-pointer" @click="redirect">
       <q-img
         v-if="currentUser"
         :src="user.avatar || '/assets/images/preloaders/default-avatar.svg'"
@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import router from "src/router";
 import { computed, inject } from "vue";
 
 const { specialist, currentUser, roles } = defineProps({
@@ -45,6 +46,13 @@ const { specialist, currentUser, roles } = defineProps({
 const user = inject("currentUser");
 
 const specialistRoles = computed(() => specialist.group.map((group) => group.name).join(", "));
+
+const redirect = () => {
+  router.push({
+    name: "profile",
+    params: { id: specialist.id },
+  });
+};
 </script>
 
 <style scoped lang="scss"></style>
