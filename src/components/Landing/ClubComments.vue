@@ -22,17 +22,17 @@
       @click="carousel.prev()"
       unelevated
       dense
-      size="xl"
+      size="md"
       class="q-mr-md"
-      :icon="'chevron_left'"
+      icon="img:/assets/icons/arrow/arrow-left-white.svg"
     />
     <q-btn
       @click="carousel.next()"
       unelevated
       dense
-      size="xl"
+      size="md"
       class="q-mr-md"
-      :icon="'chevron_right'"
+      icon="img:/assets/icons/arrow/arrow-right-white.svg"
     />
   </div>
 </template>

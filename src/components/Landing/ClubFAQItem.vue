@@ -4,6 +4,7 @@
     :label="label"
     :header-style="{ paddingLeft: 0 }"
     expand-icon-class="text-white"
+    expand-icon="img:/assets/icons/arrow/arrow-down-white.svg"
   >
     <q-card class="text-body2">
       <q-card-section v-if="content.length > 1" class="q-pl-none">

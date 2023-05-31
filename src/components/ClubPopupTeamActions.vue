@@ -1,5 +1,9 @@
 <template>
-  <q-icon class="cursor-pointer relative-position" name="more_horiz" size="40px">
+  <q-icon
+    class="cursor-pointer relative-position"
+    name="img:/assets/images/team-page/more2.svg"
+    size="20px"
+  >
     <q-menu class="w-max-content">
       <q-list separator>
         <q-item
@@ -72,7 +76,11 @@ const copyTeamTelegram = async () => {
 .slide-leave-to {
   opacity: 0;
 }
-
+.cursor-pointer {
+  padding: 10px;
+  background-color: #ddcfe9;
+  border-radius: 5px;
+}
 .slide-enter-active,
 .slide-leave-active {
   transition: all 0.4s ease;
