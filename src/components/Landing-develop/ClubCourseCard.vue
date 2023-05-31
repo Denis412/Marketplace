@@ -1,5 +1,5 @@
 <template>
-  <q-card class="course-card c-pa-32 c-ma-16">
+  <q-card @click="redirect(card.url)" class="course-card c-pa-32 c-ma-16 cursor-pointer" v-ripple>
     <q-card-section class="base">
       <p class="text-subtitle1 base">{{ card.name }}</p>
       <p class="text-body2 course-mb-51">{{ card.period }}</p>
@@ -17,6 +17,10 @@
 const { card } = defineProps({
   card: Object,
 });
+
+const redirect = (url) => {
+  window.open(url, "_blank");
+};
 </script>
 
 <style lang="scss" scoped>

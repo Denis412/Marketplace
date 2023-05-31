@@ -27,7 +27,9 @@
 
       <div class="flex q-gutter-x-md">
         <div v-for="social in socials" :key="social.id" style="width: 24px; height: 24px">
-          <q-img :src="social.imageUrl" />
+          <a :href="social.url" target="_blank">
+            <q-img :src="social.imageUrl" />
+          </a>
         </div>
       </div>
     </div>
@@ -71,9 +73,13 @@ const contacts = ref([
 ]);
 
 const socials = ref([
-  { id: 1, imageUrl: "/assets/icons/socials/telegram-white.svg" },
-  { id: 2, imageUrl: "/assets/icons/socials/vk-white.svg" },
-  { id: 3, imageUrl: "/assets/icons/socials/youtube-white.svg" },
+  { id: 1, imageUrl: "/assets/icons/socials/telegram-white.svg", url: "https://t.me/sprint_1T" },
+  { id: 2, imageUrl: "/assets/icons/socials/vk-white.svg", url: "https://vk.com/1tsprint" },
+  {
+    id: 3,
+    imageUrl: "/assets/icons/socials/youtube-white.svg",
+    url: "https://www.youtube.com/@1t-sprint",
+  },
 ]);
 </script>
 

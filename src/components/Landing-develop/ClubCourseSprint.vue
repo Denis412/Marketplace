@@ -18,6 +18,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "1243 студентов обучено",
     img: "assets/images/landing-develop/courses/developer.png",
+    url: "https://sprint.1t.ru/code",
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "732 студентов обучено",
     img: "assets/images/landing-develop/courses/designer.png",
+    url: "https://sprint.1t.ru/design",
   },
   {
     id: 3,
@@ -32,6 +34,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "672 студентов обучено",
     img: "assets/images/landing-develop/courses/analysis.png",
+    url: "https://sprint.1t.ru/analyze",
   },
   {
     id: 4,
@@ -39,6 +42,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "567 студентов обучено",
     img: "assets/images/landing-develop/courses/manager.png",
+    url: "https://sprint.1t.ru/manage",
   },
   {
     id: 5,
@@ -46,6 +50,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "324 студентов обучено",
     img: "assets/images/landing-develop/courses/marketer.png",
+    url: "https://sprint.1t.ru/market",
   },
   {
     id: 6,
@@ -53,6 +58,7 @@ const coursesList = [
     period: "3 месяца обучения",
     description: "324 студентов обучено",
     img: "assets/images/landing-develop/courses/tester.png",
+    url: "https://sprint.1t.ru/test",
   },
 ];
 </script>
@@ -62,5 +68,4 @@ const coursesList = [
   margin: 0 auto;
   max-width: 1220px;
 }
-
 </style>
