@@ -1,7 +1,12 @@
 <template>
   <q-header class="header-main flex flex-center bg-dark-purple c-px-32">
     <q-toolbar>
-      <q-img class="logo" src="/assets/images/logo-white.svg" alt="logo" />
+      <q-img
+        class="logo cursor-pointer"
+        src="/assets/images/logo-white.svg"
+        @click="toRoot"
+        alt="logo"
+      />
 
       <q-toolbar-title class="flex no-wrap items-center cursor-pointer">
         <span class="text-h3" @click="toRoot">Клуб</span>
