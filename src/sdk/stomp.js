@@ -18,13 +18,13 @@ const queueCreate = async () => {
 };
 
 const connectQueue = (queue) => {
-  console.log("queue", queue);
+  // console.log("queue", queue);
 
   const onConnect = () => {
     const onMessage = (message) => {
       const messageBody = JSON.parse(message.body);
 
-      console.log("Receive message:", messageBody);
+      // console.log("Receive message:", messageBody);
 
       message.ack();
     };
@@ -33,10 +33,10 @@ const connectQueue = (queue) => {
   };
 
   const onError = () => {
-    console.log("error");
+    // console.log("error");
   };
   const onClose = () => {
-    console.log("close");
+    // console.log("close");
   };
 
   stompClient.reconnect_delay = 5000;
@@ -49,7 +49,7 @@ const connectQueue = (queue) => {
 
 const disconnect = () => {
   stompClient.disconnect(() => {
-    console.log("disconnect");
+    // console.log("disconnect");
   });
 };
 

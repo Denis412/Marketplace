@@ -29,7 +29,7 @@ const refetchPaginatePages = async ({ page, perPage, where, orderBy, space_id })
 
   const { data: pagesData } = await refetch();
 
-  console.log("refetch paginate pages", pagesData);
+  // console.log("refetch paginate pages", pagesData);
 
   return pagesData.pages.data;
 };
@@ -53,7 +53,7 @@ const refetchPaginateRootPages = async ({ page, perPage, where, orderBy, space_i
 
   const { data: pagesData } = await refetch();
 
-  console.log("refetch paginate root pages", pagesData);
+  // console.log("refetch paginate root pages", pagesData);
 
   return pagesData.rootPages.data;
 };
@@ -64,7 +64,7 @@ const create = async ({ input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("create page", pageData);
+  // console.log("create page", pageData);
 
   return pageData.pageCreate.record;
 };
@@ -75,7 +75,7 @@ const update = async ({ input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("update page", pageData);
+  // console.log("update page", pageData);
 
   return pageData.pageUpdate.record;
 };
@@ -86,7 +86,7 @@ const deleteById = async (id, space_id) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("delete page", pageData);
+  // console.log("delete page", pageData);
 
   return pageData.pageDelete;
 };

@@ -28,7 +28,7 @@ const refetchPaginateUserArtifacts = async ({ page: perPage, where }) => {
 
   const { data: artifactsData } = await refetch();
 
-  console.log("refetch artiacts", artifactsData);
+  // console.log("refetch artiacts", artifactsData);
 
   return artifactsData.paginate_user_artifact.data;
 };
@@ -39,7 +39,7 @@ const create = async ({ input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("create artifact", artifactData);
+  // console.log("create artifact", artifactData);
 
   return artifactData.create_user_artifact.record;
 };
@@ -50,7 +50,7 @@ const update = async ({ id, input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("update artifact", artifactData);
+  // console.log("update artifact", artifactData);
 
   return artifactData.update_user_artifact.record;
 };
@@ -61,7 +61,7 @@ const deleteById = async ({ id, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("delete artifact", artifactData);
+  // console.log("delete artifact", artifactData);
 
   return artifactData.delete_user_artifact;
 };

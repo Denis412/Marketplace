@@ -41,7 +41,7 @@ const refetchPaginatePermissionTreeGroups = async ({
 
   const { data: permissionsData } = await refetch();
 
-  console.log("refetch paginate permission groups", permissionsData);
+  // console.log("refetch paginate permission groups", permissionsData);
 
   return permissionsData.permissionTreeGroups.data;
 };
@@ -57,7 +57,7 @@ const refetchPaginatePermissionTreeSubjects = async ({
 
   const { data: permissionsData } = await refetch();
 
-  console.log("refetch paginate permission subjects", permissionsData);
+  // console.log("refetch paginate permission subjects", permissionsData);
 
   return permissionsData.permissionTreeSubjects.data;
 };
@@ -68,7 +68,7 @@ const create = async ({ input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("create permission", permissionData);
+  // console.log("create permission", permissionData);
 
   return permissionData.permissionRuleCreate.record;
 };
@@ -79,7 +79,7 @@ const update = async ({ id, input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("update permission", permissionData);
+  // console.log("update permission", permissionData);
 
   return permissionData.permissionRuleUpdate.record;
 };
@@ -90,7 +90,7 @@ const deleteById = async ({ id, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("delete permission", permissionData);
+  // console.log("delete permission", permissionData);
 
   return permissionData.permissionRuleDelete;
 };

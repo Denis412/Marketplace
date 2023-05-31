@@ -45,38 +45,38 @@ const refetchPaginateApplications = async ({ page, perPage, where, space_id }) =
 
   const { data: applicationsData } = await refetch();
 
-  console.log("refetch paginate application", applicationsData);
+  // console.log("refetch paginate application", applicationsData);
 
   return applicationsData.paginate_application.data;
 };
 
 const create = async ({ name, subject, team, project, status, sender, is_customer, space_id }) => {
-  console.log("trt", { name, subject, team, project, status, sender, space_id });
+  // console.log("trt", { name, subject, team, project, status, sender, space_id });
   const input = team
     ? { name, subject, team, status, sender }
     : { name, subject, project, is_customer, status };
 
-  console.log(input);
+  // console.log(input);
 
   const { data: applicationData } = await creatingApplication(
     { input },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("create application", applicationData);
+  // console.log("create application", applicationData);
 
   return applicationData.create_application.record;
 };
 
 const update = async (id, data, space_id) => {
-  console.log("application", id, data, space_id);
+  // console.log("application", id, data, space_id);
 
   const { data: applicationData } = await updatingApplication(
     { id, input: data },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("update application", applicationData);
+  // console.log("update application", applicationData);
 
   return applicationData.update_application.record;
 };
@@ -87,7 +87,7 @@ const deleteById = async (id, space_id) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("delete application", applicationData);
+  // console.log("delete application", applicationData);
 
   return applicationData.delete_application;
 };

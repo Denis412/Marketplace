@@ -39,7 +39,7 @@ const paginate = async (where) => {
 const create = async ({ input }) => {
   const { data: spaceData } = await creatingSpace({ input });
 
-  console.log("create space", spaceData);
+  // console.log("create space", spaceData);
 
   return spaceData.spaceCreate.record;
 };
@@ -49,7 +49,7 @@ const deleteById = async (space_id) => {
     id: space_id,
   });
 
-  console.log("delete space", spaceData);
+  // console.log("delete space", spaceData);
 
   return spaceData.spaceForceDelete;
 };

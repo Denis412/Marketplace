@@ -15,7 +15,7 @@ const refetchPaginateCompetencies = async ({ page, perPage, where }) => {
 
   const { data: competenciesData } = await refetch();
 
-  console.log("refetch paginate competence", competenciesData);
+  // console.log("refetch paginate competence", competenciesData);
 
   return competenciesData.paginate_competence.data;
 };

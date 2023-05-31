@@ -1,7 +1,7 @@
 import { Cookies } from "quasar";
 
 const save = (tokenData) => {
-  console.log(tokenData);
+  // console.log(tokenData);
 
   // Cookies.set(
   //   "access_token",

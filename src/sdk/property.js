@@ -21,7 +21,7 @@ const queryPropertyById = ({ id, space_id }) => {
 };
 
 const paginateProperties = ({ page, perPage, where, space_id }) => {
-  console.log({ page, perPage, where, space_id });
+  // console.log({ page, perPage, where, space_id });
   return useQuery(
     propertiesPaginate,
     { page, perPage, where },
@@ -34,7 +34,7 @@ const refetchPropertyById = async ({ id, space_id }) => {
 
   const { data: propertyData } = await refetch();
 
-  console.log("get property", propertyData);
+  // console.log("get property", propertyData);
 
   return propertyData.property;
 };
@@ -44,7 +44,7 @@ const refetchPaginateProperties = async ({ page, perPage, where, space_id }) => 
 
   const { data: propertyData } = await refetch();
 
-  console.log("refetch paginate property", propertyData);
+  // console.log("refetch paginate property", propertyData);
 
   return propertyData.properties.data;
 };
@@ -55,19 +55,19 @@ const create = async ({ input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("create property", propertyData);
+  // console.log("create property", propertyData);
 
   return propertyData.propertyCreate.record;
 };
 
 const createMany = async ({ input, space_id }) => {
-  console.log(input);
+  // console.log(input);
   const { data: propertiesData } = await creatingPropertyMany(
     { input },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("create many properties", propertiesData);
+  // console.log("create many properties", propertiesData);
 
   return propertiesData.propertyCreateMany.records;
 };
@@ -78,7 +78,7 @@ const update = async ({ id, input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("update property", propertyData);
+  // console.log("update property", propertyData);
 
   return propertyData.propertyUpdate.record;
 };
@@ -89,7 +89,7 @@ const deleteById = async ({ id, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("delete property", propertyData);
+  // console.log("delete property", propertyData);
 
   return propertyData.propertyDelete;
 };

@@ -42,7 +42,7 @@ const paginateSubjects = ({ where, page, perPage, space_id, is_invite, is_team, 
   else if (is_my_teams) query = paginateSubjectsForMyTeams;
   else query = paginateSubjectsInMainSpace;
 
-  console.log("query", query);
+  // console.log("query", query);
 
   return useQuery(
     query,
@@ -60,18 +60,18 @@ const queryGetUserById = (id) => {
 };
 
 const refetchUserById = async (id) => {
-  console.log("id", id);
+  // console.log("id", id);
   const { refetch } = queryGetUserById(id);
 
   const { data: userData } = await refetch();
 
-  console.log("refetch user", userData);
+  // console.log("refetch user", userData);
 
   return userData.user;
 };
 
 const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invite, is_team }) => {
-  console.log("refetch params", { where, page, perPage, space_id, is_invite, is_team });
+  // console.log("refetch params", { where, page, perPage, space_id, is_invite, is_team });
   const { refetch } = paginateSubjects({
     where,
     page,
@@ -81,11 +81,11 @@ const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invi
     is_team,
   });
 
-  console.log("paginte passed");
+  // console.log("paginte passed");
 
   const { data: subjectsData } = await refetch();
 
-  console.log("refetch paginate subjects", subjectsData);
+  // console.log("refetch paginate subjects", subjectsData);
 
   return subjectsData.paginate_subject.data;
 };
@@ -95,13 +95,13 @@ const refetchSubjectById = async (id, space_id = 0) => {
 
   const { data: subjectData } = await refetch();
 
-  console.log("get subject", subjectData);
+  // console.log("get subject", subjectData);
 
   return subjectData.get_subject;
 };
 
 const registration = async ({ name, surname, email }) => {
-  console.log({ name, email, surname });
+  // console.log({ name, email, surname });
   const { data: userInfo } = await signUp({
     input: {
       name,
@@ -111,13 +111,13 @@ const registration = async ({ name, surname, email }) => {
     },
   });
 
-  console.log("registration", userInfo);
+  // console.log("registration", userInfo);
 
   return userInfo.userSignUp;
 };
 
 const setPassword = async ({ user_id, password, code }) => {
-  console.log("code", { user_id, password, code });
+  // console.log("code", { user_id, password, code });
   await userSetPassword({
     input: {
       user_id,
@@ -134,7 +134,7 @@ const userPasswordSendCode = async ({ email }) => {
     },
   });
 
-  console.log("send code", resetSendCode);
+  // console.log("send code", resetSendCode);
 
   return resetSendCode.userResetPasswordSendCode;
 };
@@ -159,7 +159,7 @@ const saveUserData = async (userInfo) => {
 
   const userData = await refetchUserById(userInfo.userSignIn.recordId);
 
-  console.log("ghgh");
+  // console.log("ghgh");
 
   // if (first_entry) {
   //   const { data: spaceData } = await creatingSpace({
@@ -178,7 +178,7 @@ const saveUserData = async (userInfo) => {
   //   console.log("data", spaceData, updateSubjectData);
   // }
 
-  console.log("userData", userData);
+  // console.log("userData", userData);
 
   saveLocalUserData({
     user_id: userInfo.userSignIn.recordId,
@@ -195,7 +195,7 @@ const login = async ({ login, password }, first_entry = false, recovery = false)
     },
   });
 
-  console.log("login", userInfo);
+  // console.log("login", userInfo);
 
   const userData = recovery ? null : await saveUserData(userInfo);
 
@@ -216,7 +216,7 @@ const update = async (id, updateData, is_team = false, space_id = 0) => {
       spaceHeader(space_id || process.env.MAIN_SPACE_ID)
     ));
 
-  console.log("update subject", subjectData);
+  // console.log("update subject", subjectData);
 
   return subjectData.update_subject.record;
 };

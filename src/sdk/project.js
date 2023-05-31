@@ -39,7 +39,7 @@ const refetchPaginateProjects = async ({ page, perPage, where, space_id }) => {
 
   const { data: projectsData } = await refetch();
 
-  console.log("refetch paginate project", projectsData);
+  // console.log("refetch paginate project", projectsData);
 
   return projectsData.paginate_project.data;
 };
@@ -49,7 +49,7 @@ const refetchProjectById = async ({ id, space_id }) => {
 
   const { data: projectData } = await refetch();
 
-  console.log("get project", projectData);
+  // console.log("get project", projectData);
 
   return projectData.get_project;
 };
@@ -60,19 +60,19 @@ const create = async ({ input, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("create project", projectData);
+  // console.log("create project", projectData);
 
   return projectData.create_project.record;
 };
 
 const update = async ({ id, input, space_id }) => {
-  console.log({ id, input, space_id });
+  // console.log({ id, input, space_id });
   const { data: projectData } = await updatingProject(
     { id, input },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("update project", projectData);
+  // console.log("update project", projectData);
 
   return projectData.update_project.record;
 };
@@ -83,7 +83,7 @@ const deleteProjectById = async ({ id, space_id }) => {
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 
-  console.log("delete project", projectData);
+  // console.log("delete project", projectData);
 
   return projectData.delete_project;
 };

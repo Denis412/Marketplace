@@ -436,7 +436,7 @@ export const useTeamUpdate = () => {
     try {
       loading.value = true;
 
-      console.log("team update", id, data);
+      // console.log("team update", id, data);
 
       const teamData = await teamApi.update({ id, input: data });
 
@@ -518,7 +518,7 @@ export const useTeamIsMember = () => {
     try {
       loading.value = true;
 
-      console.log("team", team);
+      // console.log("team", team);
 
       const groupData = await groupApi.refetchPaginateGroups({
         page: 1,

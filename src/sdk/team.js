@@ -25,7 +25,7 @@ const refetchPaginateTeams = async ({ page, perPage, where }) => {
 
   const { data: teamsData } = await refetch();
 
-  console.log("refetch paginate teams", teamsData);
+  // console.log("refetch paginate teams", teamsData);
 
   return teamsData.paginate_team.data;
 };
@@ -36,7 +36,7 @@ const create = async ({ input, space_id }) => {
     input: { ...input, space: space_id },
   });
 
-  console.log("create team", teamData);
+  // console.log("create team", teamData);
 
   return teamData.create_team.record;
 };
@@ -47,7 +47,7 @@ const update = async ({ id, input }) => {
     input,
   });
 
-  console.log("update team", teamData);
+  // console.log("update team", teamData);
 
   return teamData.update_team.record;
 };
@@ -57,7 +57,7 @@ const deleteById = async (id) => {
     id: id,
   });
 
-  console.log("delete team", teamData);
+  // console.log("delete team", teamData);
 
   return teamData.delete_team;
 };

@@ -223,7 +223,7 @@ export const useProjectUpdate = () => {
     try {
       loading.value = true;
 
-      console.log("space", { id, input, space_id });
+      // console.log("space", { id, input, space_id });
 
       result.value = await projectApi.update({ id, input, space_id });
 
@@ -248,7 +248,7 @@ export const useProjectApplication = () => {
     try {
       loading.value = true;
 
-      console.log({ project_id, project_name, subject, is_customer, space_id });
+      // console.log({ project_id, project_name, subject, is_customer, space_id });
 
       const subjectType = await typeApi.refetchPaginateType({
         page: 1,
@@ -295,7 +295,7 @@ export const useProjectApplication = () => {
         space_id,
       });
 
-      console.log("types", subjectType[0].id, applicationType[0].id, projectType[0].id);
+      // console.log("types", subjectType[0].id, applicationType[0].id, projectType[0].id);
 
       const subjectProperty = await propertyApi.refetchPaginateProperties({
         page: 1,
@@ -392,7 +392,7 @@ export const useProjectApplication = () => {
     try {
       loading.value = true;
 
-      console.log("accept", { application, is_project, space_id });
+      // console.log("accept", { application, is_project, space_id });
 
       if (is_project) {
         const subjectType = await typeApi.refetchPaginateType({
@@ -529,7 +529,7 @@ export const useProjectApplication = () => {
 
       if (is_project) await applicationApi.deleteById(application.id, space_id);
       else {
-        console.log(application, is_project, space_id);
+        // console.log(application, is_project, space_id);
 
         const statusProperty = await propertyApi.refetchPaginateProperties({
           page: 1,
