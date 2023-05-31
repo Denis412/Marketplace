@@ -324,6 +324,8 @@ const updateInfo = async (property_name, value) => {
         type: "warning",
         message: "Такая компетенция уже есть в списке.",
       });
+
+      return;
     } else {
       form.value.current_competence = "";
       form.value.competencies = [

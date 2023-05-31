@@ -18,7 +18,7 @@
                   <q-img
                     class="main-information__avatar-img"
                     :src="
-                      current
+                      route.query.current
                         ? currentUser.avatar
                         : user?.avatar ?? '/assets/images/preloaders/default-avatar.svg'
                     "
@@ -29,11 +29,11 @@
               <div class="main-information__text-container">
                 <div class="main-information__text-container__half">
                   <span class="main-information__text-label">
-                    {{ current ? currentUser.nickname : user?.nickname }}
+                    {{ route.query.current ? currentUser.nickname : user?.nickname }}
                   </span>
 
                   <div
-                    v-if="current"
+                    v-if="route.query.current"
                     class="main-information__text-label q-gutter-x-sm cursor-pointer q-ml-md"
                     @click="redirectSettings"
                   >
@@ -43,7 +43,9 @@
                 </div>
 
                 <div class="main-information__text-container__status">
-                  <span> Статус: {{ current ? currentUser.status : user?.status?.name }} </span>
+                  <span>
+                    Статус: {{ route.query.current ? currentUser.status : user?.status?.name }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -55,16 +57,17 @@
         <div class="main-information__bottom-container">
           <div class="main-information__bottom-container__absolute text-body1 q-gutter-y-md">
             <h4 class="text-h4">
-              {{ current ? currentUser.last_name : user?.fullname.last_name }}
-              {{ current ? currentUser.first_name : user?.fullname.first_name }}
-              {{ current ? currentUser.middle_name : user?.fullname.middle_name }}
+              {{ route.query.current ? currentUser.last_name : user?.fullname.last_name }}
+              {{ route.query.current ? currentUser.first_name : user?.fullname.first_name }}
+              {{ route.query.current ? currentUser.middle_name : user?.fullname.middle_name }}
             </h4>
 
             <div class="q-gutter-x-sm">
               <q-icon :size="baseIconSize" name="img:/assets/icons/geodata/geodata-violet-7.svg" />
 
               <span class="text-gray6"
-                >{{ current ? currentUser.city : user?.city }}, Российская Федерация</span
+                >{{ route.query.current ? currentUser.city : user?.city }}, Российская
+                Федерация</span
               >
             </div>
 
@@ -75,7 +78,7 @@
                   name="img:/assets/icons/calendar/calendar-violet-7.svg"
                 />
 
-                <span>{{ current ? currentUser.birthday : user?.birthday?.date }}</span>
+                <span>{{ route.query.current ? currentUser.birthday : user?.birthday?.date }}</span>
               </div>
 
               <div class="col flex no-wrap items-center q-gutter-x-sm">
@@ -91,7 +94,7 @@
                   name="img:/assets/icons/sex/woman-sex-violet-7.svg"
                 />
 
-                <span>{{ current ? currentUser.gender : user?.gender }}</span>
+                <span>{{ route.query.current ? currentUser.gender : user?.gender }}</span>
               </div>
             </div>
 
@@ -99,7 +102,9 @@
               <div class="col flex no-wrap items-center q-gutter-x-sm">
                 <q-icon :size="baseIconSize" name="img:/assets/icons/person/person-violet-7.svg" />
 
-                <span>{{ current ? currentUser.speciality1 : user?.speciality1.name }}</span>
+                <span>{{
+                  route.query.current ? currentUser.speciality1 : user?.speciality1.name
+                }}</span>
               </div>
 
               <div class="col flex no-wrap items-center q-gutter-x-sm">
@@ -108,7 +113,9 @@
                   name="img:/assets/icons/socials/telegram-violet-7.svg"
                 />
 
-                <span>{{ current ? currentUser.telegram_chat_id : user?.telegram_chat_id }}</span>
+                <span>{{
+                  route.query.current ? currentUser.telegram_chat_id : user?.telegram_chat_id
+                }}</span>
               </div>
             </div>
           </div>
@@ -122,7 +129,9 @@
       <div class="q-mt-lg">
         <q-list class="row q-gutter-x-sm q-gutter-y-md">
           <c-chip
-            v-for="competence in current ? currentUser.competencies : user?.competencies"
+            v-for="competence in route.query.current
+              ? currentUser.competencies
+              : user?.competencies"
             :key="competence.id"
             gradient-outline
             :label="competence.name"
@@ -139,7 +148,7 @@
               <div class="text-subtitle4">О себе</div>
 
               <div class="text-body2 text-gray6">
-                {{ current ? currentUser.about : user?.about }}
+                {{ route.query.current ? currentUser.about : user?.about }}
               </div>
             </div>
           </div>
@@ -153,7 +162,7 @@
 
             <div>
               <a href="#" class="text-body2">
-                {{ current ? currentUser.resume_link : user?.resume_link }}
+                {{ route.query.current ? currentUser.resume_link : user?.resume_link }}
               </a>
             </div>
           </div>
@@ -190,12 +199,15 @@ import CChip from "src/components/ClubChip.vue";
 import CSectionMainProfileUserInformation from "src/components/ClubSectionMainProfileUserInformation.vue";
 import CItemPortfolio from "src/components/ClubItemPortfolio.vue";
 import userApi from "src/sdk/user";
+import { useRoute, useRouter } from "vue-router";
 
 const currentUser = inject("currentUser");
 
-const { id, current } = defineProps({
+const router = useRouter();
+const route = useRoute();
+
+const { id } = defineProps({
   id: String,
-  current: Boolean,
 });
 
 const { result: currentU } = userApi.paginateSubjects({
