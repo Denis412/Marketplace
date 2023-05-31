@@ -93,7 +93,9 @@ const authorization = async () => {
     console.log("store", userStore.GET_CURRENT_USER);
 
     await router.push({
-      path: "/club/profile",
+      name: "profile",
+      params: { id: userStore.GET_CURRENT_USER.subject_id },
+      query: { current: true },
     });
   } catch (error) {
     console.log(error);

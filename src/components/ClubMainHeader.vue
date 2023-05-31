@@ -8,7 +8,7 @@
 
         <div class="flex">
           <c-header-navigation
-            v-if="!route.name.includes('landing-')"
+            v-if="!route.name?.includes('landing-')"
             class="navigation text-caption1"
           />
 
