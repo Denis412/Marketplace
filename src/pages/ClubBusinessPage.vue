@@ -8,6 +8,8 @@
         :subtitle="'1Т Клуб — это поддержка, наставничество и полная вовлеченность в ваш IT-проект'"
         :img="'/assets/images/landing-business/amico.svg'"
         :video="false"
+        :request="true"
+        :request-block="requestBlock"
       />
       <c-business-offers />
       <c-advantages :content-list="contentList" />
@@ -15,8 +17,9 @@
       <c-business-tools />
       <c-join-business />
       <c-best-teams />
+      <c-tasks />
       <c-faq />
-      <c-request />
+      <c-request id="requestBlock" />
     </main>
   </q-page>
 </template>
@@ -24,7 +27,6 @@
 <script setup>
 import CBackgroundSpot from "components/Landing/ClubBackgroundSpot.vue";
 import CMainScreen from "components/Landing/ClubMainScreen.vue";
-import CBusinessScreen from "components/Landing/ClubBusinessScreen.vue";
 import CBusinessOffers from "components/Landing/ClubBusinessOffers.vue";
 import CAdvantages from "src/components/Landing/ClubAdvantages.vue";
 import CString from "components/Landing/ClubString.vue";
@@ -34,6 +36,7 @@ import CBestTeams from "components/Landing/ClubBestTeams.vue";
 import CTasks from "components/Landing/ClubTasks.vue";
 import CFaq from "components/Landing/ClubFAQ.vue";
 import CRequest from "components/Landing/ClubRequest.vue";
+import { ref, onMounted } from "vue";
 
 const contentList = [
   {
@@ -55,6 +58,12 @@ const contentList = [
       "Возможность наблюдать за работой над IT-проектом с помощью сервиса для управления задачами",
   },
 ];
+
+const requestBlock = ref(null);
+
+onMounted(() => {
+  requestBlock.value = document.querySelector("#requestBlock");
+});
 </script>
 
 <style scoped lang="scss"></style>

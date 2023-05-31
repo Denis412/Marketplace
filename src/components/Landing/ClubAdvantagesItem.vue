@@ -1,6 +1,6 @@
 <template>
   <section
-    class="advantage-item flex flex-center relative-position"
+    class="advantage-item flex flex-start relative-position"
     :style="item.id == 1 ? 'margin-left:160px' : ''"
   >
     <q-img class="absolute-right advantage-img" src="assets/images/landing-business/plus.png" />

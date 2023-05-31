@@ -17,6 +17,13 @@
           label="Вступить в 1Т клуб"
         />
 
+        <q-btn
+          v-if="request"
+          class="text-subtitle4 q-ml-sm c-px-32 request-btn"
+          label="Оставить заявку"
+          @click="scrollTo(requestBlock)"
+        />
+
         <a v-if="video" class="text-subtitle5 link" href="#about">
           <q-img
             class="play_video"
@@ -36,13 +43,25 @@
 
 <script setup>
 import CButton from "../ClubButton.vue";
+import { scroll } from "quasar";
 
-const { title, subtitle, img, video } = defineProps({
+const { title, subtitle, img, video, request, requestBlock } = defineProps({
   title: String,
   subtitle: String,
   img: String,
   video: Boolean,
+  request: Boolean,
+  requestBlock: Object,
 });
+
+const { getScrollTarget, setVerticalScrollPosition } = scroll;
+
+const scrollTo = (el) => {
+  const target = getScrollTarget(el);
+  const offset = el.offsetTop + 90;
+  const duration = 750;
+  setVerticalScrollPosition(target, offset, duration);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -56,5 +75,10 @@ section {
 }
 .play_video {
   cursor: pointer;
+}
+.request-btn {
+  border: 3px solid #881d95;
+  text-transform: none;
+  border-radius: 8px;
 }
 </style>

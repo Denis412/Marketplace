@@ -19,7 +19,6 @@ const { contentList } = defineProps({
   contentList: Array,
 });
 
-console.log(contentList);
 const scroller = ref(null);
 
 const onWheel = (e) => {

@@ -78,7 +78,7 @@
                 borderless
                 autogrow
                 v-model="form.message"
-                placeholder="Расскажите, чем вас заинтересовал 1T Клуб"
+                placeholder="Расскажите о вашей задаче"
                 type="textarea"
                 class="c-input-landing gray-scrollbar-input c-input-area-mh bg-white"
               />
@@ -173,9 +173,11 @@
 import CLabelControl from "src/components/ClubLabelControl.vue";
 // import CRecaptcha from "src/components/ClubRecaptcha.vue";
 import emailjs from "@emailjs/browser";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
 const isAccept = ref(false);
+
+const requestBlock = ref(null);
 
 const alert = ref({
   success: false,
@@ -230,8 +232,6 @@ const sendEmail = () => {
       );
   }
 };
-
-console.log();
 </script>
 
 <style scoped lang="scss">
