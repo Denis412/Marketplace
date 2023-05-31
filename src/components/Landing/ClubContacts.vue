@@ -1,50 +1,15 @@
 <template>
-  <section class="section-margin container">
-    <q-card class="rounded-borders-12 card">
-      <q-card-section horizontal class="flex justify-between">
-        <q-card-section>
-          <div class="text-h4 q-mb-xl">Контакты</div>
-
-          <c-contacts-section
-            title="Режим работы"
-            :text-content="[
-              'Понедельник - пятница: c 09:00 до 18:00',
-              'Суббота и воскресенье выходной',
-            ]"
-          />
-
-          <c-contacts-section
-            title="Адрес"
-            image-url="/assets/images/landing/map-gradient.svg"
-            text-content="ул. Ростовская набережная д.5,"
-            row
-          />
-
-          <c-contacts-section
-            title="Телефон"
-            image-url="/assets/images/landing/phone-gradient.svg"
-            text-content="+7 (999) 333-33-07"
-            row
-          />
-
-          <c-contacts-section
-            title="Эл. почта"
-            image-url="/assets/images/landing/email-gradient.svg"
-            text-content="Club@1T.ru"
-            row
-          />
-        </q-card-section>
-
-        <q-card-section>
-          <c-write-to-us-form />
-        </q-card-section>
-      </q-card-section>
-    </q-card>
+  <section class="section-margin map">
+    <div class="row">
+      <div class="col-6"></div>
+      <div class="col-6">
+        <div class="flex flex-center q-pt-xl"><c-write-to-us-form /></div>
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup>
-import CContactsSection from "./ClubContactsSection.vue";
 import CWriteToUsForm from "components/Landing/ClubWriteToUsForm.vue";
 </script>
 
@@ -54,5 +19,16 @@ import CWriteToUsForm from "components/Landing/ClubWriteToUsForm.vue";
   background-color: #260f4a;
 
   margin-bottom: 66px;
+}
+
+.map {
+  margin-bottom: 160px;
+  background-image: url("/assets/images/landing/map.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 40rem;
+  @media (min-width: 2000px) {
+    height: 120vh;
+  }
 }
 </style>

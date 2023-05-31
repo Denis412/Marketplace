@@ -1,10 +1,5 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <!-- <div class="flex justify-between">
-      <pre>{{ applications }}</pre>
-
-      <pre>{{ projects }}</pre>
-    </div> -->
     <div class="loader loader-lg" v-if="loading" />
 
     <div v-else>
@@ -28,7 +23,7 @@
         </section>
       </q-list>
 
-      <q-list v-else class="row c-mt-40">
+      <q-list v-else-if="selectedProjectsType === 'applicated'" class="row c-mt-40">
         <section v-for="application in applications" :key="application.id" class="col-4 q-pa-md">
           <c-card-project :current-project="application.project" :application="application" />
         </section>
@@ -39,7 +34,7 @@
 
 <script setup>
 import { useUserStore } from "src/stores/user";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 import CCardProject from "src/components/ClubCardProject.vue";
 import projectApi from "src/sdk/project";
@@ -49,14 +44,14 @@ import applicationApi from "src/sdk/application";
 const userStore = useUserStore();
 const currentUser = computed(() => userStore.GET_CURRENT_USER);
 
-// const currentProjects = computed(() => currentUser.value?)
-
 const projects = ref([]);
 const applications = ref([]);
 const loading = ref(true);
 const selectedProjectsType = ref("active");
 
-const subject = userApi.queryGetSubjectById(currentUser.value.subject_id);
+// const subject = userApi.queryGetSubjectById(currentUser.value.subject_id);
+
+useUserStore().SET_PROP("projects", projects.value);
 
 onMounted(async () => {
   let pr = [];

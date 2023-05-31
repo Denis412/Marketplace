@@ -37,7 +37,7 @@
             до {{ currentProject?.delivery_date?.date }}
           </span>
 
-          <span>Роль в проекте: Участник</span>
+          <span>Роль в проекте: {{ role }}</span>
         </div>
       </q-card-section>
 
@@ -52,6 +52,7 @@
 import { useRouter } from "vue-router";
 import { truncate } from "src/utils/truncateString";
 import CApplicationControls from "./ClubApplicationControls.vue";
+import { computed, inject } from "vue";
 // import {  inject } from "vue";
 
 const { currentProject, application, is_invite } = defineProps({
@@ -60,7 +61,24 @@ const { currentProject, application, is_invite } = defineProps({
   is_invite: Boolean,
 });
 
-// const currentUser = inject("currentUser");
+const currentUser = inject("currentUser");
+
+const role = computed(() => {
+  if (application?.is_customer) return "Заказчик";
+  else if (application) return "Участник";
+
+  if (currentProject.leader?.email.email === currentUser.value.email) return "Руководитель";
+  if (
+    currentProject.customers.length &&
+    currentProject.customers?.some((customer) => customer.email.email === currentUser.value.email)
+  )
+    return "Заказчик";
+  if (
+    currentProject.members.length &&
+    currentProject.members?.some((member) => member.email.email === currentUser.value.email)
+  )
+    return "Участник";
+});
 
 const router = useRouter();
 

@@ -53,14 +53,26 @@
               </template>
             </c-label-control>
 
-            <c-label-control label="Компетенции" class="control">
+            <c-label-control label="Компетенции" class="w-100p">
               <template #control>
+                <q-list class="flex q-gutter-sm">
+                  <c-chip
+                    v-for="competence in form.competencies"
+                    :key="competence.id"
+                    :label="competence.name"
+                    gradient-outline
+                    removed
+                    @remove="deleteCompetence"
+                  />
+                </q-list>
+
                 <q-select
                   no-caps
                   borderless
-                  v-model="form.competencies"
+                  v-model="form.current_competence"
+                  :options="currentCompetencies"
                   @update:model-value="updateInfo('competencies', $event)"
-                  class="club-dropdown"
+                  class="club-dropdown control q-mt-md"
                   dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
                 >
                   <template v-slot:no-option>
@@ -143,7 +155,7 @@
       </div>
     </section>
 
-    <div class="c-my-64 separator" />
+    <!-- <div class="c-my-64 separator" />
 
     <section class="c-gutter-y-64">
       <h4 class="text-h4 c-pt-64 c-ml-96">Портфолио</h4>
@@ -168,7 +180,7 @@
           label="Добавить"
         />
       </div>
-    </section>
+    </section> -->
   </q-page>
 </template>
 
@@ -185,19 +197,32 @@ import userStatusApi from "src/sdk/user-status";
 
 import CLabelControl from "src/components/ClubLabelControl.vue";
 import CItemPortfolio from "src/components/ClubItemPortfolio.vue";
+import CChip from "src/components/ClubChip.vue";
 import { useValidators } from "src/use/validators";
+import competenceApi from "src/sdk/competence";
+import { useQuasar } from "quasar";
 
 const { isTelegramUrl, isUrl } = useValidators();
+
+const $q = useQuasar();
 
 const currentUser = inject("currentUser");
 
 const { result: specialities } = specilalityApi.paginateSpeciality({ page: 1, perPage: 50 });
+const { result: competencies } = competenceApi.paginateCompetencies({ page: 1, perPage: 50 });
 const { result: userStatuses } = userStatusApi.paginateUserStatuses({ page: 1, perPage: 50 });
 
 const currentSpecialitites = computed(() =>
   specialities.value?.paginate_speciality.data.map((speciality) => ({
     label: speciality.name,
     value: speciality.id,
+  }))
+);
+
+const currentCompetencies = computed(() =>
+  competencies.value?.paginate_competence.data.map((competence) => ({
+    label: competence.name,
+    value: competence.id,
   }))
 );
 
@@ -218,6 +243,7 @@ const form = ref({
   telegram: currentUser.value.telegram_chat_id,
   speciality: currentUser.value.speciality1,
   competencies: currentUser.value.competencies,
+  current_competence: "",
   about: currentUser.value.about,
   resume: currentUser.value.resume_link,
   artefacts: currentUser.value.artefacts,
@@ -241,6 +267,20 @@ const items = ref([
 ]);
 
 // const pickFile = () => uploader.value.pickFiles();
+
+const deleteCompetence = async (label) => {
+  form.value.competencies = form.value.competencies.filter(
+    (competence) => competence.name !== label
+  );
+
+  await userApi.update(currentUser.value.subject_id, {
+    competencies: {
+      [process.env.COMPETENCE_TYPE_ID]: form.value.competencies.map((competence) => competence.id),
+    },
+  });
+
+  useUserStore().SET_PROP("competencies", form.value.competencies);
+};
 
 const updateInfo = async (property_name, value) => {
   let input;
@@ -276,7 +316,33 @@ const updateInfo = async (property_name, value) => {
       },
     };
 
-    useUserStore().SET_PROP(property_name, value.label);
+    useUserStore().SET_PROP("speciality1", value.label);
+  } else if (property_name === "competencies" && value.label && value.label.trim()) {
+    console.log("value", value);
+    if (form.value.competencies?.find((competence) => competence.name === value.label)) {
+      $q.notify({
+        type: "warning",
+        message: "Такая компетенция уже есть в списке.",
+      });
+    } else {
+      form.value.current_competence = "";
+      form.value.competencies = [
+        ...(form.value.competencies ?? []),
+        { name: value.label, id: value.value },
+      ];
+
+      console.log("compete", form.value.competencies);
+
+      input = {
+        competencies: {
+          [process.env.COMPETENCE_TYPE_ID]: form.value.competencies.map(
+            (competence) => competence.id
+          ),
+        },
+      };
+
+      useUserStore().SET_PROP(property_name, form.value.competencies);
+    }
   } else {
     input = {
       [property_name]: value,

@@ -39,6 +39,7 @@ const specialtiesList = ref([
   { filterName: "Маркетолог", displayName: "Маркетологи", value: "marketers" },
   { filterName: "Дизайнер", displayName: "Дизайнеры", value: "designers" },
   { filterName: "Аналитик", displayName: "Аналитики", value: "analitics" },
+  { filterName: "Без специальности", displayName: "Без специальности", value: "empty" },
 ]);
 
 const groupByMembers = computed(() => _.groupBy(currentMembers.value, "speciality1.name"));

@@ -180,6 +180,7 @@ const redirectSettings = () => {
     $avatar_size: 160px;
 
     height: $avatar_size;
+    max-height: $avatar_size;
     width: $avatar_size;
 
     border-radius: 50%;
@@ -191,6 +192,8 @@ const redirectSettings = () => {
     }
 
     &-img {
+      max-height: $avatar_size;
+
       border-radius: 50%;
       border: 4px solid white;
     }

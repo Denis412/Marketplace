@@ -11,7 +11,12 @@
 
       <div class="q-mt-lg">
         <q-list class="row q-gutter-x-sm q-gutter-y-md">
-          <c-chip v-for="n in 10" :key="n" gradient-outline label="Программирование" />
+          <c-chip
+            v-for="competence in currentUser.competencies"
+            :key="competence.id"
+            gradient-outline
+            :label="competence.name"
+          />
         </q-list>
       </div>
     </section>
@@ -50,7 +55,7 @@
       </div>
     </section>
 
-    <div class="c-mt-64 c-mb-64 separator" />
+    <!-- <div class="c-mt-64 c-mb-64 separator" />
 
     <section>
       <h4 class="text-h4 c-pb-64">Портфолио</h4>
@@ -64,7 +69,7 @@
           :right-side="index % 2 !== 0"
         />
       </q-list>
-    </section>
+    </section> -->
   </q-page>
 </template>
 
@@ -74,6 +79,7 @@ import { inject, ref } from "vue";
 import CChip from "src/components/ClubChip.vue";
 import CSectionMainProfileUserInformation from "src/components/ClubSectionMainProfileUserInformation.vue";
 import CItemPortfolio from "src/components/ClubItemPortfolio.vue";
+import userApi from "src/sdk/user";
 
 const currentUser = inject("currentUser");
 
@@ -93,6 +99,19 @@ const items = ref([
     image: "",
   },
 ]);
+
+// onMounted(async () => {
+//   console.log("hello");
+//   await userApi.refetchPaginateSubjects({
+//     page: 1,
+//     perPage: 1,
+//     where: {
+//       column: "id",
+//       operator: "EQ",
+//       value: currentUser.value.subject_id,
+//     },
+//   });
+// });
 </script>
 
 <style scoped lang="scss">

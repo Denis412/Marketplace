@@ -12,7 +12,7 @@
         </q-item>
 
         <q-item
-          v-else
+          v-else-if="isMember"
           clickable
           v-ripple
           class="flex no-wrap items-center text-caption1 text-black"
@@ -20,7 +20,13 @@
           Покинуть команду
         </q-item>
 
-        <q-item clickable v-ripple class="flex no-wrap items-center text-caption1 text-black">
+        <q-item
+          clickable
+          v-ripple
+          ref="t"
+          class="flex no-wrap items-center text-caption1 text-black"
+          @click="copyTeamTelegram"
+        >
           Поделиться
         </q-item>
       </q-list>
@@ -29,13 +35,17 @@
 </template>
 
 <script setup>
-import { inject } from "vue";
+import { useQuasar } from "quasar";
+import { inject, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+
+const $q = useQuasar();
 
 const router = useRouter();
 
 const currentTeam = inject("currentTeam");
 const isOwner = inject("isOwner");
+const isMember = inject("isMember");
 
 const editProfile = async () => {
   router.push({
@@ -44,6 +54,32 @@ const editProfile = async () => {
     query: { space: currentTeam.value.space },
   });
 };
+
+const copyTeamTelegram = async () => {
+  await navigator.clipboard.writeText(currentTeam.value.telegram_chat_id);
+
+  $q.notify({
+    position: "top",
+    color: "lightgray",
+    timeout: 1000,
+    message: "Ссылка скопирована в буфер обмена",
+  });
+};
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.4s ease;
+}
+
+.slide-enter-to,
+.slide-leave-from {
+  opacity: 1;
+}
+</style>

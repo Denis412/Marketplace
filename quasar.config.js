@@ -58,8 +58,15 @@ module.exports = configure(function (/* ctx */) {
         FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru/",
         RABBIT_URI: "wss://stud.druid.1t.ru/ws",
 
+        EMAILJS_SERVICE_ID: "service_1wdj4t5",
+        EMAILJS_TEMPLATE_ID: "template_vlarxg7",
+        EMAILJS_TEMPLATE_WRITE_ID: "template_tf5j6md",
+        EMAILJS_PUBLIC_KEY: "8VISXizKwxu9ZO_pL",
+
         MAIN_SPACE_ID: 42,
 
+        PROJECTS_PAGE_ID: "2175982620077905167",
+        MY_PROJECTS_PAGE_ID: "5811147062794236464",
         TEAMS_PAGE_ID: "4854717215393261588",
         ALL_TEAMS_PAGE_ID: "5191226628121289747",
         MY_TEAMS_PAGE_ID: "5297017851980857027",
@@ -77,6 +84,7 @@ module.exports = configure(function (/* ctx */) {
 
         SUBJECT_TEAMS_PROPERTY_ID: "4567125113940260904",
 
+        COMPETENCE_TYPE_ID: "1021001357304361750",
         SPECIALITY_TYPE_ID: "1054792999490113487",
         USER_STATUS_TYPE_ID: "1676382032638755233",
         SUBJECT_TYPE_ID: "6410837257365292951",
@@ -89,6 +97,8 @@ module.exports = configure(function (/* ctx */) {
 
         ORDER_TYPE_ID: "5117870577983195887",
         ORDER_FUNCTION_ID: "7160658608500929189",
+
+        DEFAULT_SPECIALITY_ID: "3291532951454342514",
 
         ORDER_STATUS_0: "1744362893253691369", // Черновик
         ORDER_STATUS_1: "2363916507227203881", // Поиск исполнителя

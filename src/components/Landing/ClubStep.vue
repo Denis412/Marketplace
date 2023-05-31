@@ -5,7 +5,7 @@
     </div>
     <div class="absolute-center step-shadow"></div>
     <div class="absolute step-text">
-      <div class="text-subtitle2">
+      <div class="text-subtitle1">
         {{ title }}
       </div>
       <p class="text-body2">
@@ -29,9 +29,11 @@ const { num } = defineProps({
 .step-shadow {
   width: 320px;
   height: 320px;
-  background: radial-gradient(50% 50% at 50% 50%,
-      rgba(136, 29, 149, 0.3) 0%,
-      rgba(136, 29, 149, 0) 100%);
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(136, 29, 149, 0.3) 0%,
+    rgba(136, 29, 149, 0) 100%
+  );
   filter: blur(2px);
 }
 
@@ -46,15 +48,20 @@ const { num } = defineProps({
     margin: 210px 0 0 355px;
   }
 
-  margin-top: 210px;
+  margin-top: 180px;
 }
 
 .step1 {
   margin-top: 0;
 }
-
+.step4 {
+  margin-top: 120px !important;
+}
+.step3 {
+  margin-left: 20px;
+}
 .step5 {
-  margin-top: 274px;
+  margin-top: 110px !important;
 }
 
 .num {
@@ -63,7 +70,7 @@ const { num } = defineProps({
 
 .step-text {
   width: 544px;
-  top: 46px;
-  left: 74px;
+  top: 20px;
+  left: 8rem;
 }
 </style>

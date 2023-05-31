@@ -8,13 +8,15 @@
       <section>
         <q-img
           :src="currentProject?.avatar || ''"
-          class="bg-violet4 rounded-borders-8 project-avatar c-mt-40 cursor-pointer"
+          class="bg-violet4 rounded-borders-8 project-avatar c-mt-40"
+          :class="{ 'cursor-pointer': isLeader }"
           @click="pickFiles"
         />
 
         <q-file
           style="display: none"
           v-model="selectFile"
+          max-file-size="10485760"
           accept=".png,.jpg"
           ref="uploader"
           @update:model-value="uploadImage"
@@ -30,7 +32,7 @@
 </template>
 
 <script setup>
-import { computed, provide, ref, onMounted, watch, reactive, toRefs } from "vue";
+import { provide, ref, onMounted, watch, inject, computed } from "vue";
 import { useRoute } from "vue-router";
 
 import CSectionProjectsHeaders from "src/components/ClubSectionProjectsHeaders.vue";
@@ -46,6 +48,8 @@ import userApi from "src/sdk/user";
 const route = useRoute();
 const { result, updateProject } = useProjectUpdate();
 
+const currentUser = inject("currentUser");
+
 const res = {
   leader: ref(null),
   customers: ref([]),
@@ -54,33 +58,59 @@ const res = {
 
 const { refetch } = BaseService.fetchApiPaginate(userApi.paginateSubjects);
 
-const { result: currentProject } = BaseService.fetchApiPaginate(
-  projectApi.paginateProject,
-  {
-    where: {
-      column: "name",
-      operator: "EQ",
-      value: route.query.name,
-    },
+const { result: project } = projectApi.paginateProject({
+  page: 1,
+  perPage: 1,
+  where: {
+    column: "name",
+    operator: "EQ",
+    value: route.query.name,
   },
-  { only_one: true, space_id: route.query.space }
-);
+  space_id: route.query.space,
+});
+
+const currentProject = computed(() => project.value?.paginate_project.data[0]);
+
+// const { result: currentProject } = BaseService.fetchApiPaginate(
+//   projectApi.paginateProject,
+//   {
+//     where: {
+//       column: "name",
+//       operator: "EQ",
+//       value: route.query.name,
+//     },
+//   },
+//   { only_one: true, space_id: route.query.space }
+// );
+
+const isLeader = ref(false);
 
 const uploader = ref(null);
 const loading = ref(false);
 const selectFile = ref(null);
 
-const pickFiles = () => uploader.value.pickFiles();
+const pickFiles = () => (isLeader.value ? uploader.value.pickFiles() : null);
 
 const uploadImage = async () => {
   const fileId = await filesApi.uploadFiles(selectFile.value);
   const avatar = await filesApi.get(fileId);
 
   await updateProject({
-    id: currentProject.value.id,
+    id: currentProject.value?.id,
     input: {
-      name: currentProject.value.name,
+      name: currentProject.value?.name,
       avatar: filesApi.getUrl(avatar[0]),
+    },
+    space_id: route.query.space,
+  });
+
+  await projectApi.refetchPaginateProjects({
+    page: 1,
+    perPage: 1,
+    where: {
+      column: "id",
+      operator: "EQ",
+      value: route.params.id,
     },
     space_id: route.query.space,
   });
@@ -108,15 +138,21 @@ const groupProjectSubjects = async (group_names) => {
           { only_one: true }
         );
 
-        if (currentProject.value?.author_id === subject.id)
+        if (currentProject.value?.author_id === subject.id) {
           res.leader.value = Object.assign({}, subjectMainSpace, { role: "Руководитель проекта" });
 
-        res[group_name].value.push(
-          Object.assign({}, subjectMainSpace, {
-            role:
-              currentProject.value?.author_id === subject.id ? "Руководитель проекта" : "Участник",
-          })
-        );
+          if (currentUser.value.subject_id === subjectMainSpace.id) isLeader.value = true;
+        }
+
+        if (group_name !== "leader" && subject.email.email === subjectMainSpace.email.email)
+          res[group_name].value.push(
+            Object.assign({}, subjectMainSpace, {
+              role:
+                currentProject.value?.author_id === subject.id
+                  ? "Руководитель проекта"
+                  : "Участник",
+            })
+          );
       } catch (e) {
         console.log(e);
       }
@@ -129,14 +165,18 @@ const groupProjectSubjects = async (group_names) => {
 provide("spaceId", route.query.space);
 provide("currentProject", currentProject);
 
+provide("isLeader", isLeader);
 provide("currentMembers", res.members);
 provide("currentCustomers", res.customers);
 provide("currentLeader", res.leader);
 
 watch(currentProject, async (value) => {
   if (value) await groupProjectSubjects(["members", "customers"]);
+});
 
-  console.log(res);
+onMounted(async () => {
+  if (!res.leader.value || !res.members.value?.length || !res.customers.value?.length)
+    await groupProjectSubjects(["members", "customers"]);
 });
 </script>
 

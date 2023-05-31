@@ -55,13 +55,13 @@ const queryGetSubjectById = (id, space_id = 0) => {
   return useQuery(getSubjectById, { id }, spaceHeader(space_id || process.env.MAIN_SPACE_ID));
 };
 
-const queryGetUserById = (id, space_id = 0) => {
-  return useQuery(getUser, { id }, spaceHeader(space_id || process.env.MAIN_SPACE_ID));
+const queryGetUserById = (id) => {
+  return useQuery(getUser, { id });
 };
 
-const refetchUserById = async (id, space_id = 0) => {
+const refetchUserById = async (id) => {
   console.log("id", id);
-  const { refetch } = queryGetUserById(id, space_id);
+  const { refetch } = queryGetUserById(id);
 
   const { data: userData } = await refetch();
 
@@ -154,7 +154,7 @@ const saveLocalUserData = (saveData) => {
   localStorage.setItem("user-data", JSON.stringify(saveData));
 };
 
-const saveUserData = async (userInfo, first_entry = false) => {
+const saveUserData = async (userInfo) => {
   tokenApi.save(userInfo.userSignIn.record);
 
   const userData = await refetchUserById(userInfo.userSignIn.recordId);
@@ -197,7 +197,7 @@ const login = async ({ login, password }, first_entry = false, recovery = false)
 
   console.log("login", userInfo);
 
-  const userData = recovery ? null : await saveUserData(userInfo, first_entry);
+  const userData = recovery ? null : await saveUserData(userInfo);
 
   return userData?.user;
 };

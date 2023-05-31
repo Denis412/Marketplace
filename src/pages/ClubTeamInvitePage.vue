@@ -60,7 +60,7 @@
               @click="inviteSubjects"
             />
 
-            <c-button outline label="Отменить" />
+            <c-button outline label="Отменить" @click="cancel" />
           </div>
         </section>
 
@@ -111,6 +111,7 @@ const {
   sendApplication: sendProjectApplication,
 } = useProjectApplication();
 
+const router = useRouter();
 const route = useRoute();
 const $q = useQuasar();
 
@@ -173,7 +174,7 @@ const selectSpecialitites = computed(() =>
 );
 
 const showSubjects = computed(
-  () => filteredSubjects.value ?? (!route.query.space ? teamFilter.value : projectFilter.value)
+  () => filteredSubjects.value ?? (!route.query?.project ? teamFilter.value : projectFilter.value)
 );
 
 const teamFilter = computed(() => {
@@ -183,8 +184,11 @@ const teamFilter = computed(() => {
 });
 
 const projectFilter = computed(() => {
-  return projectSubjects.value?.paginate_subject.data.filter((subject) => {
+  return allSubjects.value?.paginate_subject.data.filter((subject) => {
     return (
+      projectSubjects.value?.paginate_subject.data.some(
+        (sub) => sub.email.email === subject.email.email
+      ) &&
       !project.value?.paginate_project.data[0]?.members.some(
         (member) => member.email.email === subject.email.email
       ) &&
@@ -202,7 +206,7 @@ const inviteSubjects = async () => {
   if (!selectedSubjects.value.length) return;
 
   try {
-    if (route.query.space) {
+    if (route.query.project) {
       for (let subject of selectedSubjects.value) {
         await sendProjectApplication({
           subject: subject,
@@ -212,7 +216,26 @@ const inviteSubjects = async () => {
           space_id: route.query.space,
         });
       }
-    } else
+
+      await projectApi.refetchPaginateProjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: route.query.name,
+        },
+        space_id: route.query.space,
+      });
+
+      delete route.query.customer;
+
+      router.push({
+        name: "project",
+        params: { ...route.params },
+        query: { ...route.query },
+      });
+    } else {
       for (let subject of selectedSubjects.value) {
         await sendApplication({
           name: team.value.paginate_team.data[0].name,
@@ -224,17 +247,20 @@ const inviteSubjects = async () => {
           },
           status: process.env.APPLICATION_STATUS_PENDING,
           sender: "team",
+          space: team.value.paginate_team.data[0].space,
           sender_id: team.value.paginate_team.data[0].id,
           target: subject,
         });
       }
 
-    selectedSubjects.value = [];
+      router.push({
+        name: "teamSpace",
+        params: { ...route.params },
+        query: { ...route.query },
+      });
+    }
 
-    // router.push({
-    //   name: "team",
-    //   params: { name: route.params.name },
-    // });
+    selectedSubjects.value = [];
   } catch (error) {
     console.log(error);
 
@@ -251,7 +277,7 @@ const filteringSubjects = async (filter) => {
     return;
   }
 
-  if (!route.query.space) filteredSubjects.value = teamFilter.value;
+  if (!route.query.project) filteredSubjects.value = teamFilter.value;
   else filteredSubjects.value = projectFilter.value;
 
   filteredSubjects.value = filteredSubjects.value.filter(
@@ -260,17 +286,6 @@ const filteringSubjects = async (filter) => {
       subject.fullname.middle_name.includes(filters.value.name) ||
       subject.fullname.last_name.includes(filters.value.name)
   );
-
-  // filteredSubjects.value = await userApi.refetchPaginateSubjects({
-  //   page: 1,
-  //   perPage: 100,
-  //   where: filters.value.name
-  //     ? { column: "fullname", operator: "FTS", value: filters.value.name }
-  //     : null,
-  //   is_invite: !route.query.space,
-  //   is_team: route.query.space,
-  //   space_id: route.query.space,
-  // });
 
   if (filters.value.speciality)
     filteredSubjects.value = filteredSubjects.value.filter(
@@ -281,6 +296,24 @@ const filteringSubjects = async (filter) => {
 };
 
 const resetSubjects = () => (selectedSubjects.value = []);
+
+const cancel = () => {
+  if (route.query.project) {
+    delete route.query.project;
+    delete route.query.customer;
+
+    router.push({
+      name: "project",
+      params: { ...route.params },
+      query: { ...route.query },
+    });
+  } else
+    router.push({
+      name: "teamSpace",
+      params: { ...route.params },
+      query: { ...route.query },
+    });
+};
 </script>
 
 <style scoped lang="scss">

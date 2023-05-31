@@ -65,6 +65,7 @@
             <q-input
               v-model="form.name"
               @change="updateTeamData('name', $event)"
+              maxlength="30"
               placeholder="Название команды"
               class="c-input-outline teamSettingForm-input-small"
               outlined
@@ -89,6 +90,7 @@
           <template #control>
             <q-input
               v-model="form.description"
+              maxlength="1000"
               @change="updateTeamData('description', $event)"
               placeholder="Описание команды"
               class="c-input-outline c-input-area-mc teamSettingForm-input"

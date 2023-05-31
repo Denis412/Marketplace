@@ -210,13 +210,17 @@
 }
 
 .logo-header {
-  height: 75px;
-  width: 90px;
+  height: 33px;
+  width: 40px;
 }
 
 .container {
   max-width: 1120px;
   margin: 0 auto;
+}
+
+.rounded-borders-5 {
+  border-radius: 8px;
 }
 
 .rounded-borders-8 {
@@ -284,6 +288,15 @@
 .club-mb-16 {
   margin-bottom: 16px;
 }
+.c-mb-160 {
+  margin-bottom: 160px;
+}
+.c-mb-18 {
+  margin-bottom: 18px;
+}
+.c-mb-32 {
+  margin-bottom: 32px;
+}
 
 .c-pa-24 {
   padding: 24px;
@@ -315,6 +328,10 @@
 
 .section-margin {
   margin-top: 124px;
+}
+
+.section-mb {
+  margin-bottom: 160px;
 }
 
 .page-background {
@@ -539,3 +556,20 @@
     @extend .text-caption1;
   }
 }
+
+.club-carousel {
+  .q-carousel {
+    background-color: transparent;
+  }
+  & .carousel__slide {
+    min-width: 452px !important;
+  }
+}
+
+.review-card {
+  & #movie_player > div.ytp-cued-thumbnail-overlay > button{
+    background-color: rgb(255, 0, 0) !important;
+  }
+
+}
+

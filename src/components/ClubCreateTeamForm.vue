@@ -3,7 +3,21 @@
     <header>
       <h3 class="text-h3 text-center">Создание команды</h3>
 
-      <h3 v-if="creatingTeam" class="text-h3-text-center">Создание...</h3>
+      <teleport v-if="creatingTeam" to="body">
+        <div
+          style="
+            z-index: 10000;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+          "
+        >
+          <div class="loader loader-lg" />
+        </div>
+      </teleport>
     </header>
 
     <main class="flex column flex-center c-mt-32">
@@ -35,18 +49,23 @@
           bg-color="white"
           placeholder="Введите название"
           class="text-body2"
+          maxlength="30"
           v-model="form.name"
-          :rules="[required, maxLength(30)]"
+          :rules="[required, minLength(2), isLatin, maxLength(30)]"
         />
 
-        <c-input
-          bg-color="white"
+        <q-input
+          borderless
+          outlined
           placeholder="Введите описание"
-          class="club-textarea-mh-150 text-body2"
+          type="textarea"
+          maxlength="1000"
+          bg-color="white"
+          class="c-input-outline club-textarea-mh-150 gray-scrollbar-input text-body2"
           autogrow
-          style="max-height: 100px"
           v-model="form.description"
           :rules="[required, maxLengthForTeamForm(1000)]"
+          lazy-rules
         />
       </section>
     </main>
@@ -56,7 +75,7 @@
       <c-button
         outline
         class="text-body1 c-ml-32"
-        label="Отмена"
+        label="Отменить"
         type="reset"
         to="/club/teams/my-teams"
       />
@@ -79,11 +98,13 @@ import TeamService from "src/sevices/TeamService";
 
 import { useUserStore } from "src/stores/user";
 import filesApi from "src/sdk/file";
+import userApi from "src/sdk/user";
+import teamApi from "src/sdk/team";
 
 const currentUser = inject("currentUser");
 
 const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
-const { required, maxLength, maxLengthForTeamForm } = useValidators();
+const { required, maxLength, minLength, isLatin, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
 
@@ -123,13 +144,11 @@ const teamCreate = async () => {
 
     await createTeam({ ...form.value, author: currentUser.value });
 
-    // await useUserStore().FETCH_CURRENT_USER();
+    await useUserStore().FETCH_CURRENT_USER();
 
     router.push({
       name: "my-teams",
     });
-
-    // await filesApi.uploadFiles(upload_img.value);
   } catch (error) {
     console.log(error);
   }

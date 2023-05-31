@@ -1,36 +1,60 @@
 <template>
-  <section class="flex no-wrap container">
+  <section class="flex no-wrap container items-center">
     <div class="col">
-      <h1 class="text-h1">1Т Клуб</h1>
+      <h1 class="text-h1">{{ title }}</h1>
 
-      <p class="text-subtitle3 q-mt-md">
-        1Т Клуб - сообщество единомышленников, которых объединяет страсть к
-        работе и саморазвитию.
-      </p>
+      <div class="row">
+        <p class="text-body2 q-mt-md col-10">
+          {{ subtitle }}
+        </p>
+      </div>
 
-      <c-button
-        to="/registration"
-        background
-        size="xl"
-        class="q-mt-xl"
-        label="Вступить в клуб"
-      />
+      <section class="flex q-py-md c-mt-40 items-center">
+        <c-button
+          to="/registration"
+          background
+          class="text-subtitle4 q-mr-lg c-px-32"
+          label="Вступить в 1Т клуб"
+        />
+
+        <a v-if="video" class="text-subtitle5 link" href="#about">
+          <q-img
+            class="play_video"
+            src="/assets/images/Play_video.svg"
+            height="60px"
+            width="60px"
+            alt="logo"
+          />
+          <span class="q-ml-md">Смотреть ролик</span></a
+        >
+      </section>
     </div>
 
-    <q-img
-      class="col"
-      style="max-width: 480px"
-      src="/assets/images/amico.svg"
-    />
+    <q-img class="col" style="max-width: 480px" :src="img || '/assets/images/amico.svg'" />
   </section>
 </template>
 
 <script setup>
 import CButton from "../ClubButton.vue";
+
+const { title, subtitle, img, video } = defineProps({
+  title: String,
+  subtitle: String,
+  img: String,
+  video: Boolean,
+});
 </script>
 
 <style lang="scss" scoped>
 section {
-  margin-top: 85px;
+  margin-top: 56px;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+.play_video {
+  cursor: pointer;
 }
 </style>

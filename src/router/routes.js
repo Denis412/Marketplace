@@ -4,9 +4,29 @@ const routes = [
     component: () => import("layouts/ClubLandingLayout.vue"),
     children: [
       {
+        path: "customer-application",
+        name: "customer-application",
+        component: () => import("pages/ClubCustomerApplicationPage.vue"),
+      },
+      {
         path: "",
         name: "landing-main",
         component: () => import("pages/IndexPage.vue"),
+      },
+      {
+        path: "selfdevelopment",
+        name: "landing-selfdevelopment",
+        component: () => import("src/pages/ClubDevelopmentPage.vue"),
+      },
+      {
+        path: "work",
+        name: "landing-work",
+        component: () => import("pages/ClubWorkPage.vue"),
+      },
+      {
+        path: "business",
+        name: "landing-business",
+        component: () => import("pages/ClubBusinessPage.vue"),
       },
     ],
   },
@@ -160,6 +180,44 @@ const routes = [
       },
     ],
   },
+
+  // {
+  //   path: "/project",
+  //   name: "teamLayout",
+  //   component: () => import("layouts/ClubTeamLayout.vue"),
+  //   children: [
+  //     {
+  //       path: ":id/invite",
+  //       name: "projectInvite",
+  //       component: () => import("pages/ClubTeamInvitePage.vue"),
+  //     },
+  //     {
+  //       path: "space/:id",
+  //       name: "teamSpace",
+  //       meta: { isTeamMember: true },
+  //       component: () => import("pages/ClubTeamSpace.vue"),
+  //     },
+  //     {
+  //       path: "space/:id/edit",
+  //       name: "teamSpaceEdit",
+  //       meta: { isTeamOwner: true },
+  //       component: () => import("src/pages/ClubTeamSettingsPage.vue"),
+  //     },
+  //     {
+  //       path: ":id/edit",
+  //       name: "teamEdit",
+  //       meta: { isTeamOwner: true },
+  //       component: () => import("src/pages/ClubTeamSettingsPage.vue"),
+  //     },
+
+  //     {
+  //       path: ":id/invite",
+  //       name: "teamInvite",
+  //       meta: { isTeamOwner: true },
+  //       component: () => import("pages/ClubTeamInvitePage.vue"),
+  //     },
+  //   ],
+  // },
 
   // Always leave this as last one,
   // but you can also remove it

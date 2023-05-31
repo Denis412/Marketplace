@@ -44,7 +44,12 @@ export const projectsPaginateInTeamSpace = gql`
         team_name
         created_at
         space
-
+        leader {
+          id
+          email {
+            email
+          }
+        }
         members {
           id
           fullname {

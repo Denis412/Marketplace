@@ -1,7 +1,10 @@
 <template>
   <q-layout view="hHh LpR fff">
     <c-main-header />
-    <c-main-drawer side="left" />
+    <c-main-drawer
+      side="left"
+      :projects="route.name === 'my-projects' || route.name === 'project'"
+    />
 
     <q-page-container v-if="currentUser">
       <router-view v-slot="{ Component }">
@@ -21,8 +24,11 @@ import CMainHeader from "src/components/ClubMainHeader.vue";
 import CMainDrawer from "src/components/ClubMainDrawer.vue";
 import CMainFooter from "src/components/Landing/ClubMainFooter.vue";
 import { useUserStore } from "src/stores/user";
+import { useRoute } from "vue-router";
 
 const f = computed(() => result.value);
+
+const route = useRoute();
 
 const exclude = ref([
   "ClubTeamPage",

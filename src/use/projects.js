@@ -143,6 +143,9 @@ export const useProjectCreate = () => {
           name,
           team_name: team.name,
           space: space_id,
+          leader: {
+            [subject[0].type_id]: subject[0].id,
+          },
           members: {
             [subject[0].type_id]: [subject[0].id],
           },
@@ -224,26 +227,6 @@ export const useProjectUpdate = () => {
 
       result.value = await projectApi.update({ id, input, space_id });
 
-      await projectApi.refetchPaginateProjects({
-        page: 1,
-        perPage: 100,
-        space_id,
-      });
-
-      await useProjectsQuery()
-        .getWithWere({
-          page: 1,
-          perPage: 1,
-          where: {
-            column: "name",
-            operator: "EQ",
-            value: result.value.name,
-          },
-          space_id,
-          project_space: true,
-        })
-        .refetch({});
-
       loading.value = false;
     } catch (e) {
       error.value = e;
@@ -275,6 +258,18 @@ export const useProjectApplication = () => {
           operator: "EQ",
           value: "subject",
         },
+        space_id,
+      });
+
+      const stubjectInTeamSpace = await userApi.refetchPaginateSubjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "email",
+          operator: "FTS",
+          value: subject.email.email,
+        },
+        is_team: true,
         space_id,
       });
 
@@ -353,7 +348,7 @@ export const useProjectApplication = () => {
         where: {
           column: `${subjectProperty[0].id}->${subjectType[0].id}`,
           operator: "EQ",
-          value: subject.id,
+          value: stubjectInTeamSpace[0].id,
         },
       });
 
@@ -363,7 +358,7 @@ export const useProjectApplication = () => {
       result.value = await applicationApi.create({
         name: project_name,
         subject: {
-          [subjectType[0].id]: subject.id,
+          [subjectType[0].id]: stubjectInTeamSpace[0].id,
         },
         project: {
           [projectType[0].id]: project_id,
@@ -378,7 +373,7 @@ export const useProjectApplication = () => {
           model_type: "object",
           model_id: result.value.id,
           owner_type: "subject",
-          owner_id: subject.id,
+          owner_id: stubjectInTeamSpace[0].id,
           level: 5,
         },
         space_id,
@@ -506,6 +501,17 @@ export const useProjectApplication = () => {
           },
           space_id
         );
+
+        await projectApi.refetchPaginateProjects({
+          page: 1,
+          perPage: 1,
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: application.project.name,
+          },
+          space_id: application.project.space,
+        });
       }
 
       loading.value = false;
@@ -559,6 +565,17 @@ export const useProjectApplication = () => {
           space_id
         );
       }
+
+      await projectApi.refetchPaginateProjects({
+        page: 1,
+        perPage: 1,
+        where: {
+          column: "name",
+          operator: "EQ",
+          value: application.project.name,
+        },
+        space_id: application.project.space,
+      });
 
       loading.value = false;
     } catch (e) {

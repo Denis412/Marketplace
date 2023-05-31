@@ -21,10 +21,29 @@ export const useTeamCreate = () => {
     try {
       creatingTeam.value = true;
 
+      team = await teamApi.create({
+        input: {
+          name,
+          avatar,
+          description,
+          leader_telegram_chat_id: author.telegram_chat_id,
+        },
+      });
+
       space = await spaceApi.create({
         input: {
           name,
           description,
+        },
+      });
+
+      await teamApi.update({
+        id: team.id,
+        input: {
+          space: space.id,
+          members: {
+            [process.env.SUBJECT_TYPE_ID]: [team.author_id],
+          },
         },
       });
 
@@ -40,26 +59,6 @@ export const useTeamCreate = () => {
         },
         space_id: space.id,
       });
-
-      // await propertyApi.createMany({
-      //   input: [
-      //     {
-      //       name: "speciality1",
-      //       label: "Специальность",
-      //       data_type: "text",
-      //       type_id: subjectType[0].id,
-      //       order: 2,
-      //     },
-      //     {
-      //       name: "avatar",
-      //       label: "Аватар",
-      //       data_type: "text",
-      //       type_id: subjectType[0].id,
-      //       order: 4,
-      //     },
-      //   ],
-      //   space_id: space.id,
-      // });
 
       //*******************************************************************************
 
@@ -188,11 +187,35 @@ export const useTeamCreate = () => {
 
       await propertyApi.create({
         input: {
+          label: "Руководитель проекта",
+          name: "leader",
+          type_id: projectTypeData.id,
+          data_type: "object",
+          order: 8,
+          multiple: {
+            status: false,
+          },
+          meta: {
+            related_types: [
+              {
+                type_id: subjectType[0].id,
+                inverse_relation: true,
+                inverse_relation_label: "Проекты",
+                inverse_relation_name: "projects_leader",
+              },
+            ],
+          },
+        },
+        space_id: space.id,
+      });
+
+      await propertyApi.create({
+        input: {
           label: "Заказчики",
           name: "customers",
           type_id: projectTypeData.id,
           data_type: "object",
-          order: 8,
+          order: 9,
           multiple: {
             status: true,
             max_number: 3,
@@ -217,7 +240,7 @@ export const useTeamCreate = () => {
           label: "Дата сдачи",
           data_type: "datetime",
           type_id: projectTypeData.id,
-          order: 9,
+          order: 10,
           meta: {
             properties: [
               {
@@ -368,25 +391,6 @@ export const useTeamCreate = () => {
 
       //*******************************************************************************
 
-      team = await teamApi.create({
-        input: {
-          name,
-          avatar,
-          description,
-          leader_telegram_chat_id: author.telegram_chat_id,
-        },
-        space_id: space.id,
-      });
-
-      await teamApi.update({
-        id: team.id,
-        input: {
-          members: {
-            [process.env.SUBJECT_TYPE_ID]: [team.author_id],
-          },
-        },
-      });
-
       const rootPageData = await pageApi.create({
         input: {
           title: team.name,
@@ -409,26 +413,6 @@ export const useTeamCreate = () => {
         },
         space_id: space.id,
       });
-
-      await userApi.refetchPaginateSubjects({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "id",
-          operator: "EQ",
-          value: team.author_id,
-        },
-      });
-
-      // await userApi.update(
-      //   projectTypeData.author_id,
-      //   {
-      //     speciality1: mainSpaceSubject[0].speciality1.name,
-      //     avatar: mainSpaceSubject[0].avatar,
-      //   },
-      //   true,
-      //   space.id
-      // );
 
       createTeamResult.value = { team, space };
 
@@ -454,7 +438,7 @@ export const useTeamUpdate = () => {
 
       console.log("team update", id, data);
 
-      const teamData = await teamApi.update(id, data);
+      const teamData = await teamApi.update({ id, input: data });
 
       await teamApi.refetchPaginateTeams({
         page: 1,

@@ -1,17 +1,8 @@
 <template>
   <section>
-    <q-btn
-      round
-      flat
-      icon="img:/assets/icons/notification.svg"
-      class="c-notification-btn"
-    >
+    <q-btn round disable flat icon="img:/assets/icons/notification.svg" class="c-notification-btn">
       <!-- фильтрация на бэке -->
-      <q-badge
-        floating
-        color="red"
-        v-if="NotificationList.filter((elem) => !elem.status).length"
-      />
+      <q-badge floating color="red" v-if="NotificationList.filter((elem) => !elem.status).length" />
 
       <q-popup-proxy class="c-notification-popup">
         <h4 class="text-h4 c-mb-32">Уведомления</h4>

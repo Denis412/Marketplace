@@ -53,9 +53,9 @@
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
-import { useRouter } from "vue-router";
-import { useApplications } from "src/use/applications";
+import { inject, ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+// import { useApplications } from "src/use/applications";
 
 import _ from "lodash";
 
@@ -70,8 +70,23 @@ const { isProfile } = defineProps({
 const isOwner = inject("isOwner");
 const currentTeam = inject("currentTeam");
 
+const route = useRoute();
 const router = useRouter();
-const { filteredApplications } = useApplications(currentTeam, true);
+// const { filteredApplications } = useApplications(currentTeam, true);
+
+const filteredApplications = computed(() => {
+  return currentTeam.value?.applications.reduce(
+    (acc, application) => {
+      acc[application.sender == "subject" ? "incoming" : "outgoing"].push(application);
+
+      return acc;
+    },
+    {
+      incoming: [],
+      outgoing: [],
+    }
+  );
+});
 
 const selectMembersList = ref("members");
 
@@ -79,6 +94,7 @@ const inviteUser = async () => {
   router.push({
     name: "teamInvite",
     params: { id: currentTeam.value.id },
+    query: { ...route.query },
   });
 };
 </script>

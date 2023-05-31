@@ -8,8 +8,14 @@
     :width="256"
     :mini-width="64"
   >
-    <c-tree-teams v-if="route.path.includes('teams')" :class="{ 'c-tree-mini': miniState }" />
     <c-tree-my-team v-if="team" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-projects v-else-if="projects" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-teams v-else-if="!team" :class="{ 'c-tree-mini': miniState }" />
+
+    <c-tree-orders
+      v-else-if="route.path.includes('orders')"
+      :class="{ 'c-tree-mini': miniState }"
+    />
 
     <!-- <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
       <q-item
@@ -34,7 +40,7 @@
 
         <c-qtabs-document v-if="item.title == 'Документы'" />
       </q-item>
-    </q-list> -->
+    </q-list>  -->
 
     <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
       <img src="/assets/icons/arrow/drawer-arrow.svg" />
@@ -48,12 +54,15 @@ import { useRoute } from "vue-router";
 import CQtabsDocument from "src/components/ClubQtabsDocument.vue";
 import CTreeTeams from "src/components/ClubTreeTeams.vue";
 import CTreeMyTeam from "src/components/ClubTreeMyTeam.vue";
+import CTreeProjects from "src/components/ClubTreeProjects.vue";
+import CTreeOrders from "src/components/ClubTreeOrders.vue";
 
 import { filesApi } from "src/sdk/files/file";
 
-const { side, team } = defineProps({
+const { side, team, projects } = defineProps({
   side: String,
   team: Boolean,
+  projects: Boolean,
 });
 
 const route = useRoute();
@@ -68,34 +77,34 @@ const isMyteam = () => {
   return currentUser.value?.teams.some((team) => team.space === route.query.space);
 };
 
-const mainTreeItems = ref([
-  {
-    title: "Главная",
-    img: "HomeIconDemo.svg",
-    path: "club",
-  },
-  {
-    title: "Магазин",
-    img: "HomeIconDemo.svg",
-    path: "market",
-  },
-  {
-    title: "Команды",
-    img: "HomeIconDemo.svg",
-    path: "my-teams",
-  },
-  {
-    title: "Документы",
-    img: "HomeIconDemo.svg",
-    path: "addDocument",
-    content: "+",
-  },
-  {
-    title: "Лендинг",
-    img: "HomeIconDemo.svg",
-    path: "addDocument",
-  },
-]);
+// const mainTreeItems = ref([
+//   {
+//     title: "Главная",
+//     img: "HomeIconDemo.svg",
+//     path: "club",
+//   },
+//   {
+//     title: "Магазин",
+//     img: "HomeIconDemo.svg",
+//     path: "market",
+//   },
+//   {
+//     title: "Команды",
+//     img: "HomeIconDemo.svg",
+//     path: "my-teams",
+//   },
+//   {
+//     title: "Документы",
+//     img: "HomeIconDemo.svg",
+//     path: "addDocument",
+//     content: "+",
+//   },
+//   {
+//     title: "Лендинг",
+//     img: "HomeIconDemo.svg",
+//     path: "addDocument",
+//   },
+// ]);
 
 const toggleDrawer = () => {
   miniState.value = !miniState.value;
