@@ -11,7 +11,7 @@
           class="search-input c-input-outline"
           outlined
           placeholder="Поиск участника"
-          @change="filteringSubjects('name')"
+          @change="filteringSubjects('name', $event)"
           v-model="filters.name"
         >
           <template #prepend>
@@ -25,7 +25,7 @@
           clearable
           class="club-dropdown text-caption1 text-black"
           v-model="filters.speciality"
-          @update:model-value="filteringSubjects('speciality')"
+          @update:model-value="filteringSubjects('speciality', $event)"
           :options="selectSpecialitites"
           dropdown-icon="img:/assets/icons/arrow/arrow-down-grey.svg"
         >
@@ -157,7 +157,7 @@ const { result: allSpecialities } = specilalityApi.paginateSpeciality({
 
 const { result: allSubjects } = userApi.paginateSubjects({
   page: 1,
-  perPage: 100,
+  perPage: 50,
   is_invite: true,
   where: {
     column: "id",
@@ -271,7 +271,7 @@ const inviteSubjects = async () => {
   }
 };
 
-const filteringSubjects = async (filter) => {
+const filteringSubjects = async (filter, value) => {
   if (filter === "name" && (filters.value.name === "" || !filters.value.name.trim())) {
     filteredSubjects.value = null;
     return;
@@ -280,12 +280,18 @@ const filteringSubjects = async (filter) => {
   if (!route.query.project) filteredSubjects.value = teamFilter.value;
   else filteredSubjects.value = projectFilter.value;
 
-  filteredSubjects.value = filteredSubjects.value.filter(
-    (subject) =>
-      subject.fullname.first_name.includes(filters.value.name) ||
-      subject.fullname.middle_name.includes(filters.value.name) ||
-      subject.fullname.last_name.includes(filters.value.name)
-  );
+  filteredSubjects.value = await userApi.refetchPaginateSubjects({
+    page: 1,
+    perPage: 300,
+    where:
+      filter === "name" && value
+        ? {
+            column: "fullname",
+            operator: "FTS",
+            value,
+          }
+        : null,
+  });
 
   if (filters.value.speciality)
     filteredSubjects.value = filteredSubjects.value.filter(
