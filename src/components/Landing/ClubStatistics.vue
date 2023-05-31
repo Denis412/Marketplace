@@ -28,7 +28,7 @@
         <c-partitian :index="index + 33" v-for="index in 33" :key="index" />
       </div>
       <div class="q-mt-lg">
-        <q-btn
+        <!-- <q-btn
           @click="flag = !flag"
           unelevated
           dense
@@ -46,7 +46,7 @@
           :disable="flag"
           class="q-mr-md control"
           icon="img:/assets/icons/arrow/arrow-right-white.svg"
-        />
+        /> -->
       </div>
     </div>
   </section>
