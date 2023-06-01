@@ -45,14 +45,14 @@ const contex = () => {
     id: dragNode.data.page_id,
     space_id: 13,
   });
-  // Определите, куда переместить перетаскиваемую страницу
-  const move = dragContext.insertBefore ? "BEFORE" : "AFTER";
-  // Определите идентификатор страницы, относительно которой будет осуществляться перемещение
-  const pageId = dragContext.insertBefore
-    ? dragContext.insertBefore.data.page_id
-    : dragContext.insertAfter.data.page_id;
-  // Вызовите метод movePages с необходимыми аргументами
-  pageApi.movePages(move, pageId, [dragNode.data.page_id]);
+  // // Определите, куда переместить перетаскиваемую страницу
+  // const move = dragContext.insertBefore ? "BEFORE" : "AFTER";
+  // // Определите идентификатор страницы, относительно которой будет осуществляться перемещение
+  // const pageId = dragContext.insertBefore
+  //   ? dragContext.insertBefore.data.page_id
+  //   : dragContext.insertAfter.data.page_id;
+  // // Вызовите метод movePages с необходимыми аргументами
+  // pageApi.movePages(move, pageId, [dragNode.data.page_id]);
 };
 
 onMounted(() => {

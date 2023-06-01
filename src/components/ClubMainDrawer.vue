@@ -28,7 +28,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import CTabsDocument from "src/components/ClubTabsDocument.vue";
-import { filesApi } from "src/sdk/files/file";
+import { filesFunc } from "src/use/fileFunctions";
 
 const { side } = defineProps({
   side: String,
@@ -91,7 +91,7 @@ const toggleDrawer = () => {
 };
 
 const addDocument = () => {
-  filesApi.createHtmlFile({ space_id: 13 });
+  filesFunc.createHtmlFile({ space_id: 13 });
 };
 
 const isActive = (path) => {
