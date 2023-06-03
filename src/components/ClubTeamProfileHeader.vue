@@ -88,20 +88,21 @@
 import { computed, inject, ref } from "vue";
 import { useRouter } from "vue-router";
 
-import { useTeamApplication, useTeamUpdate } from "src/use/teams";
+// import { useTeamApplication, useTeamUpdate } from "src/use/teams";
+
+import TeamService from "src/sevices/TeamService";
 
 import CButton from "src/components/ClubButton.vue";
 import CChip from "./ClubChip.vue";
 import CPopupTeamActions from "./ClubPopupTeamActions.vue";
-import teamApi from "src/sdk/team";
-import TeamService from "src/sevices/TeamService";
+// import teamApi from "src/sdk/team";
 
 const { isProfile } = defineProps({
   isProfile: Boolean,
 });
 
 const router = useRouter();
-const { updateTeam } = useTeamUpdate();
+// const { updateTeam } = useTeamUpdate();
 
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
@@ -119,9 +120,7 @@ const isInvited = computed(() =>
 );
 
 const updateTeamStatus = async () => {
-  await updateTeam(currentTeam.value.id, {
-    ready_for_orders: isReady.value,
-  });
+  await TeamService.updateTeam({ ready_for_orders: isReady.value }, { id: currentTeam.value.id });
 };
 
 const applicationSend = async () => {
