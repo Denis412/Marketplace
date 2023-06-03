@@ -34,6 +34,8 @@ import { useQuasar } from "quasar";
 
 import CButton from "./ClubButton.vue";
 
+import TeamService from "src/sevices/TeamService";
+
 import propertyApi from "src/sdk/property";
 import { useTeamApplication } from "src/use/teams";
 import { useProjectApplication } from "src/use/projects";
@@ -107,7 +109,11 @@ const accept = async () => {
   console.log(application, incoming);
 
   try {
-    if (!project) await acceptApplication({ application, is_team });
+    if (!project)
+      await TeamService.acceptTeamApplication(
+        { application },
+        { is_team, space_id: application.team.space }
+      );
     else
       await acceptProjectApplication({
         application,

@@ -76,7 +76,7 @@ export const getTeamsWithWhere = gql`
 `;
 
 export const getTeamById = gql`
-  query getTeamsWithWhere($id: String!) {
+  query getTeamById($id: String!) {
     get_team(id: $id) {
       id
       type_id

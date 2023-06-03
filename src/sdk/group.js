@@ -47,8 +47,8 @@ const update = async ({ id, input, space_id }) => {
   return groupData.record;
 };
 
-const invite = async (space_id, data) => {
-  const { data: inviteData } = await invitingUser({ input: data }, spaceHeader(space_id));
+const invite = async ({ input, space_id }) => {
+  const { data: inviteData } = await invitingUser({ input }, spaceHeader(space_id));
 
   // console.log("invite group", inviteData);
 

@@ -94,6 +94,7 @@ import CDropdown from "src/components/ClubDropdown.vue";
 import { computed, inject, provide, ref, watch } from "vue";
 
 import TeamService from "src/sevices/TeamService";
+import BaseService from "src/sevices/BaseService";
 
 import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";
@@ -106,12 +107,12 @@ import projectApi from "src/sdk/project";
 
 const currentUser = inject("currentUser");
 
-const { result, loading: sending, sendApplication } = useTeamApplication();
-const {
-  result: sendedProjectApplication,
-  loading: sendingProjectAppliaction,
-  sendApplication: sendProjectApplication,
-} = useProjectApplication();
+// const { result, loading: sending, sendApplication } = useTeamApplication();
+// const {
+//   result: sendedProjectApplication,
+//   loading: sendingProjectAppliaction,
+//   sendApplication: sendProjectApplication,
+// } = useProjectApplication();
 
 const router = useRouter();
 const route = useRoute();
@@ -136,44 +137,63 @@ const { result: team } = TeamService.fetchTeamById(route.params.id);
 //   },
 // });
 
-// const { result: project } = TeamService.fe
+const { result: project } = TeamService.fetchProjectById(route.params.id, route.query.space);
 
-const { result: project } = projectApi.paginateProject({
-  page: 1,
-  perPage: 1,
-  where: {
-    column: "id",
-    operator: "EQ",
-    value: route.params.id,
+// const { result: project } = projectApi.paginateProject({
+//   page: 1,
+//   perPage: 1,
+//   where: {
+//     column: "id",
+//     operator: "EQ",
+//     value: route.params.id,
+//   },
+//   space_id: route.query.space,
+// });
+
+const { result: projectSubjects } = TeamService.fetchSubjectsInTeamSpace(
+  { perPage: 100 },
+  { space_id: route.query.space }
+);
+
+// const { result: projectSubjects } = userApi.paginateSubjects({
+//   page: 1,
+//   perPage: 100,
+//   is_team: true,
+//   space_id: route.query.space,
+// });
+
+const { result: allSpecialities } = BaseService.fetchApiPaginate(specilalityApi.paginateSpeciality);
+
+// const { result: allSpecialities } = specilalityApi.paginateSpeciality({
+//   page: 1,
+//   perPage: 100,
+// });
+
+const { result: allSubjects } = BaseService.fetchApiPaginate(
+  userApi.paginateSubjects,
+  {
+    where: {
+      column: "user_id",
+      operator: "NEQ",
+      value: currentUser.value.user_id,
+    },
   },
-  space_id: route.query.space,
-});
+  { is_invite: true }
+);
 
-const { result: projectSubjects } = userApi.paginateSubjects({
-  page: 1,
-  perPage: 100,
-  is_team: true,
-  space_id: route.query.space,
-});
-
-const { result: allSpecialities } = specilalityApi.paginateSpeciality({
-  page: 1,
-  perPage: 100,
-});
-
-const { result: allSubjects } = userApi.paginateSubjects({
-  page: 1,
-  perPage: 50,
-  is_invite: true,
-  where: {
-    column: "id",
-    operator: "NEQ",
-    value: currentUser.value.subject_id,
-  },
-});
+// const { result: allSubjects } = userApi.paginateSubjects({
+//   page: 1,
+//   perPage: 50,
+//   is_invite: true,
+//   where: {
+//     column: "user_id",
+//     operator: "NEQ",
+//     value: currentUser.value.user_id,
+//   },
+// });
 
 const selectSpecialitites = computed(() =>
-  allSpecialities.value?.paginate_speciality.data.map((speciality) => ({
+  allSpecialities.value?.map((speciality) => ({
     label: speciality.name,
     value: speciality.id,
   }))
@@ -184,24 +204,18 @@ const showSubjects = computed(
 );
 
 const teamFilter = computed(() => {
-  return allSubjects.value?.paginate_subject.data.filter((subject) => {
+  return allSubjects.value?.filter((subject) => {
     return !team.value?.members.some((member) => member.id === subject.id);
   });
 });
 
 const projectFilter = computed(() => {
-  return allSubjects.value?.paginate_subject.data.filter((subject) => {
+  return allSubjects.value?.filter((subject) => {
     return (
-      projectSubjects.value?.paginate_subject.data.some(
-        (sub) => sub.email.email === subject.email.email
-      ) &&
-      !project.value?.paginate_project.data[0]?.members.some(
-        (member) => member.email.email === subject.email.email
-      ) &&
-      !project.value?.paginate_project.data[0]?.customers.some(
-        (customer) => customer.email.email === subject.email.email
-      ) &&
-      project.value?.paginate_project.data[0]?.leader?.email.email !== subject.email.email
+      projectSubjects.value?.some((sub) => sub.email.email === subject.email.email) &&
+      !project.value?.members.some((member) => member.email.email === subject.email.email) &&
+      !project.value?.customers.some((customer) => customer.email.email === subject.email.email) &&
+      project.value?.leader?.email.email !== subject.email.email
     );
   });
 });
@@ -214,7 +228,7 @@ const inviteSubjects = async () => {
   try {
     if (route.query.project) {
       for (let subject of selectedSubjects.value) {
-        await sendProjectApplication({
+        await TeamService.sendProjectApplication({
           subject: subject,
           project_name: route.query.name,
           project_id: route.params.id,
@@ -223,16 +237,27 @@ const inviteSubjects = async () => {
         });
       }
 
-      await projectApi.refetchPaginateProjects({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "name",
-          operator: "EQ",
-          value: route.query.name,
+      await TeamService.fetchSubjectsInTeamSpace().refetch(
+        {
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: route.query.name,
+          },
         },
-        space_id: route.query.space,
-      });
+        { only_one: true, space_id: route.query.space }
+      );
+
+      // await projectApi.refetchPaginateProjects({
+      //   page: 1,
+      //   perPage: 1,
+      //   where: {
+      //     column: "name",
+      //     operator: "EQ",
+      //     value: route.query.name,
+      //   },
+      //   space_id: route.query.space,
+      // });
 
       delete route.query.customer;
 
@@ -243,18 +268,18 @@ const inviteSubjects = async () => {
       });
     } else {
       for (let subject of selectedSubjects.value) {
-        await sendApplication({
-          name: team.value.paginate_team.data[0].name,
+        await TeamService.sendTeamApplication({
+          name: team.value.name,
           subject: {
             [process.env.SUBJECT_TYPE_ID]: subject.id,
           },
           team: {
-            [process.env.TEAM_TYPE_ID]: team.value.paginate_team.data[0].id,
+            [process.env.TEAM_TYPE_ID]: team.value.id,
           },
           status: process.env.APPLICATION_STATUS_PENDING,
           sender: "team",
-          space: team.value.paginate_team.data[0].space,
-          sender_id: team.value.paginate_team.data[0].id,
+          space: team.value.space,
+          sender_id: team.value.id,
           target: subject,
         });
       }

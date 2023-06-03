@@ -8,6 +8,7 @@ import {
 import routes from "./routes";
 import { useUserStore } from "src/stores/user";
 import teamApi from "src/sdk/team";
+import TeamService from "src/sevices/TeamService";
 
 /*
  * If not building with SSR mode, you can
@@ -47,21 +48,18 @@ export default route(function (/* { store, ssrContext } */) {
     // console.log(requiresAuth, teamMember, teamOwner);
 
     if (teamOwner) {
-      const team = await teamApi.refetchPaginateTeams({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "id",
-          operator: "EQ",
-          value: to.params.id,
-        },
-      });
+      const { result: team } = await TeamService.fetchTeamById(to.params.id);
+
+      console.log("team", team);
 
       const subject = await userStore.FETCH_CURRENT_SPACE_SUBJECT(0, false);
 
-      if (team[0]?.author_id !== subject.id) next(`/team/${to.params.id}?space=${to.query?.space}`);
+      if (team.value?.author_id !== subject.id)
+        next(`/team/${to.params.id}?space=${to.query?.space}`);
     } else if (teamMember || to.name === "team") {
       const result = await userStore.FETCH_CURRENT_SPACE_SUBJECT(to.query.space, true);
+
+      console.log("rsssss", result);
 
       if (teamMember && !result)
         next(`/team/${to.params.id}?name=${to.query?.name}&space=${to.query?.space}`);

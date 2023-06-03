@@ -9,8 +9,8 @@ function basePaginateQuery(method_link, variables = {}, options = {}) {
   });
 }
 
-function baseQueryById(method_link, id) {
-  return method_link?.({ id });
+function baseQueryById(method_link, variables = {}, options = {}) {
+  return method_link?.({ ...variables, ...options });
 }
 
 async function baseMutation(method_link, variables = {}, options = {}) {
@@ -27,7 +27,7 @@ function extractPropertyData(result, get = false) {
 }
 
 export default class BaseService {
-  static fetchApiById(method_link, id) {
+  static fetchApiById(method_link, variables = {}, options = {}) {
     const refetchResult = ref(null);
     const refetchLoading = ref(null);
     const refetchError = ref(null);
@@ -36,7 +36,7 @@ export default class BaseService {
       result: resultApi,
       loading: loadingApi,
       error: errorApi,
-    } = baseQueryById(method_link, id);
+    } = baseQueryById(method_link, variables, options);
 
     const result = computed(
       () => refetchResult.value ?? extractPropertyData(resultApi.value, true)
@@ -52,14 +52,16 @@ export default class BaseService {
           refetch_options ?? options
         ).refetch(refetch_variables ?? variables);
 
+        console.log("data", data);
+
         if (!refetch_options?.update_parent_query)
           return {
-            data: extractPropertyData(data),
-            loading: refetchLoading.value,
-            error: refetchError.value,
+            data: extractPropertyData(data, true),
+            loading,
+            error,
           };
 
-        refetchResult.value = extractPropertyData(data);
+        refetchResult.value = extractPropertyData(data, true);
         refetchLoading.value = loading;
         refetchError.value = error;
       } catch (e) {
