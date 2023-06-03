@@ -480,7 +480,9 @@ export default class TeamService {
       });
       result.value = createdApplication.value;
 
-      if (variables.sender === "team") await this.fetchTeamById(variables.sender_id).refetch();
+      await this.fetchTeamById(
+        variables.sender === "team" ? variables.sender_id : variables.target.id
+      ).refetch();
 
       console.log("end");
     } catch (e) {
@@ -504,7 +506,7 @@ export default class TeamService {
 
       // console.log("vars", variables.application, options);
 
-      if (options.is_team) {
+      if (options?.is_team) {
         const { data: groupData } = await BaseService.fetchApiPaginate(
           groupApi.paginateGroups,
           {},
