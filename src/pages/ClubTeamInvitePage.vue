@@ -98,21 +98,10 @@ import BaseService from "src/sevices/BaseService";
 
 import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";
-import teamApi from "src/sdk/team";
 import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
-import { useTeamApplication } from "src/use/teams";
-import { useProjectApplication } from "src/use/projects";
-import projectApi from "src/sdk/project";
 
 const currentUser = inject("currentUser");
-
-// const { result, loading: sending, sendApplication } = useTeamApplication();
-// const {
-//   result: sendedProjectApplication,
-//   loading: sendingProjectAppliaction,
-//   sendApplication: sendProjectApplication,
-// } = useProjectApplication();
 
 const router = useRouter();
 const route = useRoute();
@@ -126,48 +115,13 @@ const filters = ref({
 });
 
 const { result: team } = TeamService.fetchTeamById(route.params.id);
-
-// const { result: team } = teamApi.paginateTeams({
-//   page: 1,
-//   perPage: 1,
-//   where: {
-//     column: "id",
-//     operator: "EQ",
-//     value: route.params.id,
-//   },
-// });
-
 const { result: project } = TeamService.fetchProjectById(route.params.id, route.query.space);
-
-// const { result: project } = projectApi.paginateProject({
-//   page: 1,
-//   perPage: 1,
-//   where: {
-//     column: "id",
-//     operator: "EQ",
-//     value: route.params.id,
-//   },
-//   space_id: route.query.space,
-// });
+const { result: allSpecialities } = BaseService.fetchApiPaginate(specilalityApi.paginateSpeciality);
 
 const { result: projectSubjects } = TeamService.fetchSubjectsInTeamSpace(
   { perPage: 100 },
   { space_id: route.query.space }
 );
-
-// const { result: projectSubjects } = userApi.paginateSubjects({
-//   page: 1,
-//   perPage: 100,
-//   is_team: true,
-//   space_id: route.query.space,
-// });
-
-const { result: allSpecialities } = BaseService.fetchApiPaginate(specilalityApi.paginateSpeciality);
-
-// const { result: allSpecialities } = specilalityApi.paginateSpeciality({
-//   page: 1,
-//   perPage: 100,
-// });
 
 const { result: allSubjects } = BaseService.fetchApiPaginate(
   userApi.paginateSubjects,
@@ -180,17 +134,6 @@ const { result: allSubjects } = BaseService.fetchApiPaginate(
   },
   { is_invite: true }
 );
-
-// const { result: allSubjects } = userApi.paginateSubjects({
-//   page: 1,
-//   perPage: 50,
-//   is_invite: true,
-//   where: {
-//     column: "user_id",
-//     operator: "NEQ",
-//     value: currentUser.value.user_id,
-//   },
-// });
 
 const selectSpecialitites = computed(() =>
   allSpecialities.value?.map((speciality) => ({
@@ -247,17 +190,6 @@ const inviteSubjects = async () => {
         },
         { only_one: true, space_id: route.query.space }
       );
-
-      // await projectApi.refetchPaginateProjects({
-      //   page: 1,
-      //   perPage: 1,
-      //   where: {
-      //     column: "name",
-      //     operator: "EQ",
-      //     value: route.query.name,
-      //   },
-      //   space_id: route.query.space,
-      // });
 
       delete route.query.customer;
 

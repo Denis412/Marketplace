@@ -649,6 +649,8 @@ export default class TeamService {
     return { result, loading, error };
   }
 
+  static async cancelTeamApplication(variables, options) {}
+
   static async sendProjectApplication(variables, options) {
     const result = ref(null);
     const loading = ref(false);
@@ -813,4 +815,8 @@ export default class TeamService {
 
     return { result, loading, error };
   }
+
+  static async acceptProjectApplication(variables, options) {}
+
+  static async cancelProjectApplication(variables, options) {}
 }

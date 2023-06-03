@@ -5,6 +5,8 @@
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
 
+      <!-- <pre>{{ res }}</pre> -->
+
       <section>
         <q-img
           :src="currentProject?.avatar || ''"
@@ -44,6 +46,7 @@ import { useProjectUpdate } from "src/use/projects";
 import filesApi from "src/sdk/file";
 import BaseService from "src/sevices/BaseService";
 import userApi from "src/sdk/user";
+import TeamService from "src/sevices/TeamService";
 
 const route = useRoute();
 const { result, updateProject } = useProjectUpdate();
@@ -58,30 +61,7 @@ const res = {
 
 const { refetch } = BaseService.fetchApiPaginate(userApi.paginateSubjects);
 
-const { result: project } = projectApi.paginateProject({
-  page: 1,
-  perPage: 1,
-  where: {
-    column: "name",
-    operator: "EQ",
-    value: route.query.name,
-  },
-  space_id: route.query.space,
-});
-
-const currentProject = computed(() => project.value?.paginate_project.data[0]);
-
-// const { result: currentProject } = BaseService.fetchApiPaginate(
-//   projectApi.paginateProject,
-//   {
-//     where: {
-//       column: "name",
-//       operator: "EQ",
-//       value: route.query.name,
-//     },
-//   },
-//   { only_one: true, space_id: route.query.space }
-// );
+const { result: currentProject } = TeamService.fetchProjectById(route.params.id, route.query.space);
 
 const isLeader = ref(false);
 
@@ -127,7 +107,7 @@ const groupProjectSubjects = async (group_names) => {
     console.log(group_name);
     for (let subject of currentProject.value?.[group_name] ?? []) {
       try {
-        const subjectMainSpace = await refetch(
+        const { data: subjectMainSpace } = await refetch(
           {
             where: {
               column: "email",
@@ -137,6 +117,8 @@ const groupProjectSubjects = async (group_names) => {
           },
           { only_one: true }
         );
+
+        console.log("subj", subject, subjectMainSpace);
 
         if (currentProject.value?.author_id === subject.id) {
           res.leader.value = Object.assign({}, subjectMainSpace, { role: "Руководитель проекта" });

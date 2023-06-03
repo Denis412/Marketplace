@@ -140,11 +140,42 @@ export const getProjectById = gql`
       target
       team_name
       created_at
+      leader {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+        email {
+          email
+        }
+        group {
+          id
+          name
+        }
+      }
+      customers {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+        email {
+          email
+        }
+        group {
+          id
+          name
+        }
+      }
       members {
         id
         fullname {
           first_name
           last_name
+        }
+        email {
+          email
         }
         group {
           id
