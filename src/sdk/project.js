@@ -3,7 +3,6 @@ import apolloClient from "src/apollo/apollo-client";
 import { projectCreate, projectDelete, projectUpdate } from "src/graphql/project/mutations";
 import {
   getProjectById,
-  projectsPaginate,
   projectsPaginateInMainSpace,
   projectsPaginateInTeamSpace,
 } from "src/graphql/project/queries";
@@ -15,6 +14,24 @@ const { mutate: creatingProject } = useMutation(projectCreate);
 const { mutate: updatingProject } = useMutation(projectUpdate);
 const { mutate: deletingProject } = useMutation(projectDelete);
 
+const queryProjectById = ({ id, space_id, fetchPolicy }) => {
+  return useQuery(
+    getProjectById,
+    { id },
+    fetchPolicy
+      ? { fetchPolicy, ...spaceHeader(space_id || process.env.MAIN_SPACE_ID) }
+      : spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+  );
+};
+
+const refetchProjectById = async ({ id, space_id, fetchPolicy }) => {
+  const { refetch } = queryProjectById({ id, space_id, fetchPolicy });
+
+  const { data: projectData } = await refetch();
+
+  return projectData.get_project;
+};
+
 const paginateProject = ({ page, perPage, where, space_id }) => {
   const query = space_id ? projectsPaginateInTeamSpace : projectsPaginateInMainSpace;
 
@@ -23,10 +40,6 @@ const paginateProject = ({ page, perPage, where, space_id }) => {
     { page, perPage, where },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
-};
-
-const gueryProjectById = ({ id, space_id }) => {
-  return useQuery(getProjectById, { id }, spaceHeader(space_id));
 };
 
 const refetchPaginateProjects = async ({ page, perPage, where, space_id }) => {
@@ -42,16 +55,6 @@ const refetchPaginateProjects = async ({ page, perPage, where, space_id }) => {
   // console.log("refetch paginate project", projectsData);
 
   return projectsData.paginate_project.data;
-};
-
-const refetchProjectById = async ({ id, space_id }) => {
-  const { refetch } = gueryProjectById({ id, space_id });
-
-  const { data: projectData } = await refetch();
-
-  // console.log("get project", projectData);
-
-  return projectData.get_project;
 };
 
 const create = async ({ input, space_id }) => {
@@ -89,9 +92,10 @@ const deleteProjectById = async ({ id, space_id }) => {
 };
 
 const projectApi = {
+  queryProjectById,
+  refetchProjectById,
   paginateProject,
   refetchPaginateProjects,
-  gueryProjectById,
   refetchProjectById,
   create,
   update,

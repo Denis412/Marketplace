@@ -34,7 +34,16 @@ const { mutate: updatingUserInTeamSpace } = useMutation(updateSubjectInTeam);
 const { mutate: resetPasswordSendCode } = useMutation(userResetPasswordSendCode);
 const { mutate: resetPasswordConfirmCode } = useMutation(userResetPasswordConfirmCodeSetPassword);
 
-const paginateSubjects = ({ where, page, perPage, space_id, is_invite, is_team, is_my_teams }) => {
+const paginateSubjects = ({
+  where,
+  page,
+  perPage,
+  space_id,
+  is_invite,
+  is_team,
+  is_my_teams,
+  fetchPolicy,
+}) => {
   let query;
 
   if (is_invite) query = paginateSubjectsForInvite;
@@ -47,7 +56,7 @@ const paginateSubjects = ({ where, page, perPage, space_id, is_invite, is_team, 
   return useQuery(
     query,
     { page, perPage, where },
-    spaceHeader(space_id || process.env.MAIN_SPACE_ID)
+    { fetchPolicy, ...spaceHeader(space_id || process.env.MAIN_SPACE_ID) }
   );
 };
 

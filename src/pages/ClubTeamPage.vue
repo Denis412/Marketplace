@@ -14,32 +14,32 @@
 
 <script setup>
 import CTeamProfile from "src/components/ClubTeamProfile.vue";
-import teamApi from "src/sdk/team";
-import userApi from "src/sdk/user";
+// import userApi from "src/sdk/user";
 import { computed, provide } from "vue";
 import { useRoute } from "vue-router";
 
+import TeamService from "src/sevices/TeamService";
+
 const route = useRoute();
 
-const { result: currentTeam } = teamApi.paginateTeams({
-  page: 1,
-  perPage: 1,
-  where: {
-    column: "id",
-    operator: "EQ",
-    value: route.params.id,
-  },
-});
+const { result: currentTeam } = TeamService.fetchTeamById(route.params.id);
 
-const { result: members, loading } = userApi.paginateSubjects({
-  page: 1,
-  perPage: 100,
-  is_team: true,
-  space_id: route.query.space,
-});
+const { result: members, loading } = TeamService.fetchSubjectsInTeamSpace(
+  {},
+  {
+    space_id: route.query.space,
+  }
+);
 
-const team = computed(() => currentTeam.value?.paginate_team.data[0]);
-const currentMembers = computed(() => members.value?.paginate_subject.data);
+// const { result: members, loading } = userApi.paginateSubjects({
+//   page: 1,
+//   perPage: 100,
+//   is_team: true,
+//   space_id: route.query.space,
+// });
+
+const team = computed(() => currentTeam.value);
+const currentMembers = computed(() => members.value);
 
 provide("currentTeam", team);
 provide("currentMembers", currentMembers);

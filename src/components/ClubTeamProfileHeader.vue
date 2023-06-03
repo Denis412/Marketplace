@@ -53,7 +53,7 @@
             @click="applicationSend"
           />
 
-          <div v-if="sending" class="text-body2">Отправляем заявку...</div>
+          <div v-if="sendingApplication" class="text-body2">Отправляем заявку...</div>
 
           <q-checkbox
             dense
@@ -88,24 +88,26 @@
 import { computed, inject, ref } from "vue";
 import { useRouter } from "vue-router";
 
-import { useTeamApplication, useTeamUpdate } from "src/use/teams";
+// import { useTeamApplication, useTeamUpdate } from "src/use/teams";
+
+import TeamService from "src/sevices/TeamService";
 
 import CButton from "src/components/ClubButton.vue";
 import CChip from "./ClubChip.vue";
 import CPopupTeamActions from "./ClubPopupTeamActions.vue";
-import teamApi from "src/sdk/team";
+// import teamApi from "src/sdk/team";
 
 const { isProfile } = defineProps({
   isProfile: Boolean,
 });
 
 const router = useRouter();
-const { updateTeam } = useTeamUpdate();
-const { loading: sending, sendApplication } = useTeamApplication();
+// const { updateTeam } = useTeamUpdate();
 
 const currentUser = inject("currentUser");
 const currentTeam = inject("currentTeam");
 
+const sendingApplication = ref(false);
 const isReady = ref(currentTeam.value.ready_for_orders ?? false);
 const isOwner = inject("isOwner");
 const isMember = inject("isMember");
@@ -118,13 +120,13 @@ const isInvited = computed(() =>
 );
 
 const updateTeamStatus = async () => {
-  await updateTeam(currentTeam.value.id, {
-    ready_for_orders: isReady.value,
-  });
+  await TeamService.updateTeam({ ready_for_orders: isReady.value }, { id: currentTeam.value.id });
 };
 
 const applicationSend = async () => {
-  await sendApplication({
+  sendingApplication.value = true;
+
+  await TeamService.sendTeamApplication({
     name: currentUser.value.first_name,
     subject: {
       [process.env.SUBJECT_TYPE_ID]: currentUser.value.subject_id,
@@ -138,15 +140,7 @@ const applicationSend = async () => {
     target: currentTeam.value,
   });
 
-  await teamApi.refetchPaginateTeams({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "id",
-      operator: "EQ",
-      value: currentTeam.value.id,
-    },
-  });
+  sendingApplication.value = false;
 };
 </script>
 

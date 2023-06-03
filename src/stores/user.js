@@ -63,6 +63,8 @@ export const useUserStore = defineStore("user", {
           { space_id }
         );
 
+        console.log("fetch");
+
         const subjectsData = await userApi.refetchPaginateSubjects({
           page: 1,
           perPage: 1,

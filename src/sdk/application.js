@@ -50,11 +50,8 @@ const refetchPaginateApplications = async ({ page, perPage, where, space_id }) =
   return applicationsData.paginate_application.data;
 };
 
-const create = async ({ name, subject, team, project, status, sender, is_customer, space_id }) => {
+const create = async ({ input, space_id }) => {
   // console.log("trt", { name, subject, team, project, status, sender, space_id });
-  const input = team
-    ? { name, subject, team, status, sender }
-    : { name, subject, project, is_customer, status };
 
   // console.log(input);
 
@@ -68,11 +65,11 @@ const create = async ({ name, subject, team, project, status, sender, is_custome
   return applicationData.create_application.record;
 };
 
-const update = async (id, data, space_id) => {
+const update = async ({ id, input, space_id }) => {
   // console.log("application", id, data, space_id);
 
   const { data: applicationData } = await updatingApplication(
-    { id, input: data },
+    { id, input },
     spaceHeader(space_id || process.env.MAIN_SPACE_ID)
   );
 

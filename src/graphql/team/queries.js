@@ -74,3 +74,66 @@ export const getTeamsWithWhere = gql`
     }
   }
 `;
+
+export const getTeamById = gql`
+  query getTeamById($id: String!) {
+    get_team(id: $id) {
+      id
+      type_id
+      avatar
+      author_id
+      leader_telegram_chat_id
+      telegram_chat_id
+      directions
+      projects {
+        id
+        name
+      }
+      applications {
+        id
+        name
+        subject {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+          avatar
+          speciality1 {
+            name
+          }
+          email {
+            email
+          }
+        }
+        team {
+          id
+          space
+          name
+        }
+        status
+        sender
+        updated_at
+      }
+      members {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+        group {
+          name
+        }
+      }
+      space
+      level
+      position
+      created_at
+      updated_at
+      ready_for_orders
+      name
+      description
+      status
+    }
+  }
+`;

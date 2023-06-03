@@ -134,6 +134,80 @@ export const getProjectById = gql`
     get_project(id: $id) {
       id
       name
+      avatar
+      author_id
+      description
+      target
+      team_name
+      created_at
+      applications {
+        id
+        name
+        type_id
+        is_customer
+        subject {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+          email {
+            email
+          }
+        }
+        project {
+          id
+          name
+          space
+        }
+        updated_at
+        status
+      }
+      leader {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+        email {
+          email
+        }
+        group {
+          id
+          name
+        }
+      }
+      customers {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+        email {
+          email
+        }
+        group {
+          id
+          name
+        }
+      }
+      members {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+        email {
+          email
+        }
+        group {
+          id
+          name
+        }
+      }
+      delivery_date {
+        date
+      }
     }
   }
 `;

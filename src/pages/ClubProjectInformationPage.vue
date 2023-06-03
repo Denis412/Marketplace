@@ -1,6 +1,6 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <div class="loader loader-lg" v-if="!currentProject || loading" />
+    <div class="loader loader-lg" v-if="projectLoading" />
 
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
@@ -23,10 +23,10 @@
         />
       </section>
 
-      <c-section-projects-headers />
-      <c-project-information-section />
-      <c-project-target-description-sections />
-      <c-project-members-sections />
+      <c-section-projects-headers v-if="res.leader && res.customers" />
+      <c-project-information-section v-if="currentProject" />
+      <c-project-target-description-sections v-if="currentProject" />
+      <c-project-members-sections v-if="res.members" />
     </div>
   </q-page>
 </template>
@@ -44,6 +44,7 @@ import { useProjectUpdate } from "src/use/projects";
 import filesApi from "src/sdk/file";
 import BaseService from "src/sevices/BaseService";
 import userApi from "src/sdk/user";
+import TeamService from "src/sevices/TeamService";
 
 const route = useRoute();
 const { result, updateProject } = useProjectUpdate();
@@ -58,30 +59,10 @@ const res = {
 
 const { refetch } = BaseService.fetchApiPaginate(userApi.paginateSubjects);
 
-const { result: project } = projectApi.paginateProject({
-  page: 1,
-  perPage: 1,
-  where: {
-    column: "name",
-    operator: "EQ",
-    value: route.query.name,
-  },
-  space_id: route.query.space,
-});
-
-const currentProject = computed(() => project.value?.paginate_project.data[0]);
-
-// const { result: currentProject } = BaseService.fetchApiPaginate(
-//   projectApi.paginateProject,
-//   {
-//     where: {
-//       column: "name",
-//       operator: "EQ",
-//       value: route.query.name,
-//     },
-//   },
-//   { only_one: true, space_id: route.query.space }
-// );
+const { result: currentProject, loading: projectLoading } = TeamService.fetchProjectById(
+  route.params.id,
+  route.query.space
+);
 
 const isLeader = ref(false);
 
@@ -93,27 +74,18 @@ const pickFiles = () => (isLeader.value ? uploader.value.pickFiles() : null);
 
 const uploadImage = async () => {
   const fileId = await filesApi.uploadFiles(selectFile.value);
-  const avatar = await filesApi.get(fileId);
+  const avatar = await filesApi.refetchQueryFileById({ id: fileId[0] });
 
   await updateProject({
     id: currentProject.value?.id,
     input: {
       name: currentProject.value?.name,
-      avatar: filesApi.getUrl(avatar[0]),
+      avatar: filesApi.getUrl(avatar),
     },
     space_id: route.query.space,
   });
 
-  await projectApi.refetchPaginateProjects({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "id",
-      operator: "EQ",
-      value: route.params.id,
-    },
-    space_id: route.query.space,
-  });
+  await TeamService.fetchProjectById(route.params.id, route.query.space).refetch();
 };
 
 const groupProjectSubjects = async (group_names) => {
@@ -127,7 +99,7 @@ const groupProjectSubjects = async (group_names) => {
     console.log(group_name);
     for (let subject of currentProject.value?.[group_name] ?? []) {
       try {
-        const subjectMainSpace = await refetch(
+        const { data: subjectMainSpace } = await refetch(
           {
             where: {
               column: "email",
@@ -137,6 +109,8 @@ const groupProjectSubjects = async (group_names) => {
           },
           { only_one: true }
         );
+
+        console.log("subj", subject, subjectMainSpace);
 
         if (currentProject.value?.author_id === subject.id) {
           res.leader.value = Object.assign({}, subjectMainSpace, { role: "Руководитель проекта" });
