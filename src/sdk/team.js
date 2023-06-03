@@ -1,7 +1,7 @@
 import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 
 import { teamCreate, teamDelete, teamUpdate } from "src/graphql/team/mutations";
-import { getTeamsWithWhere } from "src/graphql/team/queries";
+import { getTeamById, getTeamsWithWhere } from "src/graphql/team/queries";
 import { spaceHeader } from "src/utils/spaceHeader";
 
 import apolloClient from "src/apollo/apollo-client";
@@ -11,6 +11,18 @@ provideApolloClient(apolloClient);
 const { mutate: creatingTeam } = useMutation(teamCreate, spaceHeader(process.env.MAIN_SPACE_ID));
 const { mutate: updatingTeam } = useMutation(teamUpdate, spaceHeader(process.env.MAIN_SPACE_ID));
 const { mutate: deletingTeam } = useMutation(teamDelete, spaceHeader(process.env.MAIN_SPACE_ID));
+
+const queryTeamById = ({ id }) => {
+  return useQuery(getTeamById, { id }, spaceHeader(process.env.MAIN_SPACE_ID));
+};
+
+const refetchQueryTeamById = async ({ id }) => {
+  const { refetch } = paginateTeams({ id });
+
+  const { data: teamData } = await refetch();
+
+  return teamData.get_team;
+};
 
 const paginateTeams = ({ page, perPage, where }) => {
   return useQuery(
@@ -66,6 +78,8 @@ const teamApi = {
   create,
   update,
   deleteById,
+  queryTeamById,
+  refetchQueryTeamById,
   paginateTeams,
   refetchPaginateTeams,
 };

@@ -21,14 +21,8 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-const { result: currentTeam } = teamApi.paginateTeams({
-  page: 1,
-  perPage: 1,
-  where: {
-    column: "id",
-    operator: "EQ",
-    value: route.params.id,
-  },
+const { result: currentTeam } = teamApi.queryTeamById({
+  id: route.params.id,
 });
 
 const { result: members, loading } = userApi.paginateSubjects({
@@ -38,7 +32,7 @@ const { result: members, loading } = userApi.paginateSubjects({
   space_id: route.query.space,
 });
 
-const team = computed(() => currentTeam.value?.paginate_team.data[0]);
+const team = computed(() => currentTeam.value?.get_team);
 const currentMembers = computed(() => members.value?.paginate_subject.data);
 
 provide("currentTeam", team);
