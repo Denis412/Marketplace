@@ -144,6 +144,7 @@ export const getProjectById = gql`
         id
         name
         type_id
+        is_customer
         subject {
           id
           fullname {

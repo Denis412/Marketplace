@@ -94,17 +94,11 @@ export default class TeamService {
       { space_id: teamSpace.value.id }
     );
 
-    console.log("team", createdTeam.value);
-
-    if (err.value) console.log("error", err.value);
-
     await BaseService.apiMutation(
       teamApi.update,
       { members: { [process.env.SUBJECT_TYPE_ID]: [createdTeam.value.author_id] } },
       { id: createdTeam.value.id }
     );
-
-    //Создание страниц
 
     const { result: rootPage, mutate } = await BaseService.apiMutation(
       pageApi.create,
@@ -121,8 +115,6 @@ export default class TeamService {
       title: "Профиль команды",
       parent_id: rootPage.value.id,
     });
-
-    //Создание групп
 
     const { data: subjectType } = await BaseService.fetchApiPaginate(typeApi.paginateType).refetch(
       {
@@ -179,16 +171,12 @@ export default class TeamService {
       ]
     );
 
-    //Создание типа проекта
-
     const { result: createdTypes } = await BaseService.apiMutation(
       typeApi.create,
       { name: "project", label: "Проект" },
       { space_id: teamSpace.value.id },
       [{ variables: { name: "application", label: "Заявка" } }]
     );
-
-    console.log("types", createdTypes.value[0]);
 
     await BaseService.apiMutation(
       propertyApi.createMany,
@@ -231,8 +219,6 @@ export default class TeamService {
       ],
       { space_id: teamSpace.value.id }
     );
-
-    console.log("subject type", subjectType);
 
     await BaseService.apiMutation(
       propertyApi.create,
@@ -445,8 +431,6 @@ export default class TeamService {
       perPage: 50,
     });
 
-    console.log("refetch teams");
-
     loading.value = false;
 
     return { result, loading, error };
@@ -533,8 +517,6 @@ export default class TeamService {
     try {
       loading.value = true;
 
-      // console.log("vars", variables.application, options);
-
       if (options?.is_team) {
         const { data: groupData } = await BaseService.fetchApiPaginate(
           groupApi.paginateGroups,
@@ -551,8 +533,6 @@ export default class TeamService {
           },
         });
 
-        console.log("group", groupData);
-
         await groupApi.invite({
           input: {
             name: variables.application.subject.fullname.first_name,
@@ -562,8 +542,6 @@ export default class TeamService {
           },
           space_id: options.space_id,
         });
-
-        console.log("invite");
 
         const { data: rootPage } = await BaseService.fetchApiPaginate(
           pageApi.paginateRootPages,
@@ -580,8 +558,6 @@ export default class TeamService {
           },
         });
 
-        console.log("rootPage", rootPage);
-
         const { data: newSubjectData } = await BaseService.fetchApiPaginate(
           userApi.paginateSubjects,
           {},
@@ -593,8 +569,6 @@ export default class TeamService {
             value: variables.application.subject.email.email,
           },
         });
-
-        console.log("newSubjectData", newSubjectData);
 
         await BaseService.apiMutation(
           permissionApi.create,
@@ -627,8 +601,6 @@ export default class TeamService {
             },
           ]
         );
-
-        console.log("permiss");
 
         const { data: teamData } = await this.fetchTeamById(
           variables.application.team.id
@@ -692,11 +664,15 @@ export default class TeamService {
       )
         await applicationApi.deleteById(variables.application.id);
       else
-        await applicationApi.update(variables.application.id, {
-          status: process.env.APPLICATION_STATUS_REJECTED,
+        await applicationApi.update({
+          id: variables.application.id,
+          input: {
+            status: process.env.APPLICATION_STATUS_REJECTED,
+          },
         });
 
       await BaseService.fetchApiPaginate(
+        userApi.paginateSubjects,
         {
           where: {
             column: "user_id",
@@ -847,11 +823,9 @@ export default class TeamService {
             [projectType.id]: variables.project_id,
           },
           status: statusProperty.meta.options[0].id,
-        },
-        {
           is_customer: options.is_customer === "false" || !options.is_customer ? false : true,
-          space_id: options.space_id,
-        }
+        },
+        { space_id: options.space_id }
       );
 
       result.value = createdApplication.value;
@@ -888,8 +862,6 @@ export default class TeamService {
     try {
       loading.value = true;
 
-      console.log("vars", variables, options);
-
       if (options.is_project) {
         const { data: subjectType } = await BaseService.fetchApiPaginate(
           typeApi.paginateType,
@@ -903,14 +875,10 @@ export default class TeamService {
           { space_id: options.space_id, only_one: true }
         ).refetch();
 
-        console.log("sub", subjectType);
-
         const { data: project } = await this.fetchProjectById(
           variables.application.project.id,
           options.space_id
         ).refetch();
-
-        console.log("project", project);
 
         await BaseService.apiMutation(
           permissionApi.create,
@@ -942,8 +910,6 @@ export default class TeamService {
               },
             };
 
-        console.log("prop", prop);
-
         await projectApi.update({
           id: variables.application.project.id,
           input: {
@@ -957,11 +923,6 @@ export default class TeamService {
           variables.application.id,
           variables.application.project.space
         );
-
-        await this.fetchProjectById(
-          variables.application.project.id,
-          variables.application.project.space
-        ).refetch();
       } else {
         const { data: applicationType } = await BaseService.fetchApiPaginate(
           typeApi.paginateType,
@@ -974,8 +935,6 @@ export default class TeamService {
           },
           { space_id: options.space_id, only_one: true }
         ).refetch();
-
-        console.log("applic", applicationType);
 
         const { data: statusProperty } = await BaseService.fetchApiPaginate(
           propertyApi.paginateProperties,
@@ -998,8 +957,6 @@ export default class TeamService {
           { space_id: options.space_id, only_one: true }
         ).refetch();
 
-        console.log("status", statusProperty);
-
         await applicationApi.update({
           id: variables.application.id,
           input: {
@@ -1008,22 +965,12 @@ export default class TeamService {
           },
           space_id: options.space_id,
         });
-
-        await this.fetchProjectByName(variables.application.project.name, {
-          space_id: variables.application.project.space,
-        });
-
-        // await projectApi.refetchPaginateProjects({
-        //   page: 1,
-        //   perPage: 1,
-        //   where: {
-        //     column: "name",
-        //     operator: "EQ",
-        //     value: variables.application.project.name,
-        //   },
-        //   space_id: variables.application.project.space,
-        // });
       }
+
+      await this.fetchProjectById(
+        variables.application.project.id,
+        variables.application.project.space
+      ).refetch();
     } catch (e) {
       error.value = e;
 
