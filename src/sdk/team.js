@@ -28,7 +28,7 @@ const paginateTeams = ({ page, perPage, where }) => {
   return useQuery(
     getTeamsWithWhere,
     { page, perPage, where },
-    spaceHeader(process.env.MAIN_SPACE_ID)
+    { fetchPolicy: "network-only", ...spaceHeader(process.env.MAIN_SPACE_ID) }
   );
 };
 
