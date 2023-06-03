@@ -1,12 +1,16 @@
 import { computed, ref } from "vue";
 
-function baseQuery(method_link, variables = {}, options = {}) {
+function basePaginateQuery(method_link, variables = {}, options = {}) {
   return method_link?.({
     ...variables,
     ...options,
     page: variables.page || 1,
     perPage: options?.only_one ? 1 : variables.perPage || 50,
   });
+}
+
+function baseQueryById(method_link, id) {
+  return method_link?.({ id });
 }
 
 async function baseMutation(method_link, variables = {}, options = {}) {
@@ -16,13 +20,63 @@ async function baseMutation(method_link, variables = {}, options = {}) {
   });
 }
 
-function extractPropertyData(result, is_mutation = false) {
-  return result
-    ? Object.keys(result).map((key) => result[key][is_mutation ? "record" : "data"])[0]
-    : null;
+function extractPropertyData(result, get = false) {
+  if (get) return result ? Object.keys(result).map((key) => result[key])[0] : null;
+
+  return result ? Object.keys(result).map((key) => result[key]["data"])[0] : null;
 }
 
 export default class BaseService {
+  static fetchApiById(method_link, id) {
+    const refetchResult = ref(null);
+    const refetchLoading = ref(null);
+    const refetchError = ref(null);
+
+    const {
+      result: resultApi,
+      loading: loadingApi,
+      error: errorApi,
+    } = baseQueryById(method_link, id);
+
+    const result = computed(
+      () => refetchResult.value ?? extractPropertyData(resultApi.value, true)
+    );
+    const loading = computed(() => refetchLoading.value ?? loadingApi.value);
+    const error = computed(() => refetchError.value ?? errorApi.value);
+
+    async function refetch(refetch_variables = null, refetch_options = null) {
+      try {
+        const { data, loading, error } = await baseQueryById(
+          method_link,
+          refetch_variables ?? variables,
+          refetch_options ?? options
+        ).refetch(refetch_variables ?? variables);
+
+        if (!refetch_options?.update_parent_query)
+          return {
+            data: extractPropertyData(data),
+            loading: refetchLoading.value,
+            error: refetchError.value,
+          };
+
+        refetchResult.value = extractPropertyData(data);
+        refetchLoading.value = loading;
+        refetchError.value = error;
+      } catch (e) {
+        refetchLoading.value = false;
+        refetchError.value = e;
+      }
+
+      return {
+        data: refetchResult.value,
+        loading: refetchLoading.value,
+        error: refetchError.value,
+      };
+    }
+
+    return { result, loading, error, refetch };
+  }
+
   static fetchApiPaginate(method_link, variables = {}, options = {}) {
     const refetchResult = ref(null);
     const refetchLoading = ref(null);
@@ -32,7 +86,7 @@ export default class BaseService {
       result: resultApi,
       loading: loadingApi,
       error: errorApi,
-    } = baseQuery(method_link, variables, options);
+    } = basePaginateQuery(method_link, variables, options);
 
     const result = computed(() =>
       options.only_one
@@ -44,22 +98,27 @@ export default class BaseService {
 
     async function refetch(refetch_variables = null, refetch_options = null) {
       try {
-        console.log("refetch start", variables, refetch_variables, options, refetch_options);
+        // console.log("refetch start", variables, refetch_variables, options, refetch_options);
 
-        const { data, loading, error } = await baseQuery(
+        const { data, loading, error } = await basePaginateQuery(
           method_link,
           refetch_variables ?? variables,
           refetch_options ?? options
         ).refetch(refetch_variables ?? variables);
 
-        console.log("refetch data", data);
+        // console.log("refetch data", data);
 
         if (!refetch_options?.update_parent_query)
-          return refetch_options?.only_one || options?.only_one
-            ? extractPropertyData(data)?.[0]
-            : extractPropertyData(data);
+          return {
+            data:
+              refetch_options?.only_one || options?.only_one
+                ? extractPropertyData(data)?.[0]
+                : extractPropertyData(data),
+            loading: refetchLoading.value,
+            error: refetchError.value,
+          };
 
-        console.log("refetch pass", data);
+        // console.log("refetch pass", data);
 
         refetchResult.value =
           refetch_options?.only_one || options?.only_one
@@ -72,7 +131,11 @@ export default class BaseService {
         refetchError.value = e;
       }
 
-      return refetchResult.value;
+      return {
+        data: refetchResult.value,
+        loading: refetchLoading.value,
+        error: refetchError.value,
+      };
     }
 
     return { result, loading, error, refetch };

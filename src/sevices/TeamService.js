@@ -12,6 +12,17 @@ import pageApi from "src/sdk/page";
 import filesApi from "src/sdk/file";
 
 export default class TeamService {
+  static fetchTeamById(id) {
+    return BaseService.fetchApiById(teamApi.queryTeamById, id);
+  }
+
+  static fetchSubjectsInTeamSpace(variables = {}, options = {}) {
+    return BaseService.fetchApiPaginate(userApi.paginateSubjects, variables, {
+      ...options,
+      is_team: true,
+    });
+  }
+
   static fetchTeamsPaginate(variables = {}, options = {}) {
     return BaseService.fetchApiPaginate(teamApi.paginateTeams, variables, options);
   }
@@ -78,7 +89,7 @@ export default class TeamService {
 
     //Создание групп
 
-    const subjectType = await BaseService.fetchApiPaginate(typeApi.paginateType).refetch(
+    const { data: subjectType } = await BaseService.fetchApiPaginate(typeApi.paginateType).refetch(
       {
         where: {
           column: "name",
@@ -89,7 +100,7 @@ export default class TeamService {
       { only_one: true, space_id: teamSpace.value.id }
     );
 
-    const rootGroup = await BaseService.fetchApiPaginate(groupApi.paginateGroups).refetch(
+    const { data: rootGroup } = await BaseService.fetchApiPaginate(groupApi.paginateGroups).refetch(
       {
         where: {
           column: "name",
@@ -269,6 +280,28 @@ export default class TeamService {
         },
         {
           variables: {
+            label: "Руководитель проекта",
+            name: "leader",
+            type_id: createdTypes.value[0].id,
+            data_type: "object",
+            order: 8,
+            multiple: {
+              status: false,
+            },
+            meta: {
+              related_types: [
+                {
+                  type_id: subjectType.id,
+                  inverse_relation: true,
+                  inverse_relation_label: "Проекты",
+                  inverse_relation_name: "projects_leader",
+                },
+              ],
+            },
+          },
+        },
+        {
+          variables: {
             data_type: "toggle",
             name: "is_customer",
             label: "Заказчик",
@@ -372,7 +405,10 @@ export default class TeamService {
       ]
     );
 
-    await this.fetchTeamsPaginate().refetch();
+    await BaseService.fetchApiPaginate(teamApi.paginateTeams).refetch({
+      page: 1,
+      perPage: 50,
+    });
 
     console.log("refetch teams");
 
