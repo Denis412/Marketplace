@@ -28,7 +28,7 @@
             color="positive"
             icon="check_circle"
             @click.stop.prevent="
-              filesFunc.updateFile(scope.value, props.prop_doc, prop_page_id)
+              filesFunc.updateFile(scope.value, props.prop_doc, prop_page_id);
             "
             :disable="
               scope.validate(scope.value) === false ||
@@ -44,13 +44,17 @@
 <script setup>
 import { filesFunc } from "src/use/fileFunctions";
 import { ref } from "vue";
+import EventBus from "../sdk/files/eventBus";
 
 const props = defineProps({
+  prop_data: Object,
   prop_doc: Object,
   prop_page_id: String,
 });
 
-const cur_name = ref(props.prop_doc.name.slice(0, -5));
+console.log(props.prop_data);
+
+const cur_name = ref(props.prop_data.title_page);
 </script>
 
 <style lang="scss" scoped>

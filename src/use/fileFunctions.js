@@ -77,8 +77,16 @@ async function updateFileContent(fileId, content) {
 
     // Отправка запроса на сервер для обновления содержимого файла
     console.log("Проверка аргументов:", { files: file, file_id: fileId }); // Проверка передаваемых аргументов
-    await uploadFile({ files: file, file_id: fileId });
+    await uploadFile(
+      { files: file, file_id: fileId },
+      {
+        context: {
+          hasUpload: true,
+        },
+      }
+    );
     console.log("Изменения в файле успешно сохранены");
+    console.log("Content = ", content);
   } catch (error) {
     console.error("Ошибка при сохранении изменений в файле:", error);
   }
@@ -130,7 +138,7 @@ const updateFile = async (name, doc, page_id, parent_id = "") => {
         size: doc.size,
         name: name + ".html",
         short_link: doc.short_link,
-        extension: doc.extension,
+        extension: "html",
         disk: doc.disk,
         hash: doc.hash,
       },
@@ -143,7 +151,7 @@ const updateFile = async (name, doc, page_id, parent_id = "") => {
           size: doc.size,
           name: name + ".html",
           short_link: doc.short_link,
-          extension: doc.extension,
+          extension: "html",
           disk: doc.disk,
           hash: doc.hash,
         },
