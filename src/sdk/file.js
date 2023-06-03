@@ -3,13 +3,25 @@ import apolloClient from "src/apollo/apollo-client";
 import { filesUpload, fileUpdate, fileDelete } from "src/graphql/files/mutations";
 import { ApolloClient } from "@apollo/client/core";
 import { getClientOptions } from "src/apollo/index";
-import { getFiles } from "src/graphql/files/queries";
+import { getFileById, getFiles } from "src/graphql/files/queries";
 import { spaceHeader } from "src/utils/spaceHeader";
 
 provideApolloClient(apolloClient);
 
 const { mutate } = useMutation(filesUpload);
 const { refetch } = useQuery(getFiles);
+
+const queryFileById = ({ id }) => {
+  return useQuery(getFileById, { id }, spaceHeader(process.env.MAIN_SPACE_ID));
+};
+
+const refetchQueryFileById = async ({ id }) => {
+  const { refetch } = queryFileById({ id });
+
+  const { data: fileData } = await refetch();
+
+  return fileData.get_file;
+};
 
 const filesPaginate = ({ page, perPage, where, space_id }) => {
   return useQuery(
@@ -145,6 +157,8 @@ const updateRouteId = (id_route, routeParamsId) => {
 
 const filesApi = {
   uploadFiles,
+  queryFileById,
+  refetchQueryFileById,
   filesPaginate,
   refetchFilesPaginate,
   getFileHtmlByUrl,

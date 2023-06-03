@@ -9,6 +9,7 @@ import typeApi from "src/sdk/type";
 import propertyApi from "src/sdk/property";
 import userApi from "src/sdk/user";
 import pageApi from "src/sdk/page";
+import filesApi from "src/sdk/file";
 
 export default class TeamService {
   static fetchTeamsPaginate(variables = {}, options = {}) {
@@ -26,6 +27,16 @@ export default class TeamService {
 
     loading.value = true;
 
+    let file = null;
+
+    if (variables.avatar) {
+      const ids = await filesApi.uploadFiles(variables.avatar);
+
+      file = await filesApi.refetchQueryFileById({
+        id: ids[0],
+      });
+    }
+
     const { result: teamSpace } = await BaseService.apiMutation(spaceApi.create, {
       name: variables.name,
       description: variables.description,
@@ -33,7 +44,7 @@ export default class TeamService {
 
     const { result: createdTeam, error: err } = await BaseService.apiMutation(
       teamApi.create,
-      variables,
+      file ? { ...variables, avatar: filesApi.getUrl(file) } : variables,
       { space_id: teamSpace.value.id }
     );
 

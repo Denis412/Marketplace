@@ -17,7 +17,7 @@ const queryTeamById = ({ id }) => {
 };
 
 const refetchQueryTeamById = async ({ id }) => {
-  const { refetch } = paginateTeams({ id });
+  const { refetch } = queryTeamById({ id });
 
   const { data: teamData } = await refetch();
 

@@ -15,7 +15,7 @@
 <script setup>
 import CTeamsHeader from "src/components/ClubTeamsHeader.vue";
 import CTeamCardList from "src/components/ClubTeamCardList.vue";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 import teamApi from "src/sdk/team";
 

@@ -84,12 +84,11 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from "vue";
+import { inject, ref } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 import { useValidators } from "src/use/validators";
-import { useTeamCreate } from "src/use/teams";
 
 import CInput from "./ClubInput.vue";
 import CButton from "./ClubButton.vue";
@@ -97,13 +96,9 @@ import CButton from "./ClubButton.vue";
 import TeamService from "src/sevices/TeamService";
 
 import { useUserStore } from "src/stores/user";
-import filesApi from "src/sdk/file";
-import userApi from "src/sdk/user";
-import teamApi from "src/sdk/team";
 
-const currentUser = inject("currentUser");
+// const currentUser = inject("currentUser");
 
-const { createTeamResult, creatingTeam, createTeamError, createTeam } = useTeamCreate();
 const { required, maxLength, minLength, isLatin, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
@@ -111,10 +106,10 @@ const router = useRouter();
 const form = ref({
   name: "",
   description: "",
-  avatar: "",
+  avatar: null,
 });
 
-// const creatingTeam = ref(false);
+const creatingTeam = ref(false);
 
 const upload_img = ref(null);
 const avatar_URL = ref("/assets/images/preloaders/default-avatar.svg");
@@ -122,27 +117,11 @@ const uploader = ref(null);
 
 const teamCreate = async () => {
   try {
-    // creatingTeam.value = true;
+    creatingTeam.value = true;
 
-    if (upload_img.value) {
-      const ids = await filesApi.uploadFiles(upload_img.value);
+    if (upload_img.value) form.value.avatar = upload_img.value;
 
-      const files = await filesApi.refetchFilesPaginate({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "id",
-          operator: "EQ",
-          value: ids[0],
-        },
-      });
-
-      form.value.avatar = filesApi.getUrl(files[0]);
-    }
-
-    // await TeamService.createTeam(form.value);
-
-    await createTeam({ ...form.value, author: currentUser.value });
+    await TeamService.createTeam(form.value);
 
     await useUserStore().FETCH_CURRENT_USER();
 
@@ -153,7 +132,7 @@ const teamCreate = async () => {
     console.log(error);
   }
 
-  // creatingTeam.value = false;
+  creatingTeam.value = false;
 };
 
 const updateFile = () => {

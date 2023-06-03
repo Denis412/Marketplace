@@ -39,3 +39,24 @@ export const getFiles = gql`
     }
   }
 `;
+
+export const getFileById = gql`
+  query ($id: String!) {
+    get_file(id: $id) {
+      type_id
+      id
+      author_id
+      position
+      created_at
+      updated_at
+      id
+      disk
+      hash
+      path
+      size
+      name
+      short_link
+      extension
+    }
+  }
+`;
