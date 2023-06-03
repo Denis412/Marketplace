@@ -12,10 +12,39 @@ import pageApi from "src/sdk/page";
 import filesApi from "src/sdk/file";
 import applicationApi from "src/sdk/application";
 import permissionApi from "src/sdk/permission";
+import { reobserveCacheFirst } from "@apollo/client/core/ObservableQuery";
 
 export default class TeamService {
   static fetchTeamById(id) {
     return BaseService.fetchApiById(teamApi.queryTeamById, { id });
+  }
+
+  static fetchTeamByName(name, options = {}) {
+    return BaseService.fetchApiPaginate(
+      teamApi.paginateTeams,
+      {
+        where: {
+          column: "name",
+          operator: options.fts ? "FTS" : "EQ",
+          value: name,
+        },
+      },
+      { only_one: true }
+    );
+  }
+
+  static fetchProjectByName(name, options = {}) {
+    return BaseService.fetchApiPaginate(
+      projectApi.paginateProject,
+      {
+        where: {
+          column: "name",
+          operator: options.fts ? "FTS" : "EQ",
+          value: name,
+        },
+      },
+      { only_one: true }
+    );
   }
 
   static fetchProjectById(id, space_id) {
@@ -649,7 +678,67 @@ export default class TeamService {
     return { result, loading, error };
   }
 
-  static async cancelTeamApplication(variables, options) {}
+  static async cancelTeamApplication(variables, options) {
+    const result = ref(null);
+    const loading = ref(false);
+    const error = ref(null);
+
+    try {
+      loading.value = true;
+
+      if (
+        (options.is_team && variables.application.sender === "team") ||
+        (!options.is_team && variables.application.sender === "subject")
+      )
+        await applicationApi.deleteById(variables.application.id);
+      else
+        await applicationApi.update(variables.application.id, {
+          status: process.env.APPLICATION_STATUS_REJECTED,
+        });
+
+      await BaseService.fetchApiPaginate(
+        {
+          where: {
+            column: "user_id",
+            operator: "EQ",
+            value: JSON.parse(localStorage.getItem("user-data")).user_id,
+          },
+        },
+        { only_one: true, is_my_teams: true }
+      );
+
+      // await userApi.refetchPaginateSubjects({
+      //   page: 1,
+      //   perPage: 1,
+      //   where: {
+      //     column: "user_id",
+      //     operator: "EQ",
+      //     value: JSON.parse(localStorage.getItem("user-data")).user_id,
+      //   },
+      //   is_my_teams: true,
+      // });
+
+      await this.fetchTeamByName(variables.application.team.name).refetch();
+
+      // await teamApi.refetchPaginateTeams({
+      //   page: 1,
+      //   perPage: 1,
+      //   where: {
+      //     column: "name",
+      //     operator: "EQ",
+      //     value: variables.application.team.name,
+      //   },
+      // });
+    } catch (e) {
+      error.value = e;
+
+      console.log(e);
+    }
+
+    loading.value = false;
+
+    return { result, loading, error };
+  }
 
   static async sendProjectApplication(variables, options) {
     const result = ref(null);
@@ -673,7 +762,7 @@ export default class TeamService {
       );
 
       const { data: applicationType } = await BaseService.fetchApiPaginate(
-        applicationApi.paginateApplication
+        typeApi.paginateType
       ).refetch(
         {
           where: {
@@ -686,7 +775,7 @@ export default class TeamService {
       );
 
       const { data: projectType } = await BaseService.fetchApiPaginate(
-        applicationApi.paginateApplication
+        typeApi.paginateType
       ).refetch(
         {
           where: {
@@ -705,10 +794,10 @@ export default class TeamService {
           where: {
             column: "email",
             operator: "FTS",
-            value: subject.email.email,
+            value: variables.subject.email.email,
           },
         },
-        { only_one: true, space_id: options.space_id }
+        { is_team: true, only_one: true, space_id: options.space_id }
       );
 
       const { data: subjectProperty } = await BaseService.fetchApiPaginate(
@@ -755,12 +844,6 @@ export default class TeamService {
         { only_one: true, space_id: options.space_id }
       );
 
-      const { data: statusPropertyWithMeta } = await BaseService.fetchApiById(
-        propertyApi.queryPropertyById,
-        { id: statusProperty.id },
-        { space_id: options.space_id }
-      );
-
       const applications = await applicationApi.refetchPaginateApplications({
         page: 1,
         perPage: 100,
@@ -777,17 +860,17 @@ export default class TeamService {
       const { result: createdApplication } = await BaseService.apiMutation(
         applicationApi.create,
         {
-          name: project_name,
+          name: variables.project_name,
           subject: {
             [subjectType.id]: subjectInTeamSpace.id,
           },
           project: {
             [projectType.id]: variables.project_id,
           },
-          status: statusPropertyWithMeta.meta.options[0].id,
+          status: statusProperty.meta.options[0].id,
         },
         {
-          is_customer: is_customer === "false" || !is_customer ? false : true,
+          is_customer: options.is_customer === "false" || !options.is_customer ? false : true,
           space_id: options.space_id,
         }
       );
@@ -805,6 +888,8 @@ export default class TeamService {
         },
         { space_id: options.space_id }
       );
+
+      await this.fetchProjectById(variables.project_id, options.space_id).refetch();
     } catch (e) {
       error.value = e;
 
@@ -818,5 +903,61 @@ export default class TeamService {
 
   static async acceptProjectApplication(variables, options) {}
 
-  static async cancelProjectApplication(variables, options) {}
+  static async cancelProjectApplication(variables, options) {
+    const result = ref(null);
+    const loading = ref(false);
+    const error = ref(null);
+
+    try {
+      loading.value = true;
+
+      if (options.is_project)
+        await applicationApi.deleteById(variables.application.id, options.space_id);
+      else {
+        // console.log(application, is_project, options.space_id);
+
+        const { data: statusProperty } = await BaseService.fetchApiPaginate(
+          {
+            where: {
+              and: [
+                {
+                  column: "name",
+                  operator: "EQ",
+                  value: "status",
+                },
+                {
+                  column: "type_id",
+                  operator: "EQ",
+                  value: variables.application.type_id,
+                },
+              ],
+            },
+          },
+          { space_id: options.space_id, only_one: true }
+        );
+
+        await applicationApi.update({
+          id: variables.application.id,
+          input: {
+            name: variables.application.name,
+            status: statusProperty.meta.options[1].id,
+          },
+          space_id: options.space_id,
+        });
+      }
+
+      await this.fetchProjectById(
+        variables.application.project.id,
+        variables.application.project.space
+      ).refetch();
+    } catch (e) {
+      error.value = e;
+
+      console.log(e);
+    }
+
+    loading.value = false;
+
+    return { result, loading, error };
+  }
 }

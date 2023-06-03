@@ -171,13 +171,14 @@ const inviteSubjects = async () => {
   try {
     if (route.query.project) {
       for (let subject of selectedSubjects.value) {
-        await TeamService.sendProjectApplication({
-          subject: subject,
-          project_name: route.query.name,
-          project_id: route.params.id,
-          is_customer: route.query.customer,
-          space_id: route.query.space,
-        });
+        await TeamService.sendProjectApplication(
+          {
+            subject,
+            project_name: route.query.name,
+            project_id: route.params.id,
+          },
+          { space_id: route.query.space, is_customer: route.query.customer }
+        );
       }
 
       await TeamService.fetchSubjectsInTeamSpace().refetch(

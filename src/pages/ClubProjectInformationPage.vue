@@ -1,11 +1,9 @@
 <template>
   <q-page class="c-px-32 c-py-72">
-    <div class="loader loader-lg" v-if="!currentProject || loading" />
+    <div class="loader loader-lg" v-if="projectLoading" />
 
     <div v-else>
       <h3 class="text-h3">О проекте</h3>
-
-      <!-- <pre>{{ res }}</pre> -->
 
       <section>
         <q-img
@@ -25,10 +23,10 @@
         />
       </section>
 
-      <c-section-projects-headers />
-      <c-project-information-section />
-      <c-project-target-description-sections />
-      <c-project-members-sections />
+      <c-section-projects-headers v-if="res.leader && res.customers" />
+      <c-project-information-section v-if="currentProject" />
+      <c-project-target-description-sections v-if="currentProject" />
+      <c-project-members-sections v-if="res.members" />
     </div>
   </q-page>
 </template>
@@ -61,7 +59,10 @@ const res = {
 
 const { refetch } = BaseService.fetchApiPaginate(userApi.paginateSubjects);
 
-const { result: currentProject } = TeamService.fetchProjectById(route.params.id, route.query.space);
+const { result: currentProject, loading: projectLoading } = TeamService.fetchProjectById(
+  route.params.id,
+  route.query.space
+);
 
 const isLeader = ref(false);
 
@@ -73,27 +74,18 @@ const pickFiles = () => (isLeader.value ? uploader.value.pickFiles() : null);
 
 const uploadImage = async () => {
   const fileId = await filesApi.uploadFiles(selectFile.value);
-  const avatar = await filesApi.get(fileId);
+  const avatar = await filesApi.refetchQueryFileById({ id: fileId[0] });
 
   await updateProject({
     id: currentProject.value?.id,
     input: {
       name: currentProject.value?.name,
-      avatar: filesApi.getUrl(avatar[0]),
+      avatar: filesApi.getUrl(avatar),
     },
     space_id: route.query.space,
   });
 
-  await projectApi.refetchPaginateProjects({
-    page: 1,
-    perPage: 1,
-    where: {
-      column: "id",
-      operator: "EQ",
-      value: route.params.id,
-    },
-    space_id: route.query.space,
-  });
+  await TeamService.fetchProjectById(route.params.id, route.query.space).refetch();
 };
 
 const groupProjectSubjects = async (group_names) => {

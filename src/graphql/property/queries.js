@@ -18,6 +18,7 @@ export const propertiesPaginate = gql`
       data {
         id
         name
+        meta
         created_at
         updated_at
       }

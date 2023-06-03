@@ -135,11 +135,10 @@ const accept = async () => {
 const cancel = async () => {
   if (!project) await cancelApplication({ application, is_team });
   else
-    await cancelProjectApplication({
-      application,
-      is_project,
-      space_id: application.project.space,
-    });
+    await TeamService.cancelProjectApplication(
+      { application },
+      { is_project, space_id: application.project.space }
+    );
 };
 
 watch(statusObject, (value) => {

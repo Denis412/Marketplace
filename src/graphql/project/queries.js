@@ -140,6 +140,26 @@ export const getProjectById = gql`
       target
       team_name
       created_at
+      applications {
+        id
+        subject {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+          email {
+            email
+          }
+        }
+        project {
+          id
+          name
+          space
+        }
+        updated_at
+        status
+      }
       leader {
         id
         fullname {
