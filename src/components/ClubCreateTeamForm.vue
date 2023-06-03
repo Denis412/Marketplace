@@ -97,7 +97,7 @@ import TeamService from "src/sevices/TeamService";
 
 import { useUserStore } from "src/stores/user";
 
-// const currentUser = inject("currentUser");
+const currentUser = inject("currentUser");
 
 const { required, maxLength, minLength, isLatin, maxLengthForTeamForm } = useValidators();
 const $q = useQuasar();
@@ -107,6 +107,7 @@ const form = ref({
   name: "",
   description: "",
   avatar: null,
+  leader_telegram_chat_id: currentUser.value.telegram_chat_id,
 });
 
 const creatingTeam = ref(false);

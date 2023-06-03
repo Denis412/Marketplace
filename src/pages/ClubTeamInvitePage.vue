@@ -93,6 +93,8 @@ import CSelectedSubjectChip from "src/components/ClubSelectedSubjectChip.vue";
 import CDropdown from "src/components/ClubDropdown.vue";
 import { computed, inject, provide, ref, watch } from "vue";
 
+import TeamService from "src/sevices/TeamService";
+
 import specilalityApi from "src/sdk/speciality";
 import userApi from "src/sdk/user";
 import teamApi from "src/sdk/team";
@@ -122,15 +124,19 @@ const filters = ref({
   speciality: "",
 });
 
-const { result: team } = teamApi.paginateTeams({
-  page: 1,
-  perPage: 1,
-  where: {
-    column: "id",
-    operator: "EQ",
-    value: route.params.id,
-  },
-});
+const { result: team } = TeamService.fetchTeamById(route.params.id);
+
+// const { result: team } = teamApi.paginateTeams({
+//   page: 1,
+//   perPage: 1,
+//   where: {
+//     column: "id",
+//     operator: "EQ",
+//     value: route.params.id,
+//   },
+// });
+
+// const { result: project } = TeamService.fe
 
 const { result: project } = projectApi.paginateProject({
   page: 1,
@@ -179,7 +185,7 @@ const showSubjects = computed(
 
 const teamFilter = computed(() => {
   return allSubjects.value?.paginate_subject.data.filter((subject) => {
-    return !team.value?.paginate_team.data[0]?.members.some((member) => member.id === subject.id);
+    return !team.value?.members.some((member) => member.id === subject.id);
   });
 });
 
