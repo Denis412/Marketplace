@@ -35,6 +35,7 @@ import { useQuasar } from "quasar";
 import CButton from "./ClubButton.vue";
 
 import TeamService from "src/sevices/TeamService";
+import BaseService from "src/sevices/BaseService";
 
 import propertyApi from "src/sdk/property";
 import { useTeamApplication } from "src/use/teams";
@@ -57,37 +58,26 @@ const { application, incoming, is_team, project, is_project, team_id } = defineP
   team_id: String,
 });
 
-const { result: statusProperty1 } = propertyApi.paginateProperties({
-  page: 1,
-  perPage: 1,
-  where: {
-    and: [
-      {
-        column: "name",
-        operator: "EQ",
-        value: "status",
-      },
-      {
-        column: "type_id",
-        operator: "EQ",
-        value: application.type_id,
-      },
-    ],
+const { result: statusProperty1 } = BaseService.fetchApiPaginate(
+  propertyApi.paginateProperties,
+  {
+    where: {
+      and: [
+        {
+          column: "name",
+          operator: "EQ",
+          value: "status",
+        },
+        {
+          column: "type_id",
+          operator: "EQ",
+          value: application.type_id,
+        },
+      ],
+    },
   },
-  space_id: application?.project?.space,
-});
-
-const reft = ref(null);
-
-// Убрать после исправления на беке с meta полем свойств из пагинатора
-watch(statusProperty1, async (value) => {
-  if (!value) return;
-
-  reft.value = await propertyApi.refetchPropertyById({
-    id: statusProperty1.value?.properties.data[0].id,
-    space_id: application?.project?.space,
-  });
-});
+  { space_id: application?.project?.space, only_one: true }
+);
 
 const { result: statusProperty } = propertyApi.queryPropertyById({
   id: process.env.APPLICATION_STATUS_PROPERTY,
@@ -95,7 +85,7 @@ const { result: statusProperty } = propertyApi.queryPropertyById({
 
 const statusObject = computed(() => {
   let property = project
-    ? reft.value?.meta.options.find((option) => option.id === application.status)
+    ? statusProperty1.value?.meta.options.find((option) => option.id === application.status)
     : statusProperty.value?.property.meta.options.find(
         (option) => option.id === application.status
       );
@@ -115,11 +105,10 @@ const accept = async () => {
         { is_team, space_id: application.team.space }
       );
     else
-      await acceptProjectApplication({
-        application,
-        is_project,
-        space_id: application.project.space,
-      });
+      await TeamService.acceptProjectApplication(
+        { application },
+        { is_project, space_id: application.project.space }
+      );
   } catch (error) {
     if (!incoming) {
       console.log(error);
@@ -133,7 +122,7 @@ const accept = async () => {
 };
 
 const cancel = async () => {
-  if (!project) await cancelApplication({ application, is_team });
+  if (!project) await TeamService.cancelTeamApplication({ application }, { is_team });
   else
     await TeamService.cancelProjectApplication(
       { application },

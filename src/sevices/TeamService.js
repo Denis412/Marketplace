@@ -707,28 +707,7 @@ export default class TeamService {
         { only_one: true, is_my_teams: true }
       );
 
-      // await userApi.refetchPaginateSubjects({
-      //   page: 1,
-      //   perPage: 1,
-      //   where: {
-      //     column: "user_id",
-      //     operator: "EQ",
-      //     value: JSON.parse(localStorage.getItem("user-data")).user_id,
-      //   },
-      //   is_my_teams: true,
-      // });
-
       await this.fetchTeamByName(variables.application.team.name).refetch();
-
-      // await teamApi.refetchPaginateTeams({
-      //   page: 1,
-      //   perPage: 1,
-      //   where: {
-      //     column: "name",
-      //     operator: "EQ",
-      //     value: variables.application.team.name,
-      //   },
-      // });
     } catch (e) {
       error.value = e;
 
@@ -901,7 +880,160 @@ export default class TeamService {
     return { result, loading, error };
   }
 
-  static async acceptProjectApplication(variables, options) {}
+  static async acceptProjectApplication(variables, options) {
+    const result = ref(null);
+    const loading = ref(false);
+    const error = ref(null);
+
+    try {
+      loading.value = true;
+
+      console.log("vars", variables, options);
+
+      if (options.is_project) {
+        const { data: subjectType } = await BaseService.fetchApiPaginate(
+          typeApi.paginateType,
+          {
+            where: {
+              column: "name",
+              operator: "EQ",
+              value: "subject",
+            },
+          },
+          { space_id: options.space_id, only_one: true }
+        ).refetch();
+
+        console.log("sub", subjectType);
+
+        const { data: project } = await this.fetchProjectById(
+          variables.application.project.id,
+          options.space_id
+        ).refetch();
+
+        console.log("project", project);
+
+        await BaseService.apiMutation(
+          permissionApi.create,
+          {
+            model_type: "object",
+            model_id: variables.application.project.id,
+            owner_type: "subject",
+            owner_id: variables.application.subject.id,
+            level: 4,
+          },
+          { space_id: options.space_id }
+        );
+
+        const prop = variables.application.is_customer
+          ? {
+              customers: {
+                [subjectType.id]: [
+                  ...project.customers.map((customer) => customer.id),
+                  variables.application.subject.id,
+                ],
+              },
+            }
+          : {
+              members: {
+                [subjectType.id]: [
+                  ...project.members.map((member) => member.id),
+                  variables.application.subject.id,
+                ],
+              },
+            };
+
+        console.log("prop", prop);
+
+        await projectApi.update({
+          id: variables.application.project.id,
+          input: {
+            name: variables.application.name,
+            ...prop,
+          },
+          space_id: variables.application.project.space,
+        });
+
+        await applicationApi.deleteById(
+          variables.application.id,
+          variables.application.project.space
+        );
+
+        await this.fetchProjectById(
+          variables.application.project.id,
+          variables.application.project.space
+        ).refetch();
+      } else {
+        const { data: applicationType } = await BaseService.fetchApiPaginate(
+          typeApi.paginateType,
+          {
+            where: {
+              column: "name",
+              operator: "EQ",
+              value: "application",
+            },
+          },
+          { space_id: options.space_id, only_one: true }
+        ).refetch();
+
+        console.log("applic", applicationType);
+
+        const { data: statusProperty } = await BaseService.fetchApiPaginate(
+          propertyApi.paginateProperties,
+          {
+            where: {
+              and: [
+                {
+                  column: "name",
+                  operator: "EQ",
+                  value: "status",
+                },
+                {
+                  column: "type_id",
+                  operator: "EQ",
+                  value: applicationType.id,
+                },
+              ],
+            },
+          },
+          { space_id: options.space_id, only_one: true }
+        ).refetch();
+
+        console.log("status", statusProperty);
+
+        await applicationApi.update({
+          id: variables.application.id,
+          input: {
+            name: variables.application.name,
+            status: statusProperty.meta.options[2].id,
+          },
+          space_id: options.space_id,
+        });
+
+        await this.fetchProjectByName(variables.application.project.name, {
+          space_id: variables.application.project.space,
+        });
+
+        // await projectApi.refetchPaginateProjects({
+        //   page: 1,
+        //   perPage: 1,
+        //   where: {
+        //     column: "name",
+        //     operator: "EQ",
+        //     value: variables.application.project.name,
+        //   },
+        //   space_id: variables.application.project.space,
+        // });
+      }
+    } catch (e) {
+      error.value = e;
+
+      console.log(e);
+    }
+
+    loading.value = false;
+
+    return { result, loading, error };
+  }
 
   static async cancelProjectApplication(variables, options) {
     const result = ref(null);
@@ -917,6 +1049,7 @@ export default class TeamService {
         // console.log(application, is_project, options.space_id);
 
         const { data: statusProperty } = await BaseService.fetchApiPaginate(
+          propertyApi.paginateProperties,
           {
             where: {
               and: [
@@ -934,7 +1067,7 @@ export default class TeamService {
             },
           },
           { space_id: options.space_id, only_one: true }
-        );
+        ).refetch();
 
         await applicationApi.update({
           id: variables.application.id,

@@ -142,6 +142,8 @@ export const getProjectById = gql`
       created_at
       applications {
         id
+        name
+        type_id
         subject {
           id
           fullname {
