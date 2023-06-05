@@ -273,9 +273,14 @@ const deleteCompetence = async (label) => {
     (competence) => competence.name !== label
   );
 
-  await userApi.update(currentUser.value.subject_id, {
-    competencies: {
-      [process.env.COMPETENCE_TYPE_ID]: form.value.competencies.map((competence) => competence.id),
+  await userApi.update({
+    id: currentUser.value.subject_id,
+    input: {
+      competencies: {
+        [process.env.COMPETENCE_TYPE_ID]: form.value.competencies.map(
+          (competence) => competence.id
+        ),
+      },
     },
   });
 
@@ -353,9 +358,7 @@ const updateInfo = async (property_name, value) => {
     useUserStore().SET_PROP(property_name, value);
   }
 
-  console.log(input);
-
-  await userApi.update(currentUser.value.subject_id, input);
+  await userApi.update({ id: currentUser.value.subject_id, input });
 };
 </script>
 

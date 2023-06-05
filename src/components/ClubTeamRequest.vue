@@ -18,7 +18,7 @@ import userApi from "src/sdk/user";
 
 const currentUser = inject("currentUser");
 
-const { result: subjectData } = userApi.queryGetSubjectById(currentUser.value?.subject_id);
+const { result: subjectData } = userApi.queryGetSubjectById({ id: currentUser.value?.subject_id });
 
 const currentSubject = computed(() => subjectData.value?.get_subject);
 

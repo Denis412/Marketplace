@@ -60,7 +60,7 @@ const paginateSubjects = ({
   );
 };
 
-const queryGetSubjectById = (id, space_id = 0) => {
+const queryGetSubjectById = ({ id, space_id = 0 }) => {
   return useQuery(getSubjectById, { id }, spaceHeader(space_id || process.env.MAIN_SPACE_ID));
 };
 
@@ -211,17 +211,17 @@ const login = async ({ login, password }, first_entry = false, recovery = false)
   return userData?.user;
 };
 
-const update = async (id, updateData, is_team = false, space_id = 0) => {
+const update = async ({ id, input, is_team = false, space_id = 0 }) => {
   let subjectData;
 
   if (is_team)
     ({ data: subjectData } = await updatingUserInTeamSpace(
-      { id, input: updateData },
+      { id, input },
       spaceHeader(space_id || process.env.MAIN_SPACE_ID)
     ));
   else
     ({ data: subjectData } = await updatingUser(
-      { id, input: updateData },
+      { id, input },
       spaceHeader(space_id || process.env.MAIN_SPACE_ID)
     ));
 

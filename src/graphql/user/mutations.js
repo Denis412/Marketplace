@@ -80,11 +80,7 @@ export const updateSubject = gql`
           middle_name
           last_name
         }
-        gender
-        city
-        birthday {
-          date
-        }
+
         email {
           email
         }

@@ -682,7 +682,7 @@ export default class TeamService {
           },
         },
         { only_one: true, is_my_teams: true }
-      );
+      ).refetch();
 
       await this.fetchTeamByName(variables.application.team.name).refetch();
     } catch (e) {
@@ -1047,10 +1047,100 @@ export default class TeamService {
     const loading = ref(false);
     const error = ref(null);
 
-    const { project, subject } = variables;
+    const { team, subject } = variables;
 
     try {
       loading.value = true;
+
+      const { data: excludedGroup } = await BaseService.fetchApiPaginate(
+        groupApi.paginateGroups
+      ).refetch(
+        {
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: "Исключенные",
+          },
+        },
+        { only_one: true, space_id: options.space_id }
+      );
+
+      console.log("excludedGroup", excludedGroup);
+
+      const { data: membersGroup } = await BaseService.fetchApiPaginate(
+        groupApi.paginateGroups
+      ).refetch(
+        {
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: "Участник",
+          },
+        },
+        { only_one: true, space_id: options.space_id }
+      );
+
+      console.log("membersGroup", membersGroup);
+
+      const { data: groupTypeInTeamSpace } = await BaseService.fetchApiPaginate(
+        typeApi.paginateType
+      ).refetch(
+        {
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: "group",
+          },
+        },
+        { only_one: true, space_id: options.space_id }
+      );
+
+      console.log("groupTypeInTeamSpace", groupTypeInTeamSpace, subject);
+
+      const { data: subjectInTeamSpace } = await BaseService.fetchApiPaginate(
+        userApi.paginateSubjects
+      ).refetch(
+        {
+          where: {
+            column: "email",
+            operator: "FTS",
+            value: subject.email.email,
+          },
+        },
+        { is_team: true, only_one: true, space_id: options.space_id }
+      );
+
+      console.log("subjectInTeamSpace", subjectInTeamSpace);
+
+      // const newGroups = subjectInTeamSpace.group
+      //   .map((gr) => gr.id)
+      //   .filter((group_id) => group_id !== membersGroup.id);
+      //
+      // newGroups.push(excludedGroup.id);
+
+      await BaseService.apiMutation(
+        userApi.update,
+        {
+          teams: {
+            [process.env.TEAM_TYPE_ID]: subject.teams
+              .map((t) => t.id)
+              .filter((team_id) => team_id !== team.id),
+          },
+        },
+        { id: subject.id },
+        [
+          {
+            variables: {
+              group: {
+                [groupTypeInTeamSpace.id]: subjectInTeamSpace.group
+                  .map((gr) => gr.id)
+                  .filter((group_id) => group_id !== membersGroup.id),
+              },
+            },
+            options: { id: subjectInTeamSpace.id, space_id: options.space_id },
+          },
+        ]
+      );
     } catch (e) {
       error.value = e;
 
@@ -1072,8 +1162,6 @@ export default class TeamService {
     try {
       loading.value = true;
 
-      console.log("pr su", project, subject, subject.email.email);
-
       const { data: subjectType } = await BaseService.fetchApiPaginate(
         typeApi.paginateType,
         {
@@ -1085,21 +1173,6 @@ export default class TeamService {
         },
         { space_id: options.space_id, only_one: true }
       ).refetch();
-
-      const { data: subjectInTeamSpace } = await BaseService.fetchApiPaginate(
-        userApi.paginateSubjects
-      ).refetch(
-        {
-          where: {
-            column: "email",
-            operator: "FTS",
-            value: subject.email?.email,
-          },
-        },
-        { is_team: true, only_one: true, space_id: options.space_id }
-      );
-
-      console.log("subject type", subjectType, subjectInTeamSpace, options);
 
       const { data: membersGroup } = await BaseService.fetchApiPaginate(
         groupApi.paginateGroups
@@ -1116,8 +1189,6 @@ export default class TeamService {
 
       const collection = options.is_customer ? "customers" : "members";
 
-      console.log("membersGroup", membersGroup);
-
       const { data: targetPermission } = await BaseService.fetchApiPaginate(
         permissionApi.paginatePermissionTreeSubjects,
         {
@@ -1132,15 +1203,13 @@ export default class TeamService {
         { only_one: true, space_id: options.space_id }
       ).refetch();
 
-      console.log("targetPermission", targetPermission);
-
       await BaseService.apiMutation(
         permissionApi.deleteById,
         {},
         { id: targetPermission.permission_rule_id, space_id: options.space_id }
       );
 
-      const del = await projectApi.update({
+      await projectApi.update({
         id: project.id,
         input: {
           name: project.name,
@@ -1154,8 +1223,6 @@ export default class TeamService {
       });
 
       await this.fetchProjectById(project.id, options.space_id).refetch();
-
-      console.log("del", del);
     } catch (e) {
       error.value = e;
 

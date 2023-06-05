@@ -64,7 +64,7 @@ export default class UserService {
   }
 
   static async subjectUpdate({ subject, id, input, is_team, space_id }) {
-    const subjectData = await this.fetchSubjectPaginate(
+    const { data: subjectData } = await this.fetchSubjectPaginate(
       {
         where: {
           column: "email",
@@ -75,7 +75,7 @@ export default class UserService {
       { only_one: true, space_id }
     ).refetch();
 
-    await userApi.update(subjectData.id, input, is_team, space_id);
+    await userApi.update({ id: subjectData.id, input, is_team, space_id });
 
     console.log("udpate subject");
   }

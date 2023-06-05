@@ -123,6 +123,15 @@ const confirmDeleteSpecialist = () => {
       },
       { space_id: currentProject.value.space }
     );
+  } else if (currentTeam?.value) {
+    console.log("project delete", currentTeam.value);
+    TeamService.deleteSpecialistFromTeam(
+      {
+        team: currentTeam.value,
+        subject: specialist,
+      },
+      { space_id: currentTeam.value.space }
+    );
   }
 };
 </script>
