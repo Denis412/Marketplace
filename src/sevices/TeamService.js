@@ -1174,6 +1174,19 @@ export default class TeamService {
         { space_id: options.space_id, only_one: true }
       ).refetch();
 
+      const { data: subjectInTeamSpace } = await BaseService.fetchApiPaginate(
+        userApi.paginateSubjects
+      ).refetch(
+        {
+          where: {
+            column: "email",
+            operator: "FTS",
+            value: subject.email.email,
+          },
+        },
+        { is_team: true, only_one: true, space_id: options.space_id }
+      );
+
       const { data: membersGroup } = await BaseService.fetchApiPaginate(
         groupApi.paginateGroups
       ).refetch(
@@ -1209,7 +1222,7 @@ export default class TeamService {
         { id: targetPermission.permission_rule_id, space_id: options.space_id }
       );
 
-      await projectApi.update({
+      const f = await projectApi.update({
         id: project.id,
         input: {
           name: project.name,

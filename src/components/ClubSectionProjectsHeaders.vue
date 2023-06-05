@@ -25,6 +25,7 @@
         :key="specialist.id"
         class="q-mt-lg bg-violet1"
         :specialist="specialist"
+        deleting
       />
     </div>
   </section>

@@ -115,16 +115,19 @@ const confirmDeleteSpecialist = () => {
   userStore.PUSH_DELETING_SPECIALIST(specialist);
 
   if (currentProject?.value) {
-    console.log("project delete", currentProject.value);
     TeamService.deleteSpecialistFromProject(
       {
         project: currentProject.value,
         subject: specialist,
       },
-      { space_id: currentProject.value.space }
+      {
+        space_id: currentProject.value.space,
+        is_customer: currentProject.value.customers.find(
+          (customer) => customer.email.email === specialist.email.email
+        ),
+      }
     );
   } else if (currentTeam?.value) {
-    console.log("project delete", currentTeam.value);
     TeamService.deleteSpecialistFromTeam(
       {
         team: currentTeam.value,

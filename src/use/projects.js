@@ -127,12 +127,15 @@ export const useProjectCreate = () => {
         },
       });
 
-      await userApi.update(subjectInMainSpace[0].id, {
-        projects: {
-          [process.env.PROJECT_TYPE_ID]: [
-            ...subjectInMainSpace[0].projects.map((project) => project.id),
-            projectInMainSpace.id,
-          ],
+      await userApi.update({
+        id: subjectInMainSpace[0].id,
+        input: {
+          projects: {
+            [process.env.PROJECT_TYPE_ID]: [
+              ...subjectInMainSpace[0].projects.map((project) => project.id),
+              projectInMainSpace.id,
+            ],
+          },
         },
       });
 
