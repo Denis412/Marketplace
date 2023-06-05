@@ -7,7 +7,7 @@
         <q-tab name="members" no-caps class="c-tab-text" label="Участники" />
 
         <q-tab
-          v-if="isLeader"
+          v-if="isOwner"
           name="applications"
           no-caps
           class="c-tab-text"
@@ -19,7 +19,7 @@
 
       <q-btn
         flat
-        v-if="isLeader"
+        v-if="isOwner"
         no-caps
         class="club-button-background text-body1"
         label="Пригласить"
@@ -53,7 +53,7 @@ import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
-const isLeader = inject("isLeader");
+const isOwner = inject("isOwner");
 const currentProject = inject("currentProject");
 
 const selectedList = ref("members");

@@ -1,7 +1,8 @@
 import { ref } from "vue";
 
-import projectApi from "src/sdk/project";
 import BaseService from "./BaseService";
+
+import projectApi from "src/sdk/project";
 import teamApi from "src/sdk/team";
 import spaceApi from "src/sdk/space";
 import groupApi from "src/sdk/group";
@@ -1030,6 +1031,131 @@ export default class TeamService {
         variables.application.project.id,
         variables.application.project.space
       ).refetch();
+    } catch (e) {
+      error.value = e;
+
+      console.log(e);
+    }
+
+    loading.value = false;
+
+    return { result, loading, error };
+  }
+
+  static async deleteSpecialistFromTeam(variables, options) {
+    const result = ref(null);
+    const loading = ref(false);
+    const error = ref(null);
+
+    const { project, subject } = variables;
+
+    try {
+      loading.value = true;
+    } catch (e) {
+      error.value = e;
+
+      console.log(e);
+    }
+
+    loading.value = false;
+
+    return { result, loading, error };
+  }
+
+  static async deleteSpecialistFromProject(variables, options) {
+    const result = ref(null);
+    const loading = ref(false);
+    const error = ref(null);
+
+    const { project, subject } = variables;
+
+    try {
+      loading.value = true;
+
+      console.log("pr su", project, subject, subject.email.email);
+
+      const { data: subjectType } = await BaseService.fetchApiPaginate(
+        typeApi.paginateType,
+        {
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: "subject",
+          },
+        },
+        { space_id: options.space_id, only_one: true }
+      ).refetch();
+
+      const { data: subjectInTeamSpace } = await BaseService.fetchApiPaginate(
+        userApi.paginateSubjects
+      ).refetch(
+        {
+          where: {
+            column: "email",
+            operator: "FTS",
+            value: subject.email?.email,
+          },
+        },
+        { is_team: true, only_one: true, space_id: options.space_id }
+      );
+
+      console.log("subject type", subjectType, subjectInTeamSpace, options);
+
+      const { data: membersGroup } = await BaseService.fetchApiPaginate(
+        groupApi.paginateGroups
+      ).refetch(
+        {
+          where: {
+            column: "name",
+            operator: "EQ",
+            value: "Участник",
+          },
+        },
+        { only_one: true, space_id: options.space_id }
+      );
+
+      const collection = options.is_customer ? "customers" : "members";
+
+      console.log("membersGroup", membersGroup);
+
+      const { data: targetPermission } = await BaseService.fetchApiPaginate(
+        permissionApi.paginatePermissionTreeSubjects,
+        {
+          modelId: project.id,
+          groupId: membersGroup.id,
+          where: {
+            column: "subject_id",
+            operator: "EQ",
+            value: subjectInTeamSpace.id,
+          },
+        },
+        { only_one: true, space_id: options.space_id }
+      ).refetch();
+
+      console.log("targetPermission", targetPermission);
+
+      await BaseService.apiMutation(
+        permissionApi.deleteById,
+        {},
+        { id: targetPermission.permission_rule_id, space_id: options.space_id }
+      );
+
+      const del = await projectApi.update({
+        id: project.id,
+        input: {
+          name: project.name,
+          [collection]: {
+            [subjectType.id]: project[collection]
+              .filter((sb) => sb.email.email !== subject.email.email)
+              .map((subject) => subject.id),
+          },
+        },
+        space_id: options.space_id,
+      });
+
+      await this.fetchProjectById(project.id, options.space_id).refetch();
+
+      console.log("del", del);
     } catch (e) {
       error.value = e;
 

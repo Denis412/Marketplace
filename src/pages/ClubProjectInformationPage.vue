@@ -139,7 +139,7 @@ const groupProjectSubjects = async (group_names) => {
 provide("spaceId", route.query.space);
 provide("currentProject", currentProject);
 
-provide("isLeader", isLeader);
+provide("isOwner", isLeader);
 provide("currentMembers", res.members);
 provide("currentCustomers", res.customers);
 provide("currentLeader", res.leader);

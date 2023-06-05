@@ -13,7 +13,7 @@
 
       <q-btn
         flat
-        v-if="isLeader"
+        v-if="isOwner"
         no-caps
         class="club-button-background text-body1 q-mt-lg"
         label="Пригласить"
@@ -38,7 +38,7 @@ import CSpecialistItem from "./ClubSpecialistItem.vue";
 const route = useRoute();
 const router = useRouter();
 
-const isLeader = inject("isLeader");
+const isOwner = inject("isOwner");
 const currentCustomers = inject("currentCustomers");
 const currentLeader = inject("currentLeader");
 

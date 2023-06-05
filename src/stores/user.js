@@ -8,12 +8,17 @@ export const useUserStore = defineStore("user", {
   state: () => ({
     currentUser: null,
     currentSpaceSubject: null,
+    deletingSpecialists: [],
     files: "wtf",
   }),
 
   getters: {
     GET_CURRENT_USER() {
       return this.currentUser;
+    },
+
+    GET_DELETING_SPECIALISTS() {
+      return this.deletingSpecialists;
     },
   },
 
@@ -90,6 +95,15 @@ export const useUserStore = defineStore("user", {
 
     RESET_CURRENT_SPACE_SUBJECT() {
       this.currentSpaceSubject = null;
+    },
+
+    PUSH_DELETING_SPECIALIST(specialist) {
+      if (!this.deletingSpecialists.find((sp) => sp.id === specialist.id))
+        this.deletingSpecialists.push(specialist);
+    },
+
+    REMOVE_DELETING_SPECIALIST(specialist) {
+      this.deletingSpecialists = this.deletingSpecialists.filter((sp) => sp.id !== specialist.id);
     },
 
     SET_PROP(prop, value) {

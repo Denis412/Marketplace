@@ -140,6 +140,7 @@ export const getProjectById = gql`
       target
       team_name
       created_at
+      space
       applications {
         id
         name
