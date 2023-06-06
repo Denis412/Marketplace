@@ -10,9 +10,9 @@
         {{ currentUser?.last_name }}
       </div>
 
-      <div class="text-caption1 text-violet-6 q-mt-sm c-mb-20">
+      <span class="text-caption1 text-violet-6 q-mt-sm c-mb-20">
         {{ currentUser?.email }}
-      </div>
+      </span>
     </q-card-section>
 
     <q-card-section class="c-mt-20">

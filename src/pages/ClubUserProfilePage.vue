@@ -4,9 +4,11 @@
 
     <!-- <pre>{{ current ? currentUser : user }}</pre> -->
 
+    <!--    <pre>gsd{{ user }}</pre>-->
+
     <div class="c-mt-32 separator" />
 
-    <!-- <c-section-main-profile-user-information current v-if="user" :user="user" /> -->
+    <!--    <c-section-main-profile-user-information current v-if="user" :user="user" />-->
 
     <section class="main-information">
       <section class="main-information__top">
@@ -210,17 +212,23 @@ const { id } = defineProps({
   id: String,
 });
 
-const { result: currentU } = userApi.paginateSubjects({
-  page: 1,
-  perPage: 1,
-  where: {
-    column: "id",
-    operator: "EQ",
-    value: id,
-  },
-});
+const { result: cU } = userApi.queryGetSubjectById({ id });
 
-const user = computed(() => currentU.value?.paginate_subject.data[0]);
+const user = computed(() => cU.value?.get_subject);
+
+const baseIconSize = ref("24px");
+
+// const { result: currentU } = userApi.paginateSubjects({
+//   page: 1,
+//   perPage: 1,
+//   where: {
+//     column: "id",
+//     operator: "EQ",
+//     value: id,
+//   },
+// });
+
+// const user = computed(() => cU.value);
 
 const items = ref([
   {

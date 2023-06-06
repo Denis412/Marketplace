@@ -1,30 +1,54 @@
 <template>
   <div class="fullscreen text-center flex row">
     <section class="col relative-position flex flex-center">
-      <q-form class="flex column items-center" @submit="authorization">
+      <q-form class="flex column form" @submit="authorization">
         <h3 class="text-bold c-mb-25 text-h3">Войти в личный кабинет</h3>
         <p class="c-mb-65 fs-16 text-body2">Рады видеть вас снова</p>
 
-        <c-input
-          class="c-input-400"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline"
           v-model="form.login"
           type="email"
+          maxlength="256"
           placeholder="Введите ваш e-mail"
+          :rules="[required, email, maxLength(256)]"
+          lazy-rules
         />
 
-        <c-input
-          class="q-mt-md c-input-400"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline q-mt-md"
           v-model="form.password"
-          type="password"
           placeholder="Введите пароль"
           visibility
-        />
+          :type="showPassword ? 'text' : 'password'"
+          maxlength="50"
+          :rules="[required, onlyLatin, minLength(8), maxLength(50), passwordValid]"
+          lazy-rules
+        >
+          <template v-slot:append>
+            <q-icon
+              class="cursor-pointer"
+              :name="
+                showPassword
+                  ? `img:/assets/icons/eye/eye-grey.svg`
+                  : `img:/assets/icons/eye/eye-hidden-grey.svg`
+              "
+              @click="showPassword = !showPassword"
+            />
+          </template>
+        </q-input>
 
-        <p href="" class="c-mb-50 q-mt-md link-grey cursor-pointer" @click="resetPassword">
+        <span href="" class="c-mb-50 q-mt-md text-violet4 cursor-pointer" @click="resetPassword">
           Забыли пароль?
-        </p>
+        </span>
 
-        <c-button background label="Войти" type="submit" class="text-body1" />
+        <div class="flex flex-center">
+          <c-button background label="Войти" type="submit" class="text-body1" />
+        </div>
       </q-form>
 
       <q-img
@@ -68,7 +92,9 @@ import { useQuasar } from "quasar";
 // import filesApi from "src/sdk/file";
 // import { useTimer } from "src/use/timer";
 // import { filesApi } from "src/sdk/files/file";
+import { useValidators } from "src/use/validators";
 
+const { required, email, onlyLatin, passwordValid, minLength, maxLength } = useValidators();
 const $q = useQuasar();
 const router = useRouter();
 const userStore = useUserStore();
@@ -77,6 +103,7 @@ const forgotPassword = ref(false);
 const authInfo = ref({});
 
 const files = ref(null);
+const showPassword = ref(false);
 
 const form = ref({
   login: "",
@@ -117,6 +144,13 @@ const resetPassword = () => {
 </script>
 
 <style lang="scss" scoped>
+.form {
+  max-width: 400px;
+  width: 400px;
+
+  margin: 0 16px;
+}
+
 .c {
   &-ab {
     &-0 {

@@ -27,6 +27,21 @@ export const getSubjectById = gql`
       }
       gender
       city
+      avatar
+      nickname
+      telegram_chat_id
+      about
+      resume_link
+      status {
+        name
+      }
+      competencies {
+        id
+        name
+      }
+      speciality1 {
+        name
+      }
       applications {
         sender
         id
