@@ -14,68 +14,124 @@
     </section>
 
     <section class="col relative-position flex flex-center">
-      <q-form class="flex column items-center c-maxw-400" @submit="registration">
+      <q-form class="flex column form" @submit="registration">
         <h3 class="text-bold c-mb-25 text-h3">Регистрация</h3>
-
         <p class="c-mb-30 fs-16 text-body2">Зарегистрируйтесь в нашем клубе</p>
 
-        <c-input
-          class="c-input-400"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline"
           v-model="form.name"
           type="text"
+          maxlength="50"
           placeholder="Введите ваше имя"
-          :rules="[required, onlyRussian, maxLength(50)]"
+          @update:model-value="capitailze('name')"
+          :rules="[required, onlyRussian, noSpace, maxLength(50)]"
+          lazy-rules
         />
 
-        <c-input
-          class="c-input-400 q-mt-md"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline q-mt-md"
           v-model="form.surname"
           type="text"
           placeholder="Введите вашу фамилию"
-          :rules="[required, onlyRussian, maxLength(50)]"
+          @update:model-value="capitailze('surname')"
+          :rules="[required, onlyRussian, noSpace, maxLength(50)]"
+          lazy-rules
         />
 
-        <c-input
-          class="c-input-400 q-mt-md"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline q-mt-md"
           v-model="form.email"
           type="email"
+          maxlength="256"
           placeholder="Введите ваш e-mail"
-          :rules="[required, maxLength(150)]"
+          :rules="[required, email, maxLength(256)]"
+          lazy-rules
         />
 
-        <c-input
-          class="c-input-400 q-mt-md"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline q-mt-md"
           v-model="form.password"
           type="password"
           placeholder="Введите пароль"
           visibility
-          :rules="[required, onlyLatin, minLength(8), maxLength(30), passwordValid]"
+          maxlength="50"
+          :rules="[required, onlyLatin, minLength(8), maxLength(50), passwordValid]"
           lazy-rules
-        />
+        >
+          <template v-slot:append>
+            <q-icon
+              class="cursor-pointer"
+              :name="
+                showPassword
+                  ? `img:/assets/icons/eye/eye-grey.svg`
+                  : `img:/assets/icons/eye/eye-hidden-grey.svg`
+              "
+              @click="showPassword = !showPassword"
+            />
+          </template>
+        </q-input>
 
-        <c-input
-          class="c-input-400 q-mt-md"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline q-mt-md"
           v-model="form.confirmPassword"
           type="password"
           placeholder="Повторите пароль"
+          maxlength="50"
           visibility
           :rules="[required, equal(form.password)]"
-        />
+          lazy-rules
+        >
+          <template v-slot:append>
+            <q-icon
+              class="cursor-pointer"
+              :name="
+                showConfirmPassword
+                  ? `img:/assets/icons/eye/eye-grey.svg`
+                  : `img:/assets/icons/eye/eye-hidden-grey.svg`
+              "
+              @click="showConfirmPassword = !showConfirmPassword"
+            />
+          </template>
+        </q-input>
 
         <q-checkbox
           dense
           v-model="agreement"
           color="purple"
-          class="c-mb-30 q-mt-md c-maxw-350 c-checkbox-rounded"
+          class="c-mb-30 q-mt-md text-caption2 c-checkbox-rounded"
         >
           <template v-slot:default>
-            Я принимаю <a href="">Условия использования</a> и соглашаюсь с
-            <a href="">политикой конфиденциальности</a>
+            <span class="flex">
+              Я принимаю
+              <pre> <a href="" class="text-caption2">Условия использования</a> </pre>
+              и соглашаюсь с
+              <pre><a href="" class="text-caption2">политикой конфиденциальности</a> </pre>
+            </span>
           </template>
         </q-checkbox>
 
         <!-- :disable="!agreement" -->
-        <c-button disable type="submit" background label="Зарегистрироваться" class="text-body1" />
+
+        <div class="flex flex-center">
+          <c-button
+            disable
+            type="submit"
+            background
+            label="Зарегистрироваться"
+            class="text-body1"
+          />
+        </div>
       </q-form>
 
       <q-img
@@ -83,8 +139,6 @@
         src="/assets/images/authentication/gears.svg"
       />
     </section>
-
-    <!-- <pre>{{ authUserInfo }}</pre> -->
 
     <c-confirmation-code-dialog
       v-model="showConfirmCode"
@@ -103,11 +157,21 @@ import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
 import CConfirmationCodeDialog from "src/components/ClubConfirmationCodeDialog.vue";
 import userApi from "src/sdk/user";
+import capitalizeWord from "src/utils/capitalizeWord";
 
 const $q = useQuasar();
 const timer = useTimer(90);
-const { required, minLength, maxLength, passwordValid, equal, onlyLatin, onlyRussian } =
-  useValidators();
+const {
+  required,
+  email,
+  minLength,
+  noSpace,
+  maxLength,
+  passwordValid,
+  equal,
+  onlyLatin,
+  onlyRussian,
+} = useValidators();
 
 const authUserInfo = ref({});
 const agreement = ref(false);
@@ -121,6 +185,13 @@ const form = ref({
   password: "",
   confirmPassword: "",
 });
+
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
+
+const capitailze = (prop) => {
+  if (form.value[prop].charCodeAt(0) >= 97) form.value[prop] = capitalizeWord(form.value[prop]);
+};
 
 const registration = async () => {
   // try {
@@ -161,6 +232,13 @@ registration.count = 0;
 <style lang="scss" scoped>
 * {
   box-sizing: border-box;
+}
+
+.form {
+  max-width: 400px;
+  width: 400px;
+
+  margin: 0 16px;
 }
 
 .c {

@@ -1,6 +1,6 @@
 <template>
   <q-item class="flex items-center justify-between col-5 rounded-borders-10">
-    <div class="flex items-center">
+    <div class="flex no-wrap items-center">
       <q-avatar class="medium-avatar cursor-pointer" @click="redirect">
         <q-img
           v-if="currentUser"
