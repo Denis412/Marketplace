@@ -42,7 +42,11 @@
           </template>
         </q-input>
 
-        <span href="" class="c-mb-50 q-mt-md text-violet4 cursor-pointer" @click="resetPassword">
+        <span
+          href=""
+          class="c-mb-50 q-mt-md text-violet4 text-caption2 cursor-pointer"
+          @click="resetPassword"
+        >
           Забыли пароль?
         </span>
 

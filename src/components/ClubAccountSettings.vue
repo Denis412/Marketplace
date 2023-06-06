@@ -120,9 +120,7 @@ const toggleIsDeletePhoto = () => {
 const deletePhoto = async () => {
   newAvatar.value = null;
 
-  await userApi.update(currentUser.value.subject_id, {
-    avatar: null,
-  });
+  await userApi.update({ id: currentUser.value.subject_id, input: { avatar: null } });
 
   userStore.SET_AVATAR(null);
 };
@@ -138,15 +136,13 @@ watch(selectAvatar, async (value) => {
 
   const avatarId = await userApi.uploadAvatar(value);
 
-  const files = await filesApi.get(avatarId);
+  const files = await filesApi.refetchQueryFileById({ id: avatarId });
 
-  const fileUrl = `${process.env.FILE_STORAGE_URI}/${files[0].path}/${avatarId}.${files[0].extension}?n=${files[0].name}`;
+  const fileUrl = `${process.env.FILE_STORAGE_URI}/${files.short_link}.${files.extension}?n=${files.name}`;
 
   userStore.SET_AVATAR(fileUrl);
 
-  await userApi.update(currentUser.value.subject_id, {
-    avatar: fileUrl,
-  });
+  await userApi.update({ id: currentUser.value.subject_id, input: { avatar: fileUrl } });
 });
 </script>
 

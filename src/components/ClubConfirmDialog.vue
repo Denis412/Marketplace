@@ -6,8 +6,15 @@
       </q-card-section>
 
       <q-card-section class="flex justify-end c-mt-32 rel-index-0">
-        <c-button background :label="confirmLabel" @click="$emit('confirm')" />
-        <c-button outline :label="cancelLabel" class="c-ml-32" @click="$emit('cancel')" />
+        <c-button background v-close-popup :label="confirmLabel" @click="$emit('confirm')" />
+
+        <c-button
+          outline
+          v-close-popup
+          :label="cancelLabel"
+          class="c-ml-32"
+          @click="$emit('cancel')"
+        />
       </q-card-section>
     </q-card>
   </q-dialog>
