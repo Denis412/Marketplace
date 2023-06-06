@@ -60,9 +60,9 @@
           outlined
           class="c-input-outline q-mt-md"
           v-model="form.password"
-          type="password"
           placeholder="Введите пароль"
           visibility
+          :type="showPassword ? 'text' : 'password'"
           maxlength="50"
           :rules="[required, onlyLatin, minLength(8), maxLength(50), passwordValid]"
           lazy-rules
@@ -85,10 +85,10 @@
           outlined
           class="c-input-outline q-mt-md"
           v-model="form.confirmPassword"
-          type="password"
           placeholder="Повторите пароль"
           maxlength="50"
           visibility
+          :type="showConfirmPassword ? 'text' : 'password'"
           :rules="[required, equal(form.password)]"
           lazy-rules
         >
@@ -148,7 +148,7 @@
   </div>
 </template>
 <script setup>
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useTimer } from "src/use/timer";
 import { useValidators } from "src/use/validators";
 import { useQuasar } from "quasar";
@@ -187,6 +187,7 @@ const form = ref({
 });
 
 const showPassword = ref(false);
+const passwordType = computed(() => (showPassword.value ? "text" : "password"));
 const showConfirmPassword = ref(false);
 
 const capitailze = (prop) => {
