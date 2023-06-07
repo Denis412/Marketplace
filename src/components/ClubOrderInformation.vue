@@ -16,9 +16,7 @@
       </section>
 
       <section class="q-mb-xl flex justify-start items-baseline c-mb-68">
-        <h5 class="q-mb-xs q-mr-sm c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28">
-          Заказчик
-        </h5>
+        <h5 class="q-mb-xs q-mr-sm c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28">Заказчик</h5>
         <p class="c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24" style="color: #581c87">
           {{ props.order.customer }}
         </p>
@@ -27,9 +25,7 @@
       <section class="c-mb-64">
         <h4 class="c-f-f-p c-f-w-400 c-f-s-32 c-f-h-40 c-mb-24">Отклик</h4>
 
-        <q-item-section
-          class="block-control-response flex column justify-around"
-        >
+        <q-item-section class="block-control-response flex column justify-around">
           <section class="flex justify-start no-wrap">
             <div
               class="image-block-control-response c-ml-32 c-mt-32 c-mr-24 flex items-center justify-center"
@@ -48,26 +44,19 @@
               >
                 Lorem ipsum dolor sit.
               </h4>
-              <h6
-                class="c-mb-16 c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2"
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Numquam, incidunt similique quisquam esse quaerat quibusdam.
+              <h6 class="c-mb-16 c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, incidunt similique
+                quisquam esse quaerat quibusdam.
               </h6>
-              <h6
-                class="c-f-f-m c-f-w-400 c-f-s-12 c-f-h-16"
-                style="color: #581c87"
-              >
-                Ознакомьтесь с командой-кандидатом, утвердите или откажитесь от
-                неё, чтобы ИИ нашёл вам другого исполнителя.
+              <h6 class="c-f-f-m c-f-w-400 c-f-s-12 c-f-h-16" style="color: #581c87">
+                Ознакомьтесь с командой-кандидатом, утвердите или откажитесь от неё, чтобы ИИ нашёл
+                вам другого исполнителя.
               </h6>
             </div>
           </section>
 
           <section class="flex items-end c-mb-32">
-            <div class="c-ml-32 c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2">
-              11.11.2011
-            </div>
+            <div class="c-ml-32 c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2">11.11.2011</div>
 
             <c-button
               class="c-ml-32"
@@ -99,19 +88,12 @@
         </h5>
 
         <div class="c-mr-24">
-          <p
-            class="text-content-component-todo c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-mb-24"
-          >
+          <p class="text-content-component-todo c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-mb-24">
             {{ props.order.type.name }}
           </p>
-          <div
-            class="text-content-component c-mb-12"
-            v-for="fun in props.order.functions"
-          >
+          <div class="text-content-component c-mb-12" v-for="fun in props.order.functions">
             <ul>
-              <li
-                class="q-ml-md c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-c-grey-2 c-mb-12"
-              >
+              <li class="q-ml-md c-f-f-m c-f-w-500 c-f-s-14 c-f-h-20 c-c-grey-2 c-mb-12">
                 {{ fun.name }}
               </li>
             </ul>
@@ -121,34 +103,22 @@
 
       <section class="c-mb-64">
         <div class="flex justify-start items-baseline c-mb-16">
-          <h5 class="c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1 c-mr-32">
-            Описание заказа
-          </h5>
+          <h5 class="c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1 c-mr-32">Описание заказа</h5>
 
-          <div
-            v-if="order.consultation"
-            class="flex justify-start items-center"
-          >
-            <p
-              class="c-f-f-m c-f-w-400 c-f-s-12 c-f-h-16"
-              style="margin: 0; color: #581c87"
-            >
+          <div v-if="order.consultation" class="flex justify-start items-center">
+            <p class="c-f-f-m c-f-w-400 c-f-s-12 c-f-h-16" style="margin: 0; color: #581c87">
               Мне нужна консультация
             </p>
           </div>
         </div>
 
-        <p
-          class="c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2 style-information-block"
-        >
+        <p class="c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2 style-information-block">
           {{ order.description }}
         </p>
       </section>
 
       <section class="c-mb-64">
-        <h5 class="c-mb-32 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">
-          Файлы и документы
-        </h5>
+        <h5 class="c-mb-32 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">Файлы и документы</h5>
         <div
           v-if="props.order.files === null"
           class="c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2"
@@ -160,13 +130,9 @@
 
       <section class="flex justify-start items-baseline">
         <div class="c-mr-172">
-          <h5 class="c-mb-24 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">
-            Желаемая стоимость
-          </h5>
+          <h5 class="c-mb-24 c-f-f-p c-f-w-400 c-f-s-20 c-f-h-28 c-c-grey-1">Желаемая стоимость</h5>
           <div class="flex">
-            <p
-              class="c-f-f-m c-f-w-500 c-f-s-16 c-f-h-20 c-c-grey-2 c-mr-76 flex items-center"
-            >
+            <p class="c-f-f-m c-f-w-500 c-f-s-16 c-f-h-20 c-c-grey-2 c-mr-76 flex items-center">
               от {{ props.order.price_start }}
               <q-icon
                 class="q-ml-sm"
@@ -174,9 +140,7 @@
                 name="img:/assets/icons/orderIcons/ruble.svg"
               ></q-icon>
             </p>
-            <p
-              class="c-f-f-m c-f-w-500 c-f-s-16 c-f-h-20 c-c-grey-2 flex items-center"
-            >
+            <p class="c-f-f-m c-f-w-500 c-f-s-16 c-f-h-20 c-c-grey-2 flex items-center">
               до {{ props.order.price_end }}
               <q-icon
                 class="q-ml-sm"
@@ -202,7 +166,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 import CButton from "../components/ClubButton.vue";
 import COrderStatus from "../components/ClubOrderStatus.vue";
 
@@ -232,9 +195,9 @@ const props = defineProps({
 .block-control-response {
   max-width: 820px;
   background: #ffffff;
-  box-shadow: 0px 38px 15px rgba(0, 0, 0, 0.01),
-    0px 21px 13px rgba(0, 0, 0, 0.03), 0px 10px 10px rgba(0, 0, 0, 0.04),
-    0px 2px 5px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 38px 15px rgba(0, 0, 0, 0.01), 0px 21px 13px rgba(0, 0, 0, 0.03),
+    0px 10px 10px rgba(0, 0, 0, 0.04), 0px 2px 5px rgba(0, 0, 0, 0.05),
+    0px 0px 0px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
   min-height: 285px;
 }

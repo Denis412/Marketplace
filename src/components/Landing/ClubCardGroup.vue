@@ -19,7 +19,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 import CItemsCard from "components/Landing/ClubItemsCard.vue";
 import CDirectionsCard from "components/Landing/ClubDirectionsCard.vue";
 import CBusinessOffersCard from "components/Landing/ClubBusinessOffersCard.vue";

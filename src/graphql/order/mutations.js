@@ -28,7 +28,10 @@ export const createOrder = gql`
         consultation
         price_start
         price_end
-        date_complete
+        date_complete {
+          date
+          time
+        }
       }
     }
   }

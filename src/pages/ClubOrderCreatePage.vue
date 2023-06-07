@@ -1,8 +1,8 @@
 <template>
-  <q-page class="c-pt-32 c-ml-32 container">
-    <section>
-      <h3 class="text-h3">Создать заказ</h3>
-      <p class="text-body2 c-mt-24">
+  <q-page class="c-pt-32 c-ml-32 c-mr-128">
+    <section class="c-mb-64">
+      <h3 class="text-h3 c-mb-24">Создать заказ</h3>
+      <p class="text-body2">
         Заполните форму и создайте заказ: специальный алгоритм ИИ подберет для вас подходящую
         команду. Вы сможете обсудить с лидом команды-кандидата проект, выбрать команду, либо
         отказаться, чтобы ИИ подобрал другую. Также вам на помощь всегда готов прийти модератор.
@@ -12,6 +12,7 @@
     <section>
       <q-form v-if="orderTypes">
         <c-input
+          class="c-mb-64"
           :title="'Название заказа'"
           :name="'name-order'"
           :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
@@ -22,6 +23,7 @@
         />
 
         <c-input
+          class="c-mb-64"
           :title="'Наименование заказчика'"
           :name="'name-customer'"
           :placeholder="'Укажите названия компании или ИП...'"
@@ -31,24 +33,28 @@
           :length="500"
         />
 
-        <div class="text-subtitle3 input-title input-mt">Что требуется сделать</div>
+        <div class="row no-wrap justify-between c-mt-24 c-mb-64">
+          <div class="column no-wrap items-start">
+            <p class="text-subtitle5 input-title input-mt c-pb-24">Что требуется сделать</p>
+            <div class="col-10 row wrap button-group">
+              <q-btn
+                v-for="(orderType, index) in orderTypeList"
+                :key="index"
+                class="text-caption2 btn"
+                :label="orderType.name"
+                :outline="true"
+                @click="addTodo(index, orderType)"
+              />
+            </div>
+          </div>
 
-        <div class="relative-position button-group row wrap c-mt-24">
-          <c-button
-            v-for="(orderType, index) in orderTypes"
-            :key="index"
-            class="text-caption2 btn"
-            :label="orderType.name"
-            :outline="true"
-            @click="addTodo(index, orderType)"
-          />
-
-          <img class="absolute mail-img" src="/assets/images/order/mail-icon.svg" alt="" />
+          <img class="mail-img" src="/assets/images/order/mail-icon.svg" alt="" />
         </div>
 
-        <div class="text-subtitle3 input-mt">Функции, блоки, разделы сайта</div>
-
-        <div class="c-mt-24 checkboxes-area">
+        <p v-if="allFunctions.length" class="text-subtitle5 input-mt c-mb-24">
+          Функции, блоки, разделы сайта
+        </p>
+        <div class="c-mb-64 checkboxes-area">
           <q-checkbox
             v-for="(checkbox, index) in allFunctions"
             :key="index"
@@ -161,7 +167,7 @@
               class="c-input-outline"
               name="date"
               outlined
-              v-model="form.date_complete"
+              v-model="selectedDate"
               :rules="[required]"
             >
               <template v-slot:append>
@@ -172,7 +178,7 @@
                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                     <q-date
                       :rules="[required]"
-                      v-model="form.date_complete"
+                      v-model="selectedDate"
                       mask="DD.MM.YYYY"
                       :options="optionsFn"
                     >
@@ -248,6 +254,7 @@ const selectedFunctions = ref([]);
 const allFunctions = ref([]);
 const files = ref([]);
 const uploadFile = ref();
+const selectedDate = ref("");
 
 const form = ref({
   name: "",
@@ -258,7 +265,7 @@ const form = ref({
   consultation: false,
   price_start: "",
   price_end: "",
-  date_complete: "",
+  date_complete: { date: selectedDate, time: "20:00:00" },
   draft: true,
   status: process.env.ORDER_STATUS_1,
 });
@@ -272,9 +279,12 @@ const createDraft = () => {
 
 const createOrder = () => {
   form.value.draft = false;
-  console.log(selectedType.value);
-  console.log(selectedFunctions.value);
-  OrderService.createOrder(form.value);
+  // console.log(selectedType.value);
+  // console.log(selectedFunctions.value);
+  // console.log(selectedDate);
+  // console.log(selectedDate.value);
+  console.log(form.value);
+  orderApi.orderCreate(form.value);
   // router.push({ name: "orders" });
 };
 
@@ -310,6 +320,12 @@ const addFile = () => {
 </script>
 
 <style lang="scss" scoped>
+p {
+  margin: 0;
+}
+.c-mb-24 {
+  margin-bottom: 24px;
+}
 .input-title {
   margin-left: 21px;
 
@@ -330,7 +346,7 @@ const addFile = () => {
 
 .button-group {
   gap: 32px;
-  width: 70%;
+  // width: 70%;
 }
 
 .btn {
@@ -341,7 +357,6 @@ const addFile = () => {
 }
 
 .input-mt {
-  margin-top: 80px;
   display: block;
 }
 

@@ -16,8 +16,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
-
 const { num } = defineProps({
   num: Number,
   title: String,

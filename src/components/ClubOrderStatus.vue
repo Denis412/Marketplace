@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch, onActivated, onMounted } from "vue";
+import { ref, watch, onActivated, onMounted } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getStatus } from "src/graphql/order/queries";
 
@@ -49,8 +49,6 @@ onActivated(() => {
 const status = ref();
 
 watch(loadingStatus, () => {
-  status.value = getStatuses.value.property.meta.options.find(
-    (el) => el.id === props.status
-  );
+  status.value = getStatuses.value.property.meta.options.find((el) => el.id === props.status);
 });
 </script>
