@@ -119,7 +119,7 @@ const routes = [
       {
         path: "order-create",
         name: "order-create",
-        component: () => import("pages/ClubOrderCreatePage.vue"),
+        component: () => import("pages/ClubOrderCreate.vue"),
       },
       {
         path: "/order-info/:id",

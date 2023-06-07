@@ -569,7 +569,9 @@
 }
 
 .review-card {
-  & #movie_player > div.ytp-cued-thumbnail-overlay > button {
+  & #movie_player > div.ytp-cued-thumbnail-overlay > button{
     background-color: rgb(255, 0, 0) !important;
   }
+
 }
+
