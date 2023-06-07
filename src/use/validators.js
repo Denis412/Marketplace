@@ -12,7 +12,7 @@ export function useValidators() {
     minLength: (length) => (val) =>
       !val || val.length >= length || `Минимально возможное количество символов ${length}`,
 
-    isLatin: (val) => /^[a-zA-Zа-яА-Я\d]+$/.test(val) || "Введены недопустимые символы.",
+    isLatin: (val) => /^[a-zA-Zа-яА-Я\d\s]+$/.test(val)  || "Введены недопустимые символы.",
 
     email: (val) =>
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+$/.test(val) || "Неверный формат email",

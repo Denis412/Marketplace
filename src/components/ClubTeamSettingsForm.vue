@@ -63,8 +63,9 @@
         <c-label-control label="Название команды">
           <template #control>
             <q-input
+              ref="name"
               v-model="form.name"
-              @change="updateTeamData('name', $event)"
+              @change="name.validate() ? updateTeamData('name', $event) : null"
               maxlength="30"
               placeholder="Название команды"
               class="c-input-outline teamSettingForm-input-small"
@@ -89,9 +90,10 @@
         <c-label-control label="Описание">
           <template #control>
             <q-input
+              ref="description"
               v-model="form.description"
               maxlength="1000"
-              @change="updateTeamData('description', $event)"
+              @change="description.validate() ? updateTeamData('description', $event) : null"
               placeholder="Описание команды"
               class="c-input-outline c-input-area-mc teamSettingForm-input"
               outlined
@@ -109,8 +111,13 @@
         <c-label-control label="Ссылка на Telegram лидера">
           <template #control>
             <q-input
+              ref="leader_telegram_chat_id"
               v-model="form.leader_telegram_chat_id"
-              @change="updateTeamData('leader_telegram_chat_id', $event)"
+              @change="
+                leader_telegram_chat_id.validate()
+                  ? updateTeamData('leader_telegram_chat_id', $event)
+                  : null
+              "
               placeholder="https://t.me/..."
               class="c-input-outline teamSettingForm-input"
               outlined
@@ -199,6 +206,14 @@ const { required, maxLength, minLength, isTelegramUrl, isLatin } = useValidators
 const currentTeam = inject("currentTeam");
 const upload_img = ref();
 const uploadFile = ref();
+
+const name = ref(null);
+const description = ref(null);
+const leader_telegram_chat_id = ref(null);
+
+const log = () => {
+  console.log(description.value.validate);
+};
 
 const form = ref({
   avatar: currentTeam.value?.avatar || "/assets/images/preloaders/default-avatar.svg",
