@@ -1,5 +1,4 @@
 <template>
-  <!-- <pre>{{ currentTeam }}</pre> -->
   <q-card flat class="header-wrapper w-100p">
     <q-toolbar class="absolute flex justify-end">
       <c-popup-team-actions style="z-index: 10" />

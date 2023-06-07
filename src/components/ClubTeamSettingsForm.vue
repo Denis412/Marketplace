@@ -69,7 +69,7 @@
               placeholder="Название команды"
               class="c-input-outline teamSettingForm-input-small"
               outlined
-              :rules="[required, minLength(2), maxLength(30)]"
+              :rules="[required, isLatin, minLength(2), maxLength(30)]"
             >
               <template #append>
                 <q-icon
@@ -97,7 +97,7 @@
               outlined
               autogrow
               type="textarea"
-              :rules="[required, maxLength(1000)]"
+              :rules="[required, isLatin, maxLength(1000)]"
             />
           </template>
         </c-label-control>
@@ -194,7 +194,7 @@ import TeamService from "src/sevices/TeamService";
 
 const $q = useQuasar();
 
-const { required, maxLength, minLength, isTelegramUrl } = useValidators();
+const { required, maxLength, minLength, isTelegramUrl, isLatin } = useValidators();
 
 const currentTeam = inject("currentTeam");
 const upload_img = ref();

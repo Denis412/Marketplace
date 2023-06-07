@@ -5,7 +5,7 @@
       node-key="label"
       no-connectors
       v-model:selected="selected"
-      @update:selected="redirect"
+      @click="redirect"
       no-selection-unset
       default-expand-all
       class="c-tree"
@@ -67,7 +67,6 @@ const pages = computed(() => {
 console.log(router.currentRoute.value.path.includes("team"));
 
 const redirect = () => {
-  console.log("redirect");
   router.push({
     name: selected.value === "Командное пространство" ? "teamSpace" : "team",
     params: { id: route.params.id },

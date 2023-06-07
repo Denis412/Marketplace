@@ -18,22 +18,41 @@
         active-bg-color="white"
         class="editableItems c-tabs c-pa-16 c-ml-32"
       >
-        <q-tab class="editableItem" name="profile" label="Профиль команды" />
-        <q-tab class="editableItem" name="space" label="Командное пространство" />
+        <q-tab
+          class="editableItem"
+          name="profile"
+          label="Профиль команды"
+          @click="edit('profile')"
+        />
+        <q-tab
+          class="editableItem"
+          name="space"
+          label="Командное пространство"
+          @click="edit('space')"
+        />
       </q-tabs>
     </main>
   </section>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import CTeamSettingsForm from "./ClubTeamSettingsForm.vue";
 import CTeamSpaceSettingsForm from "./ClubTeamSpaceSettingsForm.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 
-const editableItem = ref(route.path.includes("team-space") ? "space" : "profile");
+const editableItem = ref(computed(() => (route.path.includes("space") ? "space" : "profile")));
+
+const edit = async (name) => {
+  router.push({
+    name: name === "space" ? "teamSpaceEdit" : "teamEdit",
+    params: { id: route.params.id },
+    query: { space: route.query.space },
+  });
+};
 </script>
 
 <style lang="scss" scoped>

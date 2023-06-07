@@ -53,7 +53,7 @@ const isMember = inject("isMember");
 
 const editProfile = async () => {
   router.push({
-    name: router.currentRoute.value.path.includes("team-space") ? "teamSpaceEdit" : "teamEdit",
+    name: router.currentRoute.value.path.includes("space") ? "teamSpaceEdit" : "teamEdit",
     params: { id: currentTeam.value.id },
     query: { space: currentTeam.value.space },
   });

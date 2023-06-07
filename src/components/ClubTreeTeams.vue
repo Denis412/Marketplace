@@ -21,7 +21,7 @@ import pageApi from "src/sdk/page";
 const router = useRouter();
 const route = useRoute();
 const selected = ref(
-  route.path.includes("my-teams") ? process.env.MY_TEAMS_PAGE_ID : process.env.ALL_TEAMS_PAGE_ID
+  computed(()=>route.path.includes("my-teams") ? process.env.MY_TEAMS_PAGE_ID : process.env.ALL_TEAMS_PAGE_ID)
 );
 const currentUser = inject("currentUser");
 
