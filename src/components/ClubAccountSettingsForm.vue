@@ -1,14 +1,20 @@
 <template>
   <q-form @submit="$emit('submit-form', form)" class="c-gutter-y-32">
-    <section class="flex no-wrap">
+    <q-form ref="formRef" class="flex no-wrap" @submit="formSubmit">
       <c-label-control label="Фамилия">
         <template #control>
           <q-input
-            v-model="form.last_name"
+            flat
             outlined
             class="c-input-outline"
-            @change="changeUSerData('last_name', $event)"
+            v-model="form.last_name"
+            type="text"
+            maxlength="50"
             :placeholder="currentUser?.last_name"
+            @update:model-value="capitailze('last_name')"
+            @change="changeUSerData('last_name', $event)"
+            :rules="[onlyRussian, noSpace, maxLength(50)]"
+            lazy-rules
           />
         </template>
       </c-label-control>
@@ -16,11 +22,17 @@
       <c-label-control label="Имя" class="c-ml-32">
         <template #control>
           <q-input
-            v-model="form.first_name"
+            flat
             outlined
             class="c-input-outline"
-            @change="changeUSerData('first_name', $event)"
+            v-model="form.first_name"
+            type="text"
+            maxlength="50"
             :placeholder="currentUser?.first_name"
+            @update:model-value="capitailze('first_name')"
+            @change="changeUSerData('first_name', $event)"
+            :rules="[onlyRussian, noSpace, maxLength(50)]"
+            lazy-rules
           />
         </template>
       </c-label-control>
@@ -28,15 +40,21 @@
       <c-label-control label="Отчество" class="c-ml-32">
         <template #control>
           <q-input
-            v-model="form.middle_name"
+            flat
             outlined
             class="c-input-outline"
-            @change="changeUSerData('middle_name', $event)"
+            v-model="form.middle_name"
+            type="text"
+            maxlength="50"
             :placeholder="currentUser?.middle_name"
+            @update:model-value="capitailze('middle_name')"
+            @change="changeUSerData('middle_name', $event)"
+            :rules="[onlyRussian, noSpace, maxLength(50)]"
+            lazy-rules
           />
         </template>
       </c-label-control>
-    </section>
+    </q-form>
 
     <section class="flex no-wrap">
       <c-label-control label="Пол">
@@ -126,9 +144,12 @@ import CLabelControl from "./ClubLabelControl.vue";
 import userApi from "src/sdk/user";
 import { useQuasar } from "quasar";
 import UserService from "src/sevices/UserService";
+import capitalizeWord from "src/utils/capitalizeWord";
+import { useValidators } from "src/use/validators";
 
 const emit = defineEmits(["form-submit"]);
 
+const { required, email, minLength, noSpace, maxLength, equal, onlyRussian } = useValidators();
 const $q = useQuasar();
 
 const userStore = useUserStore();
@@ -144,8 +165,16 @@ const form = ref({
   city: currentUser.value?.city,
   email: currentUser.value?.email,
 });
+
+const updatedData = ref({
+  input: null,
+  prop: null,
+  value: null,
+});
+
 const cities = ["Москва", "Санкт-Петербург", "Воронеж"];
 const filteredCities = ref(cities);
+const formRef = ref(null);
 
 const optionsDateSelect = (date) => new Date(date).getTime() < Date.now();
 
@@ -153,6 +182,16 @@ const filterFn = (val, update) => {
   update(() => {
     filteredCities.value = cities.filter((v) => v.toLowerCase().includes(val.toLowerCase()));
   });
+};
+
+const capitailze = (prop) => {
+  if (form.value[prop].charCodeAt(0) >= 97) form.value[prop] = capitalizeWord(form.value[prop]);
+};
+
+const formSubmit = async () => {
+  await UserService.subjectUpdate({ subject: currentUser.value, input: updatedData.value.input });
+
+  userStore.SET_PROP(updatedData.value.prop, updatedData.value.value);
 };
 
 const changeUSerData = async (prop, value) => {
@@ -178,9 +217,11 @@ const changeUSerData = async (prop, value) => {
         [prop]: value,
       };
 
-    await UserService.subjectUpdate({ subject: currentUser.value, input });
+    updatedData.value.input = input;
+    updatedData.value.prop = prop;
+    updatedData.value.value = value;
 
-    userStore.SET_PROP(prop, value);
+    await formRef.value.submit();
   } catch (error) {
     if (prop === "birthday") {
       $q.notify({

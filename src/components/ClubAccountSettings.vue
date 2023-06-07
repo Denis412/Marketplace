@@ -62,7 +62,12 @@
             изменить его
           </p>
 
-          <c-button background label="Изменить пароль" class="c-mt-32" @click="changePassword" />
+          <c-button
+            background
+            label="Изменить пароль"
+            class="c-mt-32 text-body1"
+            @click="changePassword"
+          />
         </div>
 
         <q-img

@@ -25,7 +25,8 @@ export function useValidators() {
 
     onlyLatin: (val) => !/^[а-яА-Я]+$/.test(val) || "Ввод только латинскими символами.",
 
-    onlyRussian: (val) => /^[а-яА-Я]+$/.test(val) || "Ввод только русскими символами.",
+    onlyRussian: (val) =>
+      /^[а-яА-Я]+$/.test(val) || !val.length || "Ввод только русскими символами.",
 
     equal: (val1) => (val) => val1 === val || "Значения не совпадают.",
 
