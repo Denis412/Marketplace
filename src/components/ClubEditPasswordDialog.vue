@@ -69,6 +69,7 @@ import CClosingDialog from "./ClubClosingDialog.vue";
 
 import userApi from "src/sdk/user";
 import { useQuasar } from "quasar";
+import UserService from "src/sevices/UserService";
 
 const $q = useQuasar();
 const { required, minLength, passwordValid, equal, notEqual } = useValidators();
@@ -95,13 +96,11 @@ const changePassword = async () => {
     let userId;
 
     if (recovery) {
-      await userApi.login(
-        {
-          login: authInfo.email,
-          password: form.value.oldPassword,
-        },
-        true
-      );
+      await UserService.signIn({
+        login: authInfo.email,
+        password: form.value.oldPassword,
+        recovery: true,
+      });
     }
 
     if (timer.timer.value === 90)

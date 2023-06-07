@@ -97,6 +97,7 @@ import { useQuasar } from "quasar";
 // import { useTimer } from "src/use/timer";
 // import { filesApi } from "src/sdk/files/file";
 import { useValidators } from "src/use/validators";
+import UserService from "src/sevices/UserService";
 
 const { required, email, onlyLatin, passwordValid, minLength, maxLength } = useValidators();
 const $q = useQuasar();
@@ -117,11 +118,14 @@ const form = ref({
 const authorization = async () => {
   console.log("authenticated", form.value);
   try {
-    await userApi.login(form.value);
+    // await userApi.login(form.value);
+    const data = await UserService.signIn(form.value);
+
+    console.log("data", data);
 
     await userStore.FETCH_CURRENT_USER();
 
-    console.log("store", userStore.GET_CURRENT_USER);
+    // console.log("store", userStore.GET_CURRENT_USER);
 
     await router.push({
       name: "profile",

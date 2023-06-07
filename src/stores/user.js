@@ -35,19 +35,22 @@ export const useUserStore = defineStore("user", {
       });
 
       if (!subjectData[0].speciality1?.name)
-        await userApi.update(subjectData[0].id, {
-          speciality1: {
-            [process.env.SPECIALITY_TYPE_ID]: process.env.DEFAULT_SPECIALITY_ID,
+        await userApi.update({
+          id: subjectData[0].id,
+          input: {
+            speciality1: {
+              [process.env.SPECIALITY_TYPE_ID]: process.env.DEFAULT_SPECIALITY_ID,
+            },
           },
         });
 
-      console.log("fetch in api passed");
+      // console.log("fetch in api passed");
 
       const userData = await userApi.refetchUserById(
         JSON.parse(localStorage.getItem("user-data")).user_id
       );
 
-      console.log("data subject", subjectData[0]);
+      // console.log("data subject", subjectData[0]);
 
       this.currentUser = convertSubject({
         ...userData,
@@ -68,7 +71,7 @@ export const useUserStore = defineStore("user", {
           { space_id }
         );
 
-        console.log("fetch");
+        // console.log("fetch");
 
         const subjectsData = await userApi.refetchPaginateSubjects({
           page: 1,
@@ -82,7 +85,7 @@ export const useUserStore = defineStore("user", {
           space_id,
         });
 
-        console.log("data", subjectsData);
+        // console.log("data", subjectsData);
 
         this.currentSpaceSubject = subjectsData[0];
 
