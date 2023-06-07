@@ -165,7 +165,7 @@
               class="c-input-outline"
               name="date"
               outlined
-              v-model="form.date_complete"
+              v-model="selectedDate"
               :rules="[required]"
             >
               <template v-slot:append>
@@ -176,7 +176,7 @@
                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                     <q-date
                       :rules="[required]"
-                      v-model="form.date_complete"
+                      v-model="selectedDate"
                       mask="DD.MM.YYYY"
                       :options="optionsFn"
                     >
@@ -249,6 +249,7 @@ const selectedFunctions = ref([]);
 const allFunctions = ref([]);
 const files = ref([]);
 const uploadFile = ref();
+const selectedDate = ref("");
 
 const form = ref({
   name: "",
@@ -260,7 +261,7 @@ const form = ref({
   // files: null,
   price_start: "",
   price_end: "",
-  date_complete: "",
+  date_complete: { date: selectedDate, time: "20:00:00" },
   draft: true,
   status: process.env.ORDER_STATUS_1,
 });
@@ -274,8 +275,11 @@ const createDraft = () => {
 
 const createOrder = () => {
   form.value.draft = false;
-  console.log(selectedType.value);
-  console.log(selectedFunctions.value);
+  // console.log(selectedType.value);
+  // console.log(selectedFunctions.value);
+  // console.log(selectedDate);
+  // console.log(selectedDate.value);
+  console.log(form.value);
   orderApi.orderCreate(form.value);
   // router.push({ name: "orders" });
 };
