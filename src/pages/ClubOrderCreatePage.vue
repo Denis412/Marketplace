@@ -1,17 +1,17 @@
 <template>
-  <q-page class="c-pt-32 c-ml-32 container">
-    <section>
-      <h3 class="text-h3">Создать заказ</h3>
-      <p class="text-body2 c-mt-24">
-        Заполните форму и создайте заказ: специальный алгоритм ИИ подберет для
-        вас подходящую команду. Вы сможете обсудить с лидом команды-кандидата
-        проект, выбрать команду, либо отказаться, чтобы ИИ подобрал другую.
-        Также вам на помощь всегда готов прийти модератор.
+  <q-page class="c-pt-32 c-ml-32 c-mr-128">
+    <section class="c-mb-64">
+      <h3 class="text-h3 c-mb-24">Создать заказ</h3>
+      <p class="text-body2">
+        Заполните форму и создайте заказ: специальный алгоритм ИИ подберет для вас подходящую
+        команду. Вы сможете обсудить с лидом команды-кандидата проект, выбрать команду, либо
+        отказаться, чтобы ИИ подобрал другую. Также вам на помощь всегда готов прийти модератор.
       </p>
     </section>
     <section>
       <q-form v-if="orderTypes">
         <c-input
+          class="c-mb-64"
           :title="'Название заказа'"
           :name="'name-order'"
           :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
@@ -22,6 +22,7 @@
         />
 
         <c-input
+          class="c-mb-64"
           :title="'Наименование заказчика'"
           :name="'name-customer'"
           :placeholder="'Укажите названия компании или ИП...'"
@@ -31,28 +32,28 @@
           :length="500"
         />
 
-        <div class="text-subtitle3 input-title input-mt">
-          Что требуется сделать
-        </div>
-        <div class="relative-position button-group row wrap c-mt-24">
-          <c-button
-            v-for="(orderType, index) in orderTypeList"
-            :key="index"
-            class="text-caption2 btn"
-            :label="orderType.name"
-            :outline="true"
-            @click="addTodo(index, orderType)"
-          />
+        <div class="row no-wrap justify-between c-mt-24 c-mb-64">
+          <div class="column no-wrap items-start">
+            <p class="text-subtitle5 input-title input-mt c-pb-24">Что требуется сделать</p>
+            <div class="col-10 row wrap button-group">
+              <q-btn
+                v-for="(orderType, index) in orderTypeList"
+                :key="index"
+                class="text-caption2 btn"
+                :label="orderType.name"
+                :outline="true"
+                @click="addTodo(index, orderType)"
+              />
+            </div>
+          </div>
 
-          <img
-            class="absolute mail-img"
-            src="/assets/images/order/mail-icon.svg"
-            alt=""
-          />
+          <img class="mail-img" src="/assets/images/order/mail-icon.svg" alt="" />
         </div>
 
-        <div class="text-subtitle3 input-mt">Функции, блоки, разделы сайта</div>
-        <div class="c-mt-24 checkboxes-area">
+        <p v-if="allFunctions.length" class="text-subtitle5 input-mt c-mb-24">
+          Функции, блоки, разделы сайта
+        </p>
+        <div class="c-mb-64 checkboxes-area">
           <q-checkbox
             v-for="(checkbox, index) in allFunctions"
             :key="index"
@@ -83,24 +84,15 @@
               class="c-checkbox-outlined"
             />
 
-            <div>
-              Если Вы не знаете, как более точно сформулировать идею - дайте нам
-              знать.
-            </div>
+            <div>Если Вы не знаете, как более точно сформулировать идею - дайте нам знать.</div>
           </div>
 
           <div class="col-6">
-            <img
-              class="question-mark-img"
-              src="/assets/images/order/speech-bubble.svg"
-              alt=""
-            />
+            <img class="question-mark-img" src="/assets/images/order/speech-bubble.svg" alt="" />
           </div>
         </div>
 
-        <label for="file" class="text-subtitle3 input-mt">
-          Файлы и документы
-        </label>
+        <label for="file" class="text-subtitle3 input-mt"> Файлы и документы </label>
         <q-file
           outlined
           multiple
@@ -113,8 +105,8 @@
           ref="uploadFile"
         >
           <div class="c-file-placeholder">
-            Если у вас уже имеются контент, брендбук, бриф, спецификация или
-            иные материалы по заказу, пожалуйста, загрузите их...
+            Если у вас уже имеются контент, брендбук, бриф, спецификация или иные материалы по
+            заказу, пожалуйста, загрузите их...
           </div>
 
           <c-button
@@ -138,17 +130,10 @@
                 name="from-to"
                 placeholder="От..."
                 outlined
-                :rules="[
-                  requiredOneOfNumber(form.price_end),
-                  positive,
-                  lowerThan(form.price_end),
-                ]"
+                :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
               />
 
-              <q-icon
-                class="ruble"
-                name="img:/assets/icons/others/ruble-purple.svg"
-              />
+              <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg" />
             </div>
 
             <div class="row justify-between c-mt-24 col-3">
@@ -166,10 +151,7 @@
                 ]"
               />
 
-              <q-icon
-                class="ruble"
-                name="img:/assets/icons/others/ruble-purple.svg"
-              />
+              <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg" />
             </div>
           </div>
 
@@ -191,11 +173,7 @@
                   name="img:/assets/icons/calendar/calendar-purple.svg"
                   class="cursor-pointer"
                 >
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                     <q-date
                       :rules="[required]"
                       v-model="form.date_complete"
@@ -203,12 +181,7 @@
                       :options="optionsFn"
                     >
                       <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
+                        <q-btn v-close-popup label="Close" color="primary" flat />
                       </div>
                     </q-date>
                   </q-popup-proxy>
@@ -292,8 +265,7 @@ const form = ref({
   status: process.env.ORDER_STATUS_1,
 });
 
-const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } =
-  useValidators();
+const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } = useValidators();
 
 const createDraft = () => {
   form.value.status = process.env.ORDER_STATUS_0;
@@ -340,6 +312,12 @@ const addFile = () => {
 </script>
 
 <style lang="scss" scoped>
+p {
+  margin: 0;
+}
+.c-mb-24 {
+  margin-bottom: 24px;
+}
 .input-title {
   margin-left: 21px;
 
@@ -360,7 +338,7 @@ const addFile = () => {
 
 .button-group {
   gap: 32px;
-  width: 70%;
+  // width: 70%;
 }
 
 .btn {
@@ -371,7 +349,6 @@ const addFile = () => {
 }
 
 .input-mt {
-  margin-top: 80px;
   display: block;
 }
 
