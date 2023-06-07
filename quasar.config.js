@@ -72,6 +72,7 @@ module.exports = configure(function (/* ctx */) {
         MY_TEAMS_PAGE_ID: "5297017851980857027",
 
         USERS_GROUP_ID: "2954744714133191151", // Группа разработчиков
+        MODERATORS_GROUP_ID: "3460605780830741669",
 
         APPLICATION_STATUS_PROPERTY: "5892464470060638614",
 

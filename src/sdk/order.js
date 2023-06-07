@@ -10,25 +10,25 @@ provideApolloClient(apolloClient);
 const { mutate: creatingOrder } = useMutation(createOrder);
 const { mutate: updatingOrder } = useMutation(updateOrder);
 
-const ordersPaginate = ({ page, perPage, where, orderBy }) => {
-  return useQuery(getOrders, { page, perPage, where });
+const ordersPaginate = ({ page, perPage, where, orderBy, fetchPolicy }) => {
+  return useQuery(getOrders, { page, perPage, where }, { fetchPolicy });
 };
 
 const queryOrderById = ({ id }) => {
   return useQuery(getOrderById, { id });
 };
 
-const orderCreate = (input) => {
-  const { data: orderInfo } = creatingOrder({ input });
+const orderCreate = async ({ input }) => {
+  const { data: orderInfo } = await creatingOrder({ input });
 
   return orderInfo.create_order;
 };
 
-const update = ({ input, id, name }) => {
+const update = async ({ input, id, name }) => {
   if (!Object.entries(input).length) return;
 
   input.name = name;
-  const { data: orderInfo } = updatingOrder({ input, id });
+  const { data: orderInfo } = await updatingOrder({ input, id });
 
   return orderInfo.update_order;
 };

@@ -40,25 +40,22 @@
 <script setup>
 import CButton from "src/components/ClubButton.vue";
 import COrdersItem from "src/components/ClubOrderItem.vue";
-import { onActivated, onMounted, ref, watch } from "vue";
+import { inject, onActivated, onMounted, ref, watch } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getOrders } from "src/graphql/order/queries";
 import OrderService from "src/sevices/OrderService";
 
-const f = OrderService.fetchAllOrders();
-const { result: ordersResult, loading: loadingOrder, refetch } = useQuery(getOrders);
-const orders = ref([]);
+const currentUser = inject("currentUser");
+const isModerator = inject("isModerator");
 
-watch(ordersResult, () => {
-  orders.value = ordersResult.value?.paginate_order?.data;
-  console.log(orders.value);
-});
-
-onMounted(() => {
-  refetch();
-});
-onActivated(() => {
-  refetch();
+const { result: orders, loading: loadingOrder } = OrderService.fetchAllOrders({
+  where: isModerator.value
+    ? null
+    : {
+        column: "author_id",
+        operator: "EQ",
+        value: currentUser.value.subject_id,
+      },
 });
 </script>
 

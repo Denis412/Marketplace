@@ -222,6 +222,9 @@ const logout = () => {
 
 const isAuth = () => localStorage.getItem("user-data") && localStorage.getItem("refreshToken");
 
+const isModerator = (user) =>
+  user?.group.find((group) => group.id === process.env.MODERATORS_GROUP_ID);
+
 const uploadAvatar = async (file) => {
   const filesIds = await filesApi.uploadFiles(file);
 
@@ -245,6 +248,7 @@ const userApi = {
   update,
   logout,
   isAuth,
+  isModerator,
   uploadAvatar,
 };
 

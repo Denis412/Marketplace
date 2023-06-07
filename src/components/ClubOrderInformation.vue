@@ -2,9 +2,7 @@
   <section>
     <section class="wrapper-page-order-info">
       <section class="flex items-baseline c-mb-24">
-        <h4 class="c-f-f-f c-f-w-400 c-f-s-32 c-f-h-40 c-mr-32">
-          просмотр заказа {{ props.order.id }}
-        </h4>
+        <h4 class="c-f-f-f c-f-w-400 c-f-s-32 c-f-h-40 c-mr-32">просмотр заказа</h4>
 
         <c-order-status :status="props.order.status" />
       </section>
@@ -57,26 +55,24 @@
 
           <section class="flex items-end c-mb-32">
             <div class="c-ml-32 c-f-f-m c-f-w-400 c-f-s-16 c-f-h-24 c-c-grey-2">11.11.2011</div>
-
-            <c-button
-              class="c-ml-32"
-              :label="'Перейти к профилю'"
-              :textColor="'white'"
-              :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
+            <q-btn
+              flat
+              no-caps
+              class="club-button-background text-body1 c-ml-32"
+              label="Перейти к профилю"
             />
 
-            <c-button
-              class="c-ml-32"
-              :label="'Утвердить исполнителя'"
-              :textColor="'white'"
-              :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
+            <q-btn
+              flat
+              no-caps
+              class="club-button-background text-body1 c-ml-32"
+              label="Утвердить исполнителя"
             />
-
-            <c-button
-              class="c-ml-32"
-              :label="'Отказаться'"
-              :textColor="'white'"
-              :background="'linear-gradient(101.75deg, #4C1D95 4.25%, #881D95 96.95%);'"
+            <q-btn
+              flat
+              no-caps
+              class="club-button-background text-body1 c-ml-32"
+              label="Отказаться"
             />
           </section>
         </q-item-section>
