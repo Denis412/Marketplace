@@ -64,7 +64,7 @@
           visibility
           :type="showPassword ? 'text' : 'password'"
           maxlength="50"
-          :rules="[required, onlyLatin, minLength(8), maxLength(50), passwordValid]"
+          :rules="[required, minLength(8), maxLength(50), onlyLatin, passwordValid]"
           lazy-rules
         >
           <template v-slot:append>

@@ -12,7 +12,7 @@ export function useValidators() {
     minLength: (length) => (val) =>
       !val || val.length >= length || `Минимально возможное количество символов ${length}`,
 
-    isLatin: (val) => /^[a-zA-Zа-яА-Я\d]+$/.test(val) || "Введены недопустимые символы.",
+    isLatin: (val) => /^[a-zA-Zа-яА-Я \d]+$/.test(val) || "Введены недопустимые символы.",
 
     email: (val) =>
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+$/.test(val) || "Неверный формат email",
@@ -23,7 +23,7 @@ export function useValidators() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!?\-#$%_.]+$/.test(val) ||
       "Пароль должен содержать как минимум одну заглавную и одну строчную букву, а также как минимум одну цифру",
 
-    onlyLatin: (val) => !/^[а-яА-Я]+$/.test(val) || "Ввод только латинскими символами.",
+    onlyLatin: (val) => !/^[а-яА-Я0-9]+$/.test(val) || "Ввод только латинскими символами.",
 
     onlyRussian: (val) =>
       /^[а-яА-Я]+$/.test(val) || !val.length || "Ввод только русскими символами.",

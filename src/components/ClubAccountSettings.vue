@@ -28,6 +28,7 @@
                   v-model="selectAvatar"
                   accept=".png,.jpg"
                   ref="uploader"
+                  max-file-size="10485760"
                   @update:model-value="updateAvatar"
                 />
 

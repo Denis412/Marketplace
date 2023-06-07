@@ -169,6 +169,35 @@ export default class TeamService {
       [{ variables: { name: "application", label: "Заявка" } }]
     );
 
+    console.log("types", createdTypes);
+
+    const { data: nameProp } = await BaseService.fetchApiPaginate(
+      propertyApi.paginateProperties,
+      {
+        where: {
+          and: [
+            {
+              column: "name",
+              operator: "EQ",
+              value: "name",
+            },
+            {
+              column: "type_id",
+              operator: "EQ",
+              value: createdTypes.value[0].id,
+            },
+          ],
+        },
+      },
+      { only_one: true, space_id: teamSpace.value.id }
+    ).refetch();
+
+    await BaseService.apiMutation(
+      propertyApi.update,
+      { unique: true },
+      { id: nameProp.id, space_id: teamSpace.value.id }
+    );
+
     await BaseService.apiMutation(
       propertyApi.createMany,
       [
