@@ -125,7 +125,7 @@
 
         <div class="flex flex-center">
           <c-button
-            disable
+            :disable="!agreement"
             type="submit"
             background
             label="Зарегистрироваться"
@@ -195,36 +195,36 @@ const capitailze = (prop) => {
 };
 
 const registration = async () => {
-  // try {
-  //   let userInfo;
-  //   console.log(timer.timer.value);
-  //   if (form.value.previousEmail !== form.value.email) {
-  //     console.log(form.value.previousEmail, form.value.email);
-  //     if (timer.timer.value === 90 || timer.timer.value === 0) {
-  //       userInfo = await userApi.registration(form.value);
-  //       form.value.previousEmail = form.value.email;
-  //       if (timer.timer.value === 0) timer.clear();
-  //       timer.start();
-  //       $q.notify({
-  //         type: "positive",
-  //         message: "Вам на почту отправлено письмо с кодом подтверждения!",
-  //       });
-  //     } else {
-  //       $q.notify({
-  //         type: "warning",
-  //         message: `Подождите еще ${timer.timer.value} секунд!`,
-  //       });
-  //     }
-  //   }
-  //   showConfirmCode.value = true;
-  //   if (userInfo) {
-  //     authUserInfo.value.user_id = userInfo.recordId;
-  //     authUserInfo.value.email = userInfo.record.email;
-  //     authUserInfo.value.password = form.value.password;
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    let userInfo;
+    console.log(timer.timer.value);
+    if (form.value.previousEmail !== form.value.email) {
+      console.log(form.value.previousEmail, form.value.email);
+      if (timer.timer.value === 90 || timer.timer.value === 0) {
+        userInfo = await userApi.registration(form.value);
+        form.value.previousEmail = form.value.email;
+        if (timer.timer.value === 0) timer.clear();
+        timer.start();
+        $q.notify({
+          type: "positive",
+          message: "Вам на почту отправлено письмо с кодом подтверждения!",
+        });
+      } else {
+        $q.notify({
+          type: "warning",
+          message: `Подождите еще ${timer.timer.value} секунд!`,
+        });
+      }
+    }
+    showConfirmCode.value = true;
+    if (userInfo) {
+      authUserInfo.value.user_id = userInfo.recordId;
+      authUserInfo.value.email = userInfo.record.email;
+      authUserInfo.value.password = form.value.password;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 registration.count = 0;

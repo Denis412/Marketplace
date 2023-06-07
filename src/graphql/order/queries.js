@@ -41,8 +41,8 @@ export const getOrderById = gql`
   }
 `;
 export const getOrders = gql`
-  query paginateOrder {
-    paginate_order(page: 1, perPage: 100) {
+  query paginateOrder($page: Int!, $perPage: Int!, $where: ObjectPaginatorWhere) {
+    paginate_order(page: $page, perPage: $perPage, where: $where) {
       data {
         id
         type_id

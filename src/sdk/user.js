@@ -79,7 +79,16 @@ const refetchUserById = async (id) => {
   return userData.user;
 };
 
-const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invite, is_team }) => {
+const refetchPaginateSubjects = async ({
+  where,
+  page,
+  perPage,
+  space_id,
+  is_invite,
+  is_team,
+  is_my_teams,
+  refetchPolicy,
+}) => {
   // console.log("refetch params", { where, page, perPage, space_id, is_invite, is_team });
   const { refetch } = paginateSubjects({
     where,
@@ -88,6 +97,8 @@ const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invi
     space_id,
     is_invite,
     is_team,
+    is_my_teams,
+    refetchPolicy,
   });
 
   // console.log("paginte passed");

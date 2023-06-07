@@ -17,7 +17,7 @@
 
         <div class="description__wrapper gray-scrollbar">
           <p class="text-body2 c-mt-12 text-gray7 long-text">
-            {{ truncate(team.description, 90) }}
+            {{ truncate(team.description, 120) }}
           </p>
         </div>
       </q-card-section>

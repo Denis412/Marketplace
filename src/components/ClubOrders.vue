@@ -43,12 +43,10 @@ import COrdersItem from "src/components/ClubOrderItem.vue";
 import { onActivated, onMounted, ref, watch } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getOrders } from "src/graphql/order/queries";
+import OrderService from "src/sevices/OrderService";
 
-const {
-  result: ordersResult,
-  loading: loadingOrder,
-  refetch,
-} = useQuery(getOrders);
+const f = OrderService.fetchAllOrders();
+const { result: ordersResult, loading: loadingOrder, refetch } = useQuery(getOrders);
 const orders = ref([]);
 
 watch(ordersResult, () => {

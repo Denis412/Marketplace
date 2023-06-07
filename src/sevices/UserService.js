@@ -37,7 +37,7 @@ export default class UserService {
   }
 
   static async fetchCurrentUser() {
-    const subjectData = await this.fetchSubjectPaginate().refetch(
+    const { data: subjectData } = await this.fetchSubjectPaginate().refetch(
       {
         where: {
           column: "user_id",
@@ -48,20 +48,7 @@ export default class UserService {
       { only_one: true }
     );
 
-    console.log("fetch in api passed");
-
-    // const userData = await userApi.refetchUserById(
-    //   JSON.parse(localStorage.getItem("user-data")).user_id
-    // );
-
-    console.log("data subject", subjectData);
-
-    const currentUserData = convertSubject({
-      // ...userData,
-      ...subjectData,
-    });
-
-    return currentUserData;
+    return convertSubject(subjectData);
   }
 
   static async subjectUpdate({ subject, id, input, is_team, space_id }) {

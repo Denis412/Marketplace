@@ -13,6 +13,7 @@
                 <q-input
                   outlined
                   v-model="form.nickname"
+                  maxlength="50"
                   @change="updateInfo('nickname', $event)"
                   class="c-input-outline"
                   placeholder="Придумайте никнейм"
@@ -26,6 +27,7 @@
                   outlined
                   v-model="form.telegram"
                   placeholder="https://t.me/"
+                  maxlength="50"
                   @change="updateInfo('telegram_chat_id', $event)"
                   :rules="[isTelegramUrl]"
                   class="c-input-outline"
@@ -92,6 +94,7 @@
                   @change="updateInfo('about', $event)"
                   class="c-input-outline c-input-area-mh about-area__wrapper gray-scrollbar-input"
                   type="textarea"
+                  maxlength="1000"
                   autogrow
                   placeholder="Расскажите о себе"
                 />

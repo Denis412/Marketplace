@@ -3,12 +3,12 @@
     <section>
       <h3 class="text-h3">Создать заказ</h3>
       <p class="text-body2 c-mt-24">
-        Заполните форму и создайте заказ: специальный алгоритм ИИ подберет для
-        вас подходящую команду. Вы сможете обсудить с лидом команды-кандидата
-        проект, выбрать команду, либо отказаться, чтобы ИИ подобрал другую.
-        Также вам на помощь всегда готов прийти модератор.
+        Заполните форму и создайте заказ: специальный алгоритм ИИ подберет для вас подходящую
+        команду. Вы сможете обсудить с лидом команды-кандидата проект, выбрать команду, либо
+        отказаться, чтобы ИИ подобрал другую. Также вам на помощь всегда готов прийти модератор.
       </p>
     </section>
+
     <section>
       <q-form v-if="orderTypes">
         <c-input
@@ -31,12 +31,11 @@
           :length="500"
         />
 
-        <div class="text-subtitle3 input-title input-mt">
-          Что требуется сделать
-        </div>
+        <div class="text-subtitle3 input-title input-mt">Что требуется сделать</div>
+
         <div class="relative-position button-group row wrap c-mt-24">
           <c-button
-            v-for="(orderType, index) in orderTypeList"
+            v-for="(orderType, index) in orderTypes"
             :key="index"
             class="text-caption2 btn"
             :label="orderType.name"
@@ -44,14 +43,11 @@
             @click="addTodo(index, orderType)"
           />
 
-          <img
-            class="absolute mail-img"
-            src="/assets/images/order/mail-icon.svg"
-            alt=""
-          />
+          <img class="absolute mail-img" src="/assets/images/order/mail-icon.svg" alt="" />
         </div>
 
         <div class="text-subtitle3 input-mt">Функции, блоки, разделы сайта</div>
+
         <div class="c-mt-24 checkboxes-area">
           <q-checkbox
             v-for="(checkbox, index) in allFunctions"
@@ -83,24 +79,15 @@
               class="c-checkbox-outlined"
             />
 
-            <div>
-              Если Вы не знаете, как более точно сформулировать идею - дайте нам
-              знать.
-            </div>
+            <div>Если Вы не знаете, как более точно сформулировать идею - дайте нам знать.</div>
           </div>
 
           <div class="col-6">
-            <img
-              class="question-mark-img"
-              src="/assets/images/order/speech-bubble.svg"
-              alt=""
-            />
+            <img class="question-mark-img" src="/assets/images/order/speech-bubble.svg" alt="" />
           </div>
         </div>
 
-        <label for="file" class="text-subtitle3 input-mt">
-          Файлы и документы
-        </label>
+        <label for="file" class="text-subtitle3 input-mt"> Файлы и документы </label>
         <q-file
           outlined
           multiple
@@ -113,8 +100,8 @@
           ref="uploadFile"
         >
           <div class="c-file-placeholder">
-            Если у вас уже имеются контент, брендбук, бриф, спецификация или
-            иные материалы по заказу, пожалуйста, загрузите их...
+            Если у вас уже имеются контент, брендбук, бриф, спецификация или иные материалы по
+            заказу, пожалуйста, загрузите их...
           </div>
 
           <c-button
@@ -130,6 +117,7 @@
             <label for="from-to" class="text-subtitle3 input-title input-mt">
               Желаемая стоимость
             </label>
+
             <div class="row justify-between c-mt-24 col-3">
               <q-input
                 v-model.number="form.price_start"
@@ -138,17 +126,10 @@
                 name="from-to"
                 placeholder="От..."
                 outlined
-                :rules="[
-                  requiredOneOfNumber(form.price_end),
-                  positive,
-                  lowerThan(form.price_end),
-                ]"
+                :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
               />
 
-              <q-icon
-                class="ruble"
-                name="img:/assets/icons/others/ruble-purple.svg"
-              />
+              <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg" />
             </div>
 
             <div class="row justify-between c-mt-24 col-3">
@@ -166,10 +147,7 @@
                 ]"
               />
 
-              <q-icon
-                class="ruble"
-                name="img:/assets/icons/others/ruble-purple.svg"
-              />
+              <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg" />
             </div>
           </div>
 
@@ -191,11 +169,7 @@
                   name="img:/assets/icons/calendar/calendar-purple.svg"
                   class="cursor-pointer"
                 >
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                     <q-date
                       :rules="[required]"
                       v-model="form.date_complete"
@@ -203,12 +177,7 @@
                       :options="optionsFn"
                     >
                       <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
+                        <q-btn v-close-popup label="Close" color="primary" flat />
                       </div>
                     </q-date>
                   </q-popup-proxy>
@@ -225,17 +194,19 @@
         </div>
 
         <div class="row submit-btns">
-          <c-button
-            class="text-body1 btn col-2"
-            :label="'Разместить заказ'"
-            :background="true"
+          <q-btn
+            flat
+            no-caps
+            class="club-button-background text-body1 btn col-2"
+            label="Разместить заказ"
             @click="createOrder"
           />
 
-          <c-button
-            class="text-body1 btn col-3 offset-1"
-            :label="'Сохранить как черновик'"
-            :outline="true"
+          <q-btn
+            flat
+            no-caps
+            class="club-button-outline text-body1 btn col-3 offset-1"
+            label="Сохранить как черновик"
             @click="createDraft"
           />
         </div>
@@ -247,29 +218,30 @@
 <script setup>
 import CButton from "src/components/ClubButton.vue";
 import CInput from "src/components/ClubOrderCreateInput.vue";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useValidators } from "src/use/validators";
-import orderApi from "src/sdk/order";
-import orderTypeApi from "src/sdk/order_type";
 import { useRouter } from "vue-router";
 // import { addTodo } from "src/use/order";
 import { optionsFn } from "src/use/date";
 import { useQuasar } from "quasar";
+import OrderService from "src/sevices/OrderService";
 
 const $q = useQuasar();
 
 const router = useRouter();
 
-const { result: orderTypes } = orderTypeApi.paginateOrderTypes({
-  page: 1,
-  perPage: 100,
-});
+const { result: orderTypes } = OrderService.fetchOrderTypes();
 
-console.log(orderTypes);
+// const { result: orderTypes } = orderTypeApi.paginateOrderTypes({
+//   page: 1,
+//   perPage: 100,
+// });
 
-const orderTypeList = computed(() => orderTypes.value.paginate_order_type.data);
+// console.log(orderTypes);
 
-console.log(orderTypeList);
+// const orderTypeList = computed(() => orderTypes.value.paginate_order_type.data);
+
+// console.log(orderTypeList);
 
 const selectedType = ref("");
 const selectedFunctions = ref([]);
@@ -284,7 +256,6 @@ const form = ref({
   functions: { [process.env.ORDER_FUNCTION_ID]: selectedFunctions },
   description: "",
   consultation: false,
-  // files: null,
   price_start: "",
   price_end: "",
   date_complete: "",
@@ -292,25 +263,24 @@ const form = ref({
   status: process.env.ORDER_STATUS_1,
 });
 
-const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } =
-  useValidators();
+const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } = useValidators();
 
 const createDraft = () => {
   form.value.status = process.env.ORDER_STATUS_0;
-  orderApi.orderCreate(form.value);
+  OrderService.createOrder(form.value);
 };
 
 const createOrder = () => {
   form.value.draft = false;
   console.log(selectedType.value);
   console.log(selectedFunctions.value);
-  orderApi.orderCreate(form.value);
+  OrderService.createOrder(form.value);
   // router.push({ name: "orders" });
 };
 
 const addTodo = (index, orderType) => {
   selectedType.value = orderType.id;
-  allFunctions.value = orderTypeList.value[index].all_functions.map((el) => {
+  allFunctions.value = orderTypes.value[index].all_functions.map((el) => {
     el = { id: el.id, name: el.name };
     return el;
   });
