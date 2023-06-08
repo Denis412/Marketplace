@@ -10,23 +10,19 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted } from "vue";
-import { useUserStore } from "./stores/user";
-import { useFileStore } from "src/stores/file";
+import { useUserStore } from "src/stores/user";
 import userApi from "src/sdk/user";
 import { Cookies } from "quasar";
 import stompApi from "src/sdk/stomp";
 
-const store = useUserStore();
-
-const storeFile = useFileStore();
+const store = userApi.isAuth() ? useUserStore() : null;
 
 const isQueue = computed(() => Cookies.get("queue"));
 
 onMounted(async () => {
-  storeFile.SET_FILES();
   userApi.isAuth() ? await store.FETCH_CURRENT_USER() : null;
 
-  await stompApi.queueCreate();
+  if (userApi.isAuth()) await stompApi.queueCreate();
 });
 
 onUnmounted(() => {

@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed, ref, provide, onMounted, onUpdated } from "vue";
+import { computed, ref, provide, onMounted, onUnmounted } from "vue";
 import CMainHeader from "src/components/ClubMainHeader.vue";
 import CMainDrawer from "src/components/ClubMainDrawer.vue";
 import CMainFooter from "src/components/Landing/ClubMainFooter.vue";
@@ -28,8 +28,6 @@ import { useUserStore } from "src/stores/user";
 import { useRoute } from "vue-router";
 import userApi from "src/sdk/user";
 import { connect } from "src/lib/stompClient";
-
-// const f = computed(() => result.value);
 
 const route = useRoute();
 
@@ -57,9 +55,9 @@ connect();
 
 onMounted(async () => {
   await fetch(currentUser.value?.avatar, { mode: "no-cors" });
-
-  console.log("mount");
 });
+
+onUnmounted(() => useUserStore().RESET_CURRENT_SUBJECT());
 </script>
 
 <style lang="scss"></style>

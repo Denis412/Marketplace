@@ -9,7 +9,7 @@
       <div class="flex column flex-center">
         <h3 class="text-bold c-mb-15 text-h3">Уже заходили?</h3>
         <p class="c-mb-115 fs-16 text-body2 c-maxw-250">Будем рады видеть вас снова</p>
-        <c-button to="/authentication" outline label="Войти" class="text-body1" />
+        <c-button to="/auth" outline label="Войти" class="text-body1" />
       </div>
     </section>
 
@@ -187,7 +187,6 @@ const form = ref({
 });
 
 const showPassword = ref(false);
-const passwordType = computed(() => (showPassword.value ? "text" : "password"));
 const showConfirmPassword = ref(false);
 
 const capitailze = (prop) => {
@@ -197,14 +196,15 @@ const capitailze = (prop) => {
 const registration = async () => {
   try {
     let userInfo;
-    console.log(timer.timer.value);
     if (form.value.previousEmail !== form.value.email) {
-      console.log(form.value.previousEmail, form.value.email);
       if (timer.timer.value === 90 || timer.timer.value === 0) {
         userInfo = await userApi.registration(form.value);
+
         form.value.previousEmail = form.value.email;
+
         if (timer.timer.value === 0) timer.clear();
         timer.start();
+
         $q.notify({
           type: "positive",
           message: "Вам на почту отправлено письмо с кодом подтверждения!",

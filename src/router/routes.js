@@ -181,57 +181,24 @@ const routes = [
       },
     ],
   },
-
-  // {
-  //   path: "/project",
-  //   name: "teamLayout",
-  //   component: () => import("layouts/ClubTeamLayout.vue"),
-  //   children: [
-  //     {
-  //       path: ":id/invite",
-  //       name: "projectInvite",
-  //       component: () => import("pages/ClubTeamInvitePage.vue"),
-  //     },
-  //     {
-  //       path: "space/:id",
-  //       name: "teamSpace",
-  //       meta: { isTeamMember: true },
-  //       component: () => import("pages/ClubTeamSpace.vue"),
-  //     },
-  //     {
-  //       path: "space/:id/edit",
-  //       name: "teamSpaceEdit",
-  //       meta: { isTeamOwner: true },
-  //       component: () => import("src/pages/ClubTeamSettingsPage.vue"),
-  //     },
-  //     {
-  //       path: ":id/edit",
-  //       name: "teamEdit",
-  //       meta: { isTeamOwner: true },
-  //       component: () => import("src/pages/ClubTeamSettingsPage.vue"),
-  //     },
-
-  //     {
-  //       path: ":id/invite",
-  //       name: "teamInvite",
-  //       meta: { isTeamOwner: true },
-  //       component: () => import("pages/ClubTeamInvitePage.vue"),
-  //     },
-  //   ],
-  // },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
-    path: "/authentication",
-    name: "auth",
-    component: () => import("pages/ClubAuthenticationPage.vue"),
+    path: "/auth",
+    name: "auth-layout",
+    component: () => import("layouts/ClubAuthenticationLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "auth",
+        component: () => import("pages/ClubAuthenticationPage.vue"),
+      },
+      {
+        path: "reg",
+        name: "reg",
+        component: () => import("pages/ClubRegistrationPage.vue"),
+      },
+    ],
   },
-  {
-    path: "/registration",
-    name: "reg",
-    component: () => import("pages/ClubRegistrationPage.vue"),
-  },
+
   {
     path: "/:catchAll(.*)*",
     component: () => import("pages/ErrorNotFound.vue"),

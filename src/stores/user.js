@@ -71,6 +71,10 @@ export const useUserStore = defineStore("user", {
       }
     },
 
+    RESET_CURRENT_SUBJECT() {
+      this.currentUser = null;
+    },
+
     RESET_CURRENT_SPACE_SUBJECT() {
       this.currentSpaceSubject = null;
     },
