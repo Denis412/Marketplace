@@ -6,5 +6,6 @@ export default boot(({ app }) => {
   const apolloClients = {
     default: apolloClient,
   };
+
   app.provide(ApolloClients, apolloClients);
 });

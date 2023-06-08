@@ -9,7 +9,8 @@
               v-model="title"
               class="c-input-outline"
               placeholder="Название проекта"
-              :rules="[required]"
+              maxlength="50"
+              :rules="[required, maxLength(50), minLength(2)]"
             />
           </template>
         </c-label-control>
@@ -51,7 +52,7 @@ import CLabelControl from "src/components/ClubLabelControl.vue";
 import CSpecialistItem from "./ClubSpecialistItem.vue";
 
 const { result, loading, createProject } = useProjectCreate();
-const { required } = useValidators();
+const { required, maxLength, minLength } = useValidators();
 
 const currentTeam = inject("currentTeam");
 const currentUser = inject("currentUser");
