@@ -79,7 +79,6 @@ const uploadImage = async () => {
   await updateProject({
     id: currentProject.value?.id,
     input: {
-      name: currentProject.value?.name,
       avatar: filesApi.getUrl(avatar),
     },
     space_id: route.query.space,
@@ -113,7 +112,7 @@ const groupProjectSubjects = async (group_names) => {
         console.log("subj", subject, subjectMainSpace);
 
         if (currentProject.value?.author_id === subject.id) {
-          res.leader.value = Object.assign({}, subjectMainSpace, { role: "Руководитель проекта" });
+          res.leader.value = Object.assign({}, subjectMainSpace, { role: "Руководитель" });
 
           if (currentUser.value.subject_id === subjectMainSpace.id) isLeader.value = true;
         }
@@ -121,10 +120,7 @@ const groupProjectSubjects = async (group_names) => {
         if (group_name !== "leader" && subject.email.email === subjectMainSpace.email.email)
           res[group_name].value.push(
             Object.assign({}, subjectMainSpace, {
-              role:
-                currentProject.value?.author_id === subject.id
-                  ? "Руководитель проекта"
-                  : "Участник",
+              role: currentProject.value?.author_id === subject.id ? "Руководитель" : "Участник",
             })
           );
       } catch (e) {

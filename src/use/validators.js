@@ -15,7 +15,9 @@ export function useValidators() {
     isLatin: (val) => /^[a-zA-Zа-яА-Я \d]+$/.test(val) || "Введены недопустимые символы.",
 
     email: (val) =>
-      /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+$/.test(val) || "Неверный формат email",
+      /^((([0-9A-Za-z]{1}[-0-9A-z\.]{0,30}[0-9A-Za-z]?)|([0-9А-Яа-я]{1}[-0-9А-я\.]{0,30}[0-9А-Яа-я]?))@([-A-Za-z]{1,}\.){1,}[-A-Za-z]{2,})$/u.test(
+        val
+      ) || "Неверный формат email",
 
     noSpace: (val) => !val.includes(" ") || "Поле не должно содержать пробелов",
 
@@ -26,7 +28,7 @@ export function useValidators() {
     onlyLatin: (val) => !/^[а-яА-Я0-9]+$/.test(val) || "Ввод только латинскими символами.",
 
     onlyRussian: (val) =>
-      /^[а-яА-Я]+$/.test(val) || !val.length || "Ввод только русскими символами.",
+      /^[а-яА-ЯёЁ-]+$/.test(val) || !val.length || "Ввод только русскими символами.",
 
     equal: (val1) => (val) => val1 === val || "Значения не совпадают.",
 
@@ -43,6 +45,8 @@ export function useValidators() {
       val1 > 0 || val > 0 || "Заполните хотя бы одно из полей.",
 
     positive: (val) => val >= 0 || "Введите неотрицательное значение.",
+
+    equalPasswords: (pass1) => (pass) => pass1 === pass || "Введённые пароли не совпадают.",
 
     biggerThan: (val1) => (val) => val >= val1 || `Введите значение больше ${val1}.`,
 

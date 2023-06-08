@@ -58,7 +58,6 @@ const updateProp = async (prop_name, value) => {
   await updateProject({
     id: currentProject.value.id,
     input: {
-      name: currentProject.value.name,
       [prop_name]: value,
     },
     space_id,

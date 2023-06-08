@@ -7,7 +7,7 @@
       :orders="route.name.includes('order')"
     />
 
-    <q-page-container>
+    <q-page-container v-if="currentUser">
       <router-view v-slot="{ Component }">
         <keep-alive :exclude="exclude">
           <component :is="Component" />

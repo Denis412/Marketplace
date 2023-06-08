@@ -115,14 +115,12 @@ const updateProp = async (prop_name, value) => {
 
   if (prop_name === "delivery_date") {
     input = {
-      name: currentProject.value.name,
       delivery_date: {
         date: value,
       },
     };
   } else {
     input = {
-      name: currentProject.value.name,
       [prop_name]: value,
     };
   }

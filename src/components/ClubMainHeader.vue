@@ -89,9 +89,10 @@ import CButton from "./ClubButton.vue";
 import CRightPersonMenu from "./ClubRightPersonMenu.vue";
 import CHeaderNavigation from "./ClubHeaderNavigation.vue";
 import { useRoute, useRouter } from "vue-router";
+import userApi from "src/sdk/user";
 
-const isModerator = inject("isModerator");
 const currentUser = inject("currentUser");
+const isModerator = userApi.isModerator(currentUser.value);
 
 const route = useRoute();
 const router = useRouter();

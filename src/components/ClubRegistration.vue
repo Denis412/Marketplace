@@ -89,7 +89,7 @@
           maxlength="50"
           visibility
           :type="showConfirmPassword ? 'text' : 'password'"
-          :rules="[required, equal(form.password)]"
+          :rules="[required, equalPasswords(form.password)]"
           lazy-rules
         >
           <template v-slot:append>
@@ -168,7 +168,7 @@ const {
   noSpace,
   maxLength,
   passwordValid,
-  equal,
+  equalPasswords,
   onlyLatin,
   onlyRussian,
 } = useValidators();

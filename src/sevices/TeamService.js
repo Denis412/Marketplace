@@ -194,7 +194,7 @@ export default class TeamService {
 
     await BaseService.apiMutation(
       propertyApi.update,
-      { unique: true },
+      { unique: true, required: false },
       { id: nameProp.id, space_id: teamSpace.value.id }
     );
 
@@ -925,10 +925,7 @@ export default class TeamService {
 
         await projectApi.update({
           id: variables.application.project.id,
-          input: {
-            name: variables.application.name,
-            ...prop,
-          },
+          input: { ...prop },
           space_id: variables.application.project.space,
         });
 
@@ -1237,7 +1234,6 @@ export default class TeamService {
       const f = await projectApi.update({
         id: project.id,
         input: {
-          name: project.name,
           [collection]: {
             [subjectType.id]: project[collection]
               .filter((sb) => sb.email.email !== subject.email.email)

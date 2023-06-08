@@ -1,15 +1,13 @@
 <template>
   <q-page class="c-pa-32 relative-position">
-    <section v-if="loading" class="loader loader-lg text-h1"></section>
-
-    <section v-else>
+    <section>
       <div class="flex justify-between c-mb-32">
         <h3 class="text-h3">Мои команды</h3>
-        <c-add-buttons v-if="currentUser.teams.length" />
+        <c-add-buttons v-if="currentUser?.teams.length" />
       </div>
 
       <div>
-        <c-team-card-list v-if="currentUser.teams.length" :teams="currentUser.teams" />
+        <c-team-card-list v-if="currentUser?.teams.length" :teams="currentUser?.teams" />
         <c-not-found-teams v-else />
       </div>
 
