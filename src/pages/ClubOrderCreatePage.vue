@@ -16,7 +16,7 @@
           :name="'name-order'"
           :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
           :type="'text'"
-          :class-name="'c-input-outline'"
+          :class-name="'c-input-outline text-body1'"
           @change="(value) => (form.name = value)"
           :length="500"
         />
@@ -28,18 +28,18 @@
           :placeholder="'Укажите названия компании или ИП...'"
           :type="'text'"
           @change="(value) => (form.customer = value)"
-          :class-name="'c-input-outline'"
+          :class-name="'c-input-outline text-body1'"
           :length="500"
         />
 
         <div class="row no-wrap justify-between c-mt-24 c-mb-64">
-          <div class="column no-wrap items-start">
-            <p class="text-subtitle5 input-title input-mt c-pb-24">Что требуется сделать</p>
-            <div class="col-10 row wrap button-group">
+          <div class="column no-wrap flex-start">
+            <p class="text-subtitle5 input-title block c-mb-24">Что требуется сделать</p>
+            <div class="row wrap button-group">
               <q-btn
                 v-for="(orderType, index) in orderTypeList"
                 :key="index"
-                class="text-caption2 btn"
+                class="text-caption2 btn-type"
                 :label="orderType.name"
                 :outline="true"
                 @click="addTodo(index, orderType)"
@@ -47,21 +47,21 @@
             </div>
           </div>
 
-          <img class="mail-img" src="/assets/images/order/mail-icon.svg" alt="" />
+          <img src="/assets/images/order/mail-icon.svg" alt="" />
         </div>
 
-        <p v-if="allFunctions.length" class="text-subtitle5 input-mt c-mb-24">
-          Функции, блоки, разделы сайта
-        </p>
-        <div class="c-mb-64 checkboxes-area">
-          <q-checkbox
-            v-for="(checkbox, index) in allFunctions"
-            :key="index"
-            v-model="selectedFunctions"
-            :val="checkbox.id"
-            :label="checkbox.name"
-            class="c-checkbox-outlined"
-          />
+        <div v-if="allFunctions.length">
+          <p class="text-subtitle5 block c-mb-24">Функции, блоки, разделы сайта</p>
+          <div class="c-mb-64 checkboxes-area">
+            <q-checkbox
+              v-for="(checkbox, index) in allFunctions"
+              :key="index"
+              v-model="selectedFunctions"
+              :val="checkbox.id"
+              :label="checkbox.name"
+              class="c-checkbox-outlined"
+            />
+          </div>
         </div>
 
         <c-input
@@ -69,16 +69,17 @@
           :name="'order-description'"
           :placeholder="'Опишите, что требуется сделать по вашей задаче...'"
           :type="'textarea'"
-          :class-name="'c-textarea-outline'"
+          :class-name="'c-textarea-outline text-body1'"
           @change="(value) => (form.description = value)"
           :length="5000"
         />
 
-        <div class="row">
+        <div class="row text-caption1 c-mb-64">
           <div class="col-6">
             <q-checkbox
               v-model="form.consultation"
               :val="true"
+              left-label
               label="Мне нужна консультация"
               color="violet-6"
               class="c-checkbox-outlined"
@@ -92,7 +93,7 @@
           </div>
         </div>
 
-        <label for="file" class="text-subtitle3 input-mt"> Файлы и документы </label>
+        <label for="file" class="text-subtitle5 block c-mb-24"> Файлы и документы </label>
         <q-file
           outlined
           multiple
@@ -101,7 +102,7 @@
           v-model="files"
           max-files="10"
           max-file-size="51200"
-          class="c-filepicker-outline"
+          class="c-filepicker-outline c-mb-64"
           ref="uploadFile"
         >
           <div class="c-file-placeholder">
@@ -109,17 +110,17 @@
             заказу, пожалуйста, загрузите их...
           </div>
 
-          <c-button
-            class="text-body1 btn c-file-button"
+          <q-btn
+            class="text-body1 btn"
+            text-color="white"
             :label="'Выберите файл'"
-            :background="true"
             @click="addFile"
           />
         </q-file>
 
-        <div class="input-wrapper row relative-position">
-          <div class="col-3">
-            <label for="from-to" class="text-subtitle3 input-title input-mt">
+        <div class="input-wrapper row relative-position c-mb-64">
+          <div class="col-4">
+            <label for="from-to" class="text-subtitle5 input-title block">
               Желаемая стоимость
             </label>
             <div class="row justify-between c-mt-24 col-3">
@@ -131,9 +132,11 @@
                 placeholder="От..."
                 outlined
                 :rules="[requiredOneOfNumber(form.price_end), positive, lowerThan(form.price_end)]"
-              />
-
-              <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg" />
+              >
+                <template v-slot:append>
+                  <q-icon name="img:/assets/icons/others/ruble-purple.svg" color="orange" />
+                </template>
+              </q-input>
             </div>
 
             <div class="row justify-between c-mt-24 col-3">
@@ -149,14 +152,16 @@
                   positive,
                   biggerThan(form.price_start),
                 ]"
-              />
-
-              <q-icon class="ruble" name="img:/assets/icons/others/ruble-purple.svg" />
+              >
+                <template v-slot:append>
+                  <q-icon name="img:/assets/icons/others/ruble-purple.svg" color="orange" />
+                </template>
+              </q-input>
             </div>
           </div>
 
-          <div class="col-3 offset-2">
-            <label for="date" class="text-subtitle3 input-title input-mt">
+          <div class="col-4 offset-2">
+            <label for="date" class="text-subtitle5 input-title block c-mb-24">
               Желаемый срок готовности
             </label>
 
@@ -198,19 +203,14 @@
         </div>
 
         <div class="row submit-btns">
-          <c-button
-            class="text-body1 btn col-2"
+          <q-btn
+            class="text-body1 btn"
+            text-color="white"
             :label="'Разместить заказ'"
-            :background="true"
             @click="createOrder"
           />
 
-          <c-button
-            class="text-body1 btn col-3 offset-1"
-            :label="'Сохранить как черновик'"
-            :outline="true"
-            @click="createDraft"
-          />
+          <q-btn class="text-body1 btn" :label="'Сохранить как черновик'" @click="createDraft" />
         </div>
       </q-form>
     </section>
@@ -319,6 +319,9 @@ const addFile = () => {
 p {
   margin: 0;
 }
+.q-input {
+  max-height: 44px;
+}
 .c-mb-24 {
   margin-bottom: 24px;
 }
@@ -335,50 +338,25 @@ p {
     transform: translate(-21px, 20px);
   }
 }
-
-.input {
-  border-radius: 8px;
-}
-
 .button-group {
   gap: 32px;
-  // width: 70%;
 }
-
 .btn {
+  text-transform: none;
+  padding: 8px 16px;
   white-space: nowrap;
-  margin-bottom: 23px;
-  border-radius: 32px !important;
-  height: 37px;
+  background: linear-gradient(101.75deg, #4c1d95 4.25%, #881d95 96.95%);
+  border-radius: 8px;
+  &-type {
+  }
 }
-
-.input-mt {
-  display: block;
-}
-
 .checkboxes-area {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
-
-.submit-btns {
-  margin-top: 120px;
-}
-
-.ruble {
-  height: 24px;
-  width: 24px;
-}
-
-.mail-img {
-  right: -32%;
-  top: -58px;
-}
-
 .question-mark-img {
   margin-top: 31px;
 }
-
 .calendar-img {
   right: 0;
   top: 221px;
