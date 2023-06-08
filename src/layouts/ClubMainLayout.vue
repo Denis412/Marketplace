@@ -1,12 +1,13 @@
 <template>
-  <q-layout view="hHh LpR fff">
+  <q-layout view="hHh LpR fff" v-if="currentUser">
     <c-main-header />
     <c-main-drawer
       side="left"
       :projects="route.name === 'my-projects' || route.name === 'project'"
+      :orders="route.name.includes('order')"
     />
 
-    <q-page-container v-if="currentUser">
+    <q-page-container>
       <router-view v-slot="{ Component }">
         <keep-alive :exclude="exclude">
           <component :is="Component" />

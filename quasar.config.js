@@ -65,6 +65,7 @@ module.exports = configure(function (/* ctx */) {
 
         MAIN_SPACE_ID: 42,
 
+        MY_ORDERS_PAGE_ID: "4575094536376949576",
         PROJECTS_PAGE_ID: "2175982620077905167",
         MY_PROJECTS_PAGE_ID: "5811147062794236464",
         TEAMS_PAGE_ID: "4854717215393261588",
