@@ -13,15 +13,15 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, inject } from "vue";
+import { ref, watch, computed, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 import pageApi from "src/sdk/page";
 
 const router = useRouter();
 const route = useRoute();
-const selected = ref(
-  computed(()=>route.path.includes("my-teams") ? process.env.MY_TEAMS_PAGE_ID : process.env.ALL_TEAMS_PAGE_ID)
+const selected = computed(() =>
+  route.path.includes("my-teams") ? process.env.MY_TEAMS_PAGE_ID : process.env.ALL_TEAMS_PAGE_ID
 );
 const currentUser = inject("currentUser");
 
@@ -43,6 +43,13 @@ const pages = computed(() =>
       icon: "img:/assets/icons/tree/default-tree-icon.svg",
       children: [],
     };
+    if (page.title === "Все команды") {
+      treeElem.icon = "img:/assets/icons/tree/All-Teams.svg";
+    }
+
+    if (page.title === "Мои команды") {
+      treeElem.icon = "img:/assets/icons/tree/My-Teams-Hover.svg";
+    }
 
     if (page.id === process.env.MY_TEAMS_PAGE_ID)
       treeElem.children = currentUser.value?.teams.map((team) => {
@@ -52,10 +59,23 @@ const pages = computed(() =>
           space: team.space,
         };
       });
-
     return treeElem;
   })
 );
+
+pages.value?.reverse(); //Нормальная ли реализация?
+
+watch(selected, () => {
+  if (selected.value === "5297017851980857027") {
+    pages.value[1].icon = "img:/assets/icons/tree/All-Teams.svg";
+    pages.value[0].icon = "img:/assets/icons/tree/My-Teams-Hover.svg";
+  }
+
+  if (selected.value === "5191226628121289747") {
+    pages.value[0].icon = "img:/assets/icons/tree/My-Teams.svg";
+    pages.value[1].icon = "img:/assets/icons/tree/All-Teams-Hover.svg ";
+  }
+});
 
 const redirect = (page_id) => {
   if (page_id === process.env.MY_TEAMS_PAGE_ID || page_id === process.env.ALL_TEAMS_PAGE_ID) {
