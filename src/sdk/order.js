@@ -14,8 +14,8 @@ const ordersPaginate = ({ page, perPage, where, orderBy, fetchPolicy }) => {
   return useQuery(getOrders, { page, perPage, where }, { fetchPolicy });
 };
 
-const queryOrderById = ({ id }) => {
-  return useQuery(getOrderById, { id });
+const queryOrderById = ({ id, fetchPolicy }) => {
+  return useQuery(getOrderById, { id }, { fetchPolicy });
 };
 
 const orderCreate = async ({ input }) => {

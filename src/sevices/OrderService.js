@@ -13,8 +13,8 @@ export default class OrderService {
     return BaseService.fetchApiPaginate(orderTypeApi.paginateOrderTypes, variables, options);
   }
 
-  static fetchOrderById(variables = {}, options = {}) {
-    return BaseService.fetchApiById(orderApi.queryOrderById, variables, options);
+  static fetchOrderById(id, options = {}) {
+    return BaseService.fetchApiById(orderApi.queryOrderById, { id }, options);
   }
 
   static async createOrder(variables = {}, options = {}) {
