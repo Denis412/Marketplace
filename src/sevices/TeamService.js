@@ -78,21 +78,25 @@ export default class TeamService {
 
     if (variables.avatar) {
       const ids = await filesApi.uploadFiles(variables.avatar);
-
-      file = await filesApi.refetchQueryFileById({
-        id: ids[0],
-      });
+      file = await filesApi.refetchQueryFileById({ id: ids[0] });
     }
+
+    const { result: createdTeam, error: err } = await BaseService.apiMutation(
+      teamApi.create,
+      file ? { ...variables, avatar: filesApi.getUrl(file) } : variables
+    );
+
+    if (err.value) throw new Error("Команда с таким названием уже существует, придумайте другое");
 
     const { result: teamSpace } = await BaseService.apiMutation(spaceApi.create, {
       name: variables.name,
       description: variables.description,
     });
 
-    const { result: createdTeam, error: err } = await BaseService.apiMutation(
-      teamApi.create,
-      file ? { ...variables, avatar: filesApi.getUrl(file) } : variables,
-      { space_id: teamSpace.value.id }
+    await BaseService.apiMutation(
+      teamApi.update,
+      { space: teamSpace.value.id },
+      { id: createdTeam.value.id }
     );
 
     await BaseService.apiMutation(
@@ -107,15 +111,8 @@ export default class TeamService {
       { space_id: teamSpace.value.id }
     );
 
-    await mutate({
-      title: "Командное пространство",
-      parent_id: rootPage.value.id,
-    });
-
-    await mutate({
-      title: "Профиль команды",
-      parent_id: rootPage.value.id,
-    });
+    await mutate?.({ title: "Командное пространство", parent_id: rootPage.value.id });
+    await mutate?.({ title: "Профиль команды", parent_id: rootPage.value.id });
 
     const { data: subjectType } = await BaseService.fetchApiPaginate(typeApi.paginateType).refetch(
       {
@@ -150,13 +147,6 @@ export default class TeamService {
       [
         {
           variables: {
-            name: "Участник",
-            description: "Группа участников",
-            parent_group_id: rootGroup.id,
-          },
-        },
-        {
-          variables: {
             name: "Заказчик",
             description: "Группа заказчиков",
             parent_group_id: rootGroup.id,
@@ -177,6 +167,35 @@ export default class TeamService {
       { name: "project", label: "Проект" },
       { space_id: teamSpace.value.id },
       [{ variables: { name: "application", label: "Заявка" } }]
+    );
+
+    console.log("types", createdTypes);
+
+    const { data: nameProp } = await BaseService.fetchApiPaginate(
+      propertyApi.paginateProperties,
+      {
+        where: {
+          and: [
+            {
+              column: "name",
+              operator: "EQ",
+              value: "name",
+            },
+            {
+              column: "type_id",
+              operator: "EQ",
+              value: createdTypes.value[0].id,
+            },
+          ],
+        },
+      },
+      { only_one: true, space_id: teamSpace.value.id }
+    ).refetch();
+
+    await BaseService.apiMutation(
+      propertyApi.update,
+      { unique: true },
+      { id: nameProp.id, space_id: teamSpace.value.id }
     );
 
     await BaseService.apiMutation(
@@ -427,11 +446,6 @@ export default class TeamService {
       ]
     );
 
-    await BaseService.fetchApiPaginate(teamApi.paginateTeams).refetch({
-      page: 1,
-      perPage: 50,
-    });
-
     loading.value = false;
 
     return { result, loading, error };
@@ -497,8 +511,6 @@ export default class TeamService {
       await this.fetchTeamById(
         variables.sender === "team" ? variables.sender_id : variables.target.id
       ).refetch();
-
-      console.log("end");
     } catch (e) {
       error.value = e;
 
@@ -1065,7 +1077,7 @@ export default class TeamService {
         { only_one: true, space_id: options.space_id }
       );
 
-      console.log("excludedGroup", excludedGroup);
+      // console.log("excludedGroup", excludedGroup);
 
       const { data: membersGroup } = await BaseService.fetchApiPaginate(
         groupApi.paginateGroups
@@ -1080,7 +1092,7 @@ export default class TeamService {
         { only_one: true, space_id: options.space_id }
       );
 
-      console.log("membersGroup", membersGroup);
+      // console.log("membersGroup", membersGroup);
 
       const { data: groupTypeInTeamSpace } = await BaseService.fetchApiPaginate(
         typeApi.paginateType
@@ -1095,7 +1107,7 @@ export default class TeamService {
         { only_one: true, space_id: options.space_id }
       );
 
-      console.log("groupTypeInTeamSpace", groupTypeInTeamSpace, subject);
+      // console.log("groupTypeInTeamSpace", groupTypeInTeamSpace, subject);
 
       const { data: subjectInTeamSpace } = await BaseService.fetchApiPaginate(
         userApi.paginateSubjects
@@ -1110,7 +1122,7 @@ export default class TeamService {
         { is_team: true, only_one: true, space_id: options.space_id }
       );
 
-      console.log("subjectInTeamSpace", subjectInTeamSpace);
+      // console.log("subjectInTeamSpace", subjectInTeamSpace);
 
       // const newGroups = subjectInTeamSpace.group
       //   .map((gr) => gr.id)

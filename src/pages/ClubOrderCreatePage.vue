@@ -8,25 +8,29 @@
         отказаться, чтобы ИИ подобрал другую. Также вам на помощь всегда готов прийти модератор.
       </p>
     </section>
+
     <section>
       <q-form v-if="orderTypes">
-        <c-input
-          class="c-mb-64"
-          :title="'Название заказа'"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline c-mb-64"
+          title="Название заказа"
           :name="'name-order'"
           :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
           :type="'text'"
           :class-name="'c-input-outline text-body1'"
           @change="(value) => (form.name = value)"
-          :length="500"
+          maxlength="100"
         />
 
-        <c-input
-          class="c-mb-64"
-          :title="'Наименование заказчика'"
+        <q-input
+          flat
+          outlined
+          class="c-input-outline c-mb-64"
+          title="Наименование заказчика"
           :name="'name-customer'"
           :placeholder="'Укажите названия компании или ИП...'"
-          :type="'text'"
           @change="(value) => (form.customer = value)"
           :class-name="'c-input-outline text-body1'"
           :length="500"
@@ -37,7 +41,7 @@
             <p class="text-subtitle5 input-title block c-mb-24">Что требуется сделать</p>
             <div class="row wrap button-group">
               <q-btn
-                v-for="(orderType, index) in orderTypeList"
+                v-for="(orderType, index) in orderTypes"
                 :key="index"
                 class="text-caption2 btn-type"
                 :label="orderType.name"
@@ -64,14 +68,17 @@
           </div>
         </div>
 
-        <c-input
-          :title="'Описание заказчика'"
+        <q-input
+          flat
+          outlined
+          class="c-textarea-outline"
+          title="Описание заказчика"
           :name="'order-description'"
           :placeholder="'Опишите, что требуется сделать по вашей задаче...'"
           :type="'textarea'"
           :class-name="'c-textarea-outline text-body1'"
           @change="(value) => (form.description = value)"
-          :length="5000"
+          maxlength="5000"
         />
 
         <div class="row text-caption1 c-mb-64">
@@ -123,6 +130,7 @@
             <label for="from-to" class="text-subtitle5 input-title block">
               Желаемая стоимость
             </label>
+
             <div class="row justify-between c-mt-24 col-3">
               <q-input
                 v-model.number="form.price_start"
@@ -218,31 +226,21 @@
 </template>
 
 <script setup>
-import CButton from "src/components/ClubButton.vue";
-import CInput from "src/components/ClubOrderCreateInput.vue";
-import { ref, computed } from "vue";
+import { inject, ref } from "vue";
 import { useValidators } from "src/use/validators";
-import orderApi from "src/sdk/order";
-import orderTypeApi from "src/sdk/order_type";
 import { useRouter } from "vue-router";
-// import { addTodo } from "src/use/order";
 import { optionsFn } from "src/use/date";
 import { useQuasar } from "quasar";
+
+import OrderService from "src/sevices/OrderService";
 
 const $q = useQuasar();
 
 const router = useRouter();
 
-const { result: orderTypes } = orderTypeApi.paginateOrderTypes({
-  page: 1,
-  perPage: 100,
-});
+const currentUser = inject("currentUser");
 
-console.log(orderTypes);
-
-const orderTypeList = computed(() => orderTypes.value.paginate_order_type.data);
-
-console.log(orderTypeList);
+const { result: orderTypes } = OrderService.fetchOrderTypes();
 
 const selectedType = ref("");
 const selectedFunctions = ref([]);
@@ -258,7 +256,6 @@ const form = ref({
   functions: { [process.env.ORDER_FUNCTION_ID]: selectedFunctions },
   description: "",
   consultation: false,
-  // files: null,
   price_start: "",
   price_end: "",
   date_complete: { date: selectedDate, time: "20:00:00" },
@@ -270,33 +267,22 @@ const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } = useVa
 
 const createDraft = () => {
   form.value.status = process.env.ORDER_STATUS_0;
-  orderApi.orderCreate(form.value);
+  OrderService.createOrder(form.value);
 };
 
 const createOrder = () => {
   form.value.draft = false;
-  // console.log(selectedType.value);
-  // console.log(selectedFunctions.value);
-  // console.log(selectedDate);
-  // console.log(selectedDate.value);
+
   console.log(form.value);
-  orderApi.orderCreate(form.value);
-  // router.push({ name: "orders" });
+  OrderService.createOrder(form.value);
 };
 
 const addTodo = (index, orderType) => {
   selectedType.value = orderType.id;
-  allFunctions.value = orderTypeList.value[index].all_functions.map((el) => {
+  allFunctions.value = orderTypes.value[index].all_functions.map((el) => {
     el = { id: el.id, name: el.name };
     return el;
   });
-  console.log(selectedFunctions.value);
-  // console.log(
-  //   orderTypeList.value[index].all_functions.map((el) => {
-  //     el = { id: el.id, name: el.name };
-  //     return el;
-  //   })
-  // );
 };
 
 const addType = (id) => {

@@ -10,37 +10,8 @@
   >
     <c-tree-my-team v-if="team" :class="{ 'c-tree-mini': miniState }" />
     <c-tree-projects v-else-if="projects" :class="{ 'c-tree-mini': miniState }" />
+    <c-tree-my-orders v-else-if="orders" :class="{ 'c-tree-mini': miniState }" />
     <c-tree-teams v-else-if="!team" :class="{ 'c-tree-mini': miniState }" />
-
-    <c-tree-orders
-      v-else-if="route.path.includes('orders')"
-      :class="{ 'c-tree-mini': miniState }"
-    />
-
-    <!-- <q-list v-else class="c-pr-8 c-pt-12 no-scroll">
-      <q-item
-        v-for="item in mainTreeItems"
-        :key="item.title"
-        :class="{ active: isActive(item.path) }"
-        class="drawer-wrapper"
-      >
-        <router-link :to="{ name: item.path }" class="row no-wrap c-pl-16 drawer-item">
-          <img :src="`/assets/icons/${item.img}`" alt="" />
-
-          <div class="text-caption1 drawer-text c-ml-12">
-            {{ item.title }}
-            <q-icon
-              @click="addDocument"
-              v-if="item.title == 'Документы'"
-              name="add"
-              class="addDoc"
-            />
-          </div>
-        </router-link>
-
-        <c-qtabs-document v-if="item.title == 'Документы'" />
-      </q-item>
-    </q-list>  -->
 
     <button ref="btn" class="bg-violet-6 drawer-btn absolute" @click="toggleDrawer()">
       <img src="/assets/icons/arrow/drawer-arrow.svg" />
@@ -58,11 +29,13 @@ import CTreeProjects from "src/components/ClubTreeProjects.vue";
 import CTreeOrders from "src/components/ClubTreeOrders.vue";
 
 import { filesApi } from "src/sdk/files/file";
+import CTreeMyOrders from "components/ClubTreeMyOrders.vue";
 
-const { side, team, projects } = defineProps({
+const { side, team, projects, orders } = defineProps({
   side: String,
   team: Boolean,
   projects: Boolean,
+  orders: Boolean,
 });
 
 const route = useRoute();

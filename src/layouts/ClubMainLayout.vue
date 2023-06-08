@@ -1,12 +1,13 @@
 <template>
-  <q-layout view="hHh LpR fff">
+  <q-layout view="hHh LpR fff" v-if="currentUser">
     <c-main-header />
     <c-main-drawer
       side="left"
       :projects="route.name === 'my-projects' || route.name === 'project'"
+      :orders="route.name.includes('order')"
     />
 
-    <q-page-container v-if="currentUser">
+    <q-page-container>
       <router-view v-slot="{ Component }">
         <keep-alive :exclude="exclude">
           <component :is="Component" />
@@ -25,6 +26,7 @@ import CMainDrawer from "src/components/ClubMainDrawer.vue";
 import CMainFooter from "src/components/Landing/ClubMainFooter.vue";
 import { useUserStore } from "src/stores/user";
 import { useRoute } from "vue-router";
+import userApi from "src/sdk/user";
 
 const f = computed(() => result.value);
 
@@ -37,13 +39,18 @@ const exclude = ref([
   "ClubTeamProfileProjects",
   "ClubTeamInvitePage",
   "ClubCreateTeamPage",
+  "ClubOrderCreatePage",
+  "ClubOrdersPage",
   "ClubUserProfilePage",
   "ClubTeamsPage",
+  "ClubOrderInformationPage",
 ]);
 
 const currentUser = computed(() => useUserStore().GET_CURRENT_USER);
+const isModerator = computed(() => userApi.isModerator(currentUser.value));
 
 provide("currentUser", currentUser);
+provide("isModerator", isModerator);
 
 onMounted(async () => {
   await fetch(currentUser.value?.avatar, { mode: "no-cors" });

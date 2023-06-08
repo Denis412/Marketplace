@@ -131,6 +131,12 @@ const teamCreate = async () => {
     });
   } catch (error) {
     console.log(error);
+
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: error.message,
+    });
   }
 
   creatingTeam.value = false;
@@ -140,7 +146,7 @@ const updateFile = () => {
   if (Math.round(upload_img.value.size / Math.pow(1024, 2)) <= 10) {
     avatar_URL.value = URL.createObjectURL(upload_img.value);
   } else {
-    $q.notify("Максимальный вес картинки 10Mb!");
+    $q.notify("Допустимый размер файла - не более 10Mb!");
   }
 };
 

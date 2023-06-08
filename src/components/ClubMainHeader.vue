@@ -1,5 +1,8 @@
 <template>
-  <q-header class="header-main flex flex-center bg-dark-purple c-px-32">
+  <q-header
+    class="header-main flex flex-center bg-dark-purple c-px-32"
+    :class="{ 'bg-blue6': isModerator }"
+  >
     <q-toolbar>
       <q-img
         class="logo cursor-pointer"
@@ -83,6 +86,7 @@ import CRightPersonMenu from "./ClubRightPersonMenu.vue";
 import CHeaderNavigation from "./ClubHeaderNavigation.vue";
 import { useRoute, useRouter } from "vue-router";
 
+const isModerator = inject("isModerator");
 const currentUser = inject("currentUser");
 
 const route = useRoute();

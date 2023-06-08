@@ -4,6 +4,7 @@ import userApi from "src/sdk/user";
 import { convertSubject } from "src/utils/convertSubject";
 import { computed } from "vue";
 import BaseService from "./BaseService";
+import tokenApi from "src/sdk/token";
 
 export default class UserService {
   static fetchSubjectPaginate(variables = {}, options = {}) {
@@ -36,7 +37,7 @@ export default class UserService {
   }
 
   static async fetchCurrentUser() {
-    const subjectData = await this.fetchSubjectPaginate().refetch(
+    const { data: subjectData } = await this.fetchSubjectPaginate().refetch(
       {
         where: {
           column: "user_id",
@@ -47,20 +48,7 @@ export default class UserService {
       { only_one: true }
     );
 
-    console.log("fetch in api passed");
-
-    // const userData = await userApi.refetchUserById(
-    //   JSON.parse(localStorage.getItem("user-data")).user_id
-    // );
-
-    console.log("data subject", subjectData);
-
-    const currentUserData = convertSubject({
-      // ...userData,
-      ...subjectData,
-    });
-
-    return currentUserData;
+    return convertSubject(subjectData);
   }
 
   static async subjectUpdate({ subject, id, input, is_team, space_id }) {
@@ -76,13 +64,22 @@ export default class UserService {
     ).refetch();
 
     await userApi.update({ id: subjectData.id, input, is_team, space_id });
-
-    console.log("udpate subject");
   }
 
   static async leaveTeam({ subject, input }) {}
 
-  signIn() {}
+  static async signIn({ login, password, recovery }) {
+    const userSignInInfo = await userApi.login({ login, password });
+
+    if (recovery) return null;
+
+    userApi.saveLocalUserData({ user_id: userSignInInfo.recordId });
+    tokenApi.save(userSignInInfo.record);
+
+    return await userApi.refetchUserById(userSignInInfo.recordId);
+  }
+
+  static async recoveryPassword({ login, password, timer }) {}
   signUp() {}
   signOut() {}
 
