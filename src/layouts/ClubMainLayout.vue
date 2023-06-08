@@ -51,10 +51,10 @@ const isModerator = computed(() => userApi.isModerator(currentUser.value));
 provide("currentUser", currentUser);
 provide("isModerator", isModerator);
 
-connect();
-
 onMounted(async () => {
   await fetch(currentUser.value?.avatar, { mode: "no-cors" });
+
+  connect();
 });
 
 onUnmounted(() => useUserStore().RESET_CURRENT_SUBJECT());
