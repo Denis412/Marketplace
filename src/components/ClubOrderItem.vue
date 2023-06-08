@@ -33,6 +33,7 @@
             <q-icon class="my-icon" name="more_vert"></q-icon>
           </q-card-section>
         </router-link>
+        <!-- <q-btn @click="routerInfo">Test</q-btn> -->
       </q-card>
     </q-page>
   </div>
@@ -56,6 +57,10 @@ console.log(date);
 const orderId = computed(() => {
   return order.id ? order.id : null;
 });
+
+const routerInfo = () => {
+  console.log(order.id);
+};
 
 let cur_status;
 statuses.forEach((element) => {

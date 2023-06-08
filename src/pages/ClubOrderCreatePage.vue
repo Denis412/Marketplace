@@ -11,29 +11,27 @@
 
     <section>
       <q-form v-if="orderTypes">
+        <p class="text-subtitle5 input-title block c-mb-24">Название заказа</p>
         <q-input
           flat
           outlined
-          class="c-input-outline c-mb-64"
+          class="c-input-outline c-mb-64 text-body1"
           title="Название заказа"
           :name="'name-order'"
-          :placeholder="'Кратко в одном предложении опишите идею вашего проекта или заказа...'"
-          :type="'text'"
-          :class-name="'c-input-outline text-body1'"
-          @change="(value) => (form.name = value)"
+          placeholder="Кратко в одном предложении опишите идею вашего проекта или заказа..."
+          v-model="form.name"
           maxlength="100"
         />
 
+        <p class="text-subtitle5 input-title block c-mb-24">Наименование заказчика</p>
         <q-input
           flat
           outlined
-          class="c-input-outline c-mb-64"
+          class="c-input-outline c-mb-64 text-body1"
           title="Наименование заказчика"
-          :name="'name-customer'"
-          :placeholder="'Укажите названия компании или ИП...'"
-          @change="(value) => (form.customer = value)"
-          :class-name="'c-input-outline text-body1'"
-          :length="500"
+          placeholder="Укажите названия компании или ИП..."
+          v-model="form.customer"
+          maxlength="100"
         />
 
         <div class="row no-wrap justify-between c-mt-24 c-mb-64">
@@ -71,13 +69,11 @@
         <q-input
           flat
           outlined
-          class="c-textarea-outline"
+          class="c-textarea-outline text-body1"
           title="Описание заказчика"
-          :name="'order-description'"
-          :placeholder="'Опишите, что требуется сделать по вашей задаче...'"
-          :type="'textarea'"
-          :class-name="'c-textarea-outline text-body1'"
-          @change="(value) => (form.description = value)"
+          placeholder="Опишите, что требуется сделать по вашей задаче..."
+          type="textarea"
+          v-model="form.description"
           maxlength="5000"
         />
 
@@ -106,23 +102,21 @@
           multiple
           use-chips
           append
+          label="Если у вас уже имеются контент, брендбук, бриф, спецификация или иные материалы по заказу, пожалуйста, загрузите их..."
           v-model="files"
           max-files="10"
           max-file-size="51200"
           class="c-filepicker-outline c-mb-64"
           ref="uploadFile"
         >
-          <div class="c-file-placeholder">
-            Если у вас уже имеются контент, брендбук, бриф, спецификация или иные материалы по
-            заказу, пожалуйста, загрузите их...
-          </div>
-
-          <q-btn
-            class="text-body1 btn"
-            text-color="white"
-            :label="'Выберите файл'"
-            @click="addFile"
-          />
+          <template v-slot:append>
+            <q-btn
+              class="text-body1 btn"
+              text-color="white"
+              :label="'Выберите файл'"
+              @click="addFile"
+            />
+          </template>
         </q-file>
 
         <div class="input-wrapper row relative-position c-mb-64">
@@ -212,13 +206,18 @@
 
         <div class="row submit-btns">
           <q-btn
-            class="text-body1 btn"
+            class="text-body1 btn c-mr-106"
             text-color="white"
             :label="'Разместить заказ'"
             @click="createOrder"
           />
 
-          <q-btn class="text-body1 btn" :label="'Сохранить как черновик'" @click="createDraft" />
+          <q-btn
+            outline
+            class="text-body1 btn"
+            :label="'Сохранить как черновик'"
+            @click="createDraft"
+          />
         </div>
       </q-form>
     </section>
@@ -261,19 +260,22 @@ const form = ref({
   date_complete: { date: selectedDate, time: "20:00:00" },
   draft: true,
   status: process.env.ORDER_STATUS_1,
+  // number: 1,
 });
 
 const { required, positive, requiredOneOfNumber, lowerThan, biggerThan } = useValidators();
 
 const createDraft = () => {
   form.value.status = process.env.ORDER_STATUS_0;
+  // console.log(selectedType.value);
   OrderService.createOrder(form.value);
 };
 
 const createOrder = () => {
+  selectedType.value === "" ? (selectedType.value = orderTypes.value[0].id) : "";
   form.value.draft = false;
-
-  console.log(form.value);
+  // console.log(form.value);
+  // alert("Заказ создан");
   OrderService.createOrder(form.value);
 };
 
@@ -283,17 +285,6 @@ const addTodo = (index, orderType) => {
     el = { id: el.id, name: el.name };
     return el;
   });
-};
-
-const addType = (id) => {
-  if (form.value.functions.find((type) => type === id)) {
-    $q.notify({
-      type: "warning",
-      message: "Такой вид работ уже есть в списке!",
-    });
-    return;
-  }
-  form.value.functions = [...form.value.functions, id];
 };
 
 const addFile = () => {
@@ -308,8 +299,17 @@ p {
 .q-input {
   max-height: 44px;
 }
-.c-mb-24 {
-  margin-bottom: 24px;
+.c-m {
+  &r {
+    &-106 {
+      margin-right: 106px;
+    }
+  }
+  &b {
+    &-24 {
+      margin-bottom: 24px;
+    }
+  }
 }
 .input-title {
   margin-left: 21px;

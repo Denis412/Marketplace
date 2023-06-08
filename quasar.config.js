@@ -112,7 +112,7 @@ module.exports = configure(function (/* ctx */) {
         ORDER_STATUS_7: "5520670310916063859", // Отменен заказчиком
         ORDER_STATUS_8: "4449177655428781531", // Отменен исполнителем
 
-        PROPERTY_STATUS_ID: "6803516740521580313",
+        PROPERTY_STATUS_ID: "1448816183643769045",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

@@ -13,6 +13,7 @@ export const createOrder = gql`
         position
         created_at
         updated_at
+        number
         name
         customer
         type {
