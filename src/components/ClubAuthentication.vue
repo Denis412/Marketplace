@@ -75,7 +75,7 @@
           Зарегистрируйтесь в нашем клубе прямо сейчас
         </p>
 
-        <c-button to="/registration" outline label="Регистрация" class="text-body1" />
+        <c-button to="/auth/reg" outline label="Регистрация" class="text-body1" />
       </div>
     </section>
 
@@ -88,15 +88,11 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "stores/user";
 
-import CInput from "src/components/ClubInput.vue";
 import CButton from "src/components/ClubButton.vue";
 import CPasswordRecoveryDialog from "./ClubPasswordRecoveryDialog.vue";
-import userApi from "src/sdk/user";
 import { useQuasar } from "quasar";
-// import filesApi from "src/sdk/file";
-// import { useTimer } from "src/use/timer";
-// import { filesApi } from "src/sdk/files/file";
 import { useValidators } from "src/use/validators";
+import UserService from "src/sevices/UserService";
 
 const { required, email, onlyLatin, passwordValid, minLength, maxLength } = useValidators();
 const $q = useQuasar();
@@ -115,13 +111,9 @@ const form = ref({
 });
 
 const authorization = async () => {
-  console.log("authenticated", form.value);
   try {
-    await userApi.login(form.value);
-
+    await UserService.signIn(form.value);
     await userStore.FETCH_CURRENT_USER();
-
-    console.log("store", userStore.GET_CURRENT_USER);
 
     await router.push({
       name: "profile",

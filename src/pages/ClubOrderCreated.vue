@@ -1,33 +1,29 @@
 <template>
   <q-page class="c-pt-32 c-pt-32 container">
-      <h3 class="text-h3 text-violet-6">
-        Отлично! Ваш заказ размещен. Мы ищем исполнителя.
-      </h3>
-      <section class="relative-position">
-        <img class="absolute-center human-img" src="/assets/images/order/human.svg" alt="">
+    <h3 class="text-h3 text-violet-6">Отлично! Ваш заказ размещен. Мы ищем исполнителя.</h3>
 
-        <div class="search row items-center">
-          <div class="circles row">
-            <div class="circle1"></div>
+    <section class="relative-position">
+      <img class="absolute-center human-img" src="/assets/images/order/human.svg" alt="" />
 
-            <div class="circle2"></div>
+      <div class="search row items-center">
+        <div class="circles row">
+          <div class="circle1"></div>
 
-            <div class="circle3"></div>
-          </div>
+          <div class="circle2"></div>
 
-          <div class="text-body2 text-violet-6">
-            Поиск исполнителя...
-          </div>
+          <div class="circle3"></div>
         </div>
 
-        <c-button
+        <div class="text-body2 text-violet-6">Поиск исполнителя...</div>
+      </div>
+
+      <c-button
         class="text-body1 c-mt-32"
         :label="'Мои заказы'"
         :background="true"
         @click="toOrders"
-        />
-      </section>
-
+      />
+    </section>
   </q-page>
 </template>
 
@@ -39,7 +35,7 @@ const router = useRouter();
 
 const toOrders = () => {
   router.push({ name: "orders" });
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -65,14 +61,14 @@ const toOrders = () => {
 }
 
 .circle1 {
-  background: #851E96;
+  background: #851e96;
 }
 
 .circle2 {
-  background: #6E1E96;
+  background: #6e1e96;
 }
 
 .circle3 {
-  background: #501E96;
+  background: #501e96;
 }
 </style>

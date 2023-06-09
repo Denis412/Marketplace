@@ -14,7 +14,6 @@ function baseQueryById(method_link, variables = {}, options = {}) {
 }
 
 async function baseMutation(method_link, variables = {}, options = {}) {
-  console.log("fksdgksd", method_link.name, variables, options);
   return await method_link?.({
     input: variables,
     ...options,

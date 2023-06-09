@@ -65,6 +65,7 @@ module.exports = configure(function (/* ctx */) {
 
         MAIN_SPACE_ID: 42,
 
+        MY_ORDERS_PAGE_ID: "4575094536376949576",
         PROJECTS_PAGE_ID: "2175982620077905167",
         MY_PROJECTS_PAGE_ID: "5811147062794236464",
         TEAMS_PAGE_ID: "4854717215393261588",
@@ -72,6 +73,7 @@ module.exports = configure(function (/* ctx */) {
         MY_TEAMS_PAGE_ID: "5297017851980857027",
 
         USERS_GROUP_ID: "2954744714133191151", // Группа разработчиков
+        MODERATORS_GROUP_ID: "3460605780830741669",
 
         APPLICATION_STATUS_PROPERTY: "5892464470060638614",
 
@@ -95,20 +97,20 @@ module.exports = configure(function (/* ctx */) {
         COMMENT_TYPE_ID: "6",
         USERS_GROUP_ID: "1319554634306561363",
 
-        ORDER_TYPE_ID: "5117870577983195887",
-        ORDER_FUNCTION_ID: "7160658608500929189",
+        ORDER_TYPE_ID: "1132620023122244600",
+        ORDER_FUNCTION_ID: "3660714586775429906",
 
         DEFAULT_SPECIALITY_ID: "3291532951454342514",
 
-        ORDER_STATUS_0: "1744362893253691369", // Черновик
-        ORDER_STATUS_1: "2363916507227203881", // Поиск исполнителя
-        ORDER_STATUS_2: "3814249250560291482", // Есть кандидат
-        ORDER_STATUS_3: "4837591619999500045", // Заключается сделка
-        ORDER_STATUS_4: "3133592897321301481", // Выполняется
-        ORDER_STATUS_5: "7494949799001030133", // Завершен
-        ORDER_STATUS_6: "2375299492231411693", // Оспаривается
-        ORDER_STATUS_7: "1725305287553643069", // Отменен заказчиком
-        ORDER_STATUS_8: "6243889424355631278", // Отменен исполнителем
+        ORDER_STATUS_0: "2278807492518214753", // Черновик
+        ORDER_STATUS_1: "2333596183465108469", // Поиск исполнителя
+        ORDER_STATUS_2: "7605524763267860641", // Есть кандидат
+        ORDER_STATUS_3: "2037259879891059051", // Заключается сделка
+        ORDER_STATUS_4: "8208293674764812284", // Выполняется
+        ORDER_STATUS_5: "1192678431246620481", // Завершен
+        ORDER_STATUS_6: "9162628079365380487", // Оспаривается
+        ORDER_STATUS_7: "5520670310916063859", // Отменен заказчиком
+        ORDER_STATUS_8: "4449177655428781531", // Отменен исполнителем
 
         PROPERTY_STATUS_ID: "6803516740521580313",
       },

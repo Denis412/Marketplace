@@ -1,5 +1,7 @@
 @import "fonts.scss";
 
+
+
 .c-input-outline {
   padding-bottom: 0 !important;
 
@@ -472,7 +474,6 @@
   border: $border solid transparent !important;
   border-radius: 8px !important;
 
-  background: white;
   background-clip: padding-box !important;
 
   & .q-focus-helper {

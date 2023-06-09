@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-import MainHeader from "components/Landing/MainHeader.vue";
-import ClubMainFooter from "components/Landing/ClubMainFooter.vue";
+import MainHeader from "src/components/Landing/MainHeader.vue";
+import ClubMainFooter from "src/components/Landing/ClubMainFooter.vue";
 </script>
 
 <style lang="scss"></style>

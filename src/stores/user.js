@@ -24,35 +24,17 @@ export const useUserStore = defineStore("user", {
 
   actions: {
     async FETCH_CURRENT_USER() {
-      const subjectData = await userApi.refetchPaginateSubjects({
-        page: 1,
-        perPage: 1,
-        where: {
-          column: "user_id",
-          operator: "EQ",
-          value: JSON.parse(localStorage.getItem("user-data")).user_id,
-        },
-      });
+      this.currentUser = await UserService.fetchCurrentUser();
 
-      if (!subjectData[0].speciality1?.name)
-        await userApi.update(subjectData[0].id, {
-          speciality1: {
-            [process.env.SPECIALITY_TYPE_ID]: process.env.DEFAULT_SPECIALITY_ID,
+      if (!this.currentUser.speciality1)
+        await userApi.update({
+          id: this.currentUser.subject_id,
+          input: {
+            speciality1: {
+              [process.env.SPECIALITY_TYPE_ID]: process.env.DEFAULT_SPECIALITY_ID,
+            },
           },
         });
-
-      console.log("fetch in api passed");
-
-      const userData = await userApi.refetchUserById(
-        JSON.parse(localStorage.getItem("user-data")).user_id
-      );
-
-      console.log("data subject", subjectData[0]);
-
-      this.currentUser = convertSubject({
-        ...userData,
-        ...subjectData[0],
-      });
     },
 
     async FETCH_CURRENT_SPACE_SUBJECT(space_id = 0, is_team = false) {
@@ -68,8 +50,6 @@ export const useUserStore = defineStore("user", {
           { space_id }
         );
 
-        console.log("fetch");
-
         const subjectsData = await userApi.refetchPaginateSubjects({
           page: 1,
           perPage: 1,
@@ -82,8 +62,6 @@ export const useUserStore = defineStore("user", {
           space_id,
         });
 
-        console.log("data", subjectsData);
-
         this.currentSpaceSubject = subjectsData[0];
 
         return subjectsData[0];
@@ -91,6 +69,10 @@ export const useUserStore = defineStore("user", {
         console.log(e);
         return null;
       }
+    },
+
+    RESET_CURRENT_SUBJECT() {
+      this.currentUser = null;
     },
 
     RESET_CURRENT_SPACE_SUBJECT() {

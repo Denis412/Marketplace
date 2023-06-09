@@ -79,7 +79,16 @@ const refetchUserById = async (id) => {
   return userData.user;
 };
 
-const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invite, is_team }) => {
+const refetchPaginateSubjects = async ({
+  where,
+  page,
+  perPage,
+  space_id,
+  is_invite,
+  is_team,
+  is_my_teams,
+  refetchPolicy,
+}) => {
   // console.log("refetch params", { where, page, perPage, space_id, is_invite, is_team });
   const { refetch } = paginateSubjects({
     where,
@@ -88,6 +97,8 @@ const refetchPaginateSubjects = async ({ where, page, perPage, space_id, is_invi
     space_id,
     is_invite,
     is_team,
+    is_my_teams,
+    refetchPolicy,
   });
 
   // console.log("paginte passed");
@@ -159,44 +170,21 @@ const userPasswordConfirmCode = async ({ user_id, code, password }) => {
   });
 };
 
-const saveLocalUserData = (saveData) => {
-  localStorage.setItem("user-data", JSON.stringify(saveData));
-};
+const saveLocalUserData = (saveData) => localStorage.setItem("user-data", JSON.stringify(saveData));
 
 const saveUserData = async (userInfo) => {
-  tokenApi.save(userInfo.userSignIn.record);
+  tokenApi.save(userInfo.record);
 
-  const userData = await refetchUserById(userInfo.userSignIn.recordId);
-
-  // console.log("ghgh");
-
-  // if (first_entry) {
-  //   const { data: spaceData } = await creatingSpace({
-  //     input: {
-  //       name: userData.user.name,
-  //       description: userData.user.surname,
-  //     },
-  //   });
-
-  //   const { data: updateSubjectData } = await updatingUser({
-  //     input: {
-  //       personal_space_id: spaceData.spaceCreate.recordId,
-  //     },
-  //   });
-
-  //   console.log("data", spaceData, updateSubjectData);
-  // }
-
-  // console.log("userData", userData);
+  const userData = await refetchUserById(userInfo.recordId);
 
   saveLocalUserData({
-    user_id: userInfo.userSignIn.recordId,
+    user_id: userInfo.recordId,
   });
 
   return userData;
 };
 
-const login = async ({ login, password }, first_entry = false, recovery = false) => {
+const login = async ({ login, password }) => {
   const { data: userInfo } = await signIn({
     input: {
       login,
@@ -204,11 +192,7 @@ const login = async ({ login, password }, first_entry = false, recovery = false)
     },
   });
 
-  // console.log("login", userInfo);
-
-  const userData = recovery ? null : await saveUserData(userInfo);
-
-  return userData?.user;
+  return userInfo?.userSignIn;
 };
 
 const update = async ({ id, input, is_team = false, space_id = 0 }) => {
@@ -238,6 +222,9 @@ const logout = () => {
 
 const isAuth = () => localStorage.getItem("user-data") && localStorage.getItem("refreshToken");
 
+const isModerator = (user) =>
+  user?.group.find((group) => group.id === process.env.MODERATORS_GROUP_ID);
+
 const uploadAvatar = async (file) => {
   const filesIds = await filesApi.uploadFiles(file);
 
@@ -257,9 +244,11 @@ const userApi = {
   userPasswordConfirmCode,
   login,
   saveLocalUserData,
+  saveUserData,
   update,
   logout,
   isAuth,
+  isModerator,
   uploadAvatar,
 };
 

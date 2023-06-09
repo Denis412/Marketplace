@@ -15,13 +15,12 @@
 
 <script setup>
 import { computed, provide, ref } from "vue";
+import { useUserStore } from "src/stores/user";
+
 import CMainHeader from "src/components/ClubMainHeader.vue";
 import CMainDrawer from "src/components/ClubMainDrawer.vue";
 
-import { useUserStore } from "../stores/user";
-
 const currentUser = computed(() => useUserStore().GET_CURRENT_USER);
-
 const exclude = ref(["ClubTeamPage", "ClubTeamSpace"]);
 
 provide("currentUser", currentUser);

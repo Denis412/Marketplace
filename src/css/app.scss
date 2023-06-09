@@ -191,9 +191,11 @@
 }
 
 .bg-dark-purple {
-  background: $bg-dark-purple !important;
+  background: $bg-dark-purple ;
   background-clip: padding-box !important;
 }
+
+
 
 .header {
   display: flex;
@@ -296,6 +298,9 @@
 }
 .c-mb-32 {
   margin-bottom: 32px;
+}
+.c-mr-128 {
+  margin-right: 128px;
 }
 
 .c-pa-24 {

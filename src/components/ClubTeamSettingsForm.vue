@@ -70,16 +70,8 @@
               placeholder="Название команды"
               class="c-input-outline teamSettingForm-input-small"
               outlined
-              :rules="[required, isLatin, minLength(2), maxLength(30)]"
-            >
-              <template #append>
-                <q-icon
-                  name="img:/assets/icons/pen/edit-black.svg"
-                  class="create-form-icon cursor-pointer"
-                >
-                </q-icon>
-              </template>
-            </q-input>
+              :rules="[required, minLength(2), maxLength(30)]"
+            />
           </template>
         </c-label-control>
       </section>
@@ -122,15 +114,7 @@
               class="c-input-outline teamSettingForm-input"
               outlined
               :rules="[minLength(18), maxLength(45), isTelegramUrl]"
-            >
-              <template #append>
-                <q-icon
-                  name="img:/assets/icons/pen/edit-black.svg"
-                  class="create-form-icon cursor-pointer"
-                >
-                </q-icon>
-              </template>
-            </q-input>
+            />
           </template>
         </c-label-control>
       </section>
@@ -148,15 +132,7 @@
                 class="c-input-outline teamSettingForm-input-small"
                 outlined
                 :rules="[maxLength(30)]"
-              >
-                <template #append>
-                  <q-icon
-                    name="img:/assets/icons/pen/edit-black.svg"
-                    class="create-form-icon cursor-pointer"
-                  >
-                  </q-icon>
-                </template>
-              </q-input>
+              />
 
               <div class="flex items-center">
                 <c-button

@@ -31,11 +31,7 @@ export /* async */ function getClientOptions(/* {app, router, ...} */) {
 
   const link = concat(
     authLink,
-    ApolloLink.split(
-      (operation) => operation.getContext().hasUpload,
-      uploadLink,
-      httpLink
-    )
+    ApolloLink.split((operation) => operation.getContext().hasUpload, uploadLink, httpLink)
   );
 
   return Object.assign(

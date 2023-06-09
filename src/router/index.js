@@ -50,7 +50,7 @@ export default route(function (/* { store, ssrContext } */) {
     if (teamOwner) {
       const { result: team } = await TeamService.fetchTeamById(to.params.id);
 
-      console.log("team", team);
+      // console.log("team", team);
 
       const subject = await userStore.FETCH_CURRENT_SPACE_SUBJECT(0, false);
 
@@ -59,7 +59,7 @@ export default route(function (/* { store, ssrContext } */) {
     } else if (teamMember || to.name === "team") {
       const result = await userStore.FETCH_CURRENT_SPACE_SUBJECT(to.query.space, true);
 
-      console.log("rsssss", result);
+      // console.log("rsssss", result);
 
       if (teamMember && !result)
         next(`/team/${to.params.id}?name=${to.query?.name}&space=${to.query?.space}`);

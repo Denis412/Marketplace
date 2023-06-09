@@ -1,5 +1,8 @@
 <template>
-  <q-header class="header-main flex flex-center bg-dark-purple c-px-32">
+  <q-header
+    class="header-main flex flex-center bg-dark-purple c-px-32"
+    :class="{ 'bg-blue6': isModerator }"
+  >
     <q-toolbar>
       <q-img
         class="logo cursor-pointer"
@@ -40,17 +43,21 @@
       </q-toolbar-title>
 
       <div v-if="!currentUser">
-        <c-button
-          to="/registration"
-          class="text-button1 q-px-lg"
+        <q-btn
+          flat
+          no-caps
+          to="/auth/reg"
+          class="club-button-background text-body2 q-px-lg"
           background-square
           label="Вступить в 1T клуб"
         />
-        <c-button
-          to="/authentication"
-          outline-no-text-square
+
+        <q-btn
+          flat
+          no-caps
+          to="/auth"
           label="Войти"
-          class="text-button1 bg-dark-purple q-ml-md q-px-lg"
+          class="club-button-outline-text-colored text-body2 bg-dark-purple q-ml-md q-px-lg"
         />
       </div>
 
@@ -82,8 +89,10 @@ import CButton from "./ClubButton.vue";
 import CRightPersonMenu from "./ClubRightPersonMenu.vue";
 import CHeaderNavigation from "./ClubHeaderNavigation.vue";
 import { useRoute, useRouter } from "vue-router";
+import userApi from "src/sdk/user";
 
 const currentUser = inject("currentUser");
+const isModerator = userApi.isModerator(currentUser.value);
 
 const route = useRoute();
 const router = useRouter();

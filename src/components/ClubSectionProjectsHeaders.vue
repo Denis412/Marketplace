@@ -5,7 +5,7 @@
     </div>
 
     <div class="leaders-info c-ml-64 c-mr-124 col">
-      <h4 class="text-subtitle4">Лидер проекта</h4>
+      <h4 class="text-subtitle4">Руководитель проекта</h4>
 
       <c-specialist-item class="q-mt-lg bg-violet1" :specialist="currentLeader" />
 

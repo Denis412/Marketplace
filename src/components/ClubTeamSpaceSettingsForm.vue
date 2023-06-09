@@ -11,11 +11,7 @@
               outlined
               :rules="[minLength(18), maxLength(45), telegramm]"
               @change="updateTeamData"
-            >
-              <template #append>
-                <q-icon name="img:/icons/editBlack.svg" class="create-form-icon cursor-pointer" />
-              </template>
-            </q-input>
+            />
           </template>
         </c-label-control>
       </section>

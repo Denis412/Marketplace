@@ -5,7 +5,7 @@
     <div class="project-card-bg"></div>
 
     <section class="project-card-content__absolute q-gutter-y-sm">
-      <span class="text-body1 text-white">{{ project.name }}</span>
+      <span class="text-body1 text-white ellipsis">{{ project.name }}</span>
 
       <span class="text-caption2 text-white">{{ truncate(project.description, 60) }}</span>
     </section>

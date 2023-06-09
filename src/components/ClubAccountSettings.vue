@@ -28,6 +28,7 @@
                   v-model="selectAvatar"
                   accept=".png,.jpg"
                   ref="uploader"
+                  max-file-size="10485760"
                   @update:model-value="updateAvatar"
                 />
 
@@ -62,7 +63,12 @@
             изменить его
           </p>
 
-          <c-button background label="Изменить пароль" class="c-mt-32" @click="changePassword" />
+          <c-button
+            background
+            label="Изменить пароль"
+            class="c-mt-32 text-body1"
+            @click="changePassword"
+          />
         </div>
 
         <q-img

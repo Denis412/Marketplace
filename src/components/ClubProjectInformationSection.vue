@@ -14,6 +14,8 @@
               class="c-input-outline"
               :class="{ 'no-pointer-events': !isOwner }"
               :placeholder="currentProject?.name || 'Напишите название проекта'"
+              :rules="[maxLength(50), minLength(2)]"
+              maxlength="50"
             />
           </template>
         </c-label-control>
@@ -86,11 +88,13 @@ import { inject, computed, ref } from "vue";
 import CLabelControl from "src/components/ClubLabelControl.vue";
 import { useProjectUpdate } from "src/use/projects";
 import { useRouter } from "vue-router";
+import { useValidators } from "src/use/validators";
 
 const router = useRouter();
 
 const isOwner = inject("isOwner");
 
+const { maxLength, minLength } = useValidators();
 const { result, loading, updateProject } = useProjectUpdate();
 
 const currentProject = inject("currentProject");
@@ -111,14 +115,12 @@ const updateProp = async (prop_name, value) => {
 
   if (prop_name === "delivery_date") {
     input = {
-      name: currentProject.value.name,
       delivery_date: {
         date: value,
       },
     };
   } else {
     input = {
-      name: currentProject.value.name,
       [prop_name]: value,
     };
   }

@@ -57,7 +57,7 @@ onMounted(async () => {
   let pr = [];
 
   loading.value = true;
-  for (let team of currentUser.value.teams) {
+  for (let team of currentUser.value?.teams) {
     try {
       pr = await projectApi.refetchPaginateProjects({
         page: 1,
